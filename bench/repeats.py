@@ -1,34 +1,18 @@
-"""``docs/REPEATS.md``의 판정: 아무것도 움직이지 않을 때 ``llm`` 팔은 얼마나 움직이는가.
+"""Pre-registered check: how much does the ``llm`` arm move when nothing changes?
 
-사전 등록은 ``docs/REPEATS.md``이고, **이 파일은 그 실행들이 존재하기 전에 커밋됐다** — 다른 판정
-모듈 둘이 따르는 것과 같은 규칙, 같은 이유다. 숫자를 보고 쓴 스크립트는 그 숫자에 맞출 수 있고,
-쓸 때 아무리 조심했다고 해도 그것을 증명하지 못한다. 증명은 git 순서다.
+Roles:
 
-축 둘. 서로 다른 질문에 답하므로 따로 둔다. **R**은 설정 하나를 세 번 반복하므로 그 Δ가 담는 것은
-응답자가 동일한 프롬프트에 세 번 답한 것뿐이다. **S**는 시드를 옮겨 분할을 옮기므로 그 산포는 그
-위에 분할까지 담는다. 함께 평균 내면 둘 중 아무것도 말하지 않게 된다.
+* Settings — repeats, seeds, and pre-registered numbers.
+* Thread checks — read and compare each run's thread state.
+* R axis — three repeats of one setup, paired.
+* Half widths — published half widths that R1 compares against.
+* S axis — ``llm`` test scores across seeds.
+* Verdicts — R1, R2, and S1 from ``docs/REPEATS.md``.
+* Output — print tables, write JSON, command line.
 
-R은 부트스트랩할 수 있고 S는 할 수 없는 이유. R의 세 실행은 카드와 시드를 공유하므로 test 행도
-공유한다 — 둘의 차이는 그 행들에 대한 짝지은 차이이고, 구간은 ``paired.py``가 내는 그것이다. S의
-실행들은 각자 자기 행을 나누므로 짝지을 것이 없고, 그래서 S는 점추정 세 개의 폭을 보고하며 관찰로
-표시된다. ``REPEATS.md``가 그 비대칭을 사전 등록했다(S1: "시드 3개는 산포의 추정이 아니라 세
-점입니다").
+Usage:
 
-기록된 ``RESULTS.md`` 실행을 빼지 않는 이유. ``main``은 그 실행들보다 행동을 바꾸는 커밋 여러
-개만큼 앞에 있다(xgboost early stopping, ``internal_validation``, row budget 프롬프트 절, 스레드
-기록). 그래서 그런 Δ는 코드 차이와, 이 실험이 떼어 내려는 실행 간 항을 *둘 다* 담는다.
-``SPG.md``의 관찰 1이 그 규칙을 깬 Δ이고, 그래서 판정이 아니라 관찰로 냈으며 여기서 제대로 잰다.
-
-스레드 상태는 가정하지 않고 확인한다. A2는 스레드 수에 따라 balanced_accuracy가 0.0077 벌어지는
-것을 쟀고, 그건 짝지은 판정 하나의 반폭의 0.99배 — R이 재려는 것과 같은 크기다. 이제 모든 실행이
-자기 스레드 상태를 기록하므로, 이 스크립트는 그것을 되읽고 반복들이 같은 상태에서 돌지 않은
-데이터셋을 거부한다. *기록이 없는* 상태는 거부가 아니라 유보다: "확인하지 않았다"와 "확인했고
-다르다"는 다른 사실이다(:func:`automl_agent.threads.thread_state_changed`).
-
-팔들이 돌았던 것처럼 ``OMP_NUM_THREADS=1``로 돌린다. 값은 출력에 기록된다.
-
-사용법:
-    python -m bench.repeats                     # 두 축, 모든 데이터셋
+    python -m bench.repeats
     python -m bench.repeats spambase adult
 """
 
@@ -62,44 +46,33 @@ from bench.paired import (
 )
 from bench.predictions import bundle_path, write_bundle
 
-# R 축: 명령줄이 ``--thread-id``만 다른 세 실행. 그 값은 체크포인트 키이고 어떤 프롬프트에도
-# 닿지 않는다. 이름 대신 번호인 이유는 이름 붙일 것이 없기 때문이다 — 여기서는 어느 팔도
-# 대조군이 아니다.
+# --- Role: settings ------------------------------------------------------------------
+
+# Runs differ only by --thread-id; no arm is the control.
 REPEATS: tuple[int, ...] = (1, 2, 3)
-# S 축. 리터럴이 아니라 ``CHEAP_SEEDS``인 이유: 카드가 이미 커밋돼 있고 ``no_llm``/``random``
-# 수가 이미 ``RESULTS.md``에 있는 시드들이라, 애초에 S의 폭을 그 문서의 시드 산포와 견줄 수 있게
-# 하는 것이 그것이다.
+# Seeds whose no_llm/random scores RESULTS.md already has.
 SEEDS: tuple[int, ...] = CHEAP_SEEDS
-# S의 시드 42 점은 네 번째 실행이 아니라 반복 1에서 온다. 그 시드에서는 R의 세 반복이 똑같이
-# 유효한 점이고, 그중 S의 폭을 가장 넓게(또는 좁게) 만드는 것을 고르면 숫자를 보고 고르는 것이 된다.
+# Seed 42 of S reuses repeat 1, chosen before results.
 S_REPEAT = REPEATS[0]
 
-# R1의 문턱, 사전 등록에서 인용: span 중앙값이 반폭 중앙값의 이 배수를 넘으면, 공개된 모든 Δ를
-# 이 크기의 항이 섞인 값으로 다시 읽어야 한다.
+# Pre-registered: span median over half-width median above this.
 R1_THRESHOLD = 0.5
-# S1을 나란히 적으라고 사전 등록된 수: ``RESULTS.md``에서 random 팔의 시드 폭 평균. 다시 계산하지
-# 않고 상수로 두는 이유는 그것이 *공개된* 수치이고, 여기 두는 목적이 읽는 사람이 이 줄을 그 문서와
-# 맞춰 볼 수 있게 하는 것이기 때문이다.
+# Published random-arm seed span from RESULTS.md, not recomputed.
 RANDOM_SEED_SPAN = 0.1472
 
 
 def run_dir(dataset: Dataset, repeat: int, seed: int) -> Path:
-    """``bench/scripts/run_repeats.sh``가 실행 하나를 둔 곳. thread-id가 디렉터리 이름이다."""
+    """Folder where ``run_repeats.sh`` put one run; thread-id is its name."""
     return ARTIFACTS_DIR / f"rep{repeat}-{dataset.name}-seed{seed}"
 
 
-# --------------------------------------------------------------------------- #
-# 각 실행이 실제로 돌았던 환경
-# --------------------------------------------------------------------------- #
+# --- Role: thread checks ------------------------------------------------------------
 
 
 def recorded_threads(winner: Winner) -> dict[str, Any] | None:
-    """우승한 시도의 스레드 상태. 그 시도 자신의 ``result.json``에서 읽는다.
+    """Thread state of the winning attempt, from its own ``result.json``.
 
-    ``run_config.json``이 아니라 시도의 사본을 읽는다 — resume은 실행 수준 파일을 덮어쓰므로, 그
-    파일은 수를 견주고 있는 그 적합이 아니라 실행의 가장 최근 구간을 서술한다. 이 실행들이 resume될
-    일은 없지만, 아무 일도 잘못되지 않았을 때만 맞는 확인은 확인이 아니다.
-    """
+    Not ``run_config.json``: a resume overwrites that file."""
     result = read_json_object(winner.directory / "result.json")
     if result is None:
         return None
@@ -108,13 +81,7 @@ def recorded_threads(winner: Winner) -> dict[str, Any] | None:
 
 
 def pinned(threads: dict[str, Any] | None) -> bool | None:
-    """변수 셋이 모두 1로 고정됐는가. 기록이 없으면 ``None``.
-
-    고정은 ``run_repeats.sh``가 하는 일이고 ``REPEATS.md``가 했다고 적은 것이다. 이 함수는 그것을
-    산출물에서 되읽는다. 그 자체로 거부 사유는 아니다 — 일관되게 고정 아닌 상태도 응답자의 산포는
-    잰다 — 그래도 출력에 들어가야 한다. 고정 안 된 실행의 산포에는 스레드 항이 접혀 들어가 있어서
-    R의 답으로 인용할 수 없기 때문이다.
-    """
+    """True if all thread variables are pinned to 1; ``None`` if unrecorded."""
     if threads is None:
         return None
     if not all(key in threads for key in THREAD_ENV):
@@ -123,11 +90,9 @@ def pinned(threads: dict[str, Any] | None) -> bool | None:
 
 
 def check_one_environment(threads: dict[str, dict[str, Any] | None], label: str) -> list[str]:
-    """두 실행이 서로 다른 스레드 상태에서 적합된 것이 확인되면 거부한다.
+    """Refuse if two runs used different thread states.
 
-    돌려주는 것은 상태가 *기록되지 않은* 이름들이고, 그건 거부가 아니라 유보다. 하네스가 그 필드를
-    기록하기 전에 만든 실행은 확인할 수 없고, 그렇다고 말하는 것은 일치했다고 말하는 것과 다르다.
-    """
+    Return the names with no recorded state; those are not refused."""
     names = sorted(threads)
     for i, a in enumerate(names):
         for b in names[i + 1 :]:
@@ -140,9 +105,7 @@ def check_one_environment(threads: dict[str, dict[str, Any] | None], label: str)
     return [name for name in names if threads[name] is None]
 
 
-# --------------------------------------------------------------------------- #
-# R — 설정 하나의 세 실행
-# --------------------------------------------------------------------------- #
+# --- Role: R axis -------------------------------------------------------------------
 
 
 def adjudicate_repeats(
@@ -151,6 +114,7 @@ def adjudicate_repeats(
     seed: int = JUDGED_SEED,
     legs: dict[str, Scored] | None = None,
 ) -> DatasetVerdict:
+    """Judge the three repeats of one dataset; a refusal becomes a verdict."""
     out = DatasetVerdict(dataset=dataset.name, metric=dataset.metric, task=dataset.task)
     try:
         _adjudicate_repeats(dataset, resamples, seed, out, legs)
@@ -168,6 +132,7 @@ def _adjudicate_repeats(
     out: DatasetVerdict,
     legs: dict[str, Scored] | None = None,
 ) -> None:
+    """_adjudicate_repeats | R axis: check, score, and pair the repeats."""
     metric = dataset.metric
     winners: dict[str, Winner] = {}
     for repeat in REPEATS:
@@ -178,8 +143,7 @@ def _adjudicate_repeats(
         else:
             winners[arm] = winner
     if out.missing_arms:
-        # 셋 다이거나 아무것도 아니다. 세 점 중 둘에 대한 폭은 R1이 말하는 양이 아니고, 그것인
-        # 척 보고하면 구조적으로 산포를 작게 말하는 것이 된다.
+        # All three or none; two would understate the spread.
         raise Refusal(
             f"{dataset.name}: 반복 {', '.join(out.missing_arms)}이 없습니다 — "
             f"R은 {len(REPEATS)}회가 다 있어야 span이 사전 등록된 그 span입니다"
@@ -213,9 +177,6 @@ def _adjudicate_repeats(
             f"{dataset.name}: 분할을 정하는 config 필드가 반복마다 다릅니다 "
             f"({sorted(set(identities.values()))})"
         )
-    # 두 반복이 다른 스레드 상태에서 적합된 것이 확인되면 예외를 낸다. 돌려주는 기록 없는 이름들에
-    # 따로 필드를 둘 필요는 없다 — 아래에서 ``threads``를 팔마다 쓰고, 거기 없다는 것이 같은 말을
-    # 하므로 발을 맞춰야 할 두 번째 자리를 만들지 않는다.
     check_one_environment(threads, dataset.name)
 
     any_scored = next(iter(scored.values()))
@@ -230,25 +191,24 @@ def _adjudicate_repeats(
             "test_reproduced": s.test_score,
             "selection_gap": s.winner.val_score - s.test_score,
             "dir": s.winner.directory.as_posix(),
-            # 데이터셋이 아니라 실행마다 둔다. 이 필드의 요점 자체가 두 실행이 여기서 다를 수
-            # 있다는 것이고, 데이터셋 수준 사본은 그중 하나만 적을 수 있다.
+            # Per run, since runs may differ here.
             "threads": threads[name],
             "threads_pinned": pinned(threads[name]),
         }
 
-    # 순서 없는 모든 쌍. 작은 반복을 앞에 두어 부호를 모든 줄에서 같게 읽는다.
+    # Every pair, lower repeat first, so signs read alike.
     names = sorted(scored)
     for i, a in enumerate(names):
         for b in names[i + 1 :]:
             out.pairs.append(paired_delta(scored[a], scored[b], metric, resamples, seed, "repeat"))
 
-    # 마지막에 둔다. 중간에 거부되면 다리가 남지 않는다 — ``bench/paired.py``와 같은 규칙.
+    # Last, so a refusal leaves no legs behind.
     if legs is not None:
         legs.update(scored)
 
 
 def span(result: DatasetVerdict) -> float | None:
-    """반복들이 다시 유도한 test 점수의 최대 − 최소. 낼 수 없으면 ``None``."""
+    """Max minus min of the reproduced test scores, or ``None``."""
     if result.verdict != "ok":
         return None
     scores = [
@@ -261,22 +221,13 @@ def span(result: DatasetVerdict) -> float | None:
     return max(scores) - min(scores)
 
 
-# --------------------------------------------------------------------------- #
-# R1이 비교 대상으로 삼는 반폭
-# --------------------------------------------------------------------------- #
+# --- Role: half widths --------------------------------------------------------------
 
 
 def recorded_half_widths(seed: int = JUDGED_SEED, path: Path | None = None) -> dict[str, float]:
-    """데이터셋마다, *공개된* 판정의 주 비교들이 낸 반폭의 중앙값.
+    """Per dataset, the median half width of published primary pairs.
 
-    다시 계산하지 않고 ``bench/runs/paired/seed42.json``에서 읽는다. R1이 말하는 양은
-    ``RESULTS.md``가 실제로 낸 구간의 폭이고, 그 문서를 읽는 사람에게 다시 읽으라고 하는 것이
-    그것이기 때문이다.
-
-    주 쌍만 본다 — 기준이 그것으로 정해진, 예산을 맞춘 비교들이다. 그것들의 중앙값을 쓰는 이유는
-    반폭이 어느 쌍에 속하는지보다 test 행과 지표의 성질에 훨씬 더 가깝고, 중앙값은 어느 쌍이 우연히
-    가장 넓게 재추출됐는지 신경 쓰지 않기 때문이다.
-    """
+    Read from ``seed42.json``, not recomputed."""
     verdict = read_json_object(path or OUT_DIR / f"seed{seed}.json")
     if verdict is None:
         return {}
@@ -294,14 +245,12 @@ def recorded_half_widths(seed: int = JUDGED_SEED, path: Path | None = None) -> d
     return widths
 
 
-# --------------------------------------------------------------------------- #
-# S — 시드 레버
-# --------------------------------------------------------------------------- #
+# --- Role: S axis -------------------------------------------------------------------
 
 
 @dataclass
 class SeedRow:
-    """데이터셋 하나의 시드별 ``llm`` test 점수와, 그것들의 폭."""
+    """Per-seed ``llm`` test scores of one dataset, and their span."""
 
     dataset: str
     metric: str
@@ -315,12 +264,14 @@ class SeedRow:
 
     @property
     def span(self) -> float | None:
+        """Max minus min score, or ``None`` if refused or too few."""
         if self.verdict != "ok" or len(self.scores) < 2:
             return None
         return max(self.scores.values()) - min(self.scores.values())
 
 
 def seed_span(dataset: Dataset) -> SeedRow:
+    """Collect one dataset's seed scores; a refusal becomes a row."""
     out = SeedRow(dataset=dataset.name, metric=dataset.metric, task=dataset.task)
     try:
         _seed_span(dataset, out)
@@ -331,6 +282,7 @@ def seed_span(dataset: Dataset) -> SeedRow:
 
 
 def _seed_span(dataset: Dataset, out: SeedRow) -> None:
+    """_seed_span | S axis: score each seed and check the rows moved."""
     threads: dict[str, dict[str, Any] | None] = {}
     for seed in SEEDS:
         winner = loop_winner(f"llm_s{seed}", run_dir(dataset, S_REPEAT, seed), dataset.metric)
@@ -352,8 +304,7 @@ def _seed_span(dataset: Dataset, out: SeedRow) -> None:
             f"{dataset.name}: 시드가 {len(out.scores)}개뿐입니다 — 폭을 낼 수 없습니다"
         )
     if len(set(out.fingerprints.values())) < len(out.fingerprints):
-        # 시드는 둘인데 test 행은 한 벌이다: 시드가 분할에 닿지 않았으므로 이 "시드 폭"은 이름을
-        # 잘못 달고 있는 반복 폭이다. 결과가 아니라 실행의 버그다.
+        # Same test rows under two seeds is a run bug.
         listing = ", ".join(f"{seed}={fp[:12]}" for seed, fp in sorted(out.fingerprints.items()))
         raise Refusal(
             f"{dataset.name}: 시드가 다른데 test 지문이 겹칩니다 ({listing}) — "
@@ -367,33 +318,20 @@ def _seed_span(dataset: Dataset, out: SeedRow) -> None:
         )
 
 
-# --------------------------------------------------------------------------- #
-# 사전 등록된 진술
-# --------------------------------------------------------------------------- #
+# --- Role: verdicts -----------------------------------------------------------------
 
 
 def _partial(expected: set[str], measured: list[str]) -> list[str]:
+    """_partial | Verdicts: expected names that were not measured."""
     return sorted(expected - set(measured))
 
 
 def r1(
     results: list[DatasetVerdict], half_widths: dict[str, float], threshold: float = R1_THRESHOLD
 ) -> dict[str, Any]:
-    """R1 판정. ``docs/REPEATS.md``에서 인용:
+    """R1 verdict: median span against median half width, binary sets only.
 
-    > 이진 4개에서 `llm` 팔 반복 3회의 test 점수 span의 **중앙값**을, 같은 데이터셋에서 한 번
-    > 측정의 짝지은 판정 **반폭 중앙값**과 비교한다. span 중앙값이 반폭 중앙값의 **0.5배를
-    > 넘으면**, `RESULTS.md`와 `SPG.md`가 낸 모든 Δ는 "한 실행의 값"이 아니라 "이 크기의 항이
-    > 섞인 값"으로 다시 읽어야 한다고 적는다.
-
-    두 중앙값은 *같은* 데이터셋에 대해 낸다 — span과 공개된 반폭이 둘 다 있는 것들이다. 서로 다른
-    집합에서 내면 쉬운 데이터셋의 중앙값과 넓은 데이터셋의 중앙값을 견주고 그 비를 측정이라고 부르는
-    것이 된다.
-
-    이진만 본다. 못박은 4개에 못 미치는 범위는 답이 아니라 부분 판정이라고 적는다. R1은 방향에 대해
-    아무 말도 하지 않는다 — 작은 span은 작은 span으로 보고되고, 그게 이 저장소에 유리한 결과인데,
-    그것을 내는 문장이 같은 문장이다.
-    """
+    Both medians use the same datasets; see ``docs/REPEATS.md``."""
     expected = set(JUDGED_NAMES)
     binary = [r for r in results if r.dataset in expected]
     per_dataset: dict[str, dict[str, Any]] = {}
@@ -456,16 +394,9 @@ def r1(
 
 
 def r2(results: list[DatasetVerdict]) -> dict[str, Any]:
-    """R2 판정. ``docs/REPEATS.md``에서 인용:
+    """R2 verdict: does any repeat pair have a CI that excludes zero?
 
-    > 반복 3회를 짝지어 낸 Δ 3쌍 중 **95% CI가 0을 벗어나는 쌍이 하나라도 있으면**, 같은 설정
-    > 반복이 짝지은 판정에서 유의한 차이를 낼 수 있다는 것이 확인된 것으로 적는다.
-
-    이진 집합 어디든 쌍 하나면 충분하다. 주장이 존재 주장이기 때문이다 — 이 벤치마크가 내내 쓴 자가
-    *하나의* 설정으로 돈 두 실행을 다르다고 부를 수 있다는 것. 예측이 동일하게 나온 쌍은 어느 쪽의
-    증거도 아니라 따로 센다. 그건 같은 설정이 정확히 재현된 것이고, 반대 방향의 발견이라 자기 수를
-    가질 만하다.
-    """
+    Pairs with identical predictions are counted apart."""
     expected = set(JUDGED_NAMES)
     excluding_zero: list[dict[str, Any]] = []
     crossing = 0
@@ -522,17 +453,9 @@ def r2(results: list[DatasetVerdict]) -> dict[str, Any]:
 
 
 def s1(rows: list[SeedRow], random_span: float = RANDOM_SEED_SPAN) -> dict[str, Any]:
-    """S1 판정. ``docs/REPEATS.md``에서 인용:
+    """S1 observation: llm seed spans next to the random arm's span.
 
-    > 시드 42·43·44의 `llm` 팔 test 점수 span을 데이터셋마다 내고, `RESULTS.md`의 `random` 팔
-    > 시드 폭(평균 0.1472)과 **같은 표에 나란히** 적는다. `llm` 팔의 span이 더 작으면 그것은 이
-    > 저장소의 주장에 유리한 관찰이므로, **그렇게만 적고 판정으로 쓰지 않는다**.
-
-    ``observation_only``을 이 docstring에만 두지 않고 출력의 필드로 두는 이유는, 나중에 JSON을 읽는
-    사람이 문서를 안 읽었다는 이유로 이 비교를 판정으로 승격시킬 수 없게 하는 것이다. 시드 셋은 점
-    셋이다. 폭 네 개의 평균을 적는 것은 ``RESULTS.md``가 random 팔에 대해 그렇게 적었기 때문이고,
-    종류가 다른 요약끼리 견주는 것은 거친 것보다 나쁘다.
-    """
+    ``observation_only`` is in the output so it never becomes a verdict."""
     expected = set(JUDGED_NAMES)
     per_dataset = {
         row.dataset: {
@@ -578,12 +501,11 @@ def s1(rows: list[SeedRow], random_span: float = RANDOM_SEED_SPAN) -> dict[str, 
     }
 
 
-# --------------------------------------------------------------------------- #
-# 출력
-# --------------------------------------------------------------------------- #
+# --- Role: output -------------------------------------------------------------------
 
 
 def report_spans(results: list[DatasetVerdict], half_widths: dict[str, float]) -> None:
+    """Print the R span table."""
     print()
     print("R — 같은 설정 반복 3회의 test 점수 span")
     print(f"   {'데이터셋':<16} {'span':>9} {'공개 반폭':>11} {'비':>7}  {'스레드':<9}")
@@ -608,6 +530,7 @@ def report_spans(results: list[DatasetVerdict], half_widths: dict[str, float]) -
 
 
 def report_seeds(rows: list[SeedRow]) -> None:
+    """Print the S seed score table."""
     print()
     print(f"S — 시드 {', '.join(str(s) for s in SEEDS)}의 test 점수 (관찰, 판정 아님)")
     header = "".join(f"{f'시드 {seed}':>10}" for seed in SEEDS)
@@ -631,6 +554,7 @@ def payload(
     half_widths: dict[str, float],
     resamples: int,
 ) -> dict[str, Any]:
+    """The JSON written for this verdict."""
     return {
         "generated_by": "bench/repeats.py",
         "preregistration": "docs/REPEATS.md",
@@ -639,11 +563,9 @@ def payload(
         "seeds": list(SEEDS),
         "resamples": resamples,
         "score_tolerance": SCORE_TOLERANCE,
-        # 실행들이 쓰는 것과 같은 기록기라, 이 판정과 그 아래 시도들이 같은 환경을 서술한다 —
-        # 변수만으로는 정해지지 않는 ``cpu_count``까지 포함해서.
+        # Same recorder as the runs, including cpu_count.
         "threads": thread_state(),
-        # 있는 대로 이름 붙인다: 이 문서는 RESULTS.md의 판정을 다시 계산하지 않고, 거기서 폭만
-        # 읽는다.
+        # Read from RESULTS.md, not recomputed.
         "published_half_widths": half_widths,
         "repeat_datasets": [
             {
@@ -655,8 +577,7 @@ def payload(
                 "test_rows": r.test_rows,
                 "test_fingerprint": r.test_fingerprint,
                 "missing_arms": r.missing_arms,
-                # 스레드 상태를 확인할 수 없었던 반복. 팔별 블록 옆에 따로 저장하지 않고
-                # 거기서 유도하므로 둘이 어긋날 수 없다.
+                # Derived from arms, so the two cannot disagree.
                 "threads_unrecorded": [
                     name for name, arm in r.arms.items() if arm.get("threads") is None
                 ],
@@ -673,6 +594,7 @@ def payload(
 
 
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
+    """Parse the command line."""
     parser = argparse.ArgumentParser(
         description="llm 팔의 반복·시드 산포 (docs/REPEATS.md의 사전 등록 기준)"
     )
@@ -690,6 +612,7 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
 
 
 def main(argv: list[str] | None = None) -> int:
+    """Judge R and S, print them, write the JSON and bundle."""
     args = parse_args(argv)
     names = args.datasets or [d.name for d in ALL]
     unknown = [n for n in names if n not in BY_NAME]

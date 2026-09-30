@@ -1,15 +1,6 @@
 #!/usr/bin/env bash
-# The 25 runs behind docs/REPEATS.md: 15 repeats at the judged seed (R) and 10 at seeds
-# 43/44 (S). Sequential on purpose: the arms share one checkpoints.sqlite, and two writers
-# race for its lock.
-#
-# The R arms differ in nothing but --thread-id, which is the checkpoint key and reaches no
-# prompt. That is the point: their planning prompts are byte-identical, so what the deltas
-# carry is the model answering the same question twice.
-#
-# Thread counts are pinned because A2 measured a balanced_accuracy span of 0.0077 across
-# thread counts, 0.99x the half-width of one paired verdict — the same size as what this
-# experiment is trying to measure. Bedrock route because that is what every recorded arm used.
+# The 25 runs behind docs/REPEATS.md, serial (shared checkpoints.sqlite).
+# R arms differ only in --thread-id; S arms change seed.
 set -u
 
 export AUTOML_USE_BEDROCK=1
@@ -32,12 +23,11 @@ one() {
   echo "--- ${tid} exit=$? ($(date '+%H:%M:%S')) ---"
 }
 
-# Smallest first, so a broken pipeline costs the least to discover.
+# Smallest first, so breakage is cheapest to find.
 DATASETS=("spambase balanced_accuracy" "speeddating balanced_accuracy" \
           "house_sales r2" "bank-marketing balanced_accuracy" "adult balanced_accuracy")
 
-# R — three repeats of one configuration. All three before S, so that a run interrupted
-# halfway still answers the question that gates reading everything else.
+# R: three repeats of one setting, all before S.
 for rep in 1 2 3; do
   for pair in "${DATASETS[@]}"; do
     set -- $pair
@@ -45,7 +35,7 @@ for rep in 1 2 3; do
   done
 done
 
-# S — the seed lever. Repeat 1 only; the cards for these seeds are already committed.
+# S: the seed lever, repeat 1 only.
 for seed in 43 44; do
   for pair in "${DATASETS[@]}"; do
     set -- $pair

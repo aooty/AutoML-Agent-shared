@@ -1,39 +1,14 @@
-"""이 벤치마크가 측정한 단 하나의 재계획 이득이 시드 교체와 새 프롬프트를 견디는가?
+"""Check if the speeddating replan gain survives new seeds and prompt.
 
-``docs/REPLAN.md``는 이 모듈이 공격하려고 존재하는 그 한계로 끝난다: "시드 42 한 번의
-``hard_llm``입니다. speeddating의 +0.0935가 LLM 비결정성 산포보다 큰지는 이 실험이 답하지
-않습니다." 그 +0.0935 [+0.0654, +0.1219]는 이 저장소에서 재계획이 예산을 점수로 바꾸면서 구간이
-0을 벗어난 유일한 자리이고, 실행 하나에 기대고 있다.
+Roles:
 
-사전 등록은 ``docs/REPLAN-SEEDS.md``이고, 이 실행들이 존재하기 전에 커밋됐다. 기록된 팔 이후로 바뀐
-것이 둘이라, 한쪽을 무시하지 않고 둘 다 시야에 둔다:
+* Constants — dataset, seeds, arms, and the noise bars.
+* Adjudication — score every leg and pair them per seed.
+* Criterion — judge the rule fixed in docs/REPLAN-SEEDS.md.
+* Output — budget table, JSON payload, and the CLI.
 
-* **시드** — 셋(42, 43, 44). ``hard_nollm``이 이미 돌았던 그 셋이다;
-* **프롬프트** — ``MODEL_REGISTRY``가 이제 실행기가 존중하는 레버를 알리고
-  (``docs/REGISTRY-GAP.md``), 그 ``params``/``notes``가 계획 프롬프트에 렌더되므로, 그 커밋 이후의
-  실행은 기록된 팔의 프롬프트가 아니다.
-
-시드 42를 다시 돌리는 이유가 정확히 그것이다. 기록된 시드에서 새 프롬프트로 돈 실행이 없으면 모든
-Δ가 프롬프트 *와* 시드를 함께 지게 되고, 그것이 이 저장소의 원장이 경고하는
-"한 행에 레버가 둘인 전이"다.
-
-규칙 팔도 세 시드 전부에서 다시 돌리고, 비용은 들지 않는다. 모델을 부르지 않으므로
-``hard_nollm2 − hard_nollm``이 *코드* 변경을 *프롬프트* 변경에서 떼어 낸다 — 예측이 동일하게 나오면
-루프 팔의 교란이 프롬프트로 좁혀지고, 동일하지 않으면 그 자체가 발견이다.
-
-실행 시드 셋에 부트스트랩 시드가 왜 하나인가. 재추출 시드는 실행 시드가 아니다 — 행 인덱스를
-고정하는 값이고, 각 실행의 시드를 쓰면 세 항목이 아무 이득 없이 서로 다른 재추출 수열을 갖게 된다.
-``JUDGED_SEED``에 못박아 두어 시드 42 항목의 구간이 ``bench/replan.py``가 쓴 바로 그 수열에서
-계산되고, 판정 파일마다 ``seed`` 하나를 읽는 ``bench/recheck.py``가 여기 모든 쌍을 다시 계산할 수
-있게 한다.
-
-새 팔 둘은 ``--keep-models all``로 돌려야 한다. 기준이 각 실행의 iteration 1을 다시 채점하고,
-기본값은 우승하지 않은 iteration의 ``model.joblib``을 전부 지운다.
-
-팔들이 돌았던 것과 같이 ``OMP_NUM_THREADS=1``에서 돌린다. 그 값은 출력에 기록된다.
-
-사용법:
-    python -m bench.replan_seeds                  # 범위에 든 시드 셋
+Usage:
+    python -m bench.replan_seeds
     python -m bench.replan_seeds --seeds 42
 """
 
@@ -70,47 +45,42 @@ from bench.predictions import bundle_path, write_bundle
 from bench.random_search import run_dir as random_run_dir
 from bench.replan import first_iteration_winner, run_shape
 
-# 데이터셋 하나, 일부러 그렇게 했다. ``REPLAN.md``의 셋은 서로 다른 세 가지를 말했다 — adult는
-# iteration 1을 우승자로 유지했고, spambase는 다중성의 값을 치렀고, speeddating은 얻었다 — 그리고
-# 재현할 관측을 가진 것은 세 번째뿐이다. 나머지 둘로 넓히면 이것을 재현하는 것이 아니라 새 실행으로
-# 새 질문을 묻는 것이고, 데이터셋을 더하려면 그 자체의 사전 등록이 필요하다.
+# --- Role: constants ------------------------------------------------------------------
+
+# One dataset on purpose: only speeddating showed a gain.
 DATASET = "speeddating"
 
-# ``hard_nollm``이 이미 돌았던 셋이라, 무료 팔의 시드 산포가 같은 격자에서 측정된다. 명령줄에서
-# 받지 않고 여기 못박아 두어 범위가 사후에 넓어질 수 없게 한다.
+# Same seeds as hard_nollm; fixed here so scope cannot grow.
 SEEDS: tuple[int, ...] = (42, 43, 44)
 
-# 이 실험이 돌리는 팔들. 접미가 붙은 thread-id 접두사가 중요하다 — ``hardllm-speeddating-
-# seed42``는 ``REPLAN.md``의 기록된 아카이브이고, 여기 있는 어느 것도 거기 쓸 수 없다.
+# New prefixes, so the recorded archive is never written.
 ARMS: tuple[tuple[str, str], ...] = (("hard_llm2", "hardllm2"), ("hard_nollm2", "hardnollm2"))
 
-# ``REPLAN.md``의 기록된 팔들. 다리를 더해 다시 채점한다. 규칙 팔은 세 시드 전부에 있고 루프 팔은
-# 42에만 있다 — 프롬프트 비교가 시드 42의 관찰인 이유다.
+# Recorded REPLAN.md arms; loop arm ran on seed 42 only.
 RECORDED_RULES: tuple[str, str] = ("hard_nollm", "hardnollm")
 RECORDED_LOOP: tuple[str, str] = ("hard_llm", "hardllm")
 RECORDED_LOOP_SEEDS: tuple[int, ...] = (42,)
 
-# 기준이 가장 작은 이김에 적용하는 크기 바. ``REPEATS.md``에서 왔다 — ``llm`` 팔의 같은 설정 반복의
-# 반폭 중앙값이다. 이 벤치마크가 이미 측정한 잡음의 폭보다 작은 Δ는, 자기 CI가 무엇이라 하든
-# +0.0935의 재현이 아니다.
+# Smallest win must beat this: median repeat half-width, REPEATS.md.
 NOISE_FLOOR = 0.0122
 
-# 같은 세 시드에 걸친 규칙 팔의 test 산포. ``REPLAN.md``에 발표된 값이다. 그 문서의 사전 등록이
-# 요구하는 대로 양의 판정 옆에 함께 인용한다.
+# Rules arm test spread over the seeds, from REPLAN.md.
 RULES_SEED_SPREAD = 0.0017
 
-# 재현 대상인 관측. ``REPLAN.md``의 쌍 표에서 왔다. 판정 파일이 무엇과 견주어지고 있는지를 함께
-# 지도록 여기 적어 둔다.
+# The recorded gain being reproduced, from REPLAN.md.
 RECORDED_PRIMARY = 0.0935
 
-# 모듈 docstring을 보라 — 부트스트랩 시드는 실행 시드가 아니다.
+# One bootstrap seed for all runs, so recheck matches.
 RESAMPLE_SEED = JUDGED_SEED
 
 PRIMARY = ("hard_llm2", "hard_llm2@it1")
 
 
+# --- Role: adjudication ---------------------------------------------------------------
+
+
 def _arm_legs(seed: int, metric: str, out: DatasetVerdict) -> tuple[dict[str, Winner], dict[str, Any]]:
-    """새 팔들의 우승자와 그 iteration 1 다리들, 그리고 각 실행의 모양."""
+    """_arm_legs | Adjudication: new arms' winners, iteration 1 legs, and run shapes."""
     winners: dict[str, Winner] = {}
     shapes: dict[str, dict[str, Any]] = {}
     for arm, prefix in ARMS:
@@ -126,7 +96,7 @@ def _arm_legs(seed: int, metric: str, out: DatasetVerdict) -> tuple[dict[str, Wi
 
 
 def _recorded_legs(seed: int, metric: str, out: DatasetVerdict) -> tuple[dict[str, Winner], dict[str, Any]]:
-    """이 시드에서의 ``REPLAN.md`` 자신의 팔들. 전이 관측 둘을 위한 다리로 쓴다."""
+    """_recorded_legs | Adjudication: the recorded REPLAN.md arms for this seed."""
     winners: dict[str, Winner] = {}
     shapes: dict[str, dict[str, Any]] = {}
     wanted = [RECORDED_RULES]
@@ -144,12 +114,11 @@ def _recorded_legs(seed: int, metric: str, out: DatasetVerdict) -> tuple[dict[st
 
 
 def _pairs_to_take(scored: dict[str, Scored], fits: int) -> list[tuple[str, str, str]]:
-    """이 시드가 받칠 수 있는 비교들. ``REPLAN-SEEDS.md``가 나열한 순서대로."""
+    """_pairs_to_take | Adjudication: pairs this seed supports, in the registered order."""
     pairs: list[tuple[str, str, str]] = [(*PRIMARY, "primary")]
     matched = f"random@k={fits}"
     if matched in scored and "random@k=1" in scored:
-        # 같은 추가 예산이 아무것도 읽지 않는 검색에게 사 주는 것. 양의 주 판정 옆에 반드시
-        # 있어야 하므로, 요청받을 때가 아니라 무조건 계산한다.
+        # Always computed: must sit beside any positive primary.
         pairs.append((matched, "random@k=1", "blind_gain"))
     if matched in scored:
         pairs.append(("hard_llm2", matched, "matched_level"))
@@ -157,10 +126,10 @@ def _pairs_to_take(scored: dict[str, Scored], fits: int) -> list[tuple[str, str,
         pairs.append(("hard_llm2", "hard_nollm2", "vs_rules"))
         pairs.append(("hard_nollm2", "hard_nollm2@it1", "rules_gain"))
         if "hard_nollm" in scored:
-            # 규칙 팔은 모델을 부르지 않으므로, 이 쌍은 코드가 움직였을 때만 움직인다.
+            # Rules arm calls no model, so only code moves this.
             pairs.append(("hard_nollm2", "hard_nollm", "code_shift"))
     if "hard_llm" in scored:
-        # 한 행에 프롬프트 *와* 코드가 함께 있다 — 이것이 기준이 아니라 관찰인 이유다.
+        # Prompt and code both changed, so only a note.
         pairs.append(("hard_llm2", "hard_llm", "prompt_shift"))
     return pairs
 
@@ -168,11 +137,12 @@ def _pairs_to_take(scored: dict[str, Scored], fits: int) -> list[tuple[str, str,
 def _adjudicate(
     seed: int, resamples: int, out: DatasetVerdict, legs: dict[str, Scored] | None = None
 ) -> None:
+    """_adjudicate | Adjudication: score legs, check same rows, and fill ``out``."""
     dataset = BY_NAME[DATASET]
     metric = dataset.metric
     winners, shapes = _arm_legs(seed, metric, out)
     if "hard_llm2" not in winners:
-        # 데이터에 대한 거부가 아니다. 이 기준이 다루는 실행이 아직 일어나지 않았다는 뜻이다.
+        # Not a data problem: the run has not happened yet.
         raise Refusal(
             f"{DATASET} 시드 {seed}: hard_llm2 실행이 없습니다 — "
             "bench/scripts/run_replan_seeds.sh를 먼저 돌려야 판정할 수 있습니다"
@@ -194,8 +164,7 @@ def _adjudicate(
     scored: dict[str, Scored] = {}
     for name, winner in winners.items():
         result = reproduce(winner, metric)
-        # iteration 1 다리들은 test 점수가 기록된 적이 없어 nan이다 — holdout은 루프가 끝난 뒤
-        # 우승자에 대해 한 번만 돈다. 이유는 ``bench/replan.py``의 ``first_iteration_winner``에 있다.
+        # Iteration 1 legs never had a test score (nan).
         if not math.isnan(winner.recorded_test):
             gap = abs(result.test_score - winner.recorded_test)
             if gap > SCORE_TOLERANCE:
@@ -238,14 +207,13 @@ def _adjudicate(
             paired_delta(scored[a_name], scored[b_name], metric, resamples, RESAMPLE_SEED, kind)
         )
 
-    # 마지막에 둔다. 중간에 거부되면 다리가 남지 않는다 — 쌍이 비워진 항목의 다리를 담은 번들은,
-    # 이 판정이 내놓지 않는 수를 ``recheck``에게 내미는 셈이 된다.
+    # Last, so a refusal leaves no legs in the bundle.
     if legs is not None:
         legs.update(scored)
 
 
 def adjudicate(seed: int, resamples: int, legs: dict[str, Scored] | None = None) -> DatasetVerdict:
-    """시드 하나. 거부는 ``paired.py``처럼 쌍을 비운다."""
+    """Judge one seed; a refusal empties the pairs."""
     dataset = BY_NAME[DATASET]
     out = DatasetVerdict(
         dataset=f"{DATASET}-seed{seed}", metric=dataset.metric, task=dataset.task
@@ -259,12 +227,11 @@ def adjudicate(seed: int, resamples: int, legs: dict[str, Scored] | None = None)
     return out
 
 
-# --------------------------------------------------------------------------- #
-# 사전 등록된 기준
-# --------------------------------------------------------------------------- #
+# --- Role: criterion ------------------------------------------------------------------
 
 
 def _primary(result: DatasetVerdict) -> Delta | None:
+    """_primary | Criterion: the primary pair of one seed, or None."""
     a, b = PRIMARY
     return next(
         (p for p in result.pairs if p.a == a and p.b == b and p.kind == "primary"), None
@@ -272,29 +239,9 @@ def _primary(result: DatasetVerdict) -> Delta | None:
 
 
 def criterion(results: dict[int, DatasetVerdict]) -> dict[str, Any]:
-    """이 실행들 이전에 ``docs/REPLAN-SEEDS.md``에 커밋된 기준을 판정한다.
+    """Judge the rule committed in docs/REPLAN-SEEDS.md before these runs.
 
-    > 판정 대상인 시드 **전부**에서 ``hard_llm2``의 우승자가 자기 실행의 iteration 1을 짝지은
-    > Δ의 95% CI가 0을 걸치지 않게 이기고, 그 Δ들의 **최솟값이 0.0122를 넘는다.**
-
-    과반이 아니라 만장일치다. n=3에서 셋 중 둘 규칙은 동전과 구별하기 어렵고, 시험 중인 주장은
-    측정된 이득 하나가 재현된다는 것이지 때때로 재현된다는 것이 아니다.
-
-    크기 바는 CI가 못 하는 일을 한다. 0을 벗어난 짝 구간은 두 다리가 이 행들에서 다르다고 말할 뿐,
-    그 차이가 이 벤치마크가 이 팔에서 이미 측정한 실행 간 잡음보다 크다고는 말하지 않는다
-    (``REPEATS.md``: 반폭 중앙값 0.0122). 아주 작은 양의 Δ 셋도 "CI 셋 다 0 위"는 만족시키지만
-    +0.0935를 재현하지는 않는다.
-
-    우선순위는 미리 못박아 두어 어떤 결과도 자기에게 유리한 읽기를 고를 수 없게 한다: 시드가 없거나
-    거부되면 부분 판정. 루프가 실제로 돈 시드가 둘보다 적으면 "판정 불가"(측정된 무효가 아니라 깨진
-    전제). CI가 0 아래인 시드가 있으면 부호가 시드에 뒤집힌다고 적는다. 그다음이 만장일치와 크기.
-    그 밖은 전부 "구분되지 않음".
-
-    루프가 재계획을 아예 하지 않은 시드(``critic_runs == 0``)는 이기지 못한 것으로 세지 않고
-    분모에서 뺀다 — 돌지 않은 루프에 대해 재계획에 값을 물리면 깨진 조건이 증거로 읽힐 수 있다. 바는
-    세 시드 전부에 대해 미리 계산해 두었고 셋 다 기록된 규칙 팔의 최고보다 훨씬 위이므로 이 경로는
-    예상되지 않는다. 여기 있는 이유는 예상이 보장은 아니기 때문이다.
-    """
+    Every looped seed must win, and the smallest win must beat NOISE_FLOOR."""
     judged: list[str] = []
     wins: list[str] = []
     losses: list[str] = []
@@ -315,7 +262,7 @@ def criterion(results: dict[int, DatasetVerdict]) -> dict[str, Any]:
             continue
         judged.append(label)
         if pair.identical_predictions:
-            # 우승자가 iteration 1이다. 예산은 썼고 이긴 것은 없고 읽을 구간도 없다.
+            # Winner is iteration 1: budget spent, nothing won.
             ties.append(label)
             continue
         deltas[label] = pair.delta
@@ -396,12 +343,11 @@ def criterion(results: dict[int, DatasetVerdict]) -> dict[str, Any]:
     }
 
 
-def budget_used(results: dict[int, DatasetVerdict]) -> list[dict[str, Any]]:
-    """시드마다 각 팔이 쓴 것 — 학습 횟수, 종료 이유, Critic 실행 횟수, 마주한 바.
+# --- Role: output ---------------------------------------------------------------------
 
-    정체 가드가 미달인 바에서도 ``max_iterations`` 전에 실행을 끝낼 수 있어서 처치의 실제 크기가
-    시드마다 다르고, ``critic_runs``가 한 시드를 기준의 범위에 넣는 값이다.
-    """
+
+def budget_used(results: dict[int, DatasetVerdict]) -> list[dict[str, Any]]:
+    """Per seed, what each arm spent: fits, stop reason, critic runs, bar."""
     rows: list[dict[str, Any]] = []
     for seed in SEEDS:
         result = results.get(seed)
@@ -429,8 +375,7 @@ def payload(results: dict[int, DatasetVerdict], resamples: int) -> dict[str, Any
         "dataset": DATASET,
         "margin": 0.5,
         "run_seeds": [seed for seed in SEEDS if seed in results],
-        # 부트스트랩 시드. 파일 전체에 하나다 — ``bench/recheck.py``가 판정마다 ``seed`` 하나를
-        # 읽고 그것으로 모든 쌍을 다시 계산한다. 모듈 docstring을 보라.
+        # One bootstrap seed per file; recheck reads only this.
         "seed": RESAMPLE_SEED,
         "resamples": resamples,
         "score_tolerance": SCORE_TOLERANCE,
@@ -509,10 +454,7 @@ def main(argv: list[str] | None = None) -> int:
 
     out_path = args.out or OUT_DIR / f"replan-seeds-{DATASET}.json"
     if not legs:
-        # 채점된 것이 없으므로 내놓을 것도, 그것을 담을 번들도 없다. 여기서 판정 파일을 쓰면
-        # ``python -m bench.recheck``가 인수 없이 읽는 디렉터리에 앉아 그것을 실패시킨다 — 이
-        # 저장소의 주장은 발표된 모든 Δ가 다시 계산된다는 것이고, 아무것도 발표하지 않는 파일은
-        # 실패한 Δ가 아니라 아직 일어나지 않은 실행이다.
+        # Nothing scored; an empty verdict file would fail recheck.
         print(
             f"판정할 다리가 없습니다 — {out_path.as_posix()}를 쓰지 않았습니다. "
             "bench/scripts/run_replan_seeds.sh를 먼저 돌리세요",

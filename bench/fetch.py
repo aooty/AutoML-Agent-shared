@@ -1,18 +1,15 @@
-"""벤치마크의 CSV를 OpenML에서 다시 만든다. 무엇보다 먼저 한 번 돌린다.
+"""Rebuild the benchmark CSVs from OpenML. Run this first.
 
-    python -m bench.fetch            # 다섯 개 전부
-    python -m bench.fetch adult      # 이름으로 하나
+Roles:
 
-``bench/data/<name>.csv``에 정답 열을 OpenML 이름 그대로 포함해 쓴다 —
-``run --data ... --target ...``가 기대하는 모양이다. 행은 커밋하지 않는다(``*.csv``는 저장소
-전체에서 무시된다). 대신 이 스크립트와 ``datasets.py``의 ``data_id``가 그 행들의 사본 역할을
-한다.
+* Fetch — download one dataset and write its CSV.
+* Describe — print shape, missing share, and class balance.
+* CLI — pick datasets by name and run.
 
-데이터셋마다 출력하는 것이 ``RESULTS.md``가 데이터셋의 신분으로 인용하는 값이다 — 행, 열,
-결측 비율, 클래스 균형. CSV의 체크섬은 일부러 쓰지 않는다: 바이트는 그 파일을 쓴 pandas
-버전에 달려 있어서 행이 같은 독자에게도 해시가 어긋나고, 이 벤치마크는 그 경우와 행이 실제로
-다른 경우를 구분할 방법이 없다. 중요한 실패는 모양과 균형이 어긋나는 쪽이고, 그건 사람이 읽을
-수 있다.
+Usage:
+
+    python -m bench.fetch
+    python -m bench.fetch adult
 """
 
 from __future__ import annotations
@@ -22,13 +19,14 @@ import warnings
 
 from bench.datasets import ALL, BY_NAME, DATA_DIR, Dataset
 
+# --- Role: fetch ----------------------------------------------------------------------
+
 
 def fetch(dataset: Dataset) -> int:
     from sklearn.datasets import fetch_openml
 
     with warnings.catch_warnings():
-        # OpenML 자체의 메타데이터 경고("multiple active versions")는 ``data_id``를 못박아
-        # 둔 상황에서 남는 의문이 없다.
+        # data_id is pinned, so version warnings do not matter.
         warnings.simplefilter("ignore")
         bunch = fetch_openml(data_id=dataset.data_id, as_frame=True, parser="auto")
 
@@ -46,14 +44,13 @@ def fetch(dataset: Dataset) -> int:
     return 0
 
 
-def describe(dataset: Dataset) -> None:
-    """CSV를 설명한다. 거기에 써 넣은 frame이 아니다.
+# --- Role: describe ------------------------------------------------------------------
 
-    둘은 같은 표가 아니다. OpenML은 ``category`` dtype으로 넘겨주는데, CSV를 한 번 왕복하면
-    모든 열을 다시 추론하므로 정수 범주 코드 열이 ``int64``로 돌아와 레벨이 아니라 수치로
-    estimator에 닿는다. ``house_sales``가 정확히 이렇다. 팔 세 개가 소비하는 것은 파일이므로
-    설명하는 대상도 파일이다 — 다시 읽는 데 1초 들고, "노트는 범주형이라는데 카드는 수치라고
-    한다" 부류의 혼란이 전부 사라진다.
+
+def describe(dataset: Dataset) -> None:
+    """Describe the CSV as re-read, not the fetched frame.
+
+    A CSV round trip can turn category codes into numbers.
     """
     import pandas as pd
 
@@ -67,8 +64,7 @@ def describe(dataset: Dataset) -> None:
     features = frame.drop(columns=[dataset.target])
     numeric = [name for name in features.columns if is_numeric_column(features[name])]
     text = [name for name in features.columns if is_text_like_column(features[name])]
-    # 인코더 자신의 상한. 어느 팔이든 돌기 전에 버려질 열이 보이도록 여기서 적용한다 —
-    # 먼저 돈 팔의 카드에만 나타나면 늦다.
+    # Show columns the encoder will drop, before any arm runs.
     too_wide = {
         str(name): int(features[name].dropna().nunique())
         for name in text
@@ -91,6 +87,9 @@ def describe(dataset: Dataset) -> None:
     else:
         shares = frame[dataset.target].value_counts(normalize=True, dropna=False)
         print(f"{'':16s} 클래스 {dict(shares.round(4))}")
+
+
+# --- Role: CLI -----------------------------------------------------------------------
 
 
 def main(argv: list[str]) -> int:

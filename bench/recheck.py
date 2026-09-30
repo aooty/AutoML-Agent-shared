@@ -1,38 +1,15 @@
-"""커밋된 짝 판정을 예측 번들에서 다시 계산하고, 어긋나면 요란하게 알린다.
+"""Recompute committed paired verdicts from prediction bundles; fail loudly on mismatch.
 
-실험들이 스스로 밝힌 구멍 때문에 있다. ``docs/REPLAN.md``와 ``docs/SPG.md``는 델타와 구간을 공개하는데
-그 입력인 학습된 모델은 저장소에 없고 있었던 적도 없다. 사전 등록된 기준, 바, 정지 이유, Critic 횟수는
-누구나 다시 읽을 수 있었지만 수 하나도 다시 유도할 수 없었다.
+Roles:
 
-그래서 판정기들은 이제 자기가 채점한 배열을 쓰고(``bench/predictions.py``) 이 모듈이 거기서 판정 전체를
-다시 계산한다: leg마다의 test 점수는 같은 :func:`bench.paired.score` thunk로, 짝마다의 델타·구간·
-``P(delta > 0)``은 판정 파일이 기록한 시드와 재추출 횟수로 같은 :func:`bench.paired.paired_delta`를
-통해. 어디서든 어긋나면 경고가 아니라 오류다.
+* Verdict shapes — tolerances, known entry keys, and error types.
+* Recompute — redo leg scores and pair deltas per dataset.
+* CLI — check one file or every verdict file.
 
-통과가 뜻하는 것은 정확히 이것이다: **저장된 예측과 공개된 판정 사이의 산술이 맞다.** 그 예측이 config가
-가리키는 모델에서 나왔다는 것은 보여주지 않는다 — 그건 여전히 실행 보관본에 달려 있다. 좁은 주장을
-이름 붙이는 것이 요점이다. 검사한 것보다 많은 것을 암시하는 검사기는 없는 것보다 나쁘다.
-
-판정기마다 판정 파일 옆에 번들을 쓰므로 어느 것이든 읽는다 — 그리고 인자가 없으면 전부 읽는다. 벤치마크
-문서들이 하는 주장이 그것이기 때문이다:
-
-    python -m bench.recheck                                    # bench/runs/paired/의 판정 전부
-    python -m bench.recheck bench/runs/paired/seed42.json      # RESULTS.md
-    python -m bench.recheck bench/runs/paired/spg-seed42.json  # SPG.md
-
-인자 없는 형태가 파일 하나가 아니라 디렉터리 전체를 기본값으로 삼는 것은 의도다. 파일 하나가 기본이면
-"``python -m bench.recheck``가 통과한다"가 그 파일에 대한 문장이 되는데, 문서들은 파일 하나를 주장하지
-않는다 — 자기가 공개하는 델타 전부를 주장한다. 그래서 기본값은 집합이고, 새 판정 파일은 존재하기만 하면
-거기 들어오고, 번들 없는 판정은 집합 밖에 앉는 대신 기본 호출을 실패시킨다. 판정기가 번들을 낼 줄 알기
-전에 쓰인 판정에는 번들이 없고, 그건 통과가 아니라 exit 2다 — 그 판정기를 다시 돌리면 생긴다.
-
-**여기서 공허하게 통과할 수 있는 길은 없다.** 대조할 수가 하나도 없이 끝나는 경로는 전부 exit 0이 아니라
-exit 2다: 최상위 모양이 :data:`ENTRY_KEYS`에 없는 파일, 판정이 거부하지 않았는데 번들에 leg가 없는
-데이터셋, 이 모듈이 읽지 않는 키 아래에 델타가 있는 항목, 데이터셋이 전부 건너뛰어진 실행. 가정이 아니다 —
-이전 판이 그렇게 했다. ``datasets[].pairs``만 읽었으므로 ``rowbudget-seed42.json``(델타 다섯 개가
-``datasets[].delta`` 아래)은 건너뛴 다섯 행으로 처리되고 ``repeats-seed42.json``(열다섯 개가
-``repeat_datasets[].pairs`` 아래)은 0으로 합산됐고, 둘 다 일치한다고 출력했다. 읽지도 않은 수에 대해
-일치를 보고하는 검사기는 검사기가 없는 것보다 나쁘다 — 없던 시절은 적어도 아니라고 주장하지는 않았다.
+Usage:
+    python -m bench.recheck
+    python -m bench.recheck bench/runs/paired/seed42.json
+    python -m bench.recheck bench/runs/paired/spg-seed42.json
 """
 
 from __future__ import annotations
@@ -49,34 +26,27 @@ import numpy as np
 from bench.paired import OUT_DIR, SCORE_TOLERANCE, Scored, paired_delta, score
 from bench.predictions import bundle_path, read_bundle
 
-# 같은 코드, 같은 배열, 같은 시드면 마지막 비트까지 맞아야 한다. 문턱은 BLAS나 numpy 빌드가 달라도
-# 살아남을 만큼 느슨하게 두고, 실제로 본 가장 큰 차이는 어느 쪽이든 출력한다 — "허용 오차 안"만
-# 말하는 검사기는 1e-16과 9e-7의 차이를 숨기고, 그 둘은 같은 소식이 아니다.
+# --- Role: verdict shapes -------------------------------------------------------------
+
+# Loose enough for other BLAS builds; worst diff is printed.
 DELTA_TOLERANCE = 1e-9
 
 FIELDS = ("delta", "ci_low", "ci_high", "p_better")
 
-# 판정기들이 델타를 한 키 아래에만 공개하지는 않는다. 가장 흔한 모양만 아는 검사기는 못 읽는 파일에
-# 대해 일치를 보고하게 된다. 그래서 모양을 나열하고, 목록 밖은 건너뛰지 않고 거부한다:
-#
-#   datasets[].pairs[]         seed4N, replan, spg  — 데이터셋마다 델타 목록
-#   datasets[].delta           rowbudget            — 데이터셋마다 델타 정확히 하나
-#   repeat_datasets[].pairs[]  repeats              — 자기 키 아래의 두 번째 데이터셋 목록
-#
-# 판정기를 더하면 그 키를 여기 더해야 하고, 잊으면 exit 2다.
+# Known top-level keys; any other shape exits 2, never passes.
 ENTRY_KEYS = ("datasets", "repeat_datasets")
 
 
 class Mismatch(Exception):
-    """다시 계산한 수가 커밋된 것과 맞지 않는다."""
+    """A recomputed number does not match the committed one."""
 
 
 class UnknownVerdictShape(Exception):
-    """이 모듈이 읽을 수 없는, 그래서 통과시키지 않을 판정 파일."""
+    """A verdict file this module cannot read, so it never passes."""
 
 
 def published_deltas(entry: dict[str, Any]) -> list[dict[str, Any]]:
-    """데이터셋 항목 하나가 공개하는 델타 전부. 어느 키 아래에 있든."""
+    """All deltas one dataset entry publishes, under ``pairs`` or ``delta``."""
     out = [pair for pair in entry.get("pairs") or [] if isinstance(pair, dict)]
     single = entry.get("delta")
     if isinstance(single, dict):
@@ -85,11 +55,7 @@ def published_deltas(entry: dict[str, Any]) -> list[dict[str, Any]]:
 
 
 def dataset_entries(verdict: dict[str, Any]) -> list[dict[str, Any]]:
-    """판정 파일의 데이터셋 항목 전부.
-
-    :data:`ENTRY_KEYS` 중 아무것도 없으면 :class:`UnknownVerdictShape`를 낸다. 빈 목록과 이 모듈이
-    모르는 모양은 루프 안에서 똑같이 보이고, 둘 중 하나만 통과할 수 있다.
-    """
+    """All dataset entries of a verdict file; unknown shapes raise UnknownVerdictShape."""
     present = [key for key in ENTRY_KEYS if isinstance(verdict.get(key), list)]
     if not present:
         raise UnknownVerdictShape(
@@ -101,12 +67,11 @@ def dataset_entries(verdict: dict[str, Any]) -> list[dict[str, Any]]:
     return [entry for key in present for entry in verdict[key] if isinstance(entry, dict)]
 
 
-def _agrees(recomputed: float, recorded: Any, tolerance: float) -> tuple[bool, float]:
-    """두 수가 맞는지. nan은 자기 자신에게만 맞는 값으로 다룬다.
+# --- Role: recompute ------------------------------------------------------------------
 
-    ``identical_predictions``인 짝은 설계상 nan 경계를 가지므로 nan 대 nan은 통과, nan 대 수는
-    보이는 그대로 실패다.
-    """
+
+def _agrees(recomputed: float, recorded: Any, tolerance: float) -> tuple[bool, float]:
+    """_agrees | Recompute: match within tolerance; nan matches only nan."""
     if not isinstance(recorded, (int, float)) or isinstance(recorded, bool):
         return False, float("nan")
     a, b = float(recomputed), float(recorded)
@@ -119,7 +84,7 @@ def _agrees(recomputed: float, recorded: Any, tolerance: float) -> tuple[bool, f
 def check_dataset(
     entry: dict[str, Any], legs: dict[str, Scored], seed: int, resamples: int
 ) -> dict[str, Any]:
-    """데이터셋 하나의 leg와 짝을 다시 계산한다. 어긋나면 :class:`Mismatch`."""
+    """Recompute one dataset's legs and pairs; raise Mismatch on any gap."""
     dataset = entry["dataset"]
     metric = entry["metric"]
     worst = 0.0
@@ -181,12 +146,9 @@ def check_dataset(
 
 
 def recheck(verdict_path: Path, bundle: Path | None = None) -> tuple[list[dict[str, Any]], list[str]]:
-    """판정 파일의 모든 데이터셋을 다시 계산한다. ``(rows, problems)``를 돌려준다.
+    """Recompute every dataset of a verdict file; return ``(rows, problems)``.
 
-    이 모듈이 읽을 수 없는 파일에는 :class:`UnknownVerdictShape`를 올린다. 건너뛴 행이 될 수 있는
-    것은 판정 자신이 ``refused``라고 적은 데이터셋뿐이고, 비교를 내지 못하는 그 밖의 모든 것은
-    문제다.
-    """
+    Only datasets marked ``refused`` may be skipped; all else is a problem."""
     verdict = json.loads(verdict_path.read_text(encoding="utf-8"))
     legs_by_dataset, _meta = read_bundle(bundle or bundle_path(verdict_path))
     seed = int(verdict["seed"])
@@ -198,10 +160,7 @@ def recheck(verdict_path: Path, bundle: Path | None = None) -> tuple[list[dict[s
         dataset = entry["dataset"]
         published = published_deltas(entry)
         legs = legs_by_dataset.get(dataset)
-        # 거부는 빈 ``pairs`` 목록이 아니라 ``verdict``에서 읽는다. 판정기가 델타를 다른 키 아래
-        # 공개한 순간 그 둘이 갈라졌다: ``rowbudget``의 ``verdict: ok`` 항목 다섯은 ``pairs``가
-        # 없어서 "건너뜀 (판정=ok)"으로 처리됐다 — 이 코드가 예상한 적 없는 건너뛰기 이유가
-        # 일치인 것처럼 출력됐다.
+        # Read refusal from ``verdict``, not from empty ``pairs``.
         if entry.get("verdict") == "refused":
             if published:
                 problems.append(
@@ -220,9 +179,7 @@ def recheck(verdict_path: Path, bundle: Path | None = None) -> tuple[list[dict[s
                 )
             continue
         if not legs:
-            # 판정이 이 데이터셋을 거부하지 않았으므로 자기가 공개한 것을 책임지고, 번들이 그걸
-            # 설명해야 한다. 델타가 0개라고 무해해지지 않는다 — 수가 이 모듈이 읽지 않는 어딘가에
-            # 있다는 뜻이다.
+            # Not refused, so the bundle must hold its legs.
             problems.append(
                 f"{dataset}: 판정이 {entry.get('verdict')!r}인데 번들에 예측이 없습니다 "
                 f"(공개된 Δ {len(published)}개)"
@@ -243,13 +200,11 @@ def recheck(verdict_path: Path, bundle: Path | None = None) -> tuple[list[dict[s
     return rows, problems
 
 
-def all_verdicts() -> list[Path]:
-    """:data:`bench.paired.OUT_DIR`의 판정 파일 전부, 정렬해서.
+# --- Role: CLI ------------------------------------------------------------------------
 
-    그 디렉터리의 모든 ``*.json``이 판정이다 — 번들은 옆에 ``.npz``로 앉는다. 그래서 새 판정기의 출력은
-    존재하기만 하면 기본 호출에 들어오고, 그게 요점이다: 손으로 유지하는 목록은 누군가 추가를 잊는
-    목록이고, 그 누락은 통과처럼 보인다.
-    """
+
+def all_verdicts() -> list[Path]:
+    """Every verdict ``*.json`` in OUT_DIR, sorted; no hand-kept list."""
     return sorted(OUT_DIR.glob("*.json"))
 
 
@@ -269,11 +224,9 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
 
 
 def check_one(verdict: Path, bundle: Path | None = None) -> tuple[int, int, int]:
-    """판정 파일 하나를 다시 대조하고 그 행들을 출력한다.
+    """Recheck one verdict file and print its rows.
 
-    ``(exit_code, legs_checked, pairs_checked)``를 돌려준다. 코드가 0이 아니면 두 개수는 0이므로,
-    디렉터리 전체에서 합산하는 호출자가 실패한 파일을 실수로 계산에 넣을 수 없다.
-    """
+    Return ``(exit_code, legs, pairs)``; counts are 0 on failure."""
     if not verdict.exists():
         print(f"판정 파일이 없습니다: {verdict}", file=sys.stderr)
         return 2, 0, 0
@@ -308,9 +261,7 @@ def check_one(verdict: Path, bundle: Path | None = None) -> tuple[int, int, int]
     total_pairs = sum(int(r["pairs"]) for r in rows)
     total_legs = sum(int(r["legs"]) for r in rows)
     if not total_pairs:
-        # 어긋난 것이 없음과 대조한 것이 없음은 같은 결과가 아니고, 두 번째는 통과가 아니다.
-        # 공허한 경로 중 마지막이고, 파일의 데이터셋이 모두 정당하게 거부됐을 때 닿는 유일한
-        # 경로다.
+        # Nothing compared is not a pass: exit 2.
         print(
             f"대조한 Δ가 0개입니다 (데이터셋 {len(rows)}개가 모두 건너뛰어졌습니다). "
             "통과가 아니라 확인 불가입니다 — 이 판정 파일은 검산할 수를 공개하지 않았습니다.",
@@ -341,8 +292,7 @@ def main(argv: list[str] | None = None) -> int:
         return 2
     verdicts = all_verdicts()
     if not verdicts:
-        # 빈 디렉터리는 아무것도 대조하지 않고, 대조한 것이 없으면 통과가 아니다. 데이터셋이
-        # 전부 건너뛰어진 파일과 같은 규칙이다.
+        # Empty directory compares nothing, so it is not a pass.
         print(
             f"{OUT_DIR.as_posix()}/에 판정 파일이 없습니다. 통과가 아니라 확인 불가입니다.",
             file=sys.stderr,

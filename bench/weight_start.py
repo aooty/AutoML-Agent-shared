@@ -1,35 +1,17 @@
-"""고친 가중치 사다리가 루프가 실제로 돌 때 값을 내는가, 그리고 헤드라인이 움직이는가?
+"""Does the fixed weight ladder pay off in the loop, and does the headline move?
 
-``docs/WEIGHT-LEVER.md``는 기록된 규칙 우승자 자신의 config에 카드 비율을 주입해서,
-``docs/HARD-BAR.md``가 LLM 팔에 청구했던 Δ의 67%·84%·114%를 회수했다. 그 문서는 자기가 못 한 일을
-스스로 적었다: 루프를 돌리지 않았으므로 "그 격차가 가중치인가"를 쟀고 "제안한 코드 변경이 무엇을
-낼까"를 재지 않았다. 커밋 ``d37217e``이 그 변경을 했고 — Critic의 첫 단이 ``WEIGHT_STEP``이 아니라
-카드에서 온다 — 이 모듈이 그 뒤 열두 실행을 판정한다.
+Roles:
 
-판정 둘. 어느 쪽도 다른 쪽을 구제할 수 없게 떼어 놓는다:
+* Arms and constants — arm names, pinned predictions, published deltas.
+* Gate checks — first weight rung, verdict source, and bar.
+* Scoring — score one (dataset, seed) cell.
+* Verdict A — does the new weight prescription pay off.
+* Verdict B — re-judge the headline with HARD-BAR's rule.
+* Output — build the JSON payload and print the report.
 
-**A. 처방** — ``bar65nollmratio − bar65nollm``. ``WEIGHT-LEVER.md``가 쓴 것과 같은 조건 셋
-(speeddating에서 회수, spambase에서 동일성)에 그 문서에는 필요 없던 하나를 더한다: 어느 칸도 0 아래로
-나와서는 안 된다. 그 하나가 새로운 이유는 이번이 코드 변경이고 루프 전체가 다르게 돌기 때문이다.
-기록된 config 하나에 수를 주입하는 방식으로는 다른 칸을 해칠 수 없었다.
+Usage:
 
-**B. 헤드라인 다시 묻기** — ``HARD-BAR.md``의 기준을 *글자 그대로* 써서
-``bar65llm − bar65nollmratio``를 본다. 글자 그대로를 약속이 아니라 강제한다:
-:func:`as_hard_bar_board`가 ``headline`` 짝을 그 모듈의 ``primary``로 다시 이름 붙이고
-:func:`headline_verdict`가 그 판을 ``bench.hard_bar.criterion``에 넘긴다. 그 축약의 두 번째 사본은
-결국 어긋나고, 어긋난 사본이 듣기 좋은 쪽이 된다.
-
-유료 팔은 다시 돌리지 않는다. ``critic()``은 LLM이 꺼져 있거나 그 답이 검증에 실패할 때만
-``heuristic_verdict``에 닿고, 기록된 ``bar65llm`` 실행의 Critic verdict 37개 전부가
-``source == "llm"``이다 — :func:`source_check`가 아카이브에서 그걸 다시 확인하고, 사전 등록이 어긋남을
-정지 조건으로 만든다. 그래서 이 실험은 토큰이 0이다.
-
-사전 등록은 ``docs/WEIGHT-START.md``이고, 이 실행이 하나도 생기기 전에 커밋됐다.
-
-팔들이 돈 것처럼 ``OMP_NUM_THREADS=1``로 돌린다. 값은 출력에 기록된다.
-
-사용법:
-    python -m bench.weight_start                    # 데이터셋 넷을 시드 셋에서
+    python -m bench.weight_start
     python -m bench.weight_start adult --seeds 42
 """
 
@@ -68,30 +50,18 @@ from bench.predictions import bundle_path, write_bundle
 from bench.random_search import run_dir as random_run_dir
 from bench.replan import first_iteration_winner, run_shape
 
-# 이 실험이 돌리는 팔과 재사용하는 팔 둘. 아카이브 접두사가 실행이 마주한 조건 둘을 다 적는다 —
-# 바와 코드. ``bar65nollm-adult-seed42``는 ``HARD-BAR.md``의 기록된 아카이브이고 여기서 아무것도 그
-# 안에 써서는 안 되기 때문이다.
+# --- Role: arms and constants -----------------------------------------------------------
+
+# New prefix, so recorded archives are never written to.
 FIXED = "bar65nollmratio"
 RULES = "bar65nollm"
 LOOP = "bar65llm"
 
-# :data:`FIXED`와 :data:`RULES`를 가르는 커밋 하나. 판정 파일이 레버의 이름을 대고 독자가 거기에
-# ``git show``를 돌릴 수 있도록 못박는다.
+# The one commit that separates FIXED from RULES.
 LEVER_COMMIT = "d37217e"
 
-# 새 코드의 첫 ``class_weight`` 처방이 데이터셋마다 무엇이어야 하고 몇 번째 반복이어야 하는가.
-# ``None``은 spambase다. 기록된 세 실행이 가중치를 아예 처방하지 않았다 — 관문 뒤 분기를 한 번도 타지
-# 않았으므로 첫 단을 옮겨도 거기 닿지 못한다.
-#
-# 예측하는 것은 첫 단뿐이다. 그 뒤로는 궤적이 갈린다: 가중치 3.179는 다음 시도의 진단을 바꾸고 Critic이
-# 아예 다른 분기를 탈 수 있다. 기록된 사다리(adult 1→1.5→2.25, bank-marketing
-# 1→1.5→2.25→3.375→5.062, speeddating 1→1→1.5)가 다시 나타날 것으로 기대하지 않고 여기서 확인하지도
-# 않는다.
-#
-# ``hard_bar.PREDICTED_BARS``처럼 import 시점에 유도하지 않고 손으로 적는다: 오늘 카드가 무엇을 말하든
-# 거기서 자기 예측을 다시 계산하는 사전 등록은 아무것도 예측하지 않는 것이다. 커밋된 카드와
-# ``critic.py``가 여전히 이 값을 내는지는 ``tests/test_bench_weight_start.py``가 단언하고, 실행이 실제로
-# 그랬는지는 :func:`first_rung_check`가 단언한다.
+# Predicted first weight rung: (iteration, weight). None means no weight.
+# Written by hand on purpose; a test checks it still holds.
 EXPECTED_FIRST_RUNG: dict[str, tuple[int, float] | None] = {
     "adult": (1, 3.179),
     "bank-marketing": (1, 7.547),
@@ -99,9 +69,7 @@ EXPECTED_FIRST_RUNG: dict[str, tuple[int, float] | None] = {
     "spambase": None,
 }
 
-# 같은 자리에서 옛 코드가 한 것. 기록된 ``bar65nollm`` 아카이브에서 왔다. 실험이 *이* 수가 움직이는
-# 것에 대한 것이라서 못박는다. 다른 데서 시작한 아카이브를 다시 만들면 시험하는 대상이 바뀌고, 그건
-# 테스트가 잡는다.
+# What the old code did, from the recorded archive.
 RECORDED_FIRST_RUNG: dict[str, tuple[int, float] | None] = {
     "adult": (1, 1.5),
     "bank-marketing": (1, 1.5),
@@ -109,18 +77,13 @@ RECORDED_FIRST_RUNG: dict[str, tuple[int, float] | None] = {
     "spambase": None,
 }
 
-# 기록된 팔들이 든 Critic verdict 개수와 각각의 출처. 재사용의 전제는 유료 팔이
-# ``heuristic_verdict``에 한 번도 닿지 않았다는 것이다. :func:`source_check`가 이 개수를 다시 내므로,
-# 다시 만든 아카이브가 verdict 0개로 조용히 통과할 수 없다.
+# Expected verdict source and count in each recorded arm.
 EXPECTED_SOURCES: dict[str, tuple[str, int]] = {
     LOOP: ("llm", 37),
     RULES: ("heuristic", 43),
 }
 
-# 조건 1이 다루는 데이터셋에 대해 ``HARD-BAR.md``가 공표한 주 Δ. 소수점 넷째 자리까지.
-# 판정은 이 값을 쓰지 않는다: 자기가 채점한 다리에서 ``bar65llm − bar65nollm``을 다시 계산하고 반으로
-# 나눈다. 여기 있는 이유는 어긋남이 아무도 확인하지 않은 수가 아니라 실패가 되게 하려는 것이다.
-# ``bench/weight_lever.py``와 같은 자릿수, 같은 허용오차.
+# Main deltas from HARD-BAR.md, only to cross-check ours.
 PRIMARY_DELTAS: dict[tuple[str, int], float] = {
     ("speeddating", 42): 0.0819,
     ("speeddating", 43): 0.0777,
@@ -128,41 +91,33 @@ PRIMARY_DELTAS: dict[tuple[str, int], float] = {
 }
 PUBLISHED_TOLERANCE = 5e-5
 
-# 여기서 재지 않고 import한다: 낡은 프롬프트·낡은 바에서 잰 ``llm`` 팔 같은 설정 반복의 반폭
-# 중앙값(``REPEATS.md``). 다시 적지 않고 ``hard_bar``에서 가져온다 — 판정 B가 그 모듈의 기준이므로
-# 그 모듈의 바닥을 써야 한다.
+# Verdict B uses hard_bar's rule, so use its floor.
 NOISE_FLOOR = hard_bar.NOISE_FLOOR
 NOISE_FLOOR_SOURCE = hard_bar.NOISE_FLOOR_SOURCE
 
-# 실행 시드가 아니다. 파일의 모든 짝이 한 재추출 수열에서 나오도록, 그리고 판정 파일마다 ``seed``
-# 하나를 읽는 ``bench/recheck.py``가 전부 다시 계산할 수 있도록 못박는다.
+# Bootstrap seed, not a run seed; one for the file.
 RESAMPLE_SEED = JUDGED_SEED
 
-# 판정 A의 앞 두 조건이 각각 사는 데이터셋.
+# Where verdict A checks recovery and identity.
 POSITIVE_ON = "speeddating"
 IDENTITY_ON = "spambase"
 
 
 def _key(dataset: str, seed: int) -> str:
-    """판정 항목의 이름. 양쪽 다 움직이므로 둘 다 들어간다."""
+    """_key | Role: name of one (dataset, seed) cell."""
     return f"{dataset}-seed{seed}"
 
 
 def run_directory(arm: str, dataset: str, seed: int) -> Path:
+    """Archive folder of one run."""
     return ARTIFACTS_DIR / f"{arm}-{dataset}-seed{seed}"
 
 
-# --------------------------------------------------------------------------- #
-# Critic이 무엇을 처방했고 verdict가 어디서 왔는가
-# --------------------------------------------------------------------------- #
+# --- Role: gate checks ------------------------------------------------------------------
 
 
 def prescriptions(directory: Path) -> list[dict[str, Any]]:
-    """실행 하나의 모든 Critic verdict. 출처와, 있다면 ``class_weight``까지.
-
-    반복별 아카이브가 아니라 ``history.json``을 읽는다. 실행 자신이 원장으로 취급하는 파일이고,
-    ``run_shape``이 ``critic_runs``를 세는 파일이기 때문이다.
-    """
+    """All Critic verdicts of one run, read from history.json."""
     history = read_json_object(directory / "history.json") or {}
     attempts = history.get("history") or []
     out: list[dict[str, Any]] = []
@@ -186,11 +141,9 @@ def prescriptions(directory: Path) -> list[dict[str, Any]]:
 
 
 def positive_weight(weight: Any) -> float | None:
-    """``class_weight`` map에서 양성 클래스의 수. 없으면 ``None``.
+    """Positive-class weight from a ``class_weight`` map, else None.
 
-    map의 키는 config가 들고 있는 문자열 클래스 코드라서 ``1``이 아니라 ``"1"``을 읽는다. 애초에 map이
-    아닌 것 — 규칙 Critic이 내지 않는 ``"balanced"`` — 은 ``None``을 돌려주므로, 판정을 죽이지 않고
-    어긋남으로 보고된다.
+    Keys are string class codes, so read ``"1"``.
     """
     if not isinstance(weight, dict):
         return None
@@ -201,7 +154,7 @@ def positive_weight(weight: Any) -> float | None:
 
 
 def first_rung(directory: Path) -> tuple[int, float] | None:
-    """이 실행의 Critic이 처방한 첫 ``class_weight``. (반복, 양성 가중치) 형태."""
+    """First ``class_weight`` the Critic gave: (iteration, weight)."""
     for row in prescriptions(directory):
         value = positive_weight(row["class_weight"])
         if value is not None and isinstance(row["iteration"], int):
@@ -210,12 +163,7 @@ def first_rung(directory: Path) -> tuple[int, float] | None:
 
 
 def first_rung_check(arm: str = FIXED) -> list[dict[str, Any]]:
-    """코드 변경이 :data:`EXPECTED_FIRST_RUNG`가 말한 자리에 착지했는가?
-
-    사전 등록된 우선순위의 관문 1. 첫 단이 다른 데 있는 실행은 이 문서가 기술하는 처치가 아니고,
-    기준을 약하게 고치는 대신 판정 불가로 적는다. 처방이 *없을* 것으로 예측된 데이터셋에 처방이 나타나면
-    똑같이 크게 실패한다: 그게 동일성 예측의 기제이고, 점수만이 아니라 기제에서 확인해야 한다.
-    """
+    """Gate 1: did the first rung land where EXPECTED_FIRST_RUNG says?"""
     rows: list[dict[str, Any]] = []
     for dataset in DATASETS:
         for seed in SEEDS:
@@ -232,8 +180,7 @@ def first_rung_check(arm: str = FIXED) -> list[dict[str, Any]]:
                     "expected_weight": None if expected is None else expected[1],
                     "actual_iteration": None if actual is None else actual[0],
                     "actual_weight": None if actual is None else actual[1],
-                    # 일어나지 않은 실행은 일치가 아니라 "없음"이다: 없는 history가 "처방 없음을
-                    # 예측했고 없었다"로 읽혀서는 안 된다.
+                    # A missing run is not a match for None.
                     "run_present": present,
                     "matches": present and actual == expected,
                 }
@@ -242,13 +189,7 @@ def first_rung_check(arm: str = FIXED) -> list[dict[str, Any]]:
 
 
 def source_check() -> list[dict[str, Any]]:
-    """팔마다, 기록된 Critic verdict가 전부 어디서 왔는가.
-
-    관문 2. 재사용의 전제는 ``d37217e``이 유료 팔에 닿을 수 없었다는 것이고, 그건 유료 팔이 한 번도 타지
-    않은 폴백이 ``heuristic_verdict``이기 때문에만 성립한다. 새 팔은 반대 방향으로 확인한다: verdict
-    전부가 ``heuristic``이어야 하고, 아니면 ``--no-llm``으로 돌린 것이 아니므로 레버가 이 문서가 기술하는
-    레버가 아니다.
-    """
+    """Gate 2: where each arm's Critic verdicts came from."""
     rows: list[dict[str, Any]] = []
     for arm, (expected_source, expected_count) in (
         *EXPECTED_SOURCES.items(),
@@ -272,8 +213,7 @@ def source_check() -> list[dict[str, Any]]:
                 "runs_present": present,
                 "sources": counts,
                 "expected_source": expected_source,
-                # 0은 "못박지 않음"이다: 새 팔의 verdict 개수는 예측할 수 없다. 첫 단 뒤로 궤적이
-                # 갈리기 때문이다. 예측할 수 있는 것은 *출처*뿐이다.
+                # 0 means not pinned; new arm count is unknown.
                 "expected_count": expected_count or None,
                 "matches": (
                     present == len(DATASETS) * len(SEEDS)
@@ -287,11 +227,7 @@ def source_check() -> list[dict[str, Any]]:
 
 
 def bar_check(results: dict[tuple[str, int], DatasetVerdict]) -> list[dict[str, Any]]:
-    """새 열두 실행이 ``HARD-BAR.md``의 바를 마주했는가?
-
-    관문 3. ``hard_bar.PREDICTED_BARS``가 못박은 것과 같은 표다 — 같은 카드, 같은 ``--margin``, 그래서
-    같은 수. 다시 나열하지 않고 import한다: 바 표가 두 벌이면 독자가 실행이 아니라 그 둘을 비교하게 된다.
-    """
+    """Gate 3: did the new runs face the HARD-BAR.md bars?"""
     rows: list[dict[str, Any]] = []
     for dataset in DATASETS:
         for seed in SEEDS:
@@ -320,15 +256,13 @@ def bar_check(results: dict[tuple[str, int], DatasetVerdict]) -> list[dict[str, 
     return rows
 
 
-# --------------------------------------------------------------------------- #
-# (데이터셋, 시드) 하나 채점하기
-# --------------------------------------------------------------------------- #
+# --- Role: scoring ----------------------------------------------------------------------
 
 
 def _legs(
     dataset: str, seed: int, metric: str, out: DatasetVerdict
 ) -> tuple[dict[str, Winner], dict[str, dict[str, Any]]]:
-    """새 팔, 기록된 팔 둘, 새 팔의 반복 1, 그리고 각 실행의 모양."""
+    """_legs | Role: find each arm's winner and run shape."""
     winners: dict[str, Winner] = {}
     shapes: dict[str, dict[str, Any]] = {}
     for arm in (FIXED, RULES, LOOP):
@@ -340,7 +274,7 @@ def _legs(
         winners[arm] = winner
         shapes[arm] = run_shape(directory)
     if FIXED in winners:
-        # 반복이 고친 팔에 무엇을 사 줬는가? ``REPLAN.md``의 질문을 새 팔에 묻는다.
+        # Also score the new arm at iteration 1.
         winners[f"{FIXED}@it1"] = first_iteration_winner(
             FIXED, run_directory(FIXED, dataset, seed), metric
         )
@@ -348,15 +282,14 @@ def _legs(
 
 
 def _pairs_to_take(scored: dict[str, Scored], fits: int) -> list[tuple[str, str, str]]:
-    """이 칸이 낼 수 있는 비교. ``WEIGHT-START.md``가 나열한 순서로."""
+    """_pairs_to_take | Role: list the comparisons this cell can make."""
     pairs: list[tuple[str, str, str]] = []
     if FIXED in scored and RULES in scored:
         pairs.append((FIXED, RULES, "prescription"))
     if LOOP in scored and FIXED in scored:
         pairs.append((LOOP, FIXED, "headline"))
     if LOOP in scored and RULES in scored:
-        # 다시 재지 않고 재사용한다: 조건 1의 절반 바가 나누는 분모이고, ``published_check``이
-        # ``HARD-BAR.md``에 대고 비교하는 값이다.
+        # Needed for the half-bar and the published check.
         pairs.append((LOOP, RULES, "main"))
     if FIXED in scored and f"{FIXED}@it1" in scored:
         pairs.append((FIXED, f"{FIXED}@it1", "ratio_replan_gain"))
@@ -369,11 +302,12 @@ def _pairs_to_take(scored: dict[str, Scored], fits: int) -> list[tuple[str, str,
 def _adjudicate(
     dataset: str, seed: int, resamples: int, out: DatasetVerdict, legs: dict[str, Scored] | None
 ) -> None:
+    """_adjudicate | Role: score one cell; raise Refusal on any mismatch."""
     entry = BY_NAME[dataset]
     metric = entry.metric
     winners, shapes = _legs(dataset, seed, metric, out)
     if FIXED not in winners:
-        # 데이터에 대한 거부가 아니다: 이 판정이 다루는 실행이 아직 없다.
+        # The run has not happened yet.
         raise Refusal(
             f"{dataset} 시드 {seed}: {FIXED} 실행이 없습니다 — "
             "bench/scripts/run_weight_start.sh를 먼저 돌려야 판정할 수 있습니다"
@@ -391,8 +325,7 @@ def _adjudicate(
     scored: dict[str, Scored] = {}
     for name, winner in winners.items():
         result = reproduce(winner, metric)
-        # 반복 1 다리는 nan이다. test 점수가 기록된 적이 없다 — holdout은 루프가 끝난 뒤 우승자에
-        # 대해 한 번 돈다. 이유는 ``bench/replan.py``가 적는다.
+        # Iteration 1 has no recorded test score (nan).
         if not math.isnan(winner.recorded_test):
             gap = abs(result.test_score - winner.recorded_test)
             if gap > SCORE_TOLERANCE:
@@ -440,7 +373,7 @@ def _adjudicate(
             paired_delta(scored[a_name], scored[b_name], metric, resamples, RESAMPLE_SEED, kind)
         )
 
-    # 중간에 거부가 나면 다리를 남기지 않도록 맨 마지막에.
+    # Last, so a refusal leaves no legs behind.
     if legs is not None:
         legs.update(scored)
 
@@ -448,7 +381,7 @@ def _adjudicate(
 def adjudicate(
     dataset: str, seed: int, resamples: int, legs: dict[str, Scored] | None = None
 ) -> DatasetVerdict:
-    """(데이터셋, 시드) 하나. ``paired.py``처럼 거부는 짝을 비운다."""
+    """Score one (dataset, seed); a refusal empties the pairs."""
     entry = BY_NAME[dataset]
     out = DatasetVerdict(dataset=_key(dataset, seed), metric=entry.metric, task=entry.task)
     try:
@@ -461,11 +394,12 @@ def adjudicate(
 
 
 def _pair(result: DatasetVerdict, kind: str) -> Delta | None:
+    """_pair | Role: find the pair of one kind."""
     return next((p for p in result.pairs if p.kind == kind), None)
 
 
 def published_check(results: dict[tuple[str, int], DatasetVerdict]) -> list[dict[str, Any]]:
-    """다시 계산한 주 Δ를 ``HARD-BAR.md``가 찍은 소수점 넷째 자리에 대고 비교한다."""
+    """Compare our main deltas to the ones HARD-BAR.md printed."""
     rows: list[dict[str, Any]] = []
     for (dataset, seed), published in sorted(PRIMARY_DELTAS.items()):
         result = results.get((dataset, seed))
@@ -486,12 +420,7 @@ def published_check(results: dict[tuple[str, int], DatasetVerdict]) -> list[dict
 
 
 def identity_check(results: dict[tuple[str, int], DatasetVerdict]) -> list[dict[str, Any]]:
-    """칸마다 조건 2의 기제: 고친 팔의 실행이 키 하나하나까지 기록된 그 실행인가?
-
-    엄격한 시험은 예측이다 — ``WEIGHT-LEVER.md``의 ``refit`` 열두 칸이 ``hist_gbdt``와 ``logreg``의 같은
-    설정 표류를 정확히 0으로 쟀으므로, 예측은 "비슷함"이 아니다. 실행 모양이 함께 가는 이유는, 다른 데서
-    멈춘 실행은 다른 길로 동일성에 닿은 것이고 점수가 맞는 자리에서도 그건 알 만한 것이기 때문이다.
-    """
+    """Per cell: is the fixed arm's run the same as the recorded one?"""
     rows: list[dict[str, Any]] = []
     for dataset in DATASETS:
         for seed in SEEDS:
@@ -514,13 +443,11 @@ def identity_check(results: dict[tuple[str, int], DatasetVerdict]) -> list[dict[
     return rows
 
 
-# --------------------------------------------------------------------------- #
-# 판정 A — 처방
-# --------------------------------------------------------------------------- #
+# --- Role: verdict A --------------------------------------------------------------------
 
 
 def _cell(result: DatasetVerdict | None) -> dict[str, Any]:
-    """(데이터셋, 시드) 하나를 판정 A의 조건 셋이 읽는 것으로 줄인 것."""
+    """_cell | Role: reduce one cell to what verdict A reads."""
     if result is None or result.verdict != "ok":
         return {"evaluated": False, "reason": "없음 또는 거부"}
     prescription = _pair(result, "prescription")
@@ -536,12 +463,12 @@ def _cell(result: DatasetVerdict | None) -> dict[str, Any]:
         "prescription": prescription.delta,
         "prescription_ci": [prescription.ci_low, prescription.ci_high],
         "identical_predictions": identical,
-        # 조건 1: 0을 벗어나고 *동시에* 설명해야 하는 격차의 절반 이상.
+        # Condition 1: CI above zero and at least half.
         "clears_zero": (not identical) and prescription.ci_low > 0,
         "reaches_half": prescription.delta >= half,
-        # 조건 2, 차등 데이터셋에서. "바닥 아래"가 아니라 동일성이다.
+        # Condition 2: identical, not just close.
         "identical_to_recorded": identical,
-        # 조건 3, 모든 칸에서: 한 카드에서 버는 대가로 다른 카드를 잃는 처치는 처치가 아니다.
+        # Condition 3: no cell may lose.
         "below_zero": (not identical) and prescription.ci_high < 0,
     }
 
@@ -549,24 +476,9 @@ def _cell(result: DatasetVerdict | None) -> dict[str, Any]:
 def prescription_verdict(
     results: dict[tuple[str, int], DatasetVerdict], gates: dict[str, bool]
 ) -> dict[str, Any]:
-    """판정 A. 이 실행이 하나도 생기기 전에 ``docs/WEIGHT-START.md``에 커밋됐다.
+    """Verdict A, as pre-registered in ``docs/WEIGHT-START.md``.
 
-    > **처방이 산다는 조건** — 셋 **전부** 충족:
-    >
-    > 1. **회수**: speeddating 시드 42·43·44 **전부**에서 ``bar65nollmratio − bar65nollm``의 95%
-    >    CI가 0을 걸치지 않게 양수이고, 그 Δ가 같은 시드의 주 Δ의 **절반 이상**이다.
-    > 2. **동일성**: spambase 시드 42·43·44 **전부**에서 우승자가 ``bar65nollm``의 우승자와
-    >    **예측까지 동일**하다.
-    > 3. **짐 없음**: 열두 칸 어디에도 CI가 0 **아래**인 칸이 없다.
-    >
-    > **처방이 죽는 조건**: 1이 깨진다. 그 밖은 **부분 지지**.
-
-    과반이 아니라 시드 전원 일치이고, 이유는 ``HARD-BAR.md``와 같다: ``REPEATS.md``의 R2가 *같은*
-    설정의 반복에서 0을 벗어난 짝 Δ를 12쌍 중 4쌍에서 냈다. 그래서 시드 하나의 구간은 처치의 증거가
-    아니고, n=3에서 셋 중 둘은 동전과 구분하기 어렵다.
-
-    미리 못박은 우선순위: 관문 셋이 먼저다(첫 단, verdict 출처, 바) — 하나라도 어긋나면 판정 불가이고
-    수를 건지려고 기준을 약하게 고치지 않는다. 그다음 없거나 거부된 칸이 있으면 부분. 그다음 조건 셋.
+    Order: gates first, then missing cells, then conditions.
     """
     cells = {
         (dataset, seed): _cell(results.get((dataset, seed)))
@@ -655,26 +567,13 @@ def prescription_verdict(
     }
 
 
-# --------------------------------------------------------------------------- #
-# 판정 B — HARD-BAR 자신의 기준으로 헤드라인 다시 묻기
-# --------------------------------------------------------------------------- #
+# --- Role: verdict B --------------------------------------------------------------------
 
 
 def as_hard_bar_board(
     results: dict[tuple[str, int], DatasetVerdict],
 ) -> dict[tuple[str, int], DatasetVerdict]:
-    """이 칸들을 ``hard_bar.criterion``이 읽는 판으로 다시 쓴다. 상대만 바꿔서.
-
-    ``HARD-BAR.md``의 축약 — 데이터셋 안에서 전원 일치, 가장 작은 시드에서 크기, 다시 계획하지 않은 칸은
-    분모에서 제외, 그다음 4개 중 3개 — 을 여기 다시 구현하지 않는다. 두 번째 사본은 어긋나고, 어긋난 사본은
-    어떤 결과가 오든 그걸 듣기 좋게 만드는 쪽이 된다. 그래서 ``headline`` 짝을 그 모듈의 ``primary``로
-    다시 이름 붙여 넘긴다.
-
-    함께 가는 것이 둘 있다. ``critic_runs``는 *기록된* ``bar65llm`` 실행에서 오고, 그건 ``HARD-BAR.md``가
-    관문을 걸었던 것과 같은 실행이다 — 그래서 ``bank-marketing`` 시드 42는 새 이유가 아니라 전에 빠진 것과
-    같은 이유로 분모 밖에 남는다. 그리고 판정 옆에 시드 산포가 공표되는 무료 팔은 고친 팔이다. 이 실험이
-    측정한 팔이 그것이기 때문이다.
-    """
+    """Rename our cells so ``hard_bar.criterion`` can judge them."""
     board: dict[tuple[str, int], DatasetVerdict] = {}
     for (dataset, seed), result in results.items():
         shim = DatasetVerdict(
@@ -712,7 +611,7 @@ def as_hard_bar_board(
 def headline_verdict(
     results: dict[tuple[str, int], DatasetVerdict], gates: dict[str, bool]
 ) -> dict[str, Any]:
-    """판정 B: ``HARD-BAR.md``의 기준을 고치지 않고, 고친 규칙 팔에 대고."""
+    """Verdict B: HARD-BAR.md's rule, unchanged, against the fixed arm."""
     outcome = hard_bar.criterion(as_hard_bar_board(results))
     failed_gates = [name for name, ok in gates.items() if not ok]
     if failed_gates:
@@ -721,7 +620,7 @@ def headline_verdict(
             f"판정 불가 — 전제 검사가 어긋났습니다 ({', '.join(failed_gates)}). "
             f"원래 상태: {outcome['status']}"
         )
-    # ``hard_bar``가 자기 ``PRIMARY``로 채우는 키들을 실제로 비교한 팔로 바로잡는다.
+    # Fix the arm names hard_bar filled from PRIMARY.
     outcome["challenger"] = LOOP
     outcome["baseline"] = FIXED
     outcome["criterion_from"] = "bench/hard_bar.py criterion (글자 그대로 재사용)"
@@ -731,13 +630,11 @@ def headline_verdict(
     return outcome
 
 
-# --------------------------------------------------------------------------- #
-# 출력
-# --------------------------------------------------------------------------- #
+# --- Role: output -----------------------------------------------------------------------
 
 
 def gate_status(results: dict[tuple[str, int], DatasetVerdict]) -> dict[str, bool]:
-    """정지 조건 셋을 판정 둘이 읽는 boolean으로 줄인 것."""
+    """Reduce the three gates to booleans."""
     return {
         "first_rung": all(row["matches"] for row in first_rung_check()),
         "verdict_sources": all(row["matches"] for row in source_check()),
@@ -746,7 +643,7 @@ def gate_status(results: dict[tuple[str, int], DatasetVerdict]) -> dict[str, boo
 
 
 def budget_used(results: dict[tuple[str, int], DatasetVerdict]) -> list[dict[str, Any]]:
-    """칸마다 각 팔이 쓴 것 — 학습 횟수, 종료 이유, Critic 실행 횟수, 우승자의 가중치."""
+    """What each arm spent per cell."""
     rows: list[dict[str, Any]] = []
     for dataset in DATASETS:
         for seed in SEEDS:
@@ -771,6 +668,7 @@ def budget_used(results: dict[tuple[str, int], DatasetVerdict]) -> list[dict[str
 
 
 def payload(results: dict[tuple[str, int], DatasetVerdict], resamples: int) -> dict[str, Any]:
+    """Build the verdict file body."""
     ordered = [
         (dataset, seed) for dataset in DATASETS for seed in SEEDS if (dataset, seed) in results
     ]
@@ -785,8 +683,7 @@ def payload(results: dict[tuple[str, int], DatasetVerdict], resamples: int) -> d
         "reuses_recorded_arms": [RULES, LOOP],
         "test_rows_shared_with": "docs/HARD-BAR.md",
         "run_seeds": sorted({seed for _, seed in ordered}),
-        # 부트스트랩 시드. 파일 전체에 하나다: ``bench/recheck.py``가 판정마다 ``seed`` 하나를 읽고
-        # 그걸로 모든 짝을 다시 계산한다.
+        # One bootstrap seed for the whole file.
         "seed": RESAMPLE_SEED,
         "resamples": resamples,
         "score_tolerance": SCORE_TOLERANCE,
@@ -879,8 +776,7 @@ def main(argv: list[str] | None = None) -> int:
 
     out_path = args.out or OUT_DIR / "weight-start.json"
     if not legs:
-        # 채점된 것이 없으니 공표할 것도, 공표할 번들도 없다. 여기서 판정 파일을 쓰면 인수 없는
-        # ``python -m bench.recheck``이 읽는 디렉터리에 놓여서 그걸 실패시킨다.
+        # No file: an empty one would break recheck.
         print(
             f"판정할 다리가 없습니다 — {out_path.as_posix()}를 쓰지 않았습니다. "
             "bench/scripts/run_weight_start.sh를 먼저 돌리세요",

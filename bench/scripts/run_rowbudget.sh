@@ -1,11 +1,6 @@
 #!/usr/bin/env bash
-# The 10 runs behind docs/ROWBUDGET.md. One planning call and one fit per run
-# (--max-iterations 1): the section acts on the *first* plan, the one written before any result
-# exists, and iteration 2 onward would mix its effect with "read a different result".
-#
-# The control arm runs in a git worktree whose only difference from main is that
-# ``{{row_budget}}`` renders empty. A CLI flag would have left a permanent door for tampering
-# with the prompt; a worktree leaves nothing behind but this script and the verdict.
+# The 10 runs behind docs/ROWBUDGET.md, one fit each.
+# Control arm runs in a worktree with empty row_budget.
 set -u
 
 export AUTOML_USE_BEDROCK=1
@@ -28,10 +23,7 @@ if [ ! -d "$CONTROL" ]; then
   exit 2
 fi
 
-# 카드의 data.path 는 cwd 기준 상대경로이고, 대조군은 자기 worktree 에서 돕니다. bench/data 는
-# gitignore 되어 있으므로 worktree 에는 없습니다 — 없으면 다섯 실행이 전부 data_issue 로 죽고,
-# 그것은 절의 효과처럼 보이지 않고 그냥 판정 거부로 나옵니다. 실제로 한 번 그렇게 태웠습니다.
-# 복사가 아니라 junction 인 이유: 두 팔이 같은 바이트를 읽는 것이 이 실험의 공정성 주장입니다.
+# Link bench/data into the worktree; both read same bytes.
 if [ ! -d "$CONTROL/bench/data" ]; then
   echo "대조군 worktree 에 데이터가 없습니다: $CONTROL/bench/data"
   echo "bench/data 는 gitignore 되어 있어 worktree 에 따라오지 않습니다. 같은 파일을 가리키게 하십시오:"
@@ -55,8 +47,7 @@ one() {
   echo "--- ${tid} exit=$? ($(date '+%H:%M:%S')) ---"
 }
 
-# Both arms write into the same artifacts root, so the verdict script reads one tree — and the
-# control's cards come from its own checkout, which is the same committed file either way.
+# Both arms write to one artifacts root.
 for pair in "spambase balanced_accuracy" "speeddating balanced_accuracy" \
             "house_sales r2" "bank-marketing balanced_accuracy" "adult balanced_accuracy"; do
   set -- $pair

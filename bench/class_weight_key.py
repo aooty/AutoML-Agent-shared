@@ -1,59 +1,16 @@
-"""새 프롬프트가 speeddating의 *첫 시도*에 대해 실제로 무엇을 바꿨는가?
+"""Split the speeddating first-try gain into code, class_weight, and missing_count.
 
-``docs/REPLAN-SEEDS.md``는 새 프롬프트가 iteration 1의 test 점수를 0.6895에서 0.7375로
-— **+0.0480** — 올렸고, 주 Δ가 +0.0935에서 +0.0507로 내려간 것은 재계획 능력을 잃어서가 아니라
-이 상승 때문이라고 적었다. 그리고 그 +0.0480을 하이퍼파라미터 하나(``class_weight: "balanced"``)에
-귀속하며 두 계획이 그 키 하나로만 다르다고 했다.
+Roles:
 
-**그 문장은 틀렸고, 이 모듈은 그것을 적어 둔 덕에 확인할 수 있게 됐기 때문에 존재한다.** 두
-``train_config.json``은 *두* 곳에서 다르다:
+* Constants — runs, leg names, keys, and the published gain.
+* Refit prep — write the two configs a person could write.
+* Legs — load legs, check the config ladder, pair them.
+* Decomposition — the one-lever terms, their sum, and a summary.
+* Output — JSON payload, prediction bundle, and the CLI.
 
-* ``hyperparams.class_weight`` — 기록된 계획에는 없고, 새 계획에는 ``"balanced"``;
-* ``preprocessing.missing_count`` — 기록된 계획은 ``true``, 새 계획은 ``false``.
-
-한 줄에 레버 둘은 이 저장소의 원장이 해석을 거부해 온 바로 그 모양이므로, 두 config 사이의 짝지은
-Δ를 "키 하나의 효과"라고 부를 수 없다 — ``REPLAN-SEEDS.md``의 덧붙임이 지금 그렇게 다시 적어 둔
-내용이다.
-
-가르는 값은 CPU 적합 두 번이고 API 호출은 없다. 중간 config 둘이 모두 사람이 적어 낼 수 있는
-것이기 때문이다:
-
-===============================  ======================  ===================  =================
-다리                               코드                      ``class_weight``     ``missing_count``
-===============================  ======================  ===================  =================
-``recorded@it1``  (A)            기록된 실행의 것               없음                   ``true``
-``refit``         (C)            현재                      없음                   ``true``
-``refit+class_weight`` (D)       현재                      ``"balanced"``       ``true``
-``new@it1``       (B)            현재                      ``"balanced"``       ``false``
-===============================  ======================  ===================  =================
-
-이웃한 쌍마다 정확히 한 가지만 움직이므로, 다리 넷은 발표된 +0.0480을 정확히 그 합이 되는 세 항으로
-분해한다 (같은 행에 대고 낸 점수의 차이들이다):
-
-* ``code_shift`` = C − A — config를 고정한 채 코드만. 0일 것으로 예상한다. ``REPLAN-SEEDS``가 이미
-  규칙 팔의 ``code_shift``를 세 시드 모두에서 동일한 예측으로 측정했다.
-* ``key_shift`` = D − C — 코드 버전 하나 아래에서 ``class_weight`` 하나만. ``REPLAN-SEEDS.md``가
-  가졌다고 주장했으나 실은 갖지 않았던 수다.
-* ``count_shift`` = B − D — ``missing_count`` 하나만. 이름을 따로 줄 값이 있다: ``capabilities.py``가
-  이제 ``missing_count``가 MIMIC에서 아무것도 사지 못했다는 노트를 담고 있고, 그 노트는 계획
-  프롬프트에 렌더되므로, "계획이 그 키를 더는 적지 않았다"는 프롬프트 수정이 제 일을 한 것일 수 있다.
-* ``plan_shift`` = B − A — 발표된 +0.0480. 분해를 그 분해 대상과 대조할 수 있게 남겨 둔다.
-
-**사전 등록도 없고 성공 기준도 없다.** 통과/실패가 없는 관찰이고, 모든 값은 나온 그대로 적는다.
-대신 가드가 하나 있다 — 점수를 내기 전에 세 config를 필드 단위로 비교하고, 어긋나면 발표하지 않고
-거부한다. 두 키가 다른 config 사이에서 잰 "단일 키 효과"가 바로 이 모듈이 정정하려고 쓰인 그
-실수이기 때문이다.
-
-말할 수 없는 것 셋, 덧붙임에도 같이 적었다:
-
-* 데이터셋 하나, 시드 하나, 지표 하나;
-* *첫 시도*만 — 여기 있는 어느 것도 그 뒤 재계획이 하는 일에 대한 것이 아니다;
-* "그 시드의 첫 계획이 그 키를 썼다"이고, "프롬프트 문장이 이 이득을 일으킨다"가 아니다. 프롬프트
-  수정은 커밋 하나이고, 한 config에서 키가 내는 효과는 그 문장이 계획에 내는 효과가 아니다.
-
-사용법:
-    python -m bench.class_weight_key --prepare   # 재학습할 config 둘을 쓰고 명령을 찍는다
-    python -m bench.class_weight_key             # 재학습 둘이 존재하면 판정한다
+Usage:
+    python -m bench.class_weight_key --prepare
+    python -m bench.class_weight_key
 """
 
 from __future__ import annotations
@@ -87,41 +44,40 @@ from bench.paired import (
 from bench.predictions import bundle_path, write_bundle
 from bench.replan import first_iteration_winner
 
+# --- Role: constants ------------------------------------------------------------------
+
 DATASET = "speeddating"
 SEED = JUDGED_SEED
 
-# 기록된 실행 둘. ``hardllm-``은 ``REPLAN.md``의 아카이브, ``hardllm2-``는 ``REPLAN-SEEDS.md``의
-# 것이다. 이 모듈은 이들을 읽기만 한다.
+# Recorded runs from REPLAN.md and REPLAN-SEEDS.md; read only.
 RECORDED_RUN = f"hardllm-{DATASET}-seed{SEED}"
 NEW_RUN = f"hardllm2-{DATASET}-seed{SEED}"
 
-# 재학습 둘이 갈 자리. 세 번째 디렉터리인 이유는 기록된 아카이브 어느 쪽에도 쓰지 않기 위해서다.
+# A third dir, so neither recorded archive is written.
 REFIT_ROOT = ARTIFACTS_DIR / f"classweightkey-{DATASET}-seed{SEED}"
 
+# Each ladder step A-C-D-B moves exactly one lever.
 A = "recorded@it1"
 C = "refit"
 D = "refit+class_weight"
 B = "new@it1"
 
-# 이 모듈 이름의 유래인 하이퍼파라미터 하나와, 그 옆에 앉아 있던 것으로 드러난 preprocessing
-# 플래그. 둘을 여기 적어 두어 가드가 config에 우연히 들어 있는 값이 아니라 상수와 견주게 한다.
+# The measured key, and the flag that also changed.
 KEY = "class_weight"
 KEY_VALUE = "balanced"
 FLAG = "missing_count"
 
-# 분해 대상인 발표된 수. ``REPLAN-SEEDS.md``의 "예측과 맞춰 보기" 표에서 왔다.
+# Published first-try gain being split, from REPLAN-SEEDS.md.
 RECORDED_PLAN_SHIFT = 0.0480
 
 REFITS: tuple[tuple[str, str], ...] = ((C, "refit"), (D, "refit-class-weight"))
 
 
+# --- Role: refit prep -----------------------------------------------------------------
+
+
 def refit_dir(name: str) -> Path:
     return REFIT_ROOT / dict(REFITS)[name]
-
-
-# --------------------------------------------------------------------------- #
-# 사람이 적어 낼 수 있는 config 둘 준비하기
-# --------------------------------------------------------------------------- #
 
 
 def recorded_config() -> dict[str, Any]:
@@ -133,11 +89,7 @@ def recorded_config() -> dict[str, Any]:
 
 
 def refit_configs() -> dict[str, dict[str, Any]]:
-    """A에 키를 최대 하나 더해 얻은 C와 D.
-
-    손으로 적지 않고 파생시킨다 — 손으로 베낀 config는 어긋날 수 있는 다섯 번째 물건이고, 이 모듈이
-    들여도 되는 차이는 재고 있는 그 하나뿐이다.
-    """
+    """Derive C and D from A, adding at most one key."""
     base = recorded_config()
     with_key = copy.deepcopy(base)
     with_key.setdefault("hyperparams", {})[KEY] = KEY_VALUE
@@ -145,7 +97,7 @@ def refit_configs() -> dict[str, dict[str, Any]]:
 
 
 def prepare() -> list[Path]:
-    """재학습할 config 둘을 쓰고 그 디렉터리를 돌려준다."""
+    """Write the two refit configs and return their dirs."""
     written = []
     for name, config in refit_configs().items():
         directory = refit_dir(name)
@@ -157,30 +109,17 @@ def prepare() -> list[Path]:
     return written
 
 
-# --------------------------------------------------------------------------- #
-# 다리들
-# --------------------------------------------------------------------------- #
+# --- Role: legs -----------------------------------------------------------------------
 
 
 def run_leg(name: str, arm: str, run: str, metric: str) -> Winner:
-    """기록된 실행의 iteration 1을, 이 모듈의 다리 이름으로 바꿔 부른 것.
-
-    이름 바꾸기는 장식이 아니다. ``paired_delta``는 쌍에 ``Winner.arm``으로 라벨을 붙이고
-    ``bench/predictions.py``는 번들을 dict 키로 색인한다 — 그래서 ``arm``은 ``hard_llm@it1``인데
-    번들은 ``recorded@it1``이라고 적힌 다리는, ``python -m bench.recheck``가 저장된 어느 예측과도
-    맞춰 볼 수 없는 Δ를 발표한다. 다리마다 이름 하나.
-    """
+    """A run's iteration 1, renamed so pairs and bundle share one name."""
     winner = first_iteration_winner(arm, ARTIFACTS_DIR / run, metric)
     return replace(winner, arm=name)
 
 
 def refit_winner(name: str, metric: str) -> Winner:
-    """재학습을 ``Winner``로 감싼 것. 실행 다리들과 같은 짝짓기 장치를 통과하게 한다.
-
-    ``recorded_test``가 ``nan``인 이유는 iteration 1 다리들과 같다 — 여기 있는 어느 것도 test 분할을
-    본 적이 없으므로, 다시 낸 값을 견줄 기록된 test 점수가 없다. 실제로 적용되는 확인은
-    ``_adjudicate``가 모든 다리에 돌리는 것들이다: config의 분할 필드와 test 행의 지문.
-    """
+    """Wrap a refit as a ``Winner``; it has no recorded test score."""
     directory = refit_dir(name)
     result = read_json_object(directory / "result.json")
     if result is None:
@@ -208,7 +147,7 @@ def refit_winner(name: str, metric: str) -> Winner:
 
 
 def _describe(config: dict[str, Any]) -> dict[str, Any]:
-    """분해가 걸려 있는 필드 둘을, config에 앉아 있는 모양 그대로."""
+    """_describe | Legs: the two fields the split depends on."""
     return {
         KEY: dict(config.get("hyperparams") or {}).get(KEY),
         FLAG: dict(config.get("preprocessing") or {}).get(FLAG),
@@ -216,7 +155,7 @@ def _describe(config: dict[str, Any]) -> dict[str, Any]:
 
 
 def _differing_paths(left: dict[str, Any], right: dict[str, Any]) -> list[str]:
-    """두 config가 어긋나는 모든 ``a.b`` 경로. 중첩 객체는 한 단계까지 들어간다."""
+    """_differing_paths | Legs: dotted paths where two configs differ, recursing into dicts."""
     out: list[str] = []
     for key in sorted(set(left) | set(right)):
         lhs, rhs = left.get(key), right.get(key)
@@ -230,12 +169,7 @@ def _differing_paths(left: dict[str, Any], right: dict[str, Any]) -> list[str]:
 
 
 def check_ladder(configs: dict[str, dict[str, Any]]) -> dict[str, list[str]]:
-    """이웃한 config 쌍마다 달라야 하는 그 한 필드만 다르지 않으면 거부한다.
-
-    이것이 가드 전부이고, 이 모듈이 있는 이유다. ``REPLAN-SEEDS.md``는 두 키가 다른 config 쌍에 대해
-    단일 키 귀속을 발표했다. 단이 한 걸음씩 떨어져 있지 않은 사다리는 분해할 수 없으므로, 유보를 달아
-    보고하지 않고 거부한다 — 유보는 그 틀린 문장이 이미 달고 있었다.
-    """
+    """Refuse unless each neighbour pair differs in exactly its one field."""
     expected = {
         (A, C): [],
         (C, D): [f"hyperparams.{KEY}"],
@@ -260,12 +194,7 @@ def check_ladder(configs: dict[str, dict[str, Any]]) -> dict[str, list[str]]:
 
 @dataclass
 class Observation:
-    """판정과, 그 판정을 허락한 사다리.
-
-    ``DatasetVerdict``에 필드를 더하지 않고 따로 담는 이유는, config 사다리가 이 모듈만의
-    선행조건이기 때문이다. 공용 dataclass에 얹으면 ``bench/runs/paired/``의 다른 모든 판정 파일이 그
-    키를 null로 달게 된다.
-    """
+    """A verdict plus the config ladder that allowed it; kept off the shared dataclass."""
 
     verdict: DatasetVerdict
     ladder: dict[str, list[str]] = field(default_factory=dict)
@@ -274,6 +203,7 @@ class Observation:
 def _adjudicate(
     resamples: int, out: DatasetVerdict, ladder: dict[str, list[str]], legs: dict[str, Scored] | None
 ) -> None:
+    """_adjudicate | Legs: check the ladder, score the legs, and pair them."""
     dataset = BY_NAME[DATASET]
     metric = dataset.metric
     winners = {
@@ -326,6 +256,7 @@ def _adjudicate(
 
 
 def adjudicate(resamples: int, legs: dict[str, Scored] | None = None) -> Observation:
+    """Judge the four legs; a refusal empties the pairs."""
     dataset = BY_NAME[DATASET]
     out = DatasetVerdict(
         dataset=f"{DATASET}-seed{SEED}-it1", metric=dataset.metric, task=dataset.task
@@ -340,23 +271,16 @@ def adjudicate(resamples: int, legs: dict[str, Scored] | None = None) -> Observa
     return Observation(verdict=out, ladder=ladder)
 
 
-# --------------------------------------------------------------------------- #
-# 다리 넷이 말하는 것
-# --------------------------------------------------------------------------- #
+# --- Role: decomposition --------------------------------------------------------------
 
 
 def _delta(result: DatasetVerdict, kind: str) -> float:
+    """_delta | Decomposition: the delta of one pair kind, or nan."""
     return next((p.delta for p in result.pairs if p.kind == kind), float("nan"))
 
 
 def _val_agreement(result: DatasetVerdict) -> dict[str, Any]:
-    """기록된 config를 현재 코드로 다시 학습하면 기록된 *val* 점수가 나오는가?
-
-    코드 항을 두 번째로, 독립적으로 보는 것이다. 짝지은 Δ는 이 모듈이 스스로 낸 test 행에 대고
-    계산하는데, 이쪽은 이 모듈이 계산하지 않은 두 수를 견준다 — 기록된 실행이 적어 둔 val 점수와
-    재학습이 적어 둔 val 점수. 거부하지 않고 적기만 한다. 여기서 어긋나는 것은 멈출 이유가 아니라
-    발견이다.
-    """
+    """_val_agreement | Decomposition: does the refit match the recorded val score? Report only."""
     recorded = result.arms.get(A, {}).get("val_score")
     again = result.arms.get(C, {}).get("val_score")
     if not isinstance(recorded, (int, float)) or not isinstance(again, (int, float)):
@@ -372,12 +296,9 @@ def _val_agreement(result: DatasetVerdict) -> dict[str, Any]:
 
 
 def decomposition(result: DatasetVerdict) -> dict[str, Any]:
-    """한 레버짜리 항 셋, 그 합, 그리고 합이 되어야 하는 발표된 수.
+    """Three one-lever terms, their sum, and the published total.
 
-    잔차는 증거가 아니라 산술이다 — 같은 행에 대고 낸 점수의 차이 셋은 구성상 네 번째와 같아지므로,
-    0이 아닌 잔차는 다리가 쌍 사이에서 움직였다는 뜻이다. 그래도 발표한다. "구성상 0이어야 한다"는
-    것이 바로 파일에서 확인할 수 있어야 하는 종류의 주장이기 때문이다.
-    """
+    A nonzero residual means a leg moved between pairs."""
     terms = {kind: _delta(result, kind) for kind in ("code_shift", "key_shift", "count_shift")}
     total = _delta(result, "plan_shift")
     summed = sum(terms.values())
@@ -393,6 +314,7 @@ def decomposition(result: DatasetVerdict) -> dict[str, Any]:
 
 
 def _status(result: DatasetVerdict, terms: dict[str, float], total: float) -> str:
+    """_status | Decomposition: the one-paragraph summary printed at the end."""
     if result.verdict != "ok":
         return f"판정 거부 — {result.refusal}"
     code, key, count = terms["code_shift"], terms["key_shift"], terms["count_shift"]
@@ -415,6 +337,9 @@ def _status(result: DatasetVerdict, terms: dict[str, float], total: float) -> st
         f"그 몫은 {key:+.4f}이고 {FLAG}가 {count:+.4f}를 따로 가져갔습니다"
     )
     return ". ".join(parts)
+
+
+# --- Role: output ---------------------------------------------------------------------
 
 
 def payload(observation: Observation, resamples: int) -> dict[str, Any]:

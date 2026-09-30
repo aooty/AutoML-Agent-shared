@@ -1,27 +1,14 @@
-"""``--search-past-goal`` 팔을 판정한다: 바를 넘긴 뒤에도 예산을 쓰는 것이 값을 하는가?
+"""Judge the --search-past-goal arm: is spending past the bar worth it?
 
-사전 등록은 ``docs/SPG.md``이고, 이 실행들이 하나도 없던 때 커밋됐다. 질문은 한 문장이다: 루프의 첫
-시도가 바를 넘겨 iteration 1에서 실행이 끝나는 일이 잦다 — ``RESULTS.md``의 ``llm`` 실행 다섯 중 넷이
-그랬고 Critic은 0번 돌았다 — 그러니 대신 루프를 계속 돌리면 *test* 점수가 어떻게 되는가.
+Roles:
 
-``paired.py``와 다른 파일인 이유. 그 스크립트의 기준은 ``RESULTS.md``에 사전 등록된 것이고
-(``llm`` 대 ``random``, 예산 맞춤, 이진 4개 중 3개) 그 뒤의 모든 수는 이 플래그를 끈 채 측정됐다.
-거기에 팔을 더하면 ``bench/runs/paired/seed42.json``을 다시 쓰게 되는데, 그 산출물의 값은 미리 고정된
-계약이 만들어 냈다는 점 하나다. 그래서 공용 기계는 import하고 판정은 다른 데 쓴다.
+* Constants — the two judged arms and the recorded arm.
+* Adjudication — score every leg and pair them per dataset.
+* Criterion — judge the rule fixed in docs/SPG.md.
+* Output — fits table, JSON payload, and the CLI.
 
-대조 팔을 ``RESULTS.md``에서 읽지 않고 다시 돌리는 이유. 둘인데 두 번째가 진짜다. 코드가 한 커밋
-차이다(플래그를 끄면 동작이 보존된다고 논증했지만 논증은 측정이 아니다). 그리고 ``RESULTS.md``는 자기
-한계 절에서 ``llm`` 팔의 재현성을 측정한 적이 없다고 말한다: 시드 하나, 실행 한 번, 비결정적 응답자.
-기록된 실행을 빼면 델타에 *크기를 모르는* 항이 들어가는데, 이 벤치마크가 random 팔의 시드 폭
-0.1472에서 이미 한 번 배운 실수다.
-
-그 재실행이 공짜로 하나를 준다. 기준이 아니라 관찰로만 기록한다: ``spg_off``와 기록된 ``llm`` 실행의
-비교는 ``llm`` 수 하나가 실행끼리 얼마나 움직이는지에 대한 첫 읽기다.
-
-팔들이 돌아간 것과 같이 ``OMP_NUM_THREADS=1``로 돌린다. 그 값은 출력에 기록된다.
-
-사용법:
-    python -m bench.spg                       # 판정 시드에서 데이터셋 전부
+Usage:
+    python -m bench.spg
     python -m bench.spg adult --seed 42
 """
 
@@ -52,11 +39,15 @@ from bench.paired import (
 )
 from bench.predictions import bundle_path, write_bundle
 
-# 기준이 대상으로 삼는 두 팔. 같은 코드, 같은 카드, 같은 시드, 플래그 하나 차이.
+# --- Role: constants ------------------------------------------------------------------
+
+# Same code, card, and seed; only the flag differs.
 ARMS: tuple[tuple[str, str], ...] = (("spg_off", "spgoff"), ("spg_on", "spgon"))
-# RESULTS.md의 팔. 관찰 짝에만 쓴다 — 다른 커밋이 만든 것이라 대조군이 아니고, 아래 기준은
-# 이것을 보지 않는다.
+# RESULTS.md arm from another commit; a note, not a control.
 RECORDED: tuple[str, str] = ("llm_recorded", "llm")
+
+
+# --- Role: adjudication ---------------------------------------------------------------
 
 
 def _adjudicate(
@@ -66,6 +57,7 @@ def _adjudicate(
     out: DatasetVerdict,
     legs: dict[str, Scored] | None = None,
 ) -> None:
+    """_adjudicate | Adjudication: score legs, check same rows, and fill ``out``."""
     metric = dataset.metric
     winners: dict[str, Winner] = {}
     for arm, prefix in (*ARMS, RECORDED):
@@ -116,24 +108,20 @@ def _adjudicate(
             "val_score": s.winner.val_score,
             "test_recorded": s.winner.recorded_test,
             "test_reproduced": s.test_score,
-            # validation 한 조각에서 여러 시도 중 최고를 고르는 다중성의 값. 여기서는 부수
-            # 지표가 아니다 — ``spg_on``은 구조상 더 많은 시도에서 고르므로, 점수를 깎는
-            # 플래그라면 여기서 드러난다.
+            # spg_on picks from more tries, so harm shows here.
             "selection_gap": s.winner.val_score - s.test_score,
             "dir": s.winner.directory.as_posix(),
         }
 
-    # 기준의 짝. 델타가 양수면 플래그가 도운 것이 되게 ``spg_on``을 앞에 둔다.
+    # spg_on first, so a positive delta means the flag helped.
     out.pairs.append(paired_delta(scored["spg_on"], scored["spg_off"], metric, resamples, seed, "primary"))
     if RECORDED[0] in scored:
-        # 기준이 아니라 관찰: 거의 같은 코드의 두 실행이므로 대부분 응답자의 실행 간 잡음이다.
-        # RESULTS.md는 이걸 측정한 적이 없고 거기의 모든 ``llm`` 델타는 이것 없이 인용된다.
+        # A note, not the rule: mostly run-to-run LLM noise.
         out.pairs.append(
             paired_delta(scored["spg_off"], scored[RECORDED[0]], metric, resamples, seed, "observation")
         )
 
-    # 중간에 거부되면 leg가 남지 않도록 마지막에 한다. 짝이 지워진 데이터셋의 leg를 담은 번들은
-    # 판정이 일부러 공표하지 않은 수를 ``recheck``에 검증거리로 내주게 된다.
+    # Last, so a refusal leaves no legs in the bundle.
     if legs is not None:
         legs.update(scored)
 
@@ -141,6 +129,7 @@ def _adjudicate(
 def adjudicate(
     dataset: Dataset, seed: int, resamples: int, legs: dict[str, Scored] | None = None
 ) -> DatasetVerdict:
+    """Judge one dataset; a refusal empties the pairs."""
     out = DatasetVerdict(dataset=dataset.name, metric=dataset.metric, task=dataset.task)
     try:
         _adjudicate(dataset, seed, resamples, out, legs)
@@ -151,25 +140,13 @@ def adjudicate(
     return out
 
 
-# --------------------------------------------------------------------------- #
-# 사전 등록된 기준
-# --------------------------------------------------------------------------- #
+# --- Role: criterion ------------------------------------------------------------------
 
 
 def criterion(results: list[DatasetVerdict], seed: int = JUDGED_SEED) -> dict[str, Any]:
-    """이 실행들이 하나도 없던 때 ``docs/SPG.md``에 커밋된 기준을 평가한다.
+    """Judge the rule committed in docs/SPG.md before these runs.
 
-    > 이진 4개 중 3개 이상에서, `spg_on`이 `spg_off`를 짝지은 Δ의 95% CI가 0을 걸치지 않게
-    > 이긴다.
-
-    일부러 대칭이다: 반대 방향으로 3개 이상이면 플래그가 점수를 *깎는다*고 보고하고, ``SPG.md``는
-    그걸 실망이 아니라 결과로 사전 등록한다. 그보다 약하면 "구분되지 않음"이고, 고정된 넷보다 적게
-    덮은 범위는 부분 판정이라 이름 붙인다 — 묻지 않은 질문은 차이 없음이라는 답이 아니다.
-
-    이진만. 회귀 데이터셋은 Critic의 다른 절반을 지나가므로
-    (``balanced_accuracy_cut_headroom`` 없음, class weight 없음, 랭킹 상한 없음) 집계에 섞지 않고
-    따로 관찰한다.
-    """
+    spg_on must win on 3 of 4 binary sets; 3 losses count too."""
     expected = set(JUDGED_NAMES)
     binary = [r for r in results if r.dataset in expected]
     wins: list[str] = []
@@ -232,12 +209,11 @@ def criterion(results: list[DatasetVerdict], seed: int = JUDGED_SEED) -> dict[st
     }
 
 
-def budget_used(results: list[DatasetVerdict]) -> list[dict[str, Any]]:
-    """데이터셋마다 각 팔이 실제로 쓴 예산.
+# --- Role: output ---------------------------------------------------------------------
 
-    ``SPG.md``는 예산을 맞추지 않는다 — 쓴 양의 차이가 처치다 — 그래서 쓴 양이 델타와 함께 다녀야
-    한다. 그러지 않으면 그 수가 공짜로 이긴 것처럼 읽힌다.
-    """
+
+def budget_used(results: list[DatasetVerdict]) -> list[dict[str, Any]]:
+    """Fits each arm spent per dataset; the budget gap is the treatment."""
     rows: list[dict[str, Any]] = []
     for result in results:
         row: dict[str, Any] = {"dataset": result.dataset}
@@ -254,8 +230,7 @@ def payload(results: list[DatasetVerdict], seed: int, resamples: int) -> dict[st
         "seed": seed,
         "resamples": resamples,
         "score_tolerance": SCORE_TOLERANCE,
-        # 실행들이 쓰는 것과 같은 기록기다. 판정과 그 아래 시도들이 같은 환경을 서술하게
-        # 된다 — 환경 변수만으로는 정해지지 않는 ``cpu_count``까지.
+        # Same recorder as the runs, including cpu_count.
         "threads": thread_state(),
         "datasets": [
             {

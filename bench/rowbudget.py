@@ -1,31 +1,16 @@
-"""``docs/ROWBUDGET.md``의 판정: row budget 프롬프트 절이 계획을 바꾸는가?
+"""Judge docs/ROWBUDGET.md: does the row budget prompt section change plans?
 
-사전 등록은 ``docs/ROWBUDGET.md``이고, **이 파일은 그 실행들이 존재하기 전에 커밋됐다** —
-``paired.py``·``spg.py``·``repeats.py``와 같은 규칙, 같은 이유다.
+Roles:
 
-이 실험이 다른 점: **관측 대상이 점수가 아니라 계획이다.** 이 절이 있는 이유는 계획이 잘못 추론한
-행 수에 대고 용량과 early stopping을 정하는 것을 막는 것이므로, 답할 수 있는 질문은 iteration 1의
-계획이 달라지는가다. 실행이 ``--max-iterations 1``인 이유는 iteration 2부터는 결과를 읽어서 이 절의
-효과와 "다른 결과를 읽었다"를 섞기 때문이다. P3은 짝지은 점수 Δ를 실제로 내지만, 사전 등록과
-출력 양쪽에서 관찰로 표시된다.
+* Run paths — where each arm's runs are.
+* P1 plan check — did the first plans differ?
+* P2 forecast check — prompt row counts against runner counts.
+* One dataset — read both arms and judge them.
+* Preregistered claims — sum up P1, P2 and P3.
+* Output — print the table, write JSON, CLI.
 
-진술 셋, 아래 판정하는 자리에 인용해 두었다:
-
-* **P1** — ``early_stopping`` / ``validation_fraction`` / ``n_estimators``·``max_iter``를 다르게
-  정하는 이진 데이터셋이 몇 개인가. 2개 이상이면 이 절은 계획을 바꾼다. 0개면 프롬프트 4줄의 값을
-  못 한 것이다.
-* **P2** — 이 절의 예고를 실행기의 ``internal_validation``과 대조한다. 어긋나면 결과가 아니라
-  **버그**이고, 실험을 중단한다.
-* **P3** — 짝지은 test Δ. 관찰만.
-
-대조군 팔은 CLI 플래그가 아니라 ``{{row_budget}}``이 빈 문자열로 렌더되는 ``main``의 git
-worktree다 — 실험을 위해 더한 플래그는 그 뒤에도 제품에 남아 프롬프트를 손댈 영구적인 문이 된다.
-그래서 이 스크립트는 실행 출력의 무엇으로도 두 팔을 구별할 수 없고, 하려 하지도 않는다.
-``run_rowbudget.sh``가 붙인 thread-id 접두사를 믿고, 확인할 수 있는 것만 확인한다(같은 카드, 같은
-분할, 같은 스레드 상태).
-
-사용법:
-    python -m bench.rowbudget                   # 모든 데이터셋
+Usage:
+    python -m bench.rowbudget
     python -m bench.rowbudget spambase
 """
 
@@ -65,20 +50,15 @@ from bench.paired import (
 from bench.predictions import bundle_path, write_bundle
 from bench.repeats import check_one_environment, pinned, recorded_threads
 
-# 팔 둘. ``rb_off``를 앞에 두어 표가 대조군 → 처치 순으로 읽히고, P3의 Δ가 양수면 이 절이
-# 도움이 된 것이다.
+# --- Role: run paths --------------------------------------------------------------------
+
+# Control first, so a positive P3 delta means the section helped.
 ARMS: tuple[tuple[str, str], ...] = (("rb_off", "rboff"), ("rb_on", "rbon"))
 
-# P1이 세는 키. 사전 등록에서 인용한 것이고 하나도 더하지 않았다. *모델 계열*을 바꾼 계획도 달라진
-# 것이지만 일부러 여기 넣지 않는다 — 기준을 판정하는 스크립트 안에서 기준을 넓히는 것이, 넓히는 일이
-# 실행보다 앞서더라도, 기준이 적어 둔 뜻을 잃는 방식이다. 어차피 손해도 없다: 두 계열이 용량을 다른
-# 키로 적으므로(``max_iter`` 대 ``n_estimators``) 계열 교체는 이 집합에 드러난다. 계열은 판정 옆에
-# 기록해 두어 읽는 사람이 볼 수 있다.
+# Preregistered keys only; model swaps show through capacity keys.
 PLAN_KEYS: tuple[str, ...] = ("early_stopping", "validation_fraction", "n_estimators", "max_iter")
 
-# 이 절이 작용하는 iteration: 결과가 존재하기 전에 적힌 첫 계획. "우승자"가 아니다 —
-# ``--max-iterations 1``에서는 같은 디렉터리지만, 어느 쪽을 뜻하는지 적어 두면 그것이 이 파일이
-# 기대는 가정이 아니라 밝혀 둔 가정이 된다.
+# The first plan, written before any result existed.
 FIRST_ITERATION = 1
 
 
@@ -90,19 +70,15 @@ def first_iteration_dir(dataset: Dataset, prefix: str, seed: int = JUDGED_SEED) 
     return run_dir(dataset, prefix, seed) / "train" / f"iter_{FIRST_ITERATION:02d}"
 
 
-# --------------------------------------------------------------------------- #
-# P1 — 계획
-# --------------------------------------------------------------------------- #
+# --- Role: P1 plan check ----------------------------------------------------------------
 
-# 여기서 ``None``은 하이퍼파라미터 값이 될 수 없으므로 "계획이 이 키를 적지 않았다"로 쓰기에
-# 안전하다 — 그리고 키를 *적지 않는 것*이 바로 이 절이 만들어 내야 하는 차이다
-# (침묵의 뜻은 ``early_stopping='auto'``이고, 침묵은 "off"가 아니다).
+# None means the plan left this key out.
 ABSENT = None
 
 
 @dataclass
 class Plan:
-    """팔 하나의 iteration 1 계획을, P1이 견주는 것만으로 줄인 것."""
+    """One arm's first-iteration plan, cut down to the P1 keys."""
 
     model: str | None
     keys: dict[str, Any]
@@ -126,12 +102,9 @@ class Plan:
 
 
 def plan_difference(off: Plan, on: Plan) -> dict[str, Any]:
-    """사전 등록된 키 중 두 팔이 다르게 정한 것.
+    """Preregistered keys the two arms set differently.
 
-    ``applied_hyperparams``가 아니라 *계획*을 본다 — 실행기가 떨어뜨린 키도 계획자가 내린 결정이고,
-    P1이 묻는 것은 이 절이 계획자에게 무엇을 했는가다. 떨어뜨린 키는 함께 적어 두어, 적합에 닿지
-    못한 차이가 닿은 차이로 읽히지 않게 한다.
-    """
+    Reads the plan, not ``applied_hyperparams``; the model is noted beside it."""
     differing = sorted(
         key for key in PLAN_KEYS if off.keys.get(key, ABSENT) != on.keys.get(key, ABSENT)
     )
@@ -144,14 +117,12 @@ def plan_difference(off: Plan, on: Plan) -> dict[str, Any]:
     }
 
 
-# --------------------------------------------------------------------------- #
-# P2 — 예고를 실측과 대조
-# --------------------------------------------------------------------------- #
+# --- Role: P2 forecast check ------------------------------------------------------------
 
 
 @dataclass
 class Forecast:
-    """프롬프트 절이 계획자에게 말한 것. 같은 카드와 같은 함수로 다시 계산한다."""
+    """What the prompt section told the planner, recomputed from the card."""
 
     card_rows: int
     train: int
@@ -160,11 +131,7 @@ class Forecast:
 
 
 def forecast(card: dict[str, Any]) -> Forecast:
-    """카드의 ``n_rows``에서 낸 이 절의 산술.
-
-    보관된 프롬프트를 되파싱하지 않고, 이 절이 호출하는 것과 같은 함수인 ``row_counts``로 다시
-    계산한다. 산문을 파싱하면 문구를 시험하게 된다. 이것은 수를 시험하고, P2가 말하는 것이 그것이다.
-    """
+    """Redo the section's row math from the card's ``n_rows`` with ``row_counts``."""
     n_rows: Any = card.get("n_rows")
     try:
         counts = row_counts(int(n_rows))
@@ -180,21 +147,9 @@ def forecast(card: dict[str, Any]) -> Forecast:
 
 
 def check_forecast(predicted: Forecast, result: dict[str, Any], arm: str, dataset: str) -> dict[str, Any]:
-    """실행 하나에 대한 P2 판정. ``docs/ROWBUDGET.md``에서 인용:
+    """P2 for one run: forecast rows against ``internal_validation``.
 
-    > **P2 (검산).** `rb_on`의 각 실행에서, 절이 예고한 held-out 행 수와 실행기가
-    > `internal_validation`에 적은 행 수가 **일치하는가.** 어긋나면 그것은 이 실험의 결과가 아니라
-    > **버그**이고, 실험을 중단하고 그것을 먼저 고친다.
-
-    확인하는 수는 하나가 아니라 둘이다. 떼어 둔 행 수는 *계획이 실제로 쓴 fraction*에서 견준다 —
-    이 절의 항목은 기본값을 인용하지만 계획은 다른 값을 적어도 되고, 시험 대상은 fraction이 아니라
-    카드가 함의하는 행 수다. 그리고 ``held_out + fit``을 예고된 학습 총량과 견주는데, 그쪽이 정적
-    테스트가 덮을 수 없는 절반이다 — 카드의 ``n_rows``가 파일의 실제 길이와 만나는 유일한 자리다.
-
-    결과에 ``internal_validation``이 없는 실행은 실패가 아니다. 그 적합이 아무것도 떼어 두지 않았다는
-    뜻이고(early stopping이 꺼졌거나, 스스로 검증하지 않는 계열), 예고와 대조할 것이 없다. 통과가
-    아니라 그대로 적는다.
-    """
+    Checks held-out and total train rows; a run holding nothing out is noted."""
     internal = result.get("internal_validation")
     if not isinstance(internal, dict):
         applied = result.get("applied_hyperparams")
@@ -245,9 +200,7 @@ def check_forecast(predicted: Forecast, result: dict[str, Any], arm: str, datase
     }
 
 
-# --------------------------------------------------------------------------- #
-# 데이터셋 하나
-# --------------------------------------------------------------------------- #
+# --- Role: one dataset ------------------------------------------------------------------
 
 
 @dataclass
@@ -287,6 +240,7 @@ def adjudicate(
 def _adjudicate(
     dataset: Dataset, resamples: int, seed: int, out: Row, legs: dict[str, Scored] | None = None
 ) -> None:
+    """_adjudicate | One dataset: fill ``out`` or raise Refusal."""
     metric = dataset.metric
     winners: dict[str, Winner] = {}
     for arm, prefix in ARMS:
@@ -301,16 +255,13 @@ def _adjudicate(
             "이 판정은 두 팔이 다 있어야 성립합니다"
         )
 
-    # P1을 먼저, 그리고 우승자 디렉터리가 아니라 iteration 1 디렉터리에서 읽는다.
-    # ``--max-iterations 1``에서는 둘이 겹치지만, 실수로 iteration을 더 받은 실행은 그러지 않으면
-    # 자기 *마지막* 계획이 다른 팔의 첫 계획과 견주어진다.
+    # Read iteration 1, not the winner, in case of extra iterations.
     plans = {
         arm: Plan.read(first_iteration_dir(dataset, prefix, seed), arm) for arm, prefix in ARMS
     }
     out.plan = plan_difference(plans["rb_off"], plans["rb_on"])
 
-    # P2는 두 팔이 함께 받은 카드에 대고 본다. 카드는 하나다 — 대조군이 ``main``과 다른 것은
-    # 프롬프트 템플릿이고 모델링하라고 받은 것이 아니며, 카드가 다르면 P1이 두 질문의 비교가 된다.
+    # Both arms got the same card; P2 checks against it.
     card = read_json_object(dataset.card_path(seed))
     if card is None:
         raise Refusal(f"{dataset.name}: 카드를 읽을 수 없습니다 ({dataset.card_path(seed)})")
@@ -328,8 +279,7 @@ def _adjudicate(
             raise Refusal(f"{dataset.name}/{arm}: iteration {FIRST_ITERATION}의 result.json이 없습니다")
         out.p2.append(check_forecast(predicted, result, arm, dataset.name))
 
-    # P3 — 관찰. 여기서부터는 ``paired.py``가 이미 쓰는 장치뿐이므로, 이 Δ와 그 문서의 Δ가
-    # 어긋나면 원인은 이 파일이 아니라 분할이다.
+    # P3 is observation only, built from paired.py's tools.
     scored: dict[str, Scored] = {}
     threads: dict[str, dict[str, Any] | None] = {}
     for arm, winner in winners.items():
@@ -379,32 +329,18 @@ def _adjudicate(
         }
     out.delta = paired_delta(scored["rb_on"], scored["rb_off"], metric, resamples, seed, "observation")
 
-    # 마지막에 둔다. 중간에 거부되면 다리가 남지 않는다 — ``bench/paired.py``와 같은 규칙. Δ가
-    # 비워진 데이터셋의 다리를 담은 번들은, 이 판정이 일부러 내놓지 않는 수를 ``recheck``에게
-    # 검산하라고 내미는 셈이 된다.
+    # Last, so a refused dataset leaves no legs behind.
     if legs is not None:
         legs.update(scored)
 
 
-# --------------------------------------------------------------------------- #
-# 사전 등록된 진술
-# --------------------------------------------------------------------------- #
+# --- Role: preregistered claims ---------------------------------------------------------
 
 
 def p1(rows: list[Row], threshold: int = 2) -> dict[str, Any]:
-    """P1 판정. ``docs/ROWBUDGET.md``에서 인용:
+    """P1: count binary datasets whose first plans differ.
 
-    > **P1 (주 관찰).** 이진 4개에서, 두 팔의 iteration 1 계획이 `early_stopping` /
-    > `validation_fraction` / `n_estimators`·`max_iter` 중 **하나라도 다르게 정하는 데이터셋의
-    > 개수**를 센다. **2개 이상이면 이 절은 계획을 바꾼다**고 적는다. 0개면 **"프롬프트에 넣었지만
-    > 계획은 같았다"**고 적는다 — 그것도 결과이고, 그러면 이 절은 프롬프트 4줄의 값을 못 한 것이다.
-
-    셈은 하나인데 이름 붙은 결과는 둘이고 그 사이에 틈이 있다. 4개 중 1개는 "계획을 바꾼다"도
-    "아무것도 안 바뀌었다"도 아니고 사전 등록이 이름을 붙이지 않았으므로, 더 좋게 읽히는 쪽으로
-    둥글리지 않고 있는 수 그대로 적는다.
-
-    이진만 본다. 못박은 4개에 못 미치는 범위는 부분 판정이라고 적는다. 퇴행은 관찰한다.
-    """
+    Two or more means the section changes plans; one is reported as is."""
     expected = set(JUDGED_NAMES)
     binary = [r for r in rows if r.dataset in expected]
     changed = sorted(r.dataset for r in binary if r.verdict == "ok" and r.plan.get("differs"))
@@ -447,12 +383,7 @@ def p1(rows: list[Row], threshold: int = 2) -> dict[str, Any]:
 
 
 def p2(rows: list[Row]) -> dict[str, Any]:
-    """P2 집계. 어디서든 어긋나면 실험을 중단한다. 결과가 아니다.
-
-    ``rb_on``만이 아니라 두 팔을 다 확인한다. 사전 등록이 ``rb_on``을 지목한 것은 예고를 만든
-    프롬프트가 그 팔의 것이기 때문이지만, 확인하는 산술은 양쪽 다 실행기의 것이고, 대조군에서
-    어긋나는 것은 같은 버그를 공짜로 찾은 것이다.
-    """
+    """P2: any mismatch in either arm is a bug and halts."""
     checks = [check for row in rows for check in row.p2]
     mismatched = [check for check in checks if check.get("checked") and not check.get("matches")]
     checked = [check for check in checks if check.get("checked")]
@@ -485,16 +416,7 @@ def p2(rows: list[Row]) -> dict[str, Any]:
 
 
 def p3(rows: list[Row]) -> dict[str, Any]:
-    """P3 집계. ``docs/ROWBUDGET.md``에서 인용:
-
-    > **P3 (점수는 관찰).** test 점수의 짝지은 Δ를 데이터셋마다 내되, **판정으로 쓰지 않는다.**
-    > n=5, 시드 1개, 학습 1회이고, `REPEATS.md`가 재려는 실행 간 잡음이 이 Δ에 그대로 섞여
-    > 있습니다.
-
-    ``observation_only``을 docstring에만 두지 않고 필드로 두는 이유는, JSON을 읽는 사람이 문서를
-    안 읽었다는 이유로 이것을 승격시킬 수 없게 하는 것이다. 0을 벗어난 구간의 개수는 물어볼 것이므로
-    적는다. 그것이 판정이 아닌 이유 옆에 적는다.
-    """
+    """P3: paired test deltas, marked observation only, never a verdict."""
     per_dataset = {
         row.dataset: {
             "delta": row.delta.delta,
@@ -519,9 +441,7 @@ def p3(rows: list[Row]) -> dict[str, Any]:
     }
 
 
-# --------------------------------------------------------------------------- #
-# 출력
-# --------------------------------------------------------------------------- #
+# --- Role: output -----------------------------------------------------------------------
 
 
 def report(rows: list[Row]) -> None:
@@ -659,9 +579,7 @@ def main(argv: list[str] | None = None) -> int:
     if refused:
         print(f"거부된 데이터셋: {', '.join(refused)}", file=sys.stderr)
     if verdict_p2["halt"]:
-        # 종료 코드를 따로 두는 이유는 이것이 "실험이 아니라고 답했다"는 뜻이 아니기 때문이다.
-        # 적합이 몇 행을 봤는지에 대해 예고와 실행기가 어긋났다는 뜻이고, 그것을 고치기 전까지는
-        # 실행을 읽을 수 없다.
+        # Own exit code: runner and forecast disagree, a bug.
         print("P2가 어긋났으므로 P1·P3은 읽지 마세요.", file=sys.stderr)
         return 3
     return 1 if refused else 0

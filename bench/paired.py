@@ -1,28 +1,16 @@
-"""3-arm 벤치마크를 판정한다: 팔 사이 *test* 차이의 짝지은 부트스트랩.
+"""Judge the 3-arm benchmark with a paired bootstrap of test differences.
 
-구간 둘이 아니라 차이를 재는 이유. 한 팔의 95% 구간은 *주변부*다 — 폭의 대부분이 행 추출 잡음이고, 두
-팔은 바로 그 같은 test 행에서 채점되므로 그 잡음은 짝에 공통이고 차이에서 상쇄된다. 그래서 한 팔의
-점추정을 다른 팔의 주변부 구간에 대고 보려면 구간 폭만큼 큰 효과가 필요한데, adult에서는
-balanced_accuracy 0.017쯤이고 이 벤치마크가 찾는 어떤 효과보다 크다. MIMIC 실행이 늘 드는 예다:
-*같은* 구성을 아홉 번 반복한 폭(0.0110)이 측정 하나의 구간 폭(0.028) 안에 들어갔다. 차이를 재추출하면
-공통항이 사라지고 실제로 다른 것, 즉 계획이 측정된다.
+Roles:
 
-기록된 점수를 믿지 않고 분할을 다시 계산하는 이유. 두 팔의 수는 같은 행에서 나왔을 때만 뺄 수 있고,
-"같은 시드"는 그게 아니다 — 시드는 자기에게 건네진 행렬을 나누고, 거기 닿는 것은 정답 결측 정책이나
-다시 추출한 파일이나 정답이 이제 회귀로 읽히는 카드에 따라 움직인다. 그래서 이 스크립트는 팔마다 자기
-``train_config.json``에서 분할을 다시 유도하고 test 행의 지문을 뜨고, 서로 다른 두 분할 사이의 델타를
-출력하는 대신 **팔끼리 어긋나는 데이터셋은 판정을 거부한다**. 우승자도 다시 채점해 실행이 기록한 수와
-맞는지 본다. 거기서 어긋나면 지문은 맞아도 행이 움직인 것이다.
+* Winners — find the model each arm picked.
+* Rescoring — rebuild the split and score each winner again.
+* Paired bootstrap — resample shared test rows for each delta.
+* One dataset — score all arms, check splits, pair them.
+* Preregistered criterion — check the success rule in RESULTS.md.
+* Output — print the table, write JSON, CLI.
 
-계약은 어느 팔도 돌기 전에 ``docs/RESULTS.md``에 사전 등록된 것이다: 예산 맞춘 primary 비교(루프 팔의
-학습 횟수 k를 random 팔의 앞 k회 뽑기에 대고), 보조로 best-of-5, 재추출 4000회, 95% CI, 팔마다
-``selection_gap``.
-
-팔들이 돌아간 것과 같이 ``OMP_NUM_THREADS=1``로 돌린다. 그 값은 출력에 기록되어 나중 독자가 그랬는지
-볼 수 있다.
-
-사용법:
-    python -m bench.paired                      # 판정 시드에서 데이터셋 전부
+Usage:
+    python -m bench.paired
     python -m bench.paired adult --seed 42
 """
 
@@ -47,7 +35,7 @@ from automl_agent.scripts.train import (
     scorers,
 )
 from automl_agent.scripts.train import (
-    _proba as positive_proba,  # 다시 구현하지 않고 그대로 쓴다: ``reproduce`` 참고
+    _proba as positive_proba,  # reused, not rewritten; see ``reproduce``
 )
 from automl_agent.threads import describe_thread_state, thread_state
 from bench.datasets import ALL, BY_NAME, JUDGED_NAMES, JUDGED_SEED, Dataset
@@ -55,33 +43,22 @@ from bench.random_search import RUNS_DIR
 from bench.random_search import run_dir as random_run_dir
 
 RESAMPLES = 4000
-# 1e-9이 아니라 1e-6. 트리의 예측은 정확한 순회지만 ``logreg``의 예측은 ``X @ coef_``다 —
-# 합산 순서가 스레드 수에 달린 BLAS matmul이고, 그 수는 학습 subprocess와 이 프로세스에서 다르다.
-# 그 경로에서 실측된 흔들림은 5.7e-08이다. 그걸 걸러 내는 허용 오차는 아무도 안 읽는 허용 오차다.
-# A2에서 잰 xgboost 0.0026 흔들림은 예측이 아니라 *학습*에서였고, 이 스크립트는 아무것도 학습하지
-# 않는다.
+# logreg predictions wobble ~5.7e-08 across BLAS thread counts.
 SCORE_TOLERANCE = 1e-6
 ARTIFACTS_DIR = RUNS_DIR / "artifacts"
 OUT_DIR = RUNS_DIR / "paired"
-# 스레드 수는 기록에 들어가야 한다: A2가 스레드 수에 걸친 balanced_accuracy 폭 0.0077을 쟀고,
-# 짝 판정 하나의 반폭의 0.99배다. 어느 스레드 상태에서 돌았는지 말하지 않는 판정은 다른 판정과
-# 비교할 수 없다. 변수 목록과 기록의 모양은 ``automl_agent.threads``에서 온다. 실행들이 이제
-# ``result.json``마다 써 넣는 것과 같은 출처다 — 여기 사본을 하나 더 두면 둘이 어긋날 수 있고,
-# 그러면 판정과 그것이 판정하는 시도들이 서로 다른 환경을 서술하게 된다.
 
 
 class Refusal(Exception):
-    """이 데이터셋은 판정할 수 없다. 아무도 쓸 수 없는 델타를 돌려주는 대신 올린다."""
+    """Raised when a dataset cannot be judged, instead of a useless delta."""
 
 
-# --------------------------------------------------------------------------- #
-# 팔마다 우승자 찾기
-# --------------------------------------------------------------------------- #
+# --- Role: winners ----------------------------------------------------------------------
 
 
 @dataclass(frozen=True)
 class Winner:
-    """팔 하나가 고른 모델, 그리고 사전 등록이 요구하는 두 수."""
+    """The model one arm picked, with its val and test scores."""
 
     arm: str
     label: str
@@ -94,7 +71,7 @@ class Winner:
 
 @dataclass
 class Scored:
-    """이 스크립트가 직접 유도한 분할에서 다시 채점한 우승자."""
+    """A winner scored again on the split this script rebuilt."""
 
     winner: Winner
     pred: Any
@@ -112,13 +89,9 @@ class Scored:
 
 
 def loop_winner(arm: str, directory: Path, metric: str) -> Winner | None:
-    """전체 루프 실행(``llm`` 또는 ``no_llm``)의 우승자. ``history.json``에서 읽는다.
+    """Winner of a full loop run (``llm`` or ``no_llm``), read from ``history.json``.
 
-    ``holdout.json``이 아니라 ``history.json``인 이유: holdout 파일은 점수와 분할 라벨과 적용된 설정을
-    기록하지만 *그것을 낸 iteration이 어느 것인지*는 적지 않는다. 그건 ``best.iteration``만 말하고,
-    기본값 ``--keep-models best``에서는 진 iteration의 ``model.joblib``이 이미 지워져 있다 — 그래서 그
-    필드는 모델로 가는 편한 경로가 아니라 풀리는 유일한 경로다.
-    """
+    Only ``best.iteration`` there points to the kept model file."""
     history = read_json_object(directory / "history.json")
     if history is None:
         return None
@@ -153,11 +126,9 @@ def loop_winner(arm: str, directory: Path, metric: str) -> Winner | None:
 
 
 def random_winner(directory: Path, k: int, metric: str) -> Winner:
-    """random 팔의 **앞 k회 뽑기** 중 우승자. ``summary.json``에서 읽는다.
+    """Winner among the random arm's first k draws, read from ``summary.json``.
 
-    뽑기 순서는 시드가 고정하고 test 행을 건드리기 전에 쓰였으므로 "앞 k회"는 결과를 보고 한 선택이
-    아니다 — 팔을 다시 돌리지 않고 예산을 맞출 수 있는 이유가 그것이다.
-    """
+    The seed fixed draw order before any test, so no rerun is needed."""
     summary = read_json_object(directory / "summary.json")
     if summary is None:
         raise Refusal(f"random: summary.json을 읽을 수 없습니다 ({directory})")
@@ -196,24 +167,16 @@ def random_winner(directory: Path, k: int, metric: str) -> Winner:
     )
 
 
-# --------------------------------------------------------------------------- #
-# 분할 다시 유도하고 다시 채점하기
-# --------------------------------------------------------------------------- #
+# --- Role: rescoring --------------------------------------------------------------------
 
 
 def reproduce(winner: Winner, metric: str) -> Scored:
-    """우승자 자신의 config에서 이 스크립트가 유도한 test 행에서 ``winner``를 채점한다.
+    """Score ``winner`` on test rows rebuilt from its own config.
 
-    모든 단계가 저장소 자신의 것이다: 모델 옆에 저장된 schema로 ``load_data``, config의 시드로
-    ``split_three_way``, 양성 열은 ``_proba``, 지표는 ``scorers``. 어느 하나라도 다시 구현하면 이 수와
-    기록된 수가 어긋날 때 해석이 불가능해진다 — 분할 탓일 수도 있고 이 파일 탓일 수도 있다. 코드를
-    공유하면 남는 원인이 분할뿐이다.
-    """
+    Uses the repo's own loader, split and scorers, so only the split can differ."""
     import joblib
 
-    # ``echo=False``: ``load_data``는 모델마다 열 줄 넘게 늘어놓고, 이 스크립트는 데이터셋마다 팔마다
-    # 하나씩 올린다. 출력은 표이고 그 줄들이 표를 묻는다. 모으기는 계속 하므로 실패는 버퍼에서 읽어
-    # 낼 수 있다.
+    # load_data is chatty; keep its log but do not print.
     log = LogBuffer(echo=False)
     schema = load_schema(winner.directory / SCHEMA_FILENAME, log)
     x_arr, y_arr, n_classes, groups, task, _schema = load_data(winner.config, log, schema)
@@ -240,7 +203,7 @@ def reproduce(winner: Winner, metric: str) -> Scored:
 
 
 def score(metric: str, y_true: Any, pred: Any, proba: Any, average: str, task: str) -> float:
-    """실행들이 채점된 것과 같은 thunk 표로 계산한 ``metric``."""
+    """``metric`` from the same scorer table the runs used."""
     thunk = scorers(y_true, pred, proba, average, task=task).get(metric)
     if thunk is None:
         raise Refusal(f"{metric}은 이 task({task})의 지표 목록에 없습니다")
@@ -251,17 +214,11 @@ SPLIT_FIELDS = ("data", "target_missing", "seed", "task", "metric")
 
 
 def split_identity(config: dict[str, Any]) -> dict[str, Any]:
-    """test 분할에 *어느 행이* 들어가는지를 정하는 config 필드.
-
-    config 전체가 아니다: 모델과 하이퍼파라미터는 설계상 팔마다 다르고, 그걸 섞어 넣으면 모든 비교가
-    불일치로 보인다. 남는 것은 ``split_three_way``와 로더가 실제로 읽는 것들이다.
-    """
+    """Config fields that decide which rows land in the test split."""
     return {key: config.get(key) for key in SPLIT_FIELDS if key in config}
 
 
-# --------------------------------------------------------------------------- #
-# 짝지은 부트스트랩
-# --------------------------------------------------------------------------- #
+# --- Role: paired bootstrap -------------------------------------------------------------
 
 
 @dataclass
@@ -278,17 +235,9 @@ class Delta:
 
 
 def paired_delta(a: Scored, b: Scored, metric: str, resamples: int, seed: int, kind: str) -> Delta:
-    """공유된 test 행의 재추출에서 차이 ``a - b``를 부트스트랩한다.
+    """Bootstrap ``a - b`` over resamples of the shared test rows.
 
-    행 인덱스는 짝마다 같은 시드로 다시 seed한 rng에서 나오므로, 한 데이터셋의 모든 짝이 동일한 재추출
-    수열을 본다 — 대안인 공유 인덱스 행렬 하나는 adult에서 4000 x 9769 int64이고 아무 쓸모 없이 실행
-    내내 312MB를 붙잡는다. 구간과 ``P(delta > 0)``은 한 번의 통과에서 나온다. 따로 계산하면 두 번
-    재추출하고 둘이 어긋날 수 있다.
-
-    퇴화한 재추출은 0으로 세지 않고 버린다: 한 클래스만 뽑힌 재추출에는 balanced_accuracy가 없고, 정답이
-    상수로 뽑힌 재추출에는 r2가 없다. 그 개수는 보고한다 — "4000 중 3960"과 "4000 중 40"은 다른
-    상황이기 때문이다.
-    """
+    Every pair reseeds the rng; resamples with one class are skipped and counted."""
     base = Delta(
         a=a.winner.arm, b=b.winner.arm, kind=kind, delta=a.test_score - b.test_score,
         ci_low=float("nan"), ci_high=float("nan"), p_better=float("nan"), resamples_used=0,
@@ -323,9 +272,7 @@ def paired_delta(a: Scored, b: Scored, metric: str, resamples: int, seed: int, k
     return base
 
 
-# --------------------------------------------------------------------------- #
-# 데이터셋 하나
-# --------------------------------------------------------------------------- #
+# --- Role: one dataset ------------------------------------------------------------------
 
 
 @dataclass
@@ -362,6 +309,7 @@ def _adjudicate(
     out: DatasetVerdict,
     legs: dict[str, Scored] | None = None,
 ) -> None:
+    """_adjudicate | One dataset: fill ``out`` or raise Refusal."""
     metric = dataset.metric
     loops: dict[str, Winner] = {}
     for arm, prefix in (("llm", "llm"), ("no_llm", "nollm")):
@@ -378,8 +326,7 @@ def _adjudicate(
     if not loops and not has_random:
         raise Refusal(f"{dataset.name}: 시드 {seed}의 실행을 하나도 찾지 못했습니다")
 
-    # 필요한 random 앞자리: 루프 팔마다 자기 학습 횟수 하나(예산 맞춘 primary)와 5(best-of-5 보조).
-    # 두 팔의 k가 우연히 같을 때 두 번 재현하지 않도록 dict를 공유한다.
+    # Random prefixes needed: each loop arm's fit count, plus 5.
     winners: dict[str, Winner] = dict(loops)
     if has_random:
         needed = {5, *(w.fits for w in loops.values())}
@@ -421,8 +368,7 @@ def _adjudicate(
             "val_score": s.winner.val_score,
             "test_recorded": s.winner.recorded_test,
             "test_reproduced": s.test_score,
-            # val 최고에서 test를 뺀 값: 같은 validation 행에서 여러 시도 중 최고를 고르는 값.
-            # 양수면 validation이 우승자를 실제보다 좋게 보여 준 것이다.
+            # Positive means validation made the winner look better.
             "selection_gap": s.winner.val_score - s.test_score,
             "dir": s.winner.directory.as_posix(),
         }
@@ -441,37 +387,21 @@ def _adjudicate(
             paired_delta(scored[a_name], scored[b_name], metric, resamples, seed, kind)
         )
 
-    # 중간에 거부되면 leg가 남지 않도록 마지막에 한다. 짝이 지워진 데이터셋의 leg를 담은 번들은
-    # 판정이 일부러 공표하지 않은 수를 ``recheck``에 검증거리로 내주게 된다.
+    # Last, so a refused dataset leaves no legs behind.
     if legs is not None:
         legs.update(scored)
 
 
-# --------------------------------------------------------------------------- #
-# 사전 등록된 기준
-# --------------------------------------------------------------------------- #
+# --- Role: preregistered criterion ------------------------------------------------------
 
 
 def criterion(
     results: list[DatasetVerdict], challenger: str = "llm", seed: int = JUDGED_SEED
 ) -> dict[str, Any]:
-    """어느 실행보다도 먼저 ``docs/RESULTS.md``에 커밋된 성공 기준을 평가한다.
+    """Check the success rule committed to ``docs/RESULTS.md`` before any run.
 
-    > 이진 4개 중 3개 이상에서, `llm` 팔이 `random` 팔을 짝지은 Δ의 95% CI가 0을 걸치지 않게
-    > 이긴다.
-
-    이진만, primary(예산 맞춘) 비교만, 그리고 판정 시드에서만 평가한다. 시드 제한을 독자에게 맡기지 않고
-    여기서 강제한다: 시드 43/44는 잡음 바닥을 설명하러 있고, 사전 등록이 "짝지은 비교가 존재하는 시드는
-    42뿐"이라고 못박은 것은 나중 실행이 답이 제일 예쁘게 나온 시드를 고를 수 없게 하려는 것이다. 다른
-    시드의 실행은 같은 표를 내고 판정은 내지 않는다.
-
-    "4개 중 3개"는 *고정된* 넷에 대한 셈이므로, 그보다 적게 덮은 실행은 기준에 닿을 수조차 없고 그
-    미달을 "구분되지 않음"으로 보고해서는 안 된다 — 그 표현은 답처럼 읽히는데 실제로 일어난 일은 질문을
-    안 한 것이다. 부분 범위는 부분이라 이름 붙이고 어느 데이터셋이 없는지 적는다.
-    """
-    # 넷은 회귀를 제외해서 찾는 대신 ``datasets.JUDGED_NAMES``에 이름으로 적혀 있다. 그 제외는
-    # ``ALL``에 task 타입이 둘일 때는 같은 결과였고 셋이 된 순간 틀렸다: 다중분류가 이 분모에 끼어들어
-    # "4개 중 3개"로 커밋된 기준을 아무도 문서를 고치지 않은 채 "5개 중 3개"로 만들었을 것이다.
+    Binary datasets, primary pairs, judged seed only; partial coverage is called partial."""
+    # Named list, so a new task type cannot grow the denominator.
     expected = set(JUDGED_NAMES)
     binary = [r for r in results if r.dataset in expected]
     wins, losses, ties, absent = [], [], [], []
@@ -532,9 +462,7 @@ def criterion(
     }
 
 
-# --------------------------------------------------------------------------- #
-# 출력
-# --------------------------------------------------------------------------- #
+# --- Role: output -----------------------------------------------------------------------
 
 
 def report(results: list[DatasetVerdict]) -> None:
@@ -584,8 +512,7 @@ def payload(results: list[DatasetVerdict], seed: int, resamples: int) -> dict[st
         "seed": seed,
         "resamples": resamples,
         "score_tolerance": SCORE_TOLERANCE,
-        # 환경 변수만으로는 정해지지 않는 ``cpu_count``까지 포함한다: 셋 다 안 잡힌 상태가
-        # 4코어와 64코어에서 같은 산술이 아니다.
+        # Thread state moves scores, so every verdict records it.
         "threads": thread_state(),
         "datasets": [
             {
@@ -619,9 +546,7 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
 
 
 def main(argv: list[str] | None = None) -> int:
-    # 미룬 import: bench/predictions.py가 ``Scored``/``Winner``를 만드느라 이 모듈을 import한다.
-    # 모듈 수준에서 되돌려 import하면 순환이 된다. 여기 두는 것은 사실 하나도 말해 준다 — 번들은
-    # 판정기를 돌린 산물이고 채점 함수들의 산물이 아니다.
+    # Deferred: bench/predictions.py imports this module, a cycle.
     from bench.predictions import bundle_path, write_bundle
 
     args = parse_args(argv)

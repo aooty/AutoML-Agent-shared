@@ -1,10 +1,6 @@
 #!/usr/bin/env bash
-# The ten runs behind docs/SPG.md. Sequential on purpose: the arms share one
-# checkpoints.sqlite, and two writers race for its lock.
-#
-# Thread counts are pinned because A2 measured a balanced_accuracy span of 0.0077 across
-# thread counts, 0.99x the half-width of one paired verdict. Bedrock route because that is
-# what the recorded arm used (route=bedrock, model=anthropic.claude-opus-5).
+# The 10 runs behind docs/SPG.md, serial (shared checkpoints.sqlite).
+# Each dataset runs with and without --search-past-goal.
 set -u
 
 export AUTOML_USE_BEDROCK=1
@@ -30,7 +26,7 @@ one() {
   echo "--- ${tid} exit=$? ($(date '+%H:%M:%S')) ---"
 }
 
-# Smallest first, so a broken pipeline costs the least to discover.
+# Smallest first, so breakage is cheapest to find.
 for pair in "spambase balanced_accuracy" "speeddating balanced_accuracy" \
             "house_sales r2" "bank-marketing balanced_accuracy" "adult balanced_accuracy"; do
   set -- $pair
