@@ -1,0 +1,1328 @@
+{
+  "name": "speeddating",
+  "description": "csv 데이터에서 자동 생성된 카드입니다. 원본 행은 이 카드에 포함되지 않습니다 — 모든 수치는 열 전체에 대한 집계입니다.",
+  "task": "binary_classification",
+  "target_column": "match",
+  "n_rows": 8378,
+  "n_features": 119,
+  "n_features_dropped_non_numeric": 1,
+  "encoding": {
+    "numeric": 61,
+    "one_hot_columns": 58,
+    "one_hot_levels": 180,
+    "dropped_high_cardinality": [
+      "field"
+    ],
+    "dropped_unsupported_dtype": [],
+    "max_cardinality": 50
+  },
+  "n_classes": 2,
+  "class_balance": [
+    0.8353,
+    0.1647
+  ],
+  "imbalance_ratio": 5.07,
+  "missing": {
+    "overall_rate": 0.0183,
+    "columns_with_missing": 60,
+    "worst_rate": 0.7852
+  },
+  "features": [
+    {
+      "name": "has_null",
+      "dtype": "int64",
+      "missing_rate": 0.0,
+      "distinct": "binary",
+      "usable_by_executor": true,
+      "kind": "binary",
+      "magnitude": "sub_unit",
+      "skew": "high",
+      "target_corr": "none"
+    },
+    {
+      "name": "wave",
+      "dtype": "int64",
+      "missing_rate": 0.0,
+      "distinct": "medium",
+      "usable_by_executor": true,
+      "kind": "continuous",
+      "magnitude": "tens",
+      "skew": "low",
+      "outlier_rate": 0.0,
+      "target_corr": "none"
+    },
+    {
+      "name": "gender",
+      "dtype": "str",
+      "missing_rate": 0.0,
+      "distinct": "binary",
+      "usable_by_executor": true,
+      "kind": "binary"
+    },
+    {
+      "name": "age",
+      "dtype": "float64",
+      "missing_rate": 0.0113,
+      "distinct": "medium",
+      "usable_by_executor": true,
+      "kind": "continuous",
+      "magnitude": "tens",
+      "skew": "moderate",
+      "outlier_rate": 0.0209,
+      "target_corr": "none"
+    },
+    {
+      "name": "age_o",
+      "dtype": "float64",
+      "missing_rate": 0.0124,
+      "distinct": "medium",
+      "usable_by_executor": true,
+      "kind": "continuous",
+      "magnitude": "tens",
+      "skew": "moderate",
+      "outlier_rate": 0.0209,
+      "target_corr": "none"
+    },
+    {
+      "name": "d_age",
+      "dtype": "int64",
+      "missing_rate": 0.0,
+      "distinct": "medium",
+      "usable_by_executor": true,
+      "kind": "continuous",
+      "magnitude": "unit",
+      "skew": "high",
+      "outlier_rate": 0.0424,
+      "target_corr": "none"
+    },
+    {
+      "name": "d_d_age",
+      "dtype": "str",
+      "missing_rate": 0.0,
+      "distinct": "low",
+      "usable_by_executor": true,
+      "kind": "categorical"
+    },
+    {
+      "name": "race",
+      "dtype": "str",
+      "missing_rate": 0.0075,
+      "distinct": "low",
+      "usable_by_executor": true,
+      "kind": "categorical"
+    },
+    {
+      "name": "race_o",
+      "dtype": "str",
+      "missing_rate": 0.0087,
+      "distinct": "low",
+      "usable_by_executor": true,
+      "kind": "categorical"
+    },
+    {
+      "name": "samerace",
+      "dtype": "int64",
+      "missing_rate": 0.0,
+      "distinct": "binary",
+      "usable_by_executor": true,
+      "kind": "binary",
+      "magnitude": "sub_unit",
+      "skew": "low",
+      "outlier_rate": 0.0,
+      "target_corr": "none"
+    },
+    {
+      "name": "importance_same_race",
+      "dtype": "float64",
+      "missing_rate": 0.0094,
+      "distinct": "medium",
+      "usable_by_executor": true,
+      "kind": "continuous",
+      "magnitude": "unit",
+      "skew": "moderate",
+      "outlier_rate": 0.0,
+      "target_corr": "none"
+    },
+    {
+      "name": "importance_same_religion",
+      "dtype": "float64",
+      "missing_rate": 0.0094,
+      "distinct": "low",
+      "usable_by_executor": true,
+      "kind": "continuous",
+      "magnitude": "unit",
+      "skew": "moderate",
+      "outlier_rate": 0.0,
+      "target_corr": "none"
+    },
+    {
+      "name": "d_importance_same_race",
+      "dtype": "str",
+      "missing_rate": 0.0,
+      "distinct": "low",
+      "usable_by_executor": true,
+      "kind": "categorical"
+    },
+    {
+      "name": "d_importance_same_religion",
+      "dtype": "str",
+      "missing_rate": 0.0,
+      "distinct": "low",
+      "usable_by_executor": true,
+      "kind": "categorical"
+    },
+    {
+      "name": "field",
+      "dtype": "str",
+      "missing_rate": 0.0075,
+      "distinct": "high",
+      "usable_by_executor": false,
+      "kind": "categorical"
+    },
+    {
+      "name": "pref_o_attractive",
+      "dtype": "float64",
+      "missing_rate": 0.0106,
+      "distinct": "medium",
+      "usable_by_executor": true,
+      "kind": "continuous",
+      "magnitude": "tens",
+      "skew": "high",
+      "outlier_rate": 0.066,
+      "target_corr": "none"
+    },
+    {
+      "name": "pref_o_sincere",
+      "dtype": "float64",
+      "missing_rate": 0.0106,
+      "distinct": "medium",
+      "usable_by_executor": true,
+      "kind": "continuous",
+      "magnitude": "tens",
+      "skew": "low",
+      "outlier_rate": 0.141,
+      "target_corr": "none"
+    },
+    {
+      "name": "pref_o_intelligence",
+      "dtype": "float64",
+      "missing_rate": 0.0106,
+      "distinct": "medium",
+      "usable_by_executor": true,
+      "kind": "continuous",
+      "magnitude": "tens",
+      "skew": "moderate",
+      "outlier_rate": 0.061,
+      "target_corr": "none"
+    },
+    {
+      "name": "pref_o_funny",
+      "dtype": "float64",
+      "missing_rate": 0.0117,
+      "distinct": "medium",
+      "usable_by_executor": true,
+      "kind": "continuous",
+      "magnitude": "tens",
+      "skew": "moderate",
+      "outlier_rate": 0.0885,
+      "target_corr": "none"
+    },
+    {
+      "name": "pref_o_ambitious",
+      "dtype": "float64",
+      "missing_rate": 0.0128,
+      "distinct": "medium",
+      "usable_by_executor": true,
+      "kind": "continuous",
+      "magnitude": "unit",
+      "skew": "low",
+      "outlier_rate": 0.0012,
+      "target_corr": "none"
+    },
+    {
+      "name": "pref_o_shared_interests",
+      "dtype": "float64",
+      "missing_rate": 0.0154,
+      "distinct": "medium",
+      "usable_by_executor": true,
+      "kind": "continuous",
+      "magnitude": "tens",
+      "skew": "low",
+      "outlier_rate": 0.0104,
+      "target_corr": "none"
+    },
+    {
+      "name": "d_pref_o_attractive",
+      "dtype": "str",
+      "missing_rate": 0.0,
+      "distinct": "low",
+      "usable_by_executor": true,
+      "kind": "categorical"
+    },
+    {
+      "name": "d_pref_o_sincere",
+      "dtype": "str",
+      "missing_rate": 0.0,
+      "distinct": "low",
+      "usable_by_executor": true,
+      "kind": "categorical"
+    },
+    {
+      "name": "d_pref_o_intelligence",
+      "dtype": "str",
+      "missing_rate": 0.0,
+      "distinct": "low",
+      "usable_by_executor": true,
+      "kind": "categorical"
+    },
+    {
+      "name": "d_pref_o_funny",
+      "dtype": "str",
+      "missing_rate": 0.0,
+      "distinct": "low",
+      "usable_by_executor": true,
+      "kind": "categorical"
+    },
+    {
+      "name": "d_pref_o_ambitious",
+      "dtype": "str",
+      "missing_rate": 0.0,
+      "distinct": "low",
+      "usable_by_executor": true,
+      "kind": "categorical"
+    },
+    {
+      "name": "d_pref_o_shared_interests",
+      "dtype": "str",
+      "missing_rate": 0.0,
+      "distinct": "low",
+      "usable_by_executor": true,
+      "kind": "categorical"
+    },
+    {
+      "name": "attractive_o",
+      "dtype": "float64",
+      "missing_rate": 0.0253,
+      "distinct": "medium",
+      "usable_by_executor": true,
+      "kind": "continuous",
+      "magnitude": "unit",
+      "skew": "low",
+      "outlier_rate": 0.001,
+      "target_corr": "moderate"
+    },
+    {
+      "name": "sinsere_o",
+      "dtype": "float64",
+      "missing_rate": 0.0343,
+      "distinct": "medium",
+      "usable_by_executor": true,
+      "kind": "continuous",
+      "magnitude": "unit",
+      "skew": "moderate",
+      "outlier_rate": 0.0151,
+      "target_corr": "moderate"
+    },
+    {
+      "name": "intelligence_o",
+      "dtype": "float64",
+      "missing_rate": 0.0365,
+      "distinct": "medium",
+      "usable_by_executor": true,
+      "kind": "continuous",
+      "magnitude": "unit",
+      "skew": "moderate",
+      "outlier_rate": 0.0066,
+      "target_corr": "moderate"
+    },
+    {
+      "name": "funny_o",
+      "dtype": "float64",
+      "missing_rate": 0.043,
+      "distinct": "medium",
+      "usable_by_executor": true,
+      "kind": "continuous",
+      "magnitude": "unit",
+      "skew": "low",
+      "outlier_rate": 0.0017,
+      "target_corr": "moderate"
+    },
+    {
+      "name": "ambitous_o",
+      "dtype": "float64",
+      "missing_rate": 0.0862,
+      "distinct": "medium",
+      "usable_by_executor": true,
+      "kind": "continuous",
+      "magnitude": "unit",
+      "skew": "low",
+      "outlier_rate": 0.0193,
+      "target_corr": "weak"
+    },
+    {
+      "name": "shared_interests_o",
+      "dtype": "float64",
+      "missing_rate": 0.1284,
+      "distinct": "medium",
+      "usable_by_executor": true,
+      "kind": "continuous",
+      "magnitude": "unit",
+      "skew": "low",
+      "outlier_rate": 0.0,
+      "target_corr": "moderate"
+    },
+    {
+      "name": "d_attractive_o",
+      "dtype": "str",
+      "missing_rate": 0.0,
+      "distinct": "low",
+      "usable_by_executor": true,
+      "kind": "categorical"
+    },
+    {
+      "name": "d_sinsere_o",
+      "dtype": "str",
+      "missing_rate": 0.0,
+      "distinct": "low",
+      "usable_by_executor": true,
+      "kind": "categorical"
+    },
+    {
+      "name": "d_intelligence_o",
+      "dtype": "str",
+      "missing_rate": 0.0,
+      "distinct": "low",
+      "usable_by_executor": true,
+      "kind": "categorical"
+    },
+    {
+      "name": "d_funny_o",
+      "dtype": "str",
+      "missing_rate": 0.0,
+      "distinct": "low",
+      "usable_by_executor": true,
+      "kind": "categorical"
+    },
+    {
+      "name": "d_ambitous_o",
+      "dtype": "str",
+      "missing_rate": 0.0,
+      "distinct": "low",
+      "usable_by_executor": true,
+      "kind": "categorical"
+    },
+    {
+      "name": "d_shared_interests_o",
+      "dtype": "str",
+      "missing_rate": 0.0,
+      "distinct": "low",
+      "usable_by_executor": true,
+      "kind": "categorical"
+    },
+    {
+      "name": "attractive_important",
+      "dtype": "float64",
+      "missing_rate": 0.0094,
+      "distinct": "medium",
+      "usable_by_executor": true,
+      "kind": "continuous",
+      "magnitude": "tens",
+      "skew": "high",
+      "outlier_rate": 0.0662,
+      "target_corr": "none"
+    },
+    {
+      "name": "sincere_important",
+      "dtype": "float64",
+      "missing_rate": 0.0094,
+      "distinct": "medium",
+      "usable_by_executor": true,
+      "kind": "continuous",
+      "magnitude": "tens",
+      "skew": "low",
+      "outlier_rate": 0.141,
+      "target_corr": "none"
+    },
+    {
+      "name": "intellicence_important",
+      "dtype": "float64",
+      "missing_rate": 0.0094,
+      "distinct": "medium",
+      "usable_by_executor": true,
+      "kind": "continuous",
+      "magnitude": "tens",
+      "skew": "moderate",
+      "outlier_rate": 0.061,
+      "target_corr": "none"
+    },
+    {
+      "name": "funny_important",
+      "dtype": "float64",
+      "missing_rate": 0.0106,
+      "distinct": "medium",
+      "usable_by_executor": true,
+      "kind": "continuous",
+      "magnitude": "tens",
+      "skew": "moderate",
+      "outlier_rate": 0.0886,
+      "target_corr": "none"
+    },
+    {
+      "name": "ambtition_important",
+      "dtype": "float64",
+      "missing_rate": 0.0118,
+      "distinct": "medium",
+      "usable_by_executor": true,
+      "kind": "continuous",
+      "magnitude": "unit",
+      "skew": "low",
+      "outlier_rate": 0.0012,
+      "target_corr": "none"
+    },
+    {
+      "name": "shared_interests_important",
+      "dtype": "float64",
+      "missing_rate": 0.0144,
+      "distinct": "medium",
+      "usable_by_executor": true,
+      "kind": "continuous",
+      "magnitude": "tens",
+      "skew": "low",
+      "outlier_rate": 0.0104,
+      "target_corr": "none"
+    },
+    {
+      "name": "d_attractive_important",
+      "dtype": "str",
+      "missing_rate": 0.0,
+      "distinct": "low",
+      "usable_by_executor": true,
+      "kind": "categorical"
+    },
+    {
+      "name": "d_sincere_important",
+      "dtype": "str",
+      "missing_rate": 0.0,
+      "distinct": "low",
+      "usable_by_executor": true,
+      "kind": "categorical"
+    },
+    {
+      "name": "d_intellicence_important",
+      "dtype": "str",
+      "missing_rate": 0.0,
+      "distinct": "low",
+      "usable_by_executor": true,
+      "kind": "categorical"
+    },
+    {
+      "name": "d_funny_important",
+      "dtype": "str",
+      "missing_rate": 0.0,
+      "distinct": "low",
+      "usable_by_executor": true,
+      "kind": "categorical"
+    },
+    {
+      "name": "d_ambtition_important",
+      "dtype": "str",
+      "missing_rate": 0.0,
+      "distinct": "low",
+      "usable_by_executor": true,
+      "kind": "categorical"
+    },
+    {
+      "name": "d_shared_interests_important",
+      "dtype": "str",
+      "missing_rate": 0.0,
+      "distinct": "low",
+      "usable_by_executor": true,
+      "kind": "categorical"
+    },
+    {
+      "name": "attractive",
+      "dtype": "float64",
+      "missing_rate": 0.0125,
+      "distinct": "low",
+      "usable_by_executor": true,
+      "kind": "continuous",
+      "magnitude": "unit",
+      "skew": "moderate",
+      "outlier_rate": 0.0024,
+      "target_corr": "none"
+    },
+    {
+      "name": "sincere",
+      "dtype": "float64",
+      "missing_rate": 0.0125,
+      "distinct": "low",
+      "usable_by_executor": true,
+      "kind": "continuous",
+      "magnitude": "unit",
+      "skew": "moderate",
+      "outlier_rate": 0.0978,
+      "target_corr": "none"
+    },
+    {
+      "name": "intelligence",
+      "dtype": "float64",
+      "missing_rate": 0.0125,
+      "distinct": "low",
+      "usable_by_executor": true,
+      "kind": "continuous",
+      "magnitude": "unit",
+      "skew": "moderate",
+      "outlier_rate": 0.0213,
+      "target_corr": "weak"
+    },
+    {
+      "name": "funny",
+      "dtype": "float64",
+      "missing_rate": 0.0125,
+      "distinct": "low",
+      "usable_by_executor": true,
+      "kind": "continuous",
+      "magnitude": "unit",
+      "skew": "moderate",
+      "outlier_rate": 0.0374,
+      "target_corr": "none"
+    },
+    {
+      "name": "ambition",
+      "dtype": "float64",
+      "missing_rate": 0.0125,
+      "distinct": "low",
+      "usable_by_executor": true,
+      "kind": "continuous",
+      "magnitude": "unit",
+      "skew": "moderate",
+      "outlier_rate": 0.0299,
+      "target_corr": "none"
+    },
+    {
+      "name": "d_attractive",
+      "dtype": "str",
+      "missing_rate": 0.0,
+      "distinct": "low",
+      "usable_by_executor": true,
+      "kind": "categorical"
+    },
+    {
+      "name": "d_sincere",
+      "dtype": "str",
+      "missing_rate": 0.0,
+      "distinct": "low",
+      "usable_by_executor": true,
+      "kind": "categorical"
+    },
+    {
+      "name": "d_intelligence",
+      "dtype": "str",
+      "missing_rate": 0.0,
+      "distinct": "low",
+      "usable_by_executor": true,
+      "kind": "categorical"
+    },
+    {
+      "name": "d_funny",
+      "dtype": "str",
+      "missing_rate": 0.0,
+      "distinct": "low",
+      "usable_by_executor": true,
+      "kind": "categorical"
+    },
+    {
+      "name": "d_ambition",
+      "dtype": "str",
+      "missing_rate": 0.0,
+      "distinct": "low",
+      "usable_by_executor": true,
+      "kind": "categorical"
+    },
+    {
+      "name": "attractive_partner",
+      "dtype": "float64",
+      "missing_rate": 0.0241,
+      "distinct": "medium",
+      "usable_by_executor": true,
+      "kind": "continuous",
+      "magnitude": "unit",
+      "skew": "low",
+      "outlier_rate": 0.001,
+      "target_corr": "moderate"
+    },
+    {
+      "name": "sincere_partner",
+      "dtype": "float64",
+      "missing_rate": 0.0331,
+      "distinct": "medium",
+      "usable_by_executor": true,
+      "kind": "continuous",
+      "magnitude": "unit",
+      "skew": "moderate",
+      "outlier_rate": 0.0151,
+      "target_corr": "moderate"
+    },
+    {
+      "name": "intelligence_partner",
+      "dtype": "float64",
+      "missing_rate": 0.0353,
+      "distinct": "medium",
+      "usable_by_executor": true,
+      "kind": "continuous",
+      "magnitude": "unit",
+      "skew": "moderate",
+      "outlier_rate": 0.0066,
+      "target_corr": "moderate"
+    },
+    {
+      "name": "funny_partner",
+      "dtype": "float64",
+      "missing_rate": 0.0418,
+      "distinct": "medium",
+      "usable_by_executor": true,
+      "kind": "continuous",
+      "magnitude": "unit",
+      "skew": "low",
+      "outlier_rate": 0.0017,
+      "target_corr": "moderate"
+    },
+    {
+      "name": "ambition_partner",
+      "dtype": "float64",
+      "missing_rate": 0.085,
+      "distinct": "medium",
+      "usable_by_executor": true,
+      "kind": "continuous",
+      "magnitude": "unit",
+      "skew": "low",
+      "outlier_rate": 0.0193,
+      "target_corr": "weak"
+    },
+    {
+      "name": "shared_interests_partner",
+      "dtype": "float64",
+      "missing_rate": 0.1274,
+      "distinct": "medium",
+      "usable_by_executor": true,
+      "kind": "continuous",
+      "magnitude": "unit",
+      "skew": "low",
+      "outlier_rate": 0.0,
+      "target_corr": "moderate"
+    },
+    {
+      "name": "d_attractive_partner",
+      "dtype": "str",
+      "missing_rate": 0.0,
+      "distinct": "low",
+      "usable_by_executor": true,
+      "kind": "categorical"
+    },
+    {
+      "name": "d_sincere_partner",
+      "dtype": "str",
+      "missing_rate": 0.0,
+      "distinct": "low",
+      "usable_by_executor": true,
+      "kind": "categorical"
+    },
+    {
+      "name": "d_intelligence_partner",
+      "dtype": "str",
+      "missing_rate": 0.0,
+      "distinct": "low",
+      "usable_by_executor": true,
+      "kind": "categorical"
+    },
+    {
+      "name": "d_funny_partner",
+      "dtype": "str",
+      "missing_rate": 0.0,
+      "distinct": "low",
+      "usable_by_executor": true,
+      "kind": "categorical"
+    },
+    {
+      "name": "d_ambition_partner",
+      "dtype": "str",
+      "missing_rate": 0.0,
+      "distinct": "low",
+      "usable_by_executor": true,
+      "kind": "categorical"
+    },
+    {
+      "name": "d_shared_interests_partner",
+      "dtype": "str",
+      "missing_rate": 0.0,
+      "distinct": "low",
+      "usable_by_executor": true,
+      "kind": "categorical"
+    },
+    {
+      "name": "sports",
+      "dtype": "float64",
+      "missing_rate": 0.0094,
+      "distinct": "low",
+      "usable_by_executor": true,
+      "kind": "continuous",
+      "magnitude": "unit",
+      "skew": "low",
+      "outlier_rate": 0.0,
+      "target_corr": "none"
+    },
+    {
+      "name": "tvsports",
+      "dtype": "float64",
+      "missing_rate": 0.0094,
+      "distinct": "low",
+      "usable_by_executor": true,
+      "kind": "continuous",
+      "magnitude": "unit",
+      "skew": "low",
+      "outlier_rate": 0.0,
+      "target_corr": "none"
+    },
+    {
+      "name": "exercise",
+      "dtype": "float64",
+      "missing_rate": 0.0094,
+      "distinct": "low",
+      "usable_by_executor": true,
+      "kind": "continuous",
+      "magnitude": "unit",
+      "skew": "low",
+      "outlier_rate": 0.0,
+      "target_corr": "none"
+    },
+    {
+      "name": "dining",
+      "dtype": "float64",
+      "missing_rate": 0.0094,
+      "distinct": "low",
+      "usable_by_executor": true,
+      "kind": "continuous",
+      "magnitude": "unit",
+      "skew": "moderate",
+      "outlier_rate": 0.02,
+      "target_corr": "none"
+    },
+    {
+      "name": "museums",
+      "dtype": "float64",
+      "missing_rate": 0.0094,
+      "distinct": "medium",
+      "usable_by_executor": true,
+      "kind": "continuous",
+      "magnitude": "unit",
+      "skew": "moderate",
+      "outlier_rate": 0.0092,
+      "target_corr": "none"
+    },
+    {
+      "name": "art",
+      "dtype": "float64",
+      "missing_rate": 0.0094,
+      "distinct": "medium",
+      "usable_by_executor": true,
+      "kind": "continuous",
+      "magnitude": "unit",
+      "skew": "low",
+      "outlier_rate": 0.0022,
+      "target_corr": "none"
+    },
+    {
+      "name": "hiking",
+      "dtype": "float64",
+      "missing_rate": 0.0094,
+      "distinct": "medium",
+      "usable_by_executor": true,
+      "kind": "continuous",
+      "magnitude": "unit",
+      "skew": "low",
+      "outlier_rate": 0.0,
+      "target_corr": "none"
+    },
+    {
+      "name": "gaming",
+      "dtype": "float64",
+      "missing_rate": 0.0094,
+      "distinct": "medium",
+      "usable_by_executor": true,
+      "kind": "continuous",
+      "magnitude": "unit",
+      "skew": "moderate",
+      "outlier_rate": 0.0094,
+      "target_corr": "none"
+    },
+    {
+      "name": "clubbing",
+      "dtype": "float64",
+      "missing_rate": 0.0094,
+      "distinct": "medium",
+      "usable_by_executor": true,
+      "kind": "continuous",
+      "magnitude": "unit",
+      "skew": "low",
+      "outlier_rate": 0.0,
+      "target_corr": "weak"
+    },
+    {
+      "name": "reading",
+      "dtype": "float64",
+      "missing_rate": 0.0094,
+      "distinct": "medium",
+      "usable_by_executor": true,
+      "kind": "continuous",
+      "magnitude": "unit",
+      "skew": "moderate",
+      "outlier_rate": 0.0564,
+      "target_corr": "none"
+    },
+    {
+      "name": "tv",
+      "dtype": "float64",
+      "missing_rate": 0.0094,
+      "distinct": "low",
+      "usable_by_executor": true,
+      "kind": "continuous",
+      "magnitude": "unit",
+      "skew": "low",
+      "outlier_rate": 0.0,
+      "target_corr": "none"
+    },
+    {
+      "name": "theater",
+      "dtype": "float64",
+      "missing_rate": 0.0094,
+      "distinct": "medium",
+      "usable_by_executor": true,
+      "kind": "continuous",
+      "magnitude": "unit",
+      "skew": "moderate",
+      "outlier_rate": 0.0,
+      "target_corr": "none"
+    },
+    {
+      "name": "movies",
+      "dtype": "float64",
+      "missing_rate": 0.0094,
+      "distinct": "low",
+      "usable_by_executor": true,
+      "kind": "continuous",
+      "magnitude": "unit",
+      "skew": "moderate",
+      "outlier_rate": 0.0234,
+      "target_corr": "none"
+    },
+    {
+      "name": "concerts",
+      "dtype": "float64",
+      "missing_rate": 0.0094,
+      "distinct": "medium",
+      "usable_by_executor": true,
+      "kind": "continuous",
+      "magnitude": "unit",
+      "skew": "moderate",
+      "outlier_rate": 0.0022,
+      "target_corr": "none"
+    },
+    {
+      "name": "music",
+      "dtype": "float64",
+      "missing_rate": 0.0094,
+      "distinct": "low",
+      "usable_by_executor": true,
+      "kind": "continuous",
+      "magnitude": "unit",
+      "skew": "moderate",
+      "outlier_rate": 0.0157,
+      "target_corr": "none"
+    },
+    {
+      "name": "shopping",
+      "dtype": "float64",
+      "missing_rate": 0.0094,
+      "distinct": "low",
+      "usable_by_executor": true,
+      "kind": "continuous",
+      "magnitude": "unit",
+      "skew": "low",
+      "outlier_rate": 0.0,
+      "target_corr": "none"
+    },
+    {
+      "name": "yoga",
+      "dtype": "float64",
+      "missing_rate": 0.0094,
+      "distinct": "medium",
+      "usable_by_executor": true,
+      "kind": "continuous",
+      "magnitude": "unit",
+      "skew": "low",
+      "outlier_rate": 0.0,
+      "target_corr": "none"
+    },
+    {
+      "name": "d_sports",
+      "dtype": "str",
+      "missing_rate": 0.0,
+      "distinct": "low",
+      "usable_by_executor": true,
+      "kind": "categorical"
+    },
+    {
+      "name": "d_tvsports",
+      "dtype": "str",
+      "missing_rate": 0.0,
+      "distinct": "low",
+      "usable_by_executor": true,
+      "kind": "categorical"
+    },
+    {
+      "name": "d_exercise",
+      "dtype": "str",
+      "missing_rate": 0.0,
+      "distinct": "low",
+      "usable_by_executor": true,
+      "kind": "categorical"
+    },
+    {
+      "name": "d_dining",
+      "dtype": "str",
+      "missing_rate": 0.0,
+      "distinct": "low",
+      "usable_by_executor": true,
+      "kind": "categorical"
+    },
+    {
+      "name": "d_museums",
+      "dtype": "str",
+      "missing_rate": 0.0,
+      "distinct": "low",
+      "usable_by_executor": true,
+      "kind": "categorical"
+    },
+    {
+      "name": "d_art",
+      "dtype": "str",
+      "missing_rate": 0.0,
+      "distinct": "low",
+      "usable_by_executor": true,
+      "kind": "categorical"
+    },
+    {
+      "name": "d_hiking",
+      "dtype": "str",
+      "missing_rate": 0.0,
+      "distinct": "low",
+      "usable_by_executor": true,
+      "kind": "categorical"
+    },
+    {
+      "name": "d_gaming",
+      "dtype": "str",
+      "missing_rate": 0.0,
+      "distinct": "low",
+      "usable_by_executor": true,
+      "kind": "categorical"
+    },
+    {
+      "name": "d_clubbing",
+      "dtype": "str",
+      "missing_rate": 0.0,
+      "distinct": "low",
+      "usable_by_executor": true,
+      "kind": "categorical"
+    },
+    {
+      "name": "d_reading",
+      "dtype": "str",
+      "missing_rate": 0.0,
+      "distinct": "low",
+      "usable_by_executor": true,
+      "kind": "categorical"
+    },
+    {
+      "name": "d_tv",
+      "dtype": "str",
+      "missing_rate": 0.0,
+      "distinct": "low",
+      "usable_by_executor": true,
+      "kind": "categorical"
+    },
+    {
+      "name": "d_theater",
+      "dtype": "str",
+      "missing_rate": 0.0,
+      "distinct": "low",
+      "usable_by_executor": true,
+      "kind": "categorical"
+    },
+    {
+      "name": "d_movies",
+      "dtype": "str",
+      "missing_rate": 0.0,
+      "distinct": "low",
+      "usable_by_executor": true,
+      "kind": "categorical"
+    },
+    {
+      "name": "d_concerts",
+      "dtype": "str",
+      "missing_rate": 0.0,
+      "distinct": "low",
+      "usable_by_executor": true,
+      "kind": "categorical"
+    },
+    {
+      "name": "d_music",
+      "dtype": "str",
+      "missing_rate": 0.0,
+      "distinct": "low",
+      "usable_by_executor": true,
+      "kind": "categorical"
+    },
+    {
+      "name": "d_shopping",
+      "dtype": "str",
+      "missing_rate": 0.0,
+      "distinct": "low",
+      "usable_by_executor": true,
+      "kind": "categorical"
+    },
+    {
+      "name": "d_yoga",
+      "dtype": "str",
+      "missing_rate": 0.0,
+      "distinct": "low",
+      "usable_by_executor": true,
+      "kind": "categorical"
+    },
+    {
+      "name": "interests_correlate",
+      "dtype": "float64",
+      "missing_rate": 0.0189,
+      "distinct": "high",
+      "usable_by_executor": true,
+      "kind": "continuous",
+      "magnitude": "sub_unit",
+      "skew": "low",
+      "outlier_rate": 0.0007,
+      "target_corr": "none"
+    },
+    {
+      "name": "d_interests_correlate",
+      "dtype": "str",
+      "missing_rate": 0.0,
+      "distinct": "low",
+      "usable_by_executor": true,
+      "kind": "categorical"
+    },
+    {
+      "name": "expected_happy_with_sd_people",
+      "dtype": "float64",
+      "missing_rate": 0.0121,
+      "distinct": "low",
+      "usable_by_executor": true,
+      "kind": "continuous",
+      "magnitude": "unit",
+      "skew": "low",
+      "outlier_rate": 0.014,
+      "target_corr": "none"
+    },
+    {
+      "name": "expected_num_interested_in_me",
+      "dtype": "float64",
+      "missing_rate": 0.7852,
+      "distinct": "medium",
+      "usable_by_executor": true,
+      "kind": "continuous",
+      "magnitude": "unit",
+      "skew": "moderate",
+      "outlier_rate": 0.0533,
+      "target_corr": "weak"
+    },
+    {
+      "name": "expected_num_matches",
+      "dtype": "float64",
+      "missing_rate": 0.14,
+      "distinct": "medium",
+      "usable_by_executor": true,
+      "kind": "continuous",
+      "magnitude": "unit",
+      "skew": "moderate",
+      "outlier_rate": 0.0677,
+      "target_corr": "weak"
+    },
+    {
+      "name": "d_expected_happy_with_sd_people",
+      "dtype": "str",
+      "missing_rate": 0.0,
+      "distinct": "low",
+      "usable_by_executor": true,
+      "kind": "categorical"
+    },
+    {
+      "name": "d_expected_num_interested_in_me",
+      "dtype": "str",
+      "missing_rate": 0.0,
+      "distinct": "low",
+      "usable_by_executor": true,
+      "kind": "categorical"
+    },
+    {
+      "name": "d_expected_num_matches",
+      "dtype": "str",
+      "missing_rate": 0.0,
+      "distinct": "low",
+      "usable_by_executor": true,
+      "kind": "categorical"
+    },
+    {
+      "name": "like",
+      "dtype": "float64",
+      "missing_rate": 0.0286,
+      "distinct": "medium",
+      "usable_by_executor": true,
+      "kind": "continuous",
+      "magnitude": "unit",
+      "skew": "low",
+      "outlier_rate": 0.0145,
+      "target_corr": "strong"
+    },
+    {
+      "name": "guess_prob_liked",
+      "dtype": "float64",
+      "missing_rate": 0.0369,
+      "distinct": "medium",
+      "usable_by_executor": true,
+      "kind": "continuous",
+      "magnitude": "unit",
+      "skew": "low",
+      "outlier_rate": 0.0,
+      "target_corr": "moderate"
+    },
+    {
+      "name": "d_like",
+      "dtype": "str",
+      "missing_rate": 0.0,
+      "distinct": "low",
+      "usable_by_executor": true,
+      "kind": "categorical"
+    },
+    {
+      "name": "d_guess_prob_liked",
+      "dtype": "str",
+      "missing_rate": 0.0,
+      "distinct": "low",
+      "usable_by_executor": true,
+      "kind": "categorical"
+    },
+    {
+      "name": "met",
+      "dtype": "float64",
+      "missing_rate": 0.0448,
+      "distinct": "low",
+      "usable_by_executor": true,
+      "kind": "continuous",
+      "magnitude": "sub_unit",
+      "skew": "high",
+      "target_corr": "weak"
+    }
+  ],
+  "target_missing": {
+    "policy": "reject",
+    "n_dropped": 0
+  },
+  "preprocessing": {
+    "impute": "median",
+    "scale": true
+  },
+  "constraints": {
+    "memory_limit_mb": 2048,
+    "max_train_time_sec": 600
+  },
+  "profile": {
+    "generated_by": "automl_agent.scripts.profile",
+    "policy": "aggregates only — no cell values, no min/max, no class labels"
+  },
+  "data": {
+    "path": "bench/data/speeddating.csv",
+    "target_column": "match"
+  },
+  "baseline": {
+    "model": "logreg (median impute + standard scale)",
+    "note": "LogisticRegression fitted on the training split and scored on the validation split of automl_agent.scoring.splits' protocol, seed 43 — the same split scripts/train.py uses, so the numbers are directly comparable. The test slice is not read here.",
+    "n_rows_used": 8378,
+    "protocol": {
+      "train_fraction": 0.6,
+      "val_fraction": 0.2,
+      "test_fraction": 0.2,
+      "stratified": true,
+      "grouped_by": null,
+      "seed": 43
+    },
+    "scores": {
+      "f1": 0.4883,
+      "accuracy": 0.8562,
+      "balanced_accuracy": 0.6798,
+      "precision": 0.5897,
+      "recall": 0.4167,
+      "roc_auc": 0.8296,
+      "pr_auc": 0.5356,
+      "average_precision": 0.5356
+    },
+    "chance": {
+      "f1": 0.0,
+      "accuracy": 0.8353,
+      "balanced_accuracy": 0.5,
+      "precision": 0.0,
+      "recall": 0.0,
+      "roc_auc": 0.5,
+      "pr_auc": 0.1647,
+      "average_precision": 0.1647
+    },
+    "ks": 0.5116,
+    "balanced_accuracy_at_best_cut": 0.7558,
+    "ci": {
+      "level": 0.95,
+      "unit": "row",
+      "resamples": 400,
+      "scores": {
+        "f1": {
+          "low": 0.443,
+          "high": 0.5412
+        },
+        "accuracy": {
+          "low": 0.8401,
+          "high": 0.8729
+        },
+        "balanced_accuracy": {
+          "low": 0.6551,
+          "high": 0.7086
+        },
+        "precision": {
+          "low": 0.5276,
+          "high": 0.6539
+        },
+        "recall": {
+          "low": 0.3652,
+          "high": 0.4726
+        },
+        "roc_auc": {
+          "low": 0.8033,
+          "high": 0.8564
+        },
+        "pr_auc": {
+          "low": 0.4858,
+          "high": 0.596
+        },
+        "average_precision": {
+          "low": 0.4858,
+          "high": 0.596
+        }
+      }
+    }
+  }
+}

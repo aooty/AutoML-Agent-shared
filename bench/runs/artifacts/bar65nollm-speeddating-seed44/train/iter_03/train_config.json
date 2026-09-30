@@ -1,0 +1,31 @@
+{
+  "model": "hist_gbdt",
+  "hyperparams": {
+    "max_iter": 400,
+    "learning_rate": 0.03,
+    "l2_regularization": 1.0,
+    "max_depth": 6,
+    "class_weight": {
+      "0": 1.0,
+      "1": 1.5
+    }
+  },
+  "preprocessing": {
+    "impute": "median"
+  },
+  "target_missing": {
+    "policy": "reject"
+  },
+  "data": {
+    "path": "bench/data/speeddating.csv",
+    "target_column": "match"
+  },
+  "metric": "balanced_accuracy",
+  "task": "classification",
+  "seed": 44,
+  "paired_baseline": {
+    "iteration": 2,
+    "path": "bench\\runs\\artifacts\\bar65nollm-speeddating-seed44\\train\\iter_02\\val_predictions.npz"
+  },
+  "memory_limit_mb": 2048
+}

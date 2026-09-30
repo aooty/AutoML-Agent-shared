@@ -1,0 +1,27 @@
+{
+  "model": "hist_gbdt",
+  "hyperparams": {
+    "max_iter": 52,
+    "learning_rate": 0.000579,
+    "max_depth": 40,
+    "max_leaf_nodes": 117,
+    "l2_regularization": 39.266407
+  },
+  "preprocessing": {
+    "impute": "median",
+    "scale": true,
+    "missing_indicator": true,
+    "missing_count": true
+  },
+  "target_missing": {
+    "policy": "reject"
+  },
+  "data": {
+    "path": "bench/data/spambase.csv",
+    "target_column": "class"
+  },
+  "metric": "balanced_accuracy",
+  "task": "classification",
+  "seed": 44,
+  "memory_limit_mb": 2048
+}

@@ -1,0 +1,165 @@
+{
+  "generated_by": "bench/paired.py",
+  "seed": 42,
+  "resamples": 4000,
+  "score_tolerance": 1e-06,
+  "threads": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "cpu_count": 20
+  },
+  "datasets": [
+    {
+      "dataset": "jungle-chess",
+      "metric": "balanced_accuracy",
+      "task": "multiclass",
+      "verdict": "ok",
+      "refusal": null,
+      "test_rows": 8964,
+      "test_fingerprint": "bc9adf104645e85aaf4d09184677b07c",
+      "missing_arms": [],
+      "arms": {
+        "llm": {
+          "label": "iteration 1",
+          "fits": 1,
+          "val_score": 0.7957111145610956,
+          "test_recorded": 0.7864312324487845,
+          "test_reproduced": 0.7864312324487845,
+          "selection_gap": 0.009279882112311011,
+          "dir": "bench/runs/artifacts/llm-jungle-chess-seed42/train/iter_01"
+        },
+        "no_llm": {
+          "label": "iteration 1",
+          "fits": 1,
+          "val_score": 0.8248215184009787,
+          "test_recorded": 0.8089120052822354,
+          "test_reproduced": 0.8089120052822354,
+          "selection_gap": 0.015909513118743335,
+          "dir": "bench/runs/artifacts/nollm-jungle-chess-seed42/train/iter_01"
+        },
+        "random@k=1": {
+          "label": "draw 1",
+          "fits": 1,
+          "val_score": 0.5593445746711944,
+          "test_recorded": 0.5538578016552332,
+          "test_reproduced": 0.5538578016552332,
+          "selection_gap": 0.005486773015961122,
+          "dir": "bench/runs/random/jungle-chess-seed42/draw_01"
+        },
+        "random@k=5": {
+          "label": "draw 3",
+          "fits": 5,
+          "val_score": 0.8386653368854998,
+          "test_recorded": 0.8315399181978096,
+          "test_reproduced": 0.8315399181978096,
+          "selection_gap": 0.007125418687690233,
+          "dir": "bench/runs/random/jungle-chess-seed42/draw_03"
+        }
+      },
+      "pairs": [
+        {
+          "a": "llm",
+          "b": "random@k=1",
+          "kind": "primary",
+          "delta": 0.2325734307935513,
+          "ci_low": 0.2207668305226549,
+          "ci_high": 0.24400677399634862,
+          "p_better": 1.0,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "llm",
+          "b": "random@k=5",
+          "kind": "best_of_5",
+          "delta": -0.045108685749025046,
+          "ci_low": -0.05735107735696877,
+          "ci_high": -0.033371332325269724,
+          "p_better": 0.0,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "no_llm",
+          "b": "random@k=1",
+          "kind": "primary",
+          "delta": 0.25505420362700215,
+          "ci_low": 0.24394738792566084,
+          "ci_high": 0.26645332559768564,
+          "p_better": 1.0,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "no_llm",
+          "b": "random@k=5",
+          "kind": "best_of_5",
+          "delta": -0.0226279129155742,
+          "ci_low": -0.03388174436298018,
+          "ci_high": -0.011109302637266703,
+          "p_better": 0.0,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "llm",
+          "b": "no_llm",
+          "kind": "primary",
+          "delta": -0.022480772833450846,
+          "ci_low": -0.03216644305845308,
+          "ci_high": -0.012831959056404937,
+          "p_better": 0.0,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        }
+      ]
+    }
+  ],
+  "criterion": {
+    "challenger": "llm",
+    "seed": 42,
+    "judged_seed": 42,
+    "expected_binary": [
+      "adult",
+      "bank-marketing",
+      "spambase",
+      "speeddating"
+    ],
+    "judged": [],
+    "wins": [],
+    "losses": [],
+    "indistinguishable": [],
+    "not_evaluated": [
+      "adult",
+      "bank-marketing",
+      "spambase",
+      "speeddating"
+    ],
+    "complete": false,
+    "status": "부분 판정 — 기준은 이진 4개에 대한 것인데 0개만 판정했습니다 (없음: adult, bank-marketing, spambase, speeddating). 지금까지 이김 0 / 걸침 0 / 짐 0"
+  },
+  "criterion_no_llm": {
+    "challenger": "no_llm",
+    "seed": 42,
+    "judged_seed": 42,
+    "expected_binary": [
+      "adult",
+      "bank-marketing",
+      "spambase",
+      "speeddating"
+    ],
+    "judged": [],
+    "wins": [],
+    "losses": [],
+    "indistinguishable": [],
+    "not_evaluated": [
+      "adult",
+      "bank-marketing",
+      "spambase",
+      "speeddating"
+    ],
+    "complete": false,
+    "status": "부분 판정 — 기준은 이진 4개에 대한 것인데 0개만 판정했습니다 (없음: adult, bank-marketing, spambase, speeddating). 지금까지 이김 0 / 걸침 0 / 짐 0"
+  }
+}

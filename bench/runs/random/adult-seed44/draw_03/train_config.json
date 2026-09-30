@@ -1,0 +1,26 @@
+{
+  "model": "extra_trees",
+  "hyperparams": {
+    "n_estimators": 891,
+    "max_depth": 11,
+    "min_samples_leaf": 197,
+    "class_weight": "balanced"
+  },
+  "preprocessing": {
+    "impute": "most_frequent",
+    "scale": false,
+    "missing_indicator": true,
+    "missing_count": true
+  },
+  "target_missing": {
+    "policy": "reject"
+  },
+  "data": {
+    "path": "bench/data/adult.csv",
+    "target_column": "class"
+  },
+  "metric": "balanced_accuracy",
+  "task": "classification",
+  "seed": 44,
+  "memory_limit_mb": 2048
+}

@@ -1,0 +1,2167 @@
+{
+  "generated_by": "bench/weight_lever.py",
+  "preregistration": "docs/WEIGHT-LEVER.md",
+  "checks": "docs/HARD-BAR.md",
+  "reuses_recorded_arms": [
+    "bar65llm",
+    "bar65nollm"
+  ],
+  "test_rows_shared_with": "bench/runs/paired/hard-bar.json",
+  "variants": [
+    "ratio",
+    "balanced",
+    "refit"
+  ],
+  "run_seeds": [
+    42,
+    43,
+    44
+  ],
+  "seed": 42,
+  "resamples": 4000,
+  "threads": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "cpu_count": 20
+  },
+  "datasets": [
+    {
+      "dataset": "adult-seed42",
+      "run_seed": 42,
+      "metric": "balanced_accuracy",
+      "task": "binary",
+      "verdict": "ok",
+      "refusal": null,
+      "test_rows": 9769,
+      "test_fingerprint": "35bc63e35f35b70596c7052ac7688bf5",
+      "missing_arms": [],
+      "arms": {
+        "bar65llm": {
+          "label": "iteration 2",
+          "fits": 4,
+          "val_score": 0.8467203486478806,
+          "test_recorded": 0.8425588698029283,
+          "test_reproduced": 0.8425588698029283,
+          "selection_gap": 0.0041614788449523266,
+          "class_weight": null,
+          "model": "xgboost",
+          "dir": "bench/runs/artifacts/bar65llm-adult-seed42/train/iter_02"
+        },
+        "bar65nollm": {
+          "label": "iteration 3",
+          "fits": 5,
+          "val_score": 0.8419899687850201,
+          "test_recorded": 0.8399406562041728,
+          "test_reproduced": 0.8399406562041728,
+          "selection_gap": 0.0020493125808472845,
+          "class_weight": {
+            "0": 1.0,
+            "1": 2.25
+          },
+          "model": "hist_gbdt",
+          "dir": "bench/runs/artifacts/bar65nollm-adult-seed42/train/iter_03"
+        },
+        "ratio": {
+          "label": "cw={'0': 1.0, '1': 3.18}",
+          "fits": 1,
+          "val_score": 0.8493391861996349,
+          "test_recorded": NaN,
+          "test_reproduced": 0.8457517746098437,
+          "selection_gap": 0.003587411589791145,
+          "class_weight": {
+            "0": 1.0,
+            "1": 3.18
+          },
+          "model": "hist_gbdt",
+          "dir": "bench/runs/weightlever/adult-seed42/ratio"
+        },
+        "balanced": {
+          "label": "cw=balanced",
+          "fits": 1,
+          "val_score": 0.849223431225021,
+          "test_recorded": NaN,
+          "test_reproduced": 0.8439496231022585,
+          "selection_gap": 0.005273808122762458,
+          "class_weight": "balanced",
+          "model": "hist_gbdt",
+          "dir": "bench/runs/weightlever/adult-seed42/balanced"
+        },
+        "refit": {
+          "label": "cw={'0': 1.0, '1': 2.25}",
+          "fits": 1,
+          "val_score": 0.8419899687850201,
+          "test_recorded": NaN,
+          "test_reproduced": 0.8399406562041728,
+          "selection_gap": 0.0020493125808472845,
+          "class_weight": {
+            "0": 1.0,
+            "1": 2.25
+          },
+          "model": "hist_gbdt",
+          "dir": "bench/runs/weightlever/adult-seed42/refit"
+        }
+      },
+      "pairs": [
+        {
+          "a": "bar65llm",
+          "b": "bar65nollm",
+          "kind": "main",
+          "delta": 0.00261821359875547,
+          "ci_low": -0.0024325152303679375,
+          "ci_high": 0.007934341929787567,
+          "p_better": 0.85075,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "ratio",
+          "b": "bar65nollm",
+          "kind": "recovery",
+          "delta": 0.005811118405670945,
+          "ci_low": 0.0008640239068225309,
+          "ci_high": 0.010881857742918192,
+          "p_better": 0.98825,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "bar65llm",
+          "b": "ratio",
+          "kind": "remaining",
+          "delta": -0.0031929048069154753,
+          "ci_low": -0.007600306090740188,
+          "ci_high": 0.0013989317502455022,
+          "p_better": 0.08575,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "balanced",
+          "b": "ratio",
+          "kind": "scale",
+          "delta": -0.0018021515075852257,
+          "ci_low": -0.0037445072541444882,
+          "ci_high": 0.00018237715649842295,
+          "p_better": 0.03725,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "balanced",
+          "b": "bar65nollm",
+          "kind": "balanced_recovery",
+          "delta": 0.00400896689808572,
+          "ci_low": -0.0007379094347209454,
+          "ci_high": 0.008998410571307756,
+          "p_better": 0.94575,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "refit",
+          "b": "bar65nollm",
+          "kind": "refit_control",
+          "delta": 0.0,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "p_better": NaN,
+          "resamples_used": 0,
+          "identical_predictions": true
+        }
+      ]
+    },
+    {
+      "dataset": "adult-seed43",
+      "run_seed": 43,
+      "metric": "balanced_accuracy",
+      "task": "binary",
+      "verdict": "ok",
+      "refusal": null,
+      "test_rows": 9769,
+      "test_fingerprint": "5f70716669e546ab5768478022516d31",
+      "missing_arms": [],
+      "arms": {
+        "bar65llm": {
+          "label": "iteration 2",
+          "fits": 4,
+          "val_score": 0.8379474400446231,
+          "test_recorded": 0.8375791815642031,
+          "test_reproduced": 0.8375791815642031,
+          "selection_gap": 0.00036825848041999176,
+          "class_weight": null,
+          "model": "xgboost",
+          "dir": "bench/runs/artifacts/bar65llm-adult-seed43/train/iter_02"
+        },
+        "bar65nollm": {
+          "label": "iteration 3",
+          "fits": 5,
+          "val_score": 0.8420008505011116,
+          "test_recorded": 0.8476129809704083,
+          "test_reproduced": 0.8476129809704083,
+          "selection_gap": -0.00561213046929665,
+          "class_weight": {
+            "0": 1.0,
+            "1": 2.25
+          },
+          "model": "hist_gbdt",
+          "dir": "bench/runs/artifacts/bar65nollm-adult-seed43/train/iter_03"
+        },
+        "ratio": {
+          "label": "cw={'0': 1.0, '1': 3.18}",
+          "fits": 1,
+          "val_score": 0.8461529448802505,
+          "test_recorded": NaN,
+          "test_reproduced": 0.8492913532759154,
+          "selection_gap": -0.0031384083956649267,
+          "class_weight": {
+            "0": 1.0,
+            "1": 3.18
+          },
+          "model": "hist_gbdt",
+          "dir": "bench/runs/weightlever/adult-seed43/ratio"
+        },
+        "balanced": {
+          "label": "cw=balanced",
+          "fits": 1,
+          "val_score": 0.8472778494781152,
+          "test_recorded": NaN,
+          "test_reproduced": 0.8503126396149394,
+          "selection_gap": -0.0030347901368241725,
+          "class_weight": "balanced",
+          "model": "hist_gbdt",
+          "dir": "bench/runs/weightlever/adult-seed43/balanced"
+        },
+        "refit": {
+          "label": "cw={'0': 1.0, '1': 2.25}",
+          "fits": 1,
+          "val_score": 0.8420008505011116,
+          "test_recorded": NaN,
+          "test_reproduced": 0.8476129809704083,
+          "selection_gap": -0.00561213046929665,
+          "class_weight": {
+            "0": 1.0,
+            "1": 2.25
+          },
+          "model": "hist_gbdt",
+          "dir": "bench/runs/weightlever/adult-seed43/refit"
+        }
+      },
+      "pairs": [
+        {
+          "a": "bar65llm",
+          "b": "bar65nollm",
+          "kind": "main",
+          "delta": -0.01003379940620519,
+          "ci_low": -0.01525834441923177,
+          "ci_high": -0.004826827238494782,
+          "p_better": 0.0,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "ratio",
+          "b": "bar65nollm",
+          "kind": "recovery",
+          "delta": 0.0016783723055071587,
+          "ci_low": -0.0027835022786281693,
+          "ci_high": 0.006329959340795382,
+          "p_better": 0.758,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "bar65llm",
+          "b": "ratio",
+          "kind": "remaining",
+          "delta": -0.01171217171171235,
+          "ci_low": -0.018089415350428385,
+          "ci_high": -0.0054294816820154,
+          "p_better": 0.0005,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "balanced",
+          "b": "ratio",
+          "kind": "scale",
+          "delta": 0.0010212863390239857,
+          "ci_low": -0.000517600157501824,
+          "ci_high": 0.002595461709313196,
+          "p_better": 0.90625,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "balanced",
+          "b": "bar65nollm",
+          "kind": "balanced_recovery",
+          "delta": 0.0026996586445311443,
+          "ci_low": -0.0017457107338152587,
+          "ci_high": 0.0073713050607908115,
+          "p_better": 0.877,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "refit",
+          "b": "bar65nollm",
+          "kind": "refit_control",
+          "delta": 0.0,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "p_better": NaN,
+          "resamples_used": 0,
+          "identical_predictions": true
+        }
+      ]
+    },
+    {
+      "dataset": "adult-seed44",
+      "run_seed": 44,
+      "metric": "balanced_accuracy",
+      "task": "binary",
+      "verdict": "ok",
+      "refusal": null,
+      "test_rows": 9769,
+      "test_fingerprint": "993d06f84c9df3e5e50cf2077988e9b9",
+      "missing_arms": [],
+      "arms": {
+        "bar65llm": {
+          "label": "iteration 3",
+          "fits": 5,
+          "val_score": 0.8480567270193126,
+          "test_recorded": 0.8402373118691391,
+          "test_reproduced": 0.8402373118691391,
+          "selection_gap": 0.007819415150173481,
+          "class_weight": "balanced",
+          "model": "hist_gbdt",
+          "dir": "bench/runs/artifacts/bar65llm-adult-seed44/train/iter_03"
+        },
+        "bar65nollm": {
+          "label": "iteration 4",
+          "fits": 5,
+          "val_score": 0.8425027048837141,
+          "test_recorded": 0.8350626447664105,
+          "test_reproduced": 0.8350626447664105,
+          "selection_gap": 0.007440060117303693,
+          "class_weight": {
+            "0": 1.0,
+            "1": 2.25
+          },
+          "model": "hist_gbdt",
+          "dir": "bench/runs/artifacts/bar65nollm-adult-seed44/train/iter_04"
+        },
+        "ratio": {
+          "label": "cw={'0': 1.0, '1': 3.18}",
+          "fits": 1,
+          "val_score": 0.8434279962027993,
+          "test_recorded": NaN,
+          "test_reproduced": 0.8408643236049385,
+          "selection_gap": 0.0025636725978608332,
+          "class_weight": {
+            "0": 1.0,
+            "1": 3.18
+          },
+          "model": "hist_gbdt",
+          "dir": "bench/runs/weightlever/adult-seed44/ratio"
+        },
+        "balanced": {
+          "label": "cw=balanced",
+          "fits": 1,
+          "val_score": 0.8440510464180615,
+          "test_recorded": NaN,
+          "test_reproduced": 0.8406624665197548,
+          "selection_gap": 0.003388579898306654,
+          "class_weight": "balanced",
+          "model": "hist_gbdt",
+          "dir": "bench/runs/weightlever/adult-seed44/balanced"
+        },
+        "refit": {
+          "label": "cw={'0': 1.0, '1': 2.25}",
+          "fits": 1,
+          "val_score": 0.8425027048837141,
+          "test_recorded": NaN,
+          "test_reproduced": 0.8350626447664105,
+          "selection_gap": 0.007440060117303693,
+          "class_weight": {
+            "0": 1.0,
+            "1": 2.25
+          },
+          "model": "hist_gbdt",
+          "dir": "bench/runs/weightlever/adult-seed44/refit"
+        }
+      },
+      "pairs": [
+        {
+          "a": "bar65llm",
+          "b": "bar65nollm",
+          "kind": "main",
+          "delta": 0.005174667102728625,
+          "ci_low": 0.00015674730801034932,
+          "ci_high": 0.01045233360511156,
+          "p_better": 0.97825,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "ratio",
+          "b": "bar65nollm",
+          "kind": "recovery",
+          "delta": 0.005801678838528002,
+          "ci_low": 0.0009355774175497878,
+          "ci_high": 0.010855070285664481,
+          "p_better": 0.992,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "bar65llm",
+          "b": "ratio",
+          "kind": "remaining",
+          "delta": -0.0006270117357993765,
+          "ci_low": -0.004532780927931851,
+          "ci_high": 0.0033548229793300345,
+          "p_better": 0.37025,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "balanced",
+          "b": "ratio",
+          "kind": "scale",
+          "delta": -0.0002018570851836099,
+          "ci_low": -0.00287453510557093,
+          "ci_high": 0.002567909016744953,
+          "p_better": 0.44425,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "balanced",
+          "b": "bar65nollm",
+          "kind": "balanced_recovery",
+          "delta": 0.005599821753344392,
+          "ci_low": 0.0007220468289392463,
+          "ci_high": 0.01063294295019733,
+          "p_better": 0.98975,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "refit",
+          "b": "bar65nollm",
+          "kind": "refit_control",
+          "delta": 0.0,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "p_better": NaN,
+          "resamples_used": 0,
+          "identical_predictions": true
+        }
+      ]
+    },
+    {
+      "dataset": "bank-marketing-seed42",
+      "run_seed": 42,
+      "metric": "balanced_accuracy",
+      "task": "binary",
+      "verdict": "ok",
+      "refusal": null,
+      "test_rows": 9043,
+      "test_fingerprint": "2df57cb2794050d1c92eec82b5892022",
+      "missing_arms": [],
+      "arms": {
+        "bar65llm": {
+          "label": "iteration 1",
+          "fits": 1,
+          "val_score": 0.8826291524447761,
+          "test_recorded": 0.8634554629249314,
+          "test_reproduced": 0.8634554629249314,
+          "selection_gap": 0.019173689519844772,
+          "class_weight": "balanced",
+          "model": "hist_gbdt",
+          "dir": "bench/runs/artifacts/bar65llm-bank-marketing-seed42/train/iter_01"
+        },
+        "bar65nollm": {
+          "label": "iteration 5",
+          "fits": 5,
+          "val_score": 0.8774294808899463,
+          "test_recorded": 0.8577878181325335,
+          "test_reproduced": 0.8577878181325335,
+          "selection_gap": 0.01964166275741286,
+          "class_weight": {
+            "0": 1.0,
+            "1": 5.062
+          },
+          "model": "hist_gbdt",
+          "dir": "bench/runs/artifacts/bar65nollm-bank-marketing-seed42/train/iter_05"
+        },
+        "ratio": {
+          "label": "cw={'0': 1.0, '1': 7.55}",
+          "fits": 1,
+          "val_score": 0.878308010160207,
+          "test_recorded": NaN,
+          "test_reproduced": 0.8666053315940925,
+          "selection_gap": 0.01170267856611451,
+          "class_weight": {
+            "0": 1.0,
+            "1": 7.55
+          },
+          "model": "hist_gbdt",
+          "dir": "bench/runs/weightlever/bank-marketing-seed42/ratio"
+        },
+        "balanced": {
+          "label": "cw=balanced",
+          "fits": 1,
+          "val_score": 0.881456675165075,
+          "test_recorded": NaN,
+          "test_reproduced": 0.863347983518246,
+          "selection_gap": 0.018108691646828934,
+          "class_weight": "balanced",
+          "model": "hist_gbdt",
+          "dir": "bench/runs/weightlever/bank-marketing-seed42/balanced"
+        },
+        "refit": {
+          "label": "cw={'0': 1.0, '1': 5.062}",
+          "fits": 1,
+          "val_score": 0.8774294808899463,
+          "test_recorded": NaN,
+          "test_reproduced": 0.8577878181325335,
+          "selection_gap": 0.01964166275741286,
+          "class_weight": {
+            "0": 1.0,
+            "1": 5.062
+          },
+          "model": "hist_gbdt",
+          "dir": "bench/runs/weightlever/bank-marketing-seed42/refit"
+        }
+      },
+      "pairs": [
+        {
+          "a": "bar65llm",
+          "b": "bar65nollm",
+          "kind": "main",
+          "delta": 0.005667644792397897,
+          "ci_low": -0.000976272256086097,
+          "ci_high": 0.012739028375455038,
+          "p_better": 0.954,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "ratio",
+          "b": "bar65nollm",
+          "kind": "recovery",
+          "delta": 0.008817513461559012,
+          "ci_low": 0.0018314945544296748,
+          "ci_high": 0.01621980928665716,
+          "p_better": 0.99175,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "bar65llm",
+          "b": "ratio",
+          "kind": "remaining",
+          "delta": -0.0031498686691611155,
+          "ci_low": -0.009078212975492172,
+          "ci_high": 0.002388055957540756,
+          "p_better": 0.14225,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "balanced",
+          "b": "ratio",
+          "kind": "scale",
+          "delta": -0.0032573480758464335,
+          "ci_low": -0.008659398325417645,
+          "ci_high": 0.0017898746021955876,
+          "p_better": 0.11125,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "balanced",
+          "b": "bar65nollm",
+          "kind": "balanced_recovery",
+          "delta": 0.005560165385712579,
+          "ci_low": -0.0015314812469930023,
+          "ci_high": 0.012679331325183152,
+          "p_better": 0.938,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "refit",
+          "b": "bar65nollm",
+          "kind": "refit_control",
+          "delta": 0.0,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "p_better": NaN,
+          "resamples_used": 0,
+          "identical_predictions": true
+        }
+      ]
+    },
+    {
+      "dataset": "bank-marketing-seed43",
+      "run_seed": 43,
+      "metric": "balanced_accuracy",
+      "task": "binary",
+      "verdict": "ok",
+      "refusal": null,
+      "test_rows": 9043,
+      "test_fingerprint": "8905074b8fe6e6b762da533d3399aaf6",
+      "missing_arms": [],
+      "arms": {
+        "bar65llm": {
+          "label": "iteration 4",
+          "fits": 5,
+          "val_score": 0.8750277019066488,
+          "test_recorded": 0.8654710569084519,
+          "test_reproduced": 0.8654710569084519,
+          "selection_gap": 0.009556644998196862,
+          "class_weight": null,
+          "model": "xgboost",
+          "dir": "bench/runs/artifacts/bar65llm-bank-marketing-seed43/train/iter_04"
+        },
+        "bar65nollm": {
+          "label": "iteration 5",
+          "fits": 5,
+          "val_score": 0.8639238543249069,
+          "test_recorded": 0.8604473416010407,
+          "test_reproduced": 0.8604473416010407,
+          "selection_gap": 0.0034765127238661764,
+          "class_weight": {
+            "0": 1.0,
+            "1": 5.062
+          },
+          "model": "hist_gbdt",
+          "dir": "bench/runs/artifacts/bar65nollm-bank-marketing-seed43/train/iter_05"
+        },
+        "ratio": {
+          "label": "cw={'0': 1.0, '1': 7.55}",
+          "fits": 1,
+          "val_score": 0.8671705414609938,
+          "test_recorded": NaN,
+          "test_reproduced": 0.8636551520869116,
+          "selection_gap": 0.003515389374082245,
+          "class_weight": {
+            "0": 1.0,
+            "1": 7.55
+          },
+          "model": "hist_gbdt",
+          "dir": "bench/runs/weightlever/bank-marketing-seed43/ratio"
+        },
+        "balanced": {
+          "label": "cw=balanced",
+          "fits": 1,
+          "val_score": 0.8662989968595035,
+          "test_recorded": NaN,
+          "test_reproduced": 0.8670825969770826,
+          "selection_gap": -0.000783600117579053,
+          "class_weight": "balanced",
+          "model": "hist_gbdt",
+          "dir": "bench/runs/weightlever/bank-marketing-seed43/balanced"
+        },
+        "refit": {
+          "label": "cw={'0': 1.0, '1': 5.062}",
+          "fits": 1,
+          "val_score": 0.8639238543249069,
+          "test_recorded": NaN,
+          "test_reproduced": 0.8604473416010407,
+          "selection_gap": 0.0034765127238661764,
+          "class_weight": {
+            "0": 1.0,
+            "1": 5.062
+          },
+          "model": "hist_gbdt",
+          "dir": "bench/runs/weightlever/bank-marketing-seed43/refit"
+        }
+      },
+      "pairs": [
+        {
+          "a": "bar65llm",
+          "b": "bar65nollm",
+          "kind": "main",
+          "delta": 0.005023715307411192,
+          "ci_low": -0.0026021283354770797,
+          "ci_high": 0.012990236455401037,
+          "p_better": 0.89975,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "ratio",
+          "b": "bar65nollm",
+          "kind": "recovery",
+          "delta": 0.003207810485870821,
+          "ci_low": -0.003021488433730199,
+          "ci_high": 0.009814127916994004,
+          "p_better": 0.84275,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "bar65llm",
+          "b": "ratio",
+          "kind": "remaining",
+          "delta": 0.0018159048215403706,
+          "ci_low": -0.0059306740908501325,
+          "ci_high": 0.009430925682352981,
+          "p_better": 0.68025,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "balanced",
+          "b": "ratio",
+          "kind": "scale",
+          "delta": 0.003427444890170994,
+          "ci_low": -0.0027145181700965054,
+          "ci_high": 0.009688295422566778,
+          "p_better": 0.85975,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "balanced",
+          "b": "bar65nollm",
+          "kind": "balanced_recovery",
+          "delta": 0.006635255376041815,
+          "ci_low": -0.00012357856475305457,
+          "ci_high": 0.013564122695633335,
+          "p_better": 0.97325,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "refit",
+          "b": "bar65nollm",
+          "kind": "refit_control",
+          "delta": 0.0,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "p_better": NaN,
+          "resamples_used": 0,
+          "identical_predictions": true
+        }
+      ]
+    },
+    {
+      "dataset": "bank-marketing-seed44",
+      "run_seed": 44,
+      "metric": "balanced_accuracy",
+      "task": "binary",
+      "verdict": "ok",
+      "refusal": null,
+      "test_rows": 9043,
+      "test_fingerprint": "c8ff0afb83713af79117cda7caa3a18b",
+      "missing_arms": [],
+      "arms": {
+        "bar65llm": {
+          "label": "iteration 4",
+          "fits": 5,
+          "val_score": 0.8652111642945627,
+          "test_recorded": 0.864621519791954,
+          "test_reproduced": 0.864621519791954,
+          "selection_gap": 0.0005896445026086772,
+          "class_weight": {
+            "0": 1.0,
+            "1": 8.5
+          },
+          "model": "hist_gbdt",
+          "dir": "bench/runs/artifacts/bar65llm-bank-marketing-seed44/train/iter_04"
+        },
+        "bar65nollm": {
+          "label": "iteration 5",
+          "fits": 5,
+          "val_score": 0.8567723821934985,
+          "test_recorded": 0.8517977351200798,
+          "test_reproduced": 0.8517977351200798,
+          "selection_gap": 0.004974647073418659,
+          "class_weight": {
+            "0": 1.0,
+            "1": 5.062
+          },
+          "model": "hist_gbdt",
+          "dir": "bench/runs/artifacts/bar65nollm-bank-marketing-seed44/train/iter_05"
+        },
+        "ratio": {
+          "label": "cw={'0': 1.0, '1': 7.55}",
+          "fits": 1,
+          "val_score": 0.85985960579003,
+          "test_recorded": NaN,
+          "test_reproduced": 0.863774468432659,
+          "selection_gap": -0.00391486264262908,
+          "class_weight": {
+            "0": 1.0,
+            "1": 7.55
+          },
+          "model": "hist_gbdt",
+          "dir": "bench/runs/weightlever/bank-marketing-seed44/ratio"
+        },
+        "balanced": {
+          "label": "cw=balanced",
+          "fits": 1,
+          "val_score": 0.8608215959328865,
+          "test_recorded": NaN,
+          "test_reproduced": 0.8587012155352722,
+          "selection_gap": 0.0021203803976143076,
+          "class_weight": "balanced",
+          "model": "hist_gbdt",
+          "dir": "bench/runs/weightlever/bank-marketing-seed44/balanced"
+        },
+        "refit": {
+          "label": "cw={'0': 1.0, '1': 5.062}",
+          "fits": 1,
+          "val_score": 0.8567723821934985,
+          "test_recorded": NaN,
+          "test_reproduced": 0.8517977351200798,
+          "selection_gap": 0.004974647073418659,
+          "class_weight": {
+            "0": 1.0,
+            "1": 5.062
+          },
+          "model": "hist_gbdt",
+          "dir": "bench/runs/weightlever/bank-marketing-seed44/refit"
+        }
+      },
+      "pairs": [
+        {
+          "a": "bar65llm",
+          "b": "bar65nollm",
+          "kind": "main",
+          "delta": 0.012823784671874172,
+          "ci_low": 0.004877323846345735,
+          "ci_high": 0.020861307660841055,
+          "p_better": 0.99875,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "ratio",
+          "b": "bar65nollm",
+          "kind": "recovery",
+          "delta": 0.011976733312579202,
+          "ci_low": 0.004887044472607527,
+          "ci_high": 0.019604480830770984,
+          "p_better": 0.99975,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "bar65llm",
+          "b": "ratio",
+          "kind": "remaining",
+          "delta": 0.0008470513592949702,
+          "ci_low": -0.006964325482210475,
+          "ci_high": 0.008481870357418715,
+          "p_better": 0.58675,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "balanced",
+          "b": "ratio",
+          "kind": "scale",
+          "delta": -0.005073252897386804,
+          "ci_low": -0.011771430008637224,
+          "ci_high": 0.0014383711534982514,
+          "p_better": 0.066,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "balanced",
+          "b": "bar65nollm",
+          "kind": "balanced_recovery",
+          "delta": 0.006903480415192398,
+          "ci_low": -0.0008152920581330462,
+          "ci_high": 0.014601741426478182,
+          "p_better": 0.95975,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "refit",
+          "b": "bar65nollm",
+          "kind": "refit_control",
+          "delta": 0.0,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "p_better": NaN,
+          "resamples_used": 0,
+          "identical_predictions": true
+        }
+      ]
+    },
+    {
+      "dataset": "speeddating-seed42",
+      "run_seed": 42,
+      "metric": "balanced_accuracy",
+      "task": "binary",
+      "verdict": "ok",
+      "refusal": null,
+      "test_rows": 1676,
+      "test_fingerprint": "1cb427764715caa82986be0169a1467d",
+      "missing_arms": [],
+      "arms": {
+        "bar65llm": {
+          "label": "iteration 2",
+          "fits": 4,
+          "val_score": 0.7864544513457556,
+          "test_recorded": 0.7977070393374741,
+          "test_reproduced": 0.7977070393374741,
+          "selection_gap": -0.011252587991718466,
+          "class_weight": "balanced",
+          "model": "hist_gbdt",
+          "dir": "bench/runs/artifacts/bar65llm-speeddating-seed42/train/iter_02"
+        },
+        "bar65nollm": {
+          "label": "iteration 5",
+          "fits": 5,
+          "val_score": 0.6998447204968944,
+          "test_recorded": 0.7157660455486543,
+          "test_reproduced": 0.7157660455486543,
+          "selection_gap": -0.015921325051759916,
+          "class_weight": {
+            "0": 1.0,
+            "1": 1.5
+          },
+          "model": "logreg",
+          "dir": "bench/runs/artifacts/bar65nollm-speeddating-seed42/train/iter_05"
+        },
+        "ratio": {
+          "label": "cw={'0': 1.0, '1': 5.07}",
+          "fits": 1,
+          "val_score": 0.7621428571428571,
+          "test_recorded": NaN,
+          "test_reproduced": 0.7707919254658385,
+          "selection_gap": -0.008649068322981401,
+          "class_weight": {
+            "0": 1.0,
+            "1": 5.07
+          },
+          "model": "logreg",
+          "dir": "bench/runs/weightlever/speeddating-seed42/ratio"
+        },
+        "balanced": {
+          "label": "cw=balanced",
+          "fits": 1,
+          "val_score": 0.7617857142857143,
+          "test_recorded": NaN,
+          "test_reproduced": 0.7722463768115941,
+          "selection_gap": -0.010460662525879849,
+          "class_weight": "balanced",
+          "model": "logreg",
+          "dir": "bench/runs/weightlever/speeddating-seed42/balanced"
+        },
+        "refit": {
+          "label": "cw={'0': 1.0, '1': 1.5}",
+          "fits": 1,
+          "val_score": 0.6998447204968944,
+          "test_recorded": NaN,
+          "test_reproduced": 0.7157660455486543,
+          "selection_gap": -0.015921325051759916,
+          "class_weight": {
+            "0": 1.0,
+            "1": 1.5
+          },
+          "model": "logreg",
+          "dir": "bench/runs/weightlever/speeddating-seed42/refit"
+        }
+      },
+      "pairs": [
+        {
+          "a": "bar65llm",
+          "b": "bar65nollm",
+          "kind": "main",
+          "delta": 0.0819409937888198,
+          "ci_low": 0.05436342252638443,
+          "ci_high": 0.10965831595243815,
+          "p_better": 1.0,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "ratio",
+          "b": "bar65nollm",
+          "kind": "recovery",
+          "delta": 0.05502587991718422,
+          "ci_low": 0.028011279563235632,
+          "ci_high": 0.08249193957818557,
+          "p_better": 1.0,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "bar65llm",
+          "b": "ratio",
+          "kind": "remaining",
+          "delta": 0.026915113871635588,
+          "ci_low": 0.005399550769283267,
+          "ci_high": 0.047736053850484926,
+          "p_better": 0.993,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "balanced",
+          "b": "ratio",
+          "kind": "scale",
+          "delta": 0.001454451345755614,
+          "ci_low": -0.0010438959303290419,
+          "ci_high": 0.005639097744360777,
+          "p_better": 0.6325,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "balanced",
+          "b": "bar65nollm",
+          "kind": "balanced_recovery",
+          "delta": 0.05648033126293983,
+          "ci_low": 0.029216769444115945,
+          "ci_high": 0.08461227567900002,
+          "p_better": 1.0,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "refit",
+          "b": "bar65nollm",
+          "kind": "refit_control",
+          "delta": 0.0,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "p_better": NaN,
+          "resamples_used": 0,
+          "identical_predictions": true
+        }
+      ]
+    },
+    {
+      "dataset": "speeddating-seed43",
+      "run_seed": 43,
+      "metric": "balanced_accuracy",
+      "task": "binary",
+      "verdict": "ok",
+      "refusal": null,
+      "test_rows": 1676,
+      "test_fingerprint": "6cf28a0074ee1c3ad89a3557fb831650",
+      "missing_arms": [],
+      "arms": {
+        "bar65llm": {
+          "label": "iteration 2",
+          "fits": 4,
+          "val_score": 0.7843115942028985,
+          "test_recorded": 0.7940062111801243,
+          "test_reproduced": 0.7940062111801243,
+          "selection_gap": -0.009694616977225734,
+          "class_weight": {
+            "0": 1.0,
+            "1": 4.0
+          },
+          "model": "hist_gbdt",
+          "dir": "bench/runs/artifacts/bar65llm-speeddating-seed43/train/iter_02"
+        },
+        "bar65nollm": {
+          "label": "iteration 4",
+          "fits": 5,
+          "val_score": 0.7326552795031056,
+          "test_recorded": 0.7163250517598344,
+          "test_reproduced": 0.7163250517598344,
+          "selection_gap": 0.016330227743271197,
+          "class_weight": {
+            "0": 1.0,
+            "1": 1.5
+          },
+          "model": "hist_gbdt",
+          "dir": "bench/runs/artifacts/bar65nollm-speeddating-seed43/train/iter_04"
+        },
+        "ratio": {
+          "label": "cw={'0': 1.0, '1': 5.07}",
+          "fits": 1,
+          "val_score": 0.7825983436853001,
+          "test_recorded": NaN,
+          "test_reproduced": 0.7818322981366459,
+          "selection_gap": 0.0007660455486542261,
+          "class_weight": {
+            "0": 1.0,
+            "1": 5.07
+          },
+          "model": "hist_gbdt",
+          "dir": "bench/runs/weightlever/speeddating-seed43/ratio"
+        },
+        "balanced": {
+          "label": "cw=balanced",
+          "fits": 1,
+          "val_score": 0.7854813664596273,
+          "test_recorded": NaN,
+          "test_reproduced": 0.7741770186335404,
+          "selection_gap": 0.011304347826086913,
+          "class_weight": "balanced",
+          "model": "hist_gbdt",
+          "dir": "bench/runs/weightlever/speeddating-seed43/balanced"
+        },
+        "refit": {
+          "label": "cw={'0': 1.0, '1': 1.5}",
+          "fits": 1,
+          "val_score": 0.7326552795031056,
+          "test_recorded": NaN,
+          "test_reproduced": 0.7163250517598344,
+          "selection_gap": 0.016330227743271197,
+          "class_weight": {
+            "0": 1.0,
+            "1": 1.5
+          },
+          "model": "hist_gbdt",
+          "dir": "bench/runs/weightlever/speeddating-seed43/refit"
+        }
+      },
+      "pairs": [
+        {
+          "a": "bar65llm",
+          "b": "bar65nollm",
+          "kind": "main",
+          "delta": 0.07768115942028986,
+          "ci_low": 0.05019380779686225,
+          "ci_high": 0.10592732730415208,
+          "p_better": 1.0,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "ratio",
+          "b": "bar65nollm",
+          "kind": "recovery",
+          "delta": 0.06550724637681149,
+          "ci_low": 0.04119378683690171,
+          "ci_high": 0.09129755051381187,
+          "p_better": 1.0,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "bar65llm",
+          "b": "ratio",
+          "kind": "remaining",
+          "delta": 0.012173913043478368,
+          "ci_low": -0.00635456224630263,
+          "ci_high": 0.03163877714043666,
+          "p_better": 0.899,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "balanced",
+          "b": "ratio",
+          "kind": "scale",
+          "delta": -0.0076552795031055165,
+          "ci_low": -0.02113857851566034,
+          "ci_high": 0.005106284689174805,
+          "p_better": 0.12125,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "balanced",
+          "b": "bar65nollm",
+          "kind": "balanced_recovery",
+          "delta": 0.05785196687370597,
+          "ci_low": 0.03383314759371613,
+          "ci_high": 0.08340218069529379,
+          "p_better": 1.0,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "refit",
+          "b": "bar65nollm",
+          "kind": "refit_control",
+          "delta": 0.0,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "p_better": NaN,
+          "resamples_used": 0,
+          "identical_predictions": true
+        }
+      ]
+    },
+    {
+      "dataset": "speeddating-seed44",
+      "run_seed": 44,
+      "metric": "balanced_accuracy",
+      "task": "binary",
+      "verdict": "ok",
+      "refusal": null,
+      "test_rows": 1676,
+      "test_fingerprint": "94a26571f6c91c0047d8e864c0c958c0",
+      "missing_arms": [],
+      "arms": {
+        "bar65llm": {
+          "label": "iteration 4",
+          "fits": 5,
+          "val_score": 0.7790838509316771,
+          "test_recorded": 0.7935507246376812,
+          "test_reproduced": 0.7935507246376812,
+          "selection_gap": -0.01446687370600408,
+          "class_weight": "balanced",
+          "model": "hist_gbdt",
+          "dir": "bench/runs/artifacts/bar65llm-speeddating-seed44/train/iter_04"
+        },
+        "bar65nollm": {
+          "label": "iteration 4",
+          "fits": 5,
+          "val_score": 0.7080072463768116,
+          "test_recorded": 0.7174223602484472,
+          "test_reproduced": 0.7174223602484472,
+          "selection_gap": -0.009415113871635628,
+          "class_weight": {
+            "0": 1.0,
+            "1": 1.5
+          },
+          "model": "hist_gbdt",
+          "dir": "bench/runs/artifacts/bar65nollm-speeddating-seed44/train/iter_04"
+        },
+        "ratio": {
+          "label": "cw={'0': 1.0, '1': 5.07}",
+          "fits": 1,
+          "val_score": 0.7585869565217391,
+          "test_recorded": NaN,
+          "test_reproduced": 0.8042080745341615,
+          "selection_gap": -0.04562111801242241,
+          "class_weight": {
+            "0": 1.0,
+            "1": 5.07
+          },
+          "model": "hist_gbdt",
+          "dir": "bench/runs/weightlever/speeddating-seed44/ratio"
+        },
+        "balanced": {
+          "label": "cw=balanced",
+          "fits": 1,
+          "val_score": 0.7676708074534162,
+          "test_recorded": NaN,
+          "test_reproduced": 0.8056884057971014,
+          "selection_gap": -0.03801759834368523,
+          "class_weight": "balanced",
+          "model": "hist_gbdt",
+          "dir": "bench/runs/weightlever/speeddating-seed44/balanced"
+        },
+        "refit": {
+          "label": "cw={'0': 1.0, '1': 1.5}",
+          "fits": 1,
+          "val_score": 0.7080072463768116,
+          "test_recorded": NaN,
+          "test_reproduced": 0.7174223602484472,
+          "selection_gap": -0.009415113871635628,
+          "class_weight": {
+            "0": 1.0,
+            "1": 1.5
+          },
+          "model": "hist_gbdt",
+          "dir": "bench/runs/weightlever/speeddating-seed44/refit"
+        }
+      },
+      "pairs": [
+        {
+          "a": "bar65llm",
+          "b": "bar65nollm",
+          "kind": "main",
+          "delta": 0.07612836438923398,
+          "ci_low": 0.04917057358773021,
+          "ci_high": 0.10652308027277486,
+          "p_better": 1.0,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "ratio",
+          "b": "bar65nollm",
+          "kind": "recovery",
+          "delta": 0.08678571428571435,
+          "ci_low": 0.06134720348549089,
+          "ci_high": 0.11491232751665509,
+          "p_better": 1.0,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "bar65llm",
+          "b": "ratio",
+          "kind": "remaining",
+          "delta": -0.010657349896480373,
+          "ci_low": -0.029792308322833045,
+          "ci_high": 0.008801556424843988,
+          "p_better": 0.141,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "balanced",
+          "b": "ratio",
+          "kind": "scale",
+          "delta": 0.0014803312629398935,
+          "ci_low": -0.00884126172131508,
+          "ci_high": 0.012615231001196247,
+          "p_better": 0.60725,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "balanced",
+          "b": "bar65nollm",
+          "kind": "balanced_recovery",
+          "delta": 0.08826604554865425,
+          "ci_low": 0.062223225169089416,
+          "ci_high": 0.116080281214324,
+          "p_better": 1.0,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "refit",
+          "b": "bar65nollm",
+          "kind": "refit_control",
+          "delta": 0.0,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "p_better": NaN,
+          "resamples_used": 0,
+          "identical_predictions": true
+        }
+      ]
+    },
+    {
+      "dataset": "spambase-seed42",
+      "run_seed": 42,
+      "metric": "balanced_accuracy",
+      "task": "binary",
+      "verdict": "ok",
+      "refusal": null,
+      "test_rows": 921,
+      "test_fingerprint": "e2b91bd7f4fbf56b6f68af097a3ea79a",
+      "missing_arms": [],
+      "arms": {
+        "bar65llm": {
+          "label": "iteration 2",
+          "fits": 4,
+          "val_score": 0.949340581001604,
+          "test_recorded": 0.9417192452383067,
+          "test_reproduced": 0.9417192452383067,
+          "selection_gap": 0.007621335763297266,
+          "class_weight": null,
+          "model": "xgboost",
+          "dir": "bench/runs/artifacts/bar65llm-spambase-seed42/train/iter_02"
+        },
+        "bar65nollm": {
+          "label": "iteration 1",
+          "fits": 3,
+          "val_score": 0.959419988514624,
+          "test_recorded": 0.9490210018069256,
+          "test_reproduced": 0.9490210018069256,
+          "selection_gap": 0.010398986707698343,
+          "class_weight": null,
+          "model": "hist_gbdt",
+          "dir": "bench/runs/artifacts/bar65nollm-spambase-seed42/train/iter_01"
+        },
+        "ratio": {
+          "label": "cw={'0': 1.0, '1': 1.54}",
+          "fits": 1,
+          "val_score": 0.9571427156973406,
+          "test_recorded": NaN,
+          "test_reproduced": 0.9450220681892236,
+          "selection_gap": 0.012120647508116922,
+          "class_weight": {
+            "0": 1.0,
+            "1": 1.54
+          },
+          "model": "hist_gbdt",
+          "dir": "bench/runs/weightlever/spambase-seed42/ratio"
+        },
+        "balanced": {
+          "label": "cw=balanced",
+          "fits": 1,
+          "val_score": 0.9571427156973406,
+          "test_recorded": NaN,
+          "test_reproduced": 0.948258242246512,
+          "selection_gap": 0.008884473450828545,
+          "class_weight": "balanced",
+          "model": "hist_gbdt",
+          "dir": "bench/runs/weightlever/spambase-seed42/balanced"
+        },
+        "refit": {
+          "label": "cw=None",
+          "fits": 1,
+          "val_score": 0.959419988514624,
+          "test_recorded": NaN,
+          "test_reproduced": 0.9490210018069256,
+          "selection_gap": 0.010398986707698343,
+          "class_weight": null,
+          "model": "hist_gbdt",
+          "dir": "bench/runs/weightlever/spambase-seed42/refit"
+        }
+      },
+      "pairs": [
+        {
+          "a": "bar65llm",
+          "b": "bar65nollm",
+          "kind": "main",
+          "delta": -0.007301756568618867,
+          "ci_low": -0.017234120006510093,
+          "ci_high": 0.001814983942025467,
+          "p_better": 0.0615,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "ratio",
+          "b": "bar65nollm",
+          "kind": "recovery",
+          "delta": -0.003998933617701983,
+          "ci_low": -0.0124133369624985,
+          "ci_high": 0.004034433707754914,
+          "p_better": 0.16625,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "bar65llm",
+          "b": "ratio",
+          "kind": "remaining",
+          "delta": -0.003302822950916884,
+          "ci_low": -0.01289278919871315,
+          "ci_high": 0.006147000790554259,
+          "p_better": 0.24575,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "balanced",
+          "b": "ratio",
+          "kind": "scale",
+          "delta": 0.003236174057288377,
+          "ci_low": -0.0035190283481837253,
+          "ci_high": 0.010273624965104202,
+          "p_better": 0.8185,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "balanced",
+          "b": "bar65nollm",
+          "kind": "balanced_recovery",
+          "delta": -0.0007627595604136062,
+          "ci_low": -0.009271794558127567,
+          "ci_high": 0.008045629730811977,
+          "p_better": 0.41825,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "refit",
+          "b": "bar65nollm",
+          "kind": "refit_control",
+          "delta": 0.0,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "p_better": NaN,
+          "resamples_used": 0,
+          "identical_predictions": true
+        }
+      ]
+    },
+    {
+      "dataset": "spambase-seed43",
+      "run_seed": 43,
+      "metric": "balanced_accuracy",
+      "task": "binary",
+      "verdict": "ok",
+      "refusal": null,
+      "test_rows": 921,
+      "test_fingerprint": "02a6d47d5875a78c6b1d6e66d0af1ef3",
+      "missing_arms": [],
+      "arms": {
+        "bar65llm": {
+          "label": "iteration 1",
+          "fits": 3,
+          "val_score": 0.9538208677399552,
+          "test_recorded": 0.9490210018069256,
+          "test_reproduced": 0.9490210018069256,
+          "selection_gap": 0.004799865933029612,
+          "class_weight": null,
+          "model": "hist_gbdt",
+          "dir": "bench/runs/artifacts/bar65llm-spambase-seed43/train/iter_01"
+        },
+        "bar65nollm": {
+          "label": "iteration 1",
+          "fits": 3,
+          "val_score": 0.957479356026852,
+          "test_recorded": 0.9526718800912349,
+          "test_reproduced": 0.9526718800912349,
+          "selection_gap": 0.004807475935617034,
+          "class_weight": null,
+          "model": "hist_gbdt",
+          "dir": "bench/runs/artifacts/bar65nollm-spambase-seed43/train/iter_01"
+        },
+        "ratio": {
+          "label": "cw={'0': 1.0, '1': 1.54}",
+          "fits": 1,
+          "val_score": 0.953895126636171,
+          "test_recorded": NaN,
+          "test_reproduced": 0.9500503569418526,
+          "selection_gap": 0.0038447696943184617,
+          "class_weight": {
+            "0": 1.0,
+            "1": 1.54
+          },
+          "model": "hist_gbdt",
+          "dir": "bench/runs/weightlever/spambase-seed43/ratio"
+        },
+        "balanced": {
+          "label": "cw=balanced",
+          "fits": 1,
+          "val_score": 0.9552763421057843,
+          "test_recorded": NaN,
+          "test_reproduced": 0.9554933499215024,
+          "selection_gap": -0.00021700781571809546,
+          "class_weight": "balanced",
+          "model": "hist_gbdt",
+          "dir": "bench/runs/weightlever/spambase-seed43/balanced"
+        },
+        "refit": {
+          "label": "cw=None",
+          "fits": 1,
+          "val_score": 0.957479356026852,
+          "test_recorded": NaN,
+          "test_reproduced": 0.9526718800912349,
+          "selection_gap": 0.004807475935617034,
+          "class_weight": null,
+          "model": "hist_gbdt",
+          "dir": "bench/runs/weightlever/spambase-seed43/refit"
+        }
+      },
+      "pairs": [
+        {
+          "a": "bar65llm",
+          "b": "bar65nollm",
+          "kind": "main",
+          "delta": -0.0036508782843093224,
+          "ci_low": -0.011564439263055665,
+          "ci_high": 0.0035906642728905647,
+          "p_better": 0.161,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "ratio",
+          "b": "bar65nollm",
+          "kind": "recovery",
+          "delta": -0.0026215231493823543,
+          "ci_low": -0.010149839683654687,
+          "ci_high": 0.004922744886447294,
+          "p_better": 0.237,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "bar65llm",
+          "b": "ratio",
+          "kind": "remaining",
+          "delta": -0.001029355134926968,
+          "ci_low": -0.010339203034826919,
+          "ci_high": 0.007657667293027294,
+          "p_better": 0.41475,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "balanced",
+          "b": "ratio",
+          "kind": "scale",
+          "delta": 0.005442992979649786,
+          "ci_low": -0.0005311531514296806,
+          "ci_high": 0.012301866592650538,
+          "p_better": 0.95825,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "balanced",
+          "b": "bar65nollm",
+          "kind": "balanced_recovery",
+          "delta": 0.0028214698302674313,
+          "ci_low": -0.0053768275702019,
+          "ci_high": 0.011188149305224807,
+          "p_better": 0.74725,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "refit",
+          "b": "bar65nollm",
+          "kind": "refit_control",
+          "delta": 0.0,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "p_better": NaN,
+          "resamples_used": 0,
+          "identical_predictions": true
+        }
+      ]
+    },
+    {
+      "dataset": "spambase-seed44",
+      "run_seed": 44,
+      "metric": "balanced_accuracy",
+      "task": "binary",
+      "verdict": "ok",
+      "refusal": null,
+      "test_rows": 921,
+      "test_fingerprint": "b201b7b2cc07636f8ac31181a92d6c8f",
+      "missing_arms": [],
+      "arms": {
+        "bar65llm": {
+          "label": "iteration 3",
+          "fits": 5,
+          "val_score": 0.9384393750371295,
+          "test_recorded": 0.9461328830830298,
+          "test_reproduced": 0.9461328830830298,
+          "selection_gap": -0.007693508045900299,
+          "class_weight": null,
+          "model": "extra_trees",
+          "dir": "bench/runs/artifacts/bar65llm-spambase-seed44/train/iter_03"
+        },
+        "bar65nollm": {
+          "label": "iteration 2",
+          "fits": 4,
+          "val_score": 0.9360878433236302,
+          "test_recorded": 0.9599069877662253,
+          "test_reproduced": 0.9599069877662253,
+          "selection_gap": -0.02381914444259514,
+          "class_weight": null,
+          "model": "hist_gbdt",
+          "dir": "bench/runs/artifacts/bar65nollm-spambase-seed44/train/iter_02"
+        },
+        "ratio": {
+          "label": "cw={'0': 1.0, '1': 1.54}",
+          "fits": 1,
+          "val_score": 0.9320184558110061,
+          "test_recorded": NaN,
+          "test_reproduced": 0.9585962261915342,
+          "selection_gap": -0.02657777038052811,
+          "class_weight": {
+            "0": 1.0,
+            "1": 1.54
+          },
+          "model": "hist_gbdt",
+          "dir": "bench/runs/weightlever/spambase-seed44/ratio"
+        },
+        "balanced": {
+          "label": "cw=balanced",
+          "fits": 1,
+          "val_score": 0.9338105705063466,
+          "test_recorded": NaN,
+          "test_reproduced": 0.9563227583755443,
+          "selection_gap": -0.02251218786919762,
+          "class_weight": "balanced",
+          "model": "hist_gbdt",
+          "dir": "bench/runs/weightlever/spambase-seed44/balanced"
+        },
+        "refit": {
+          "label": "cw=None",
+          "fits": 1,
+          "val_score": 0.9360878433236302,
+          "test_recorded": NaN,
+          "test_reproduced": 0.9599069877662253,
+          "selection_gap": -0.02381914444259514,
+          "class_weight": null,
+          "model": "hist_gbdt",
+          "dir": "bench/runs/weightlever/spambase-seed44/refit"
+        }
+      },
+      "pairs": [
+        {
+          "a": "bar65llm",
+          "b": "bar65nollm",
+          "kind": "main",
+          "delta": -0.01377410468319551,
+          "ci_low": -0.02710423892583384,
+          "ci_high": -0.0011394010621240836,
+          "p_better": 0.01575,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "ratio",
+          "b": "bar65nollm",
+          "kind": "recovery",
+          "delta": -0.0013107615746911216,
+          "ci_low": -0.005319295242925718,
+          "ci_high": 0.002865329512893977,
+          "p_better": 0.2455,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "bar65llm",
+          "b": "ratio",
+          "kind": "remaining",
+          "delta": -0.012463343108504388,
+          "ci_low": -0.02532650398511551,
+          "ci_high": 3.936138513704379e-05,
+          "p_better": 0.02575,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "balanced",
+          "b": "ratio",
+          "kind": "scale",
+          "delta": -0.0022734678159899158,
+          "ci_low": -0.008120309972046458,
+          "ci_high": 0.0027173913043477852,
+          "p_better": 0.1805,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "balanced",
+          "b": "bar65nollm",
+          "kind": "balanced_recovery",
+          "delta": -0.0035842293906810374,
+          "ci_low": -0.009559867314437611,
+          "ci_high": 0.0018314276074840599,
+          "p_better": 0.10625,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "refit",
+          "b": "bar65nollm",
+          "kind": "refit_control",
+          "delta": 0.0,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "p_better": NaN,
+          "resamples_used": 0,
+          "identical_predictions": true
+        }
+      ]
+    }
+  ],
+  "refit_check": [
+    {
+      "dataset": "adult",
+      "seed": 42,
+      "identical": true,
+      "delta": 0.0,
+      "tolerance": 0.0026,
+      "ok": true
+    },
+    {
+      "dataset": "adult",
+      "seed": 43,
+      "identical": true,
+      "delta": 0.0,
+      "tolerance": 0.0026,
+      "ok": true
+    },
+    {
+      "dataset": "adult",
+      "seed": 44,
+      "identical": true,
+      "delta": 0.0,
+      "tolerance": 0.0026,
+      "ok": true
+    },
+    {
+      "dataset": "bank-marketing",
+      "seed": 42,
+      "identical": true,
+      "delta": 0.0,
+      "tolerance": 0.0026,
+      "ok": true
+    },
+    {
+      "dataset": "bank-marketing",
+      "seed": 43,
+      "identical": true,
+      "delta": 0.0,
+      "tolerance": 0.0026,
+      "ok": true
+    },
+    {
+      "dataset": "bank-marketing",
+      "seed": 44,
+      "identical": true,
+      "delta": 0.0,
+      "tolerance": 0.0026,
+      "ok": true
+    },
+    {
+      "dataset": "speeddating",
+      "seed": 42,
+      "identical": true,
+      "delta": 0.0,
+      "tolerance": 0.0026,
+      "ok": true
+    },
+    {
+      "dataset": "speeddating",
+      "seed": 43,
+      "identical": true,
+      "delta": 0.0,
+      "tolerance": 0.0026,
+      "ok": true
+    },
+    {
+      "dataset": "speeddating",
+      "seed": 44,
+      "identical": true,
+      "delta": 0.0,
+      "tolerance": 0.0026,
+      "ok": true
+    },
+    {
+      "dataset": "spambase",
+      "seed": 42,
+      "identical": true,
+      "delta": 0.0,
+      "tolerance": 0.0026,
+      "ok": true
+    },
+    {
+      "dataset": "spambase",
+      "seed": 43,
+      "identical": true,
+      "delta": 0.0,
+      "tolerance": 0.0026,
+      "ok": true
+    },
+    {
+      "dataset": "spambase",
+      "seed": 44,
+      "identical": true,
+      "delta": 0.0,
+      "tolerance": 0.0026,
+      "ok": true
+    }
+  ],
+  "published_check": [
+    {
+      "dataset": "speeddating",
+      "seed": 42,
+      "published": 0.0819,
+      "recomputed": 0.0819409937888198,
+      "off_by": 0.0,
+      "matches": true
+    },
+    {
+      "dataset": "speeddating",
+      "seed": 43,
+      "published": 0.0777,
+      "recomputed": 0.07768115942028986,
+      "off_by": 0.0,
+      "matches": true
+    },
+    {
+      "dataset": "speeddating",
+      "seed": 44,
+      "published": 0.0761,
+      "recomputed": 0.07612836438923398,
+      "off_by": 0.0,
+      "matches": true
+    }
+  ],
+  "criterion": {
+    "explains": "docs/HARD-BAR.md의 speeddating 이김에 대한 사후 설명",
+    "treatment": "ratio",
+    "baseline": "bar65nollm",
+    "loop_arm": "bar65llm",
+    "scope_datasets": [
+      "adult",
+      "bank-marketing",
+      "speeddating",
+      "spambase"
+    ],
+    "scope_seeds": [
+      42,
+      43,
+      44
+    ],
+    "positive_prediction_on": "speeddating",
+    "differential_prediction_on": "spambase",
+    "resample_seed": 42,
+    "card_ratios": {
+      "adult": 3.18,
+      "bank-marketing": 7.55,
+      "speeddating": 5.07,
+      "spambase": 1.54
+    },
+    "recorded_weights": {
+      "adult": 2.25,
+      "bank-marketing": 5.062,
+      "speeddating": 1.5,
+      "spambase": null
+    },
+    "noise_floor": 0.0122,
+    "noise_floor_source": "docs/REPEATS.md (낡은 프롬프트·낡은 바에서 잰 수입니다)",
+    "refit_tolerance": 0.0026,
+    "refit_tolerance_source": "docs/FINDINGS-mimic.md A2 (xgboost 재적합, 이 경로에서는 처음 잽니다)",
+    "cells": {
+      "adult-seed42": {
+        "evaluated": true,
+        "main": 0.00261821359875547,
+        "half_of_main": 0.001309106799377735,
+        "recovery": 0.005811118405670945,
+        "recovery_ci": [
+          0.0008640239068225309,
+          0.010881857742918192
+        ],
+        "recovery_identical": false,
+        "recovery_clears_zero": true,
+        "recovery_reaches_half": true,
+        "remaining": -0.0031929048069154753,
+        "remaining_ci": [
+          -0.007600306090740188,
+          0.0013989317502455022
+        ],
+        "remaining_closed": true,
+        "recovery_under_floor": true
+      },
+      "adult-seed43": {
+        "evaluated": true,
+        "main": -0.01003379940620519,
+        "half_of_main": -0.005016899703102595,
+        "recovery": 0.0016783723055071587,
+        "recovery_ci": [
+          -0.0027835022786281693,
+          0.006329959340795382
+        ],
+        "recovery_identical": false,
+        "recovery_clears_zero": false,
+        "recovery_reaches_half": true,
+        "remaining": -0.01171217171171235,
+        "remaining_ci": [
+          -0.018089415350428385,
+          -0.0054294816820154
+        ],
+        "remaining_closed": true,
+        "recovery_under_floor": true
+      },
+      "adult-seed44": {
+        "evaluated": true,
+        "main": 0.005174667102728625,
+        "half_of_main": 0.0025873335513643125,
+        "recovery": 0.005801678838528002,
+        "recovery_ci": [
+          0.0009355774175497878,
+          0.010855070285664481
+        ],
+        "recovery_identical": false,
+        "recovery_clears_zero": true,
+        "recovery_reaches_half": true,
+        "remaining": -0.0006270117357993765,
+        "remaining_ci": [
+          -0.004532780927931851,
+          0.0033548229793300345
+        ],
+        "remaining_closed": true,
+        "recovery_under_floor": true
+      },
+      "bank-marketing-seed42": {
+        "evaluated": true,
+        "main": 0.005667644792397897,
+        "half_of_main": 0.0028338223961989484,
+        "recovery": 0.008817513461559012,
+        "recovery_ci": [
+          0.0018314945544296748,
+          0.01621980928665716
+        ],
+        "recovery_identical": false,
+        "recovery_clears_zero": true,
+        "recovery_reaches_half": true,
+        "remaining": -0.0031498686691611155,
+        "remaining_ci": [
+          -0.009078212975492172,
+          0.002388055957540756
+        ],
+        "remaining_closed": true,
+        "recovery_under_floor": true
+      },
+      "bank-marketing-seed43": {
+        "evaluated": true,
+        "main": 0.005023715307411192,
+        "half_of_main": 0.002511857653705596,
+        "recovery": 0.003207810485870821,
+        "recovery_ci": [
+          -0.003021488433730199,
+          0.009814127916994004
+        ],
+        "recovery_identical": false,
+        "recovery_clears_zero": false,
+        "recovery_reaches_half": true,
+        "remaining": 0.0018159048215403706,
+        "remaining_ci": [
+          -0.0059306740908501325,
+          0.009430925682352981
+        ],
+        "remaining_closed": true,
+        "recovery_under_floor": true
+      },
+      "bank-marketing-seed44": {
+        "evaluated": true,
+        "main": 0.012823784671874172,
+        "half_of_main": 0.006411892335937086,
+        "recovery": 0.011976733312579202,
+        "recovery_ci": [
+          0.004887044472607527,
+          0.019604480830770984
+        ],
+        "recovery_identical": false,
+        "recovery_clears_zero": true,
+        "recovery_reaches_half": true,
+        "remaining": 0.0008470513592949702,
+        "remaining_ci": [
+          -0.006964325482210475,
+          0.008481870357418715
+        ],
+        "remaining_closed": true,
+        "recovery_under_floor": true
+      },
+      "speeddating-seed42": {
+        "evaluated": true,
+        "main": 0.0819409937888198,
+        "half_of_main": 0.0409704968944099,
+        "recovery": 0.05502587991718422,
+        "recovery_ci": [
+          0.028011279563235632,
+          0.08249193957818557
+        ],
+        "recovery_identical": false,
+        "recovery_clears_zero": true,
+        "recovery_reaches_half": true,
+        "remaining": 0.026915113871635588,
+        "remaining_ci": [
+          0.005399550769283267,
+          0.047736053850484926
+        ],
+        "remaining_closed": false,
+        "recovery_under_floor": false
+      },
+      "speeddating-seed43": {
+        "evaluated": true,
+        "main": 0.07768115942028986,
+        "half_of_main": 0.03884057971014493,
+        "recovery": 0.06550724637681149,
+        "recovery_ci": [
+          0.04119378683690171,
+          0.09129755051381187
+        ],
+        "recovery_identical": false,
+        "recovery_clears_zero": true,
+        "recovery_reaches_half": true,
+        "remaining": 0.012173913043478368,
+        "remaining_ci": [
+          -0.00635456224630263,
+          0.03163877714043666
+        ],
+        "remaining_closed": true,
+        "recovery_under_floor": false
+      },
+      "speeddating-seed44": {
+        "evaluated": true,
+        "main": 0.07612836438923398,
+        "half_of_main": 0.03806418219461699,
+        "recovery": 0.08678571428571435,
+        "recovery_ci": [
+          0.06134720348549089,
+          0.11491232751665509
+        ],
+        "recovery_identical": false,
+        "recovery_clears_zero": true,
+        "recovery_reaches_half": true,
+        "remaining": -0.010657349896480373,
+        "remaining_ci": [
+          -0.029792308322833045,
+          0.008801556424843988
+        ],
+        "remaining_closed": true,
+        "recovery_under_floor": false
+      },
+      "spambase-seed42": {
+        "evaluated": true,
+        "main": -0.007301756568618867,
+        "half_of_main": -0.0036508782843094334,
+        "recovery": -0.003998933617701983,
+        "recovery_ci": [
+          -0.0124133369624985,
+          0.004034433707754914
+        ],
+        "recovery_identical": false,
+        "recovery_clears_zero": false,
+        "recovery_reaches_half": false,
+        "remaining": -0.003302822950916884,
+        "remaining_ci": [
+          -0.01289278919871315,
+          0.006147000790554259
+        ],
+        "remaining_closed": true,
+        "recovery_under_floor": true
+      },
+      "spambase-seed43": {
+        "evaluated": true,
+        "main": -0.0036508782843093224,
+        "half_of_main": -0.0018254391421546612,
+        "recovery": -0.0026215231493823543,
+        "recovery_ci": [
+          -0.010149839683654687,
+          0.004922744886447294
+        ],
+        "recovery_identical": false,
+        "recovery_clears_zero": false,
+        "recovery_reaches_half": false,
+        "remaining": -0.001029355134926968,
+        "remaining_ci": [
+          -0.010339203034826919,
+          0.007657667293027294
+        ],
+        "remaining_closed": true,
+        "recovery_under_floor": true
+      },
+      "spambase-seed44": {
+        "evaluated": true,
+        "main": -0.01377410468319551,
+        "half_of_main": -0.006887052341597755,
+        "recovery": -0.0013107615746911216,
+        "recovery_ci": [
+          -0.005319295242925718,
+          0.002865329512893977
+        ],
+        "recovery_identical": false,
+        "recovery_clears_zero": false,
+        "recovery_reaches_half": true,
+        "remaining": -0.012463343108504388,
+        "remaining_ci": [
+          -0.02532650398511551,
+          3.936138513704379e-05
+        ],
+        "remaining_closed": true,
+        "recovery_under_floor": true
+      }
+    },
+    "condition_1_recovery": true,
+    "condition_2_remaining_closed": false,
+    "condition_3_differential": true,
+    "not_evaluated": [],
+    "out_of_scope": [],
+    "verdict": "부분 지지",
+    "status": "부분 지지 — 회수는 세 시드 전부에서 됐지만 남은 격차 조건이 깨졌습니다"
+  }
+}

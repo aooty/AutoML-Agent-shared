@@ -1,0 +1,30 @@
+{
+  "model": "hist_gbdt",
+  "hyperparams": {
+    "max_iter": 400,
+    "learning_rate": 0.15,
+    "max_depth": 12,
+    "class_weight": {
+      "0": 1.0,
+      "1": 1.5
+    }
+  },
+  "preprocessing": {
+    "impute": "median"
+  },
+  "target_missing": {
+    "policy": "reject"
+  },
+  "data": {
+    "path": "bench/data/adult.csv",
+    "target_column": "class"
+  },
+  "metric": "balanced_accuracy",
+  "task": "classification",
+  "seed": 44,
+  "paired_baseline": {
+    "iteration": 1,
+    "path": "bench\\runs\\artifacts\\bar65nollm-adult-seed44\\train\\iter_01\\val_predictions.npz"
+  },
+  "memory_limit_mb": 2048
+}

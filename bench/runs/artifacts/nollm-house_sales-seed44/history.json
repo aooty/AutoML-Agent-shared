@@ -1,0 +1,123 @@
+{
+  "thread_id": "nollm-house_sales-seed44",
+  "goal": {
+    "metric": "r2",
+    "direction": "maximize",
+    "mode": "auto",
+    "threshold": 0.785,
+    "source": "derived",
+    "reference": {
+      "source": "baseline",
+      "metric": "r2",
+      "baseline": 0.7133,
+      "margin": 0.25,
+      "baseline_ci": [
+        0.6922,
+        0.7307
+      ],
+      "baseline_ci_unit": "row",
+      "chance": -0.0
+    }
+  },
+  "iterations": 1,
+  "stop_reason": "goal_reached",
+  "best": {
+    "iteration": 1,
+    "model": "hist_gbdt",
+    "hyperparams": {
+      "max_iter": 150,
+      "learning_rate": 0.1
+    },
+    "preprocessing": {
+      "impute": "median",
+      "scale": false,
+      "missing_indicator": false,
+      "missing_count": false
+    },
+    "metric": "r2",
+    "score": 0.9013413522427323,
+    "metrics": {
+      "r2": 0.9013413522427323,
+      "mae": 64964.176908128786,
+      "rmse": 113928.18860029064,
+      "mean_absolute_error": 64964.176908128786,
+      "root_mean_squared_error": 113928.18860029064,
+      "r2_score": 0.9013413522427323,
+      "r2_ci_low": 0.888178,
+      "r2_ci_high": 0.912546,
+      "train_r2": 0.9371571029079181,
+      "train_mae": 48679.42875752339,
+      "train_val_gap": 0.035816
+    },
+    "train_time_sec": 2.362,
+    "plan_strategy": "baseline: tabular 데이터에 대한 검증된 기본값(hist_gbdt)으로 기준선을 만든다"
+  },
+  "holdout": {
+    "status": "ok",
+    "split": "test",
+    "test_fraction": 0.2,
+    "iteration": 1,
+    "model": "hist_gbdt",
+    "metric": "r2",
+    "score": 0.8952938572586602,
+    "val_score": 0.9013413522427323,
+    "metrics": {
+      "r2": 0.8952938572586602,
+      "mae": 66582.0028523623,
+      "rmse": 120347.4182457928,
+      "mean_absolute_error": 66582.0028523623,
+      "root_mean_squared_error": 120347.4182457928,
+      "r2_score": 0.8952938572586602,
+      "r2_ci_low": 0.880974,
+      "r2_ci_high": 0.906781
+    },
+    "wall_time_sec": 4.127,
+    "selection_gap": 0.006047,
+    "score_ci": [
+      0.880974,
+      0.906781
+    ],
+    "val_inside_ci": true
+  },
+  "models": {
+    "mode": "best",
+    "kept_iteration": 1,
+    "removed": [],
+    "freed_bytes": 0
+  },
+  "history": [
+    {
+      "iteration": 1,
+      "model": "hist_gbdt",
+      "hyperparams": {
+        "max_iter": 150,
+        "learning_rate": 0.1
+      },
+      "dropped_hyperparams": [],
+      "preprocessing": {
+        "impute": "median",
+        "scale": false,
+        "missing_indicator": false,
+        "missing_count": false
+      },
+      "unsupported_claims": [],
+      "status": "ok",
+      "error_type": null,
+      "metrics": {
+        "r2": 0.9013413522427323,
+        "mae": 64964.176908128786,
+        "rmse": 113928.18860029064,
+        "mean_absolute_error": 64964.176908128786,
+        "root_mean_squared_error": 113928.18860029064,
+        "r2_score": 0.9013413522427323,
+        "r2_ci_low": 0.888178,
+        "r2_ci_high": 0.912546,
+        "train_r2": 0.9371571029079181,
+        "train_mae": 48679.42875752339,
+        "train_val_gap": 0.035816
+      },
+      "train_time_sec": 2.362,
+      "critic": null
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "model": "gradient_boosting",
+  "hyperparams": {
+    "n_estimators": 7,
+    "learning_rate": 0.000249,
+    "max_depth": 46,
+    "subsample": 0.667357
+  },
+  "preprocessing": {
+    "impute": "median",
+    "scale": false,
+    "missing_indicator": false,
+    "missing_count": true
+  },
+  "target_missing": {
+    "policy": "reject"
+  },
+  "data": {
+    "path": "bench/data/jungle-chess.csv",
+    "target_column": "class"
+  },
+  "metric": "balanced_accuracy",
+  "task": "classification",
+  "seed": 42,
+  "memory_limit_mb": 2048
+}

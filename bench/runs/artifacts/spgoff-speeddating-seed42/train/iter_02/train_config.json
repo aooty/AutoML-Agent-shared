@@ -1,0 +1,39 @@
+{
+  "model": "hist_gbdt",
+  "hyperparams": {
+    "max_iter": 400,
+    "learning_rate": 0.06,
+    "max_leaf_nodes": 31,
+    "min_samples_leaf": 20,
+    "l2_regularization": 1.0,
+    "early_stopping": true,
+    "validation_fraction": 0.15,
+    "n_iter_no_change": 25,
+    "class_weight": {
+      "0": 1.0,
+      "1": 7.0
+    },
+    "random_state": 42
+  },
+  "preprocessing": {
+    "impute": "none",
+    "scale": false,
+    "missing_indicator": false,
+    "missing_count": false
+  },
+  "target_missing": {
+    "policy": "reject"
+  },
+  "data": {
+    "path": "bench/data/speeddating.csv",
+    "target_column": "match"
+  },
+  "metric": "balanced_accuracy",
+  "task": "classification",
+  "seed": 42,
+  "paired_baseline": {
+    "iteration": 1,
+    "path": "bench\\runs\\artifacts\\spgoff-speeddating-seed42\\train\\iter_01\\val_predictions.npz"
+  },
+  "memory_limit_mb": 2048
+}

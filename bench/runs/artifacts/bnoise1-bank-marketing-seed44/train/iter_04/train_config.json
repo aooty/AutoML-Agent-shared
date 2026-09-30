@@ -1,0 +1,37 @@
+{
+  "model": "hist_gbdt",
+  "hyperparams": {
+    "learning_rate": 0.015,
+    "max_iter": 2500,
+    "max_leaf_nodes": 31,
+    "max_depth": 6,
+    "min_samples_leaf": 40,
+    "l2_regularization": 10.0,
+    "early_stopping": false,
+    "class_weight": {
+      "0": 1.0,
+      "1": 6.5
+    }
+  },
+  "preprocessing": {
+    "impute": "none",
+    "scale": false,
+    "missing_indicator": false,
+    "missing_count": false
+  },
+  "target_missing": {
+    "policy": "reject"
+  },
+  "data": {
+    "path": "bench/data/bank-marketing.csv",
+    "target_column": "Class"
+  },
+  "metric": "balanced_accuracy",
+  "task": "classification",
+  "seed": 44,
+  "paired_baseline": {
+    "iteration": 2,
+    "path": "bench/runs/artifacts/bnoise1-bank-marketing-seed44/train/iter_02/val_predictions.npz"
+  },
+  "memory_limit_mb": 2048
+}

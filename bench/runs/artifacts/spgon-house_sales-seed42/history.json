@@ -1,0 +1,256 @@
+{
+  "thread_id": "spgon-house_sales-seed42",
+  "goal": {
+    "metric": "r2",
+    "direction": "maximize",
+    "mode": "auto",
+    "threshold": 0.7718,
+    "source": "derived",
+    "reference": {
+      "source": "baseline",
+      "metric": "r2",
+      "baseline": 0.6957,
+      "margin": 0.25,
+      "baseline_ci": [
+        0.6735,
+        0.713
+      ],
+      "baseline_ci_unit": "row",
+      "chance": -0.0
+    }
+  },
+  "iterations": 3,
+  "stop_reason": "stalled",
+  "best": {
+    "iteration": 1,
+    "model": "hist_gbdt",
+    "hyperparams": {
+      "max_iter": 600,
+      "learning_rate": 0.06,
+      "max_leaf_nodes": 63,
+      "min_samples_leaf": 20,
+      "l2_regularization": 1.0,
+      "early_stopping": true,
+      "validation_fraction": 0.1,
+      "n_iter_no_change": 30
+    },
+    "preprocessing": {
+      "impute": "median",
+      "scale": false,
+      "missing_indicator": false,
+      "missing_count": false
+    },
+    "metric": "r2",
+    "score": 0.8902327569197764,
+    "metrics": {
+      "r2": 0.8902327569197764,
+      "mae": 64148.441515287705,
+      "rmse": 115774.4241562865,
+      "mean_absolute_error": 64148.441515287705,
+      "root_mean_squared_error": 115774.4241562865,
+      "r2_score": 0.8902327569197764,
+      "r2_ci_low": 0.872536,
+      "r2_ci_high": 0.906251,
+      "train_r2": 0.9588983292983274,
+      "train_mae": 43491.60920196954,
+      "train_val_gap": 0.068666
+    },
+    "train_time_sec": 3.124,
+    "plan_strategy": "Switch from the linear baseline to a gradient-boosted tree ensemble (hist_gbdt) fitted on all 21 numeric columns, with median imputation and no scaling. The ranking gap here is structural: price on King County housing is driven by strong non-linear interactions (lat/long neighbourhood effects crossed with sqft_living and grade, zipcode as a numeric code that only a splitting model can carve into regions). A single hist_gbdt with a moderate learning rate and enough iterations captures those without any feature engineering. Config: max_iter=600, learning_rate=0.06, max_leaf_nodes=63, max_depth=None, min_samples_leaf=20, l2_regularization=1.0, early_stopping=True with validation_fraction=0.1 and n_iter_no_change=30 so the iteration count is chosen inside the training split rather than guessed. Full training set (no subsample) — 13k rows x 21 features is trivial for hist_gbdt, well inside 600s and 2GB. Read train_val_gap on r2 afterwards: if it is large (>0.10) the next attempt shrinks max_leaf_nodes and raises l2_regularization; if train r2 itself is low, the next attempt raises capacity or lowers the learning rate with more iterations."
+  },
+  "holdout": {
+    "status": "ok",
+    "split": "test",
+    "test_fraction": 0.2,
+    "iteration": 1,
+    "model": "hist_gbdt",
+    "metric": "r2",
+    "score": 0.8825262762688825,
+    "val_score": 0.8902327569197764,
+    "metrics": {
+      "r2": 0.8825262762688825,
+      "mae": 68253.80977969505,
+      "rmse": 133263.99112378637,
+      "mean_absolute_error": 68253.80977969505,
+      "root_mean_squared_error": 133263.99112378637,
+      "r2_score": 0.8825262762688825,
+      "r2_ci_low": 0.851793,
+      "r2_ci_high": 0.907001
+    },
+    "wall_time_sec": 4.223,
+    "selection_gap": 0.007706,
+    "score_ci": [
+      0.851793,
+      0.907001
+    ],
+    "val_inside_ci": true
+  },
+  "models": {
+    "mode": "best",
+    "kept_iteration": 1,
+    "removed": [
+      2,
+      3
+    ],
+    "freed_bytes": 695289331
+  },
+  "history": [
+    {
+      "iteration": 1,
+      "model": "hist_gbdt",
+      "hyperparams": {
+        "max_iter": 600,
+        "learning_rate": 0.06,
+        "max_leaf_nodes": 63,
+        "min_samples_leaf": 20,
+        "l2_regularization": 1.0,
+        "early_stopping": true,
+        "validation_fraction": 0.1,
+        "n_iter_no_change": 30
+      },
+      "dropped_hyperparams": [],
+      "preprocessing": {
+        "impute": "median",
+        "scale": false,
+        "missing_indicator": false,
+        "missing_count": false
+      },
+      "unsupported_claims": [],
+      "status": "ok",
+      "error_type": null,
+      "metrics": {
+        "r2": 0.8902327569197764,
+        "mae": 64148.441515287705,
+        "rmse": 115774.4241562865,
+        "mean_absolute_error": 64148.441515287705,
+        "root_mean_squared_error": 115774.4241562865,
+        "r2_score": 0.8902327569197764,
+        "r2_ci_low": 0.872536,
+        "r2_ci_high": 0.906251,
+        "train_r2": 0.9588983292983274,
+        "train_mae": 43491.60920196954,
+        "train_val_gap": 0.068666
+      },
+      "train_time_sec": 3.124,
+      "critic": {
+        "failure_type": "hyperparam",
+        "evidence": "Iteration 1 (hist_gbdt, max_iter=600, lr=0.06, max_leaf_nodes=63, min_samples_leaf=20, l2=1.0, early_stopping) scored val r2=0.8902 (95% CI 0.8725~0.9063), clearing the 0.7718 bar by 0.118 — the entire interval sits far above the bar and above the baseline CI ceiling of 0.7130, so the pass is not fragile against the threshold. No dropped_hyperparams, returncode 0, train_time 3.1s of a 600s budget (0.5%), so cost is not a constraint. The fragility that is worth naming is capacity/regularisation, not the bar: train_r2=0.9589 vs val_r2=0.8902 gives train_val_gap=0.0687 (train_mae 43,492 vs val_mae 64,148, a 47% degradation), i.e. the model memorises noticeably more than it generalises — with 63 leaves, no depth cap and l2=1.0 this is the top end of the capacity range, and the single passing score hides whether the gap is bought capacity or wasted capacity. Only one family and one point in its hyperparameter space has been measured (hist_gbdt 1회, 최고 0.8902; 짝지은 검정 없음), and 4 iterations remain, so nothing about the shape of this family's response surface is known. The slice width is 0.0337, so only a change expected to move r2 by more than ~0.03 would be resolvable as a genuine difference; smaller regularisation nudges will read as noise.",
+        "direction": "Spend the cheap budget probing capacity rather than protecting the pass: refit hist_gbdt with the gap-shrinking direction its own plan pre-committed to — smaller trees, stronger l2, lower learning rate with more iterations under early stopping — leaving preprocessing untouched so the next row is attributable to the capacity lever alone, and read whether the 0.0687 gap closes with val r2 held or improved (a lower score cannot cost the run, since best is chosen on validation).",
+        "concrete_changes": {
+          "model": "hist_gbdt",
+          "max_leaf_nodes": 31,
+          "min_samples_leaf": 40,
+          "l2_regularization": 10.0,
+          "learning_rate": 0.03,
+          "max_iter": 2000,
+          "early_stopping": true,
+          "validation_fraction": 0.1,
+          "n_iter_no_change": 50,
+          "impute": "none",
+          "scale": false,
+          "missing_indicator": false,
+          "missing_count": false
+        },
+        "unsupported_claims": [],
+        "source": "llm"
+      }
+    },
+    {
+      "iteration": 2,
+      "model": "hist_gbdt",
+      "hyperparams": {
+        "max_iter": 3000,
+        "learning_rate": 0.03,
+        "max_leaf_nodes": 31,
+        "max_depth": 8,
+        "min_samples_leaf": 40,
+        "l2_regularization": 10.0,
+        "max_bins": 255,
+        "early_stopping": true,
+        "validation_fraction": 0.1,
+        "n_iter_no_change": 60
+      },
+      "dropped_hyperparams": [],
+      "preprocessing": {
+        "impute": "median",
+        "scale": false,
+        "missing_indicator": false,
+        "missing_count": false
+      },
+      "unsupported_claims": [],
+      "status": "ok",
+      "error_type": null,
+      "metrics": {
+        "r2": 0.889944994579722,
+        "mae": 64295.432033207275,
+        "rmse": 115926.08011540874,
+        "mean_absolute_error": 64295.432033207275,
+        "root_mean_squared_error": 115926.08011540874,
+        "r2_score": 0.889944994579722,
+        "r2_ci_low": 0.873274,
+        "r2_ci_high": 0.903989,
+        "train_r2": 0.9464299002924736,
+        "train_mae": 48957.062449767094,
+        "train_val_gap": 0.056485
+      },
+      "train_time_sec": 6.393,
+      "critic": {
+        "failure_type": "hyperparam",
+        "evidence": "Iteration 2 (hist_gbdt, 31 leaves, max_depth=8, min_samples_leaf=40, l2=10, lr=0.03, max_iter=3000 w/ early stopping) scored val r2=0.8899 (95% CI 0.8733~0.9040, width 0.0307), clearing the 0.7718 bar by 0.118 with the entire interval far above both the bar and the baseline CI ceiling of 0.7130 — the pass is not fragile against the threshold. The paired test against iteration 1 gives Δ=-0.0003 (95% CI -0.0068~+0.0068, P(better)=0.46), so this is movement the measurement cannot resolve, not a regression: a 2x-to-10x move on every regularisation knob (63→31 leaves, uncapped→depth 8, msl 20→40, l2 1→10, lr 0.06→0.03) bought no resolvable change in val r2. What it did move is the only thing that resolved at all: train_r2 0.9589→0.9464 and train_val_gap 0.0687→0.0565 (train_mae 43,492→48,957 vs val_mae 64,148→64,295), i.e. capacity was being spent on training-only structure — halving effective per-tree capacity cost nothing on validation. That says the val r2 ≈ 0.89 plateau is a ranking ceiling of this configuration space, not a capacity setting, and two points 10x apart in regularisation landing inside each other's CIs is exactly the flat-response signature. Cost is a non-constraint: 6.4s of 600s, returncode 0, no dropped_hyperparams, and preprocessing applied as planned (median impute, no scale, both missingness flags off) — note the previous prescription's impute:none never reached the pipeline, so nothing here is evidence about that lever. 3 iterations remain and only hist_gbdt has been measured (2회, 최고 0.8902), so the response surface outside this one family and one preprocessing setting is entirely unknown.",
+        "direction": "Stop probing the capacity axis — 10x on every regulariser moved val r2 by less than the 0.0307 the slice can resolve — and spend the next attempt on the one untried axis that could change the ranking rather than smooth it: fit a different tree family (random_forest, a fully-grown bagged ensemble whose error is variance-averaging rather than sequential fitting) on identical preprocessing, so the row attributes cleanly to the family and tells you whether ~0.89 is this dataset's numeric-column ceiling or just hist_gbdt's.",
+        "concrete_changes": {
+          "model": "random_forest",
+          "n_estimators": 800,
+          "max_features": 0.4,
+          "min_samples_leaf": 1,
+          "max_depth": null,
+          "n_jobs": -1,
+          "impute": "median",
+          "scale": false,
+          "missing_indicator": false,
+          "missing_count": false
+        },
+        "unsupported_claims": [],
+        "source": "llm"
+      }
+    },
+    {
+      "iteration": 3,
+      "model": "random_forest",
+      "hyperparams": {
+        "n_estimators": 600,
+        "max_features": 0.4,
+        "min_samples_leaf": 1,
+        "min_samples_split": 2,
+        "bootstrap": true,
+        "n_jobs": -1,
+        "random_state": 42
+      },
+      "dropped_hyperparams": [],
+      "preprocessing": {
+        "impute": "median",
+        "scale": false,
+        "missing_indicator": false,
+        "missing_count": false
+      },
+      "unsupported_claims": [],
+      "status": "ok",
+      "error_type": null,
+      "metrics": {
+        "r2": 0.8767069960062006,
+        "mae": 69251.28466535585,
+        "rmse": 122700.25586218838,
+        "mean_absolute_error": 69251.28466535585,
+        "root_mean_squared_error": 122700.25586218838,
+        "r2_score": 0.8767069960062006,
+        "r2_ci_low": 0.86379,
+        "r2_ci_high": 0.888587,
+        "train_r2": 0.9831273676165795,
+        "train_mae": 25433.863245931985,
+        "train_val_gap": 0.10642
+      },
+      "train_time_sec": 4.397,
+      "critic": null
+    }
+  ]
+}

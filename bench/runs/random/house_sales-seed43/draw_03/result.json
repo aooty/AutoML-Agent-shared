@@ -1,0 +1,40 @@
+{
+  "metrics": {
+    "r2": 0.8464759839968603,
+    "mae": 77022.19585988714,
+    "rmse": 143886.9642964674,
+    "mean_absolute_error": 77022.19585988714,
+    "root_mean_squared_error": 143886.9642964674,
+    "r2_score": 0.8464759839968603,
+    "r2_ci_low": 0.82781,
+    "r2_ci_high": 0.86274,
+    "train_r2": 0.880641828521699,
+    "train_mae": 61976.19034874385,
+    "train_val_gap": 0.034166
+  },
+  "split": "val",
+  "applied_hyperparams": {
+    "n_estimators": 31,
+    "max_depth": 59,
+    "min_samples_leaf": 12
+  },
+  "dropped_hyperparams": [],
+  "applied_preprocessing": {
+    "impute": "mean",
+    "scale": true,
+    "missing_indicator": false,
+    "missing_count": true
+  },
+  "train_time_sec": 1.847,
+  "status": "ok",
+  "error_type": null,
+  "log_tail": "features: 수치 21개 + 범주형 0개를 one-hot 0열로\nloaded bench/data/house_sales.csv: 21613 rows x 21 encoded features\nmemory estimate 13.9 MB vs budget 2048.0 MB\nsplit: train 60% / val 20% / test 20% (not stratified, seed=43) — test는 반복 밖에서 저장된 모델로 1회만 채점합니다 {'train': 12967, 'val': 4323, 'test': 4323}\nestimator=random_forest applied_hyperparams={'n_estimators': 31, 'max_depth': 59, 'min_samples_leaf': 12}\npreprocessing applied: impute=mean scale=True missing_indicator=False missing_count=True\nfitting on 12967 rows, validating on 4323 rows\nmodel saved to model.joblib (2.3 MB)\nfeature schema saved to feature_schema.json (21 columns)\nr2=0.8465 (95% CI 0.8278~0.8627, 폭 0.0349) — row 단위 재표집 400회\nval predictions saved to val_predictions.npz (32 KB)\npaired comparison skipped (no_baseline)\ntrain_val_gap measured on r2 (maximize)\nmetrics: {\"r2\": 0.8465, \"mae\": 77022.1959, \"rmse\": 143886.9643, \"mean_absolute_error\": 77022.1959, \"root_mean_squared_error\": 143886.9643, \"r2_score\": 0.8465, \"r2_ci_low\": 0.8278, \"r2_ci_high\": 0.8627, \"train_r2\": 0.8806, \"train_mae\": 61976.1903, \"train_val_gap\": 0.0342}",
+  "paired": {
+    "metric": "r2",
+    "baseline_iteration": null,
+    "status": "skipped",
+    "reason": "no_baseline"
+  },
+  "model_path": "bench\\runs\\random\\house_sales-seed43\\draw_03\\model.joblib",
+  "schema_path": "bench\\runs\\random\\house_sales-seed43\\draw_03\\feature_schema.json"
+}

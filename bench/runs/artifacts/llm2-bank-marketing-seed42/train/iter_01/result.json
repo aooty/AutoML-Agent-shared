@@ -1,0 +1,57 @@
+{
+  "metrics": {
+    "f1": 0.6270307639128931,
+    "accuracy": 0.8806679938066799,
+    "balanced_accuracy": 0.8705227089339359,
+    "precision": 0.4942779291553134,
+    "recall": 0.8572778827977315,
+    "roc_auc": 0.9386658477635801,
+    "pr_auc": 0.6324493659750648,
+    "average_precision": 0.6324493659750648,
+    "specificity": 0.883768,
+    "balanced_accuracy_at_best_cut": 0.8812,
+    "cut_headroom": 0.010677,
+    "brier": 0.084501,
+    "calibration_error": 0.093488,
+    "balanced_accuracy_ci_low": 0.85878,
+    "balanced_accuracy_ci_high": 0.880791,
+    "train_f1": 0.736693690518153,
+    "train_accuracy": 0.9173855341738554,
+    "train_balanced_accuracy": 0.9480260870152152,
+    "train_val_gap": 0.077503
+  },
+  "split": "val",
+  "applied_hyperparams": {
+    "max_iter": 400,
+    "learning_rate": 0.08,
+    "max_leaf_nodes": 31,
+    "l2_regularization": 1.0,
+    "class_weight": "balanced",
+    "early_stopping": false
+  },
+  "dropped_hyperparams": [],
+  "applied_preprocessing": {
+    "impute": "median",
+    "scale": false,
+    "missing_indicator": false,
+    "missing_count": false
+  },
+  "train_time_sec": 7.874,
+  "status": "ok",
+  "error_type": null,
+  "log_tail": "features: 수치 7개 + 범주형 9개를 one-hot 44열로\nloaded bench/data/bank-marketing.csv: 45211 rows x 51 encoded features\nmemory estimate 35.2 MB vs budget 2048.0 MB\nsplit: train 60% / val 20% / test 20% (stratified, seed=42) — test는 반복 밖에서 저장된 모델로 1회만 채점합니다 {'train': 27126, 'val': 9042, 'test': 9043}\nestimator=hist_gbdt applied_hyperparams={'max_iter': 400, 'learning_rate': 0.08, 'max_leaf_nodes': 31, 'l2_regularization': 1.0, 'class_weight': 'balanced', 'early_stopping': False}\npreprocessing applied: impute=median scale=False missing_indicator=False missing_count=False\nfitting on 27126 rows, validating on 9042 rows\nmodel saved to model.joblib (1.4 MB)\nfeature schema saved to feature_schema.json (51 columns)\nbalanced_accuracy=0.8705 (95% CI 0.8588~0.8808, 폭 0.0220) — row 단위 재표집 400회\nval predictions saved to val_predictions.npz (69 KB)\npaired comparison skipped (no_baseline)\ntrain_val_gap measured on balanced_accuracy (maximize)\nmetrics: {\"f1\": 0.627, \"accuracy\": 0.8807, \"balanced_accuracy\": 0.8705, \"precision\": 0.4943, \"recall\": 0.8573, \"roc_auc\": 0.9387, \"pr_auc\": 0.6324, \"average_precision\": 0.6324, \"specificity\": 0.8838, \"balanced_accuracy_at_best_cut\": 0.8812, \"cut_headroom\": 0.0107, \"brier\": 0.0845, \"calibration_error\": 0.0935, \"balanced_accuracy_ci_low\": 0.8588, \"balanced_accuracy_ci_high\": 0.8808, \"train_f1\": 0.7367, \"train_accuracy\": 0.9174, \"train_balanced_accuracy\": 0.948, \"train_val_gap\": 0.0775}",
+  "threads": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "cpu_count": 20
+  },
+  "paired": {
+    "metric": "balanced_accuracy",
+    "baseline_iteration": null,
+    "status": "skipped",
+    "reason": "no_baseline"
+  },
+  "model_path": "bench\\runs\\artifacts\\llm2-bank-marketing-seed42\\train\\iter_01\\model.joblib",
+  "schema_path": "bench\\runs\\artifacts\\llm2-bank-marketing-seed42\\train\\iter_01\\feature_schema.json"
+}

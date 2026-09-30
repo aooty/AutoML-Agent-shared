@@ -1,0 +1,29 @@
+{
+  "model": "svc",
+  "hyperparams": {
+    "kernel": "rbf",
+    "C": 10.0,
+    "class_weight": null
+  },
+  "preprocessing": {
+    "impute": "median",
+    "scale": true,
+    "missing_indicator": false,
+    "missing_count": false
+  },
+  "target_missing": {
+    "policy": "reject"
+  },
+  "data": {
+    "path": "bench/data/spambase.csv",
+    "target_column": "class"
+  },
+  "metric": "balanced_accuracy",
+  "task": "classification",
+  "seed": 44,
+  "paired_baseline": {
+    "iteration": 3,
+    "path": "bench/runs/artifacts/bnoise3-spambase-seed44/train/iter_03/val_predictions.npz"
+  },
+  "memory_limit_mb": 2048
+}

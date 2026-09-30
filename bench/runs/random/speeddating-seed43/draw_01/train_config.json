@@ -1,0 +1,27 @@
+{
+  "model": "hist_gbdt",
+  "hyperparams": {
+    "max_iter": 7,
+    "learning_rate": 0.007836,
+    "max_depth": 48,
+    "max_leaf_nodes": 3,
+    "l2_regularization": 12.103485
+  },
+  "preprocessing": {
+    "impute": "mean",
+    "scale": true,
+    "missing_indicator": true,
+    "missing_count": true
+  },
+  "target_missing": {
+    "policy": "reject"
+  },
+  "data": {
+    "path": "bench/data/speeddating.csv",
+    "target_column": "match"
+  },
+  "metric": "balanced_accuracy",
+  "task": "classification",
+  "seed": 43,
+  "memory_limit_mb": 2048
+}

@@ -1,0 +1,25 @@
+{
+  "model": "logreg",
+  "hyperparams": {
+    "C": 0.001462,
+    "max_iter": 3,
+    "class_weight": null
+  },
+  "preprocessing": {
+    "impute": "most_frequent",
+    "scale": false,
+    "missing_indicator": false,
+    "missing_count": true
+  },
+  "target_missing": {
+    "policy": "reject"
+  },
+  "data": {
+    "path": "bench/data/jungle-chess.csv",
+    "target_column": "class"
+  },
+  "metric": "balanced_accuracy",
+  "task": "classification",
+  "seed": 43,
+  "memory_limit_mb": 2048
+}

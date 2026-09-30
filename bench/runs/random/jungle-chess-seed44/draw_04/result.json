@@ -1,0 +1,47 @@
+{
+  "metrics": {
+    "f1": 0.708683999507159,
+    "accuracy": 0.751561802766622,
+    "balanced_accuracy": 0.7951691160540232,
+    "precision": 0.6996796193224765,
+    "recall": 0.7951691160540232,
+    "balanced_accuracy_ci_low": 0.785848,
+    "balanced_accuracy_ci_high": 0.804057,
+    "train_f1": 0.7112993952318826,
+    "train_accuracy": 0.753635045182403,
+    "train_balanced_accuracy": 0.8021206236322739,
+    "train_val_gap": 0.006952
+  },
+  "split": "val",
+  "applied_hyperparams": {
+    "n_estimators": 19,
+    "max_depth": 54,
+    "min_samples_leaf": 108,
+    "class_weight": "balanced"
+  },
+  "dropped_hyperparams": [],
+  "applied_preprocessing": {
+    "impute": "median",
+    "scale": true,
+    "missing_indicator": false,
+    "missing_count": false
+  },
+  "train_time_sec": 2.02,
+  "status": "ok",
+  "error_type": null,
+  "log_tail": "features: 수치 6개 + 범주형 0개를 one-hot 0열로\nloaded bench/data/jungle-chess.csv: 44819 rows x 6 encoded features\nmemory estimate 8.2 MB vs budget 2048.0 MB\nsplit: train 60% / val 20% / test 20% (stratified, seed=44) — test는 반복 밖에서 저장된 모델로 1회만 채점합니다 {'train': 26891, 'val': 8964, 'test': 8964}\nestimator=extra_trees applied_hyperparams={'n_estimators': 19, 'max_depth': 54, 'min_samples_leaf': 108, 'class_weight': 'balanced'}\npreprocessing applied: impute=median scale=True missing_indicator=False missing_count=False\nfitting on 26891 rows, validating on 8964 rows\nmodel saved to model.joblib (668 KB)\nfeature schema saved to feature_schema.json (6 columns)\nroc_auc skipped: defined for binary targets only (average=macro)\npr_auc skipped: defined for binary targets only (average=macro)\nbalanced_accuracy=0.7952 (95% CI 0.7858~0.8041, 폭 0.0182) — row 단위 재표집 400회\nval predictions saved to val_predictions.npz (3 KB)\npaired comparison skipped (no_baseline)\ntrain_val_gap measured on balanced_accuracy (maximize)\nmetrics: {\"f1\": 0.7087, \"accuracy\": 0.7516, \"balanced_accuracy\": 0.7952, \"precision\": 0.6997, \"recall\": 0.7952, \"balanced_accuracy_ci_low\": 0.7858, \"balanced_accuracy_ci_high\": 0.8041, \"train_f1\": 0.7113, \"train_accuracy\": 0.7536, \"train_balanced_accuracy\": 0.8021, \"train_val_gap\": 0.007}",
+  "threads": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "cpu_count": 20
+  },
+  "paired": {
+    "metric": "balanced_accuracy",
+    "baseline_iteration": null,
+    "status": "skipped",
+    "reason": "no_baseline"
+  },
+  "model_path": "bench\\runs\\random\\jungle-chess-seed44\\draw_04\\model.joblib",
+  "schema_path": "bench\\runs\\random\\jungle-chess-seed44\\draw_04\\feature_schema.json"
+}

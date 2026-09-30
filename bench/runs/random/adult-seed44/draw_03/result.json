@@ -1,0 +1,49 @@
+{
+  "metrics": {
+    "f1": 0.6064220183486239,
+    "accuracy": 0.7365134609478964,
+    "balanced_accuracy": 0.7749077299565699,
+    "precision": 0.47180585296216987,
+    "recall": 0.8485237483953787,
+    "roc_auc": 0.8758305225112191,
+    "pr_auc": 0.695610329071999,
+    "average_precision": 0.695610329071999,
+    "specificity": 0.701292,
+    "balanced_accuracy_at_best_cut": 0.7857,
+    "cut_headroom": 0.010792,
+    "brier": 0.158275,
+    "calibration_error": 0.187265,
+    "balanced_accuracy_ci_low": 0.765911,
+    "balanced_accuracy_ci_high": 0.78416,
+    "train_f1": 0.6088866189989786,
+    "train_accuracy": 0.7386704886704887,
+    "train_balanced_accuracy": 0.7768648685000177,
+    "train_val_gap": 0.001957
+  },
+  "split": "val",
+  "applied_hyperparams": {
+    "n_estimators": 891,
+    "max_depth": 11,
+    "min_samples_leaf": 197,
+    "class_weight": "balanced"
+  },
+  "dropped_hyperparams": [],
+  "applied_preprocessing": {
+    "impute": "most_frequent",
+    "scale": false,
+    "missing_indicator": true,
+    "missing_count": true
+  },
+  "train_time_sec": 7.647,
+  "status": "ok",
+  "error_type": null,
+  "log_tail": "features: 수치 6개 + 범주형 8개를 one-hot 102열로\nloaded bench/data/adult.csv: 48842 rows x 108 encoded features\nmemory estimate 161.0 MB vs budget 2048.0 MB\nsplit: train 60% / val 20% / test 20% (stratified, seed=44) — test는 반복 밖에서 저장된 모델로 1회만 채점합니다 {'train': 29304, 'val': 9769, 'test': 9769}\nestimator=extra_trees applied_hyperparams={'n_estimators': 891, 'max_depth': 11, 'min_samples_leaf': 197, 'class_weight': 'balanced'}\npreprocessing applied: impute=most_frequent scale=False missing_indicator=True missing_count=True\nfitting on 29304 rows, validating on 9769 rows\nmodel saved to model.joblib (3.8 MB)\nfeature schema saved to feature_schema.json (108 columns)\nbalanced_accuracy=0.7749 (95% CI 0.7659~0.7842, 폭 0.0182) — row 단위 재표집 400회\nval predictions saved to val_predictions.npz (74 KB)\npaired comparison skipped (no_baseline)\ntrain_val_gap measured on balanced_accuracy (maximize)\nmetrics: {\"f1\": 0.6064, \"accuracy\": 0.7365, \"balanced_accuracy\": 0.7749, \"precision\": 0.4718, \"recall\": 0.8485, \"roc_auc\": 0.8758, \"pr_auc\": 0.6956, \"average_precision\": 0.6956, \"specificity\": 0.7013, \"balanced_accuracy_at_best_cut\": 0.7857, \"cut_headroom\": 0.0108, \"brier\": 0.1583, \"calibration_error\": 0.1873, \"balanced_accuracy_ci_low\": 0.7659, \"balanced_accuracy_ci_high\": 0.7842, \"train_f1\": 0.6089, \"train_accuracy\": 0.7387, \"train_balanced_accuracy\": 0.7769, \"train_val_gap\": 0.002}",
+  "paired": {
+    "metric": "balanced_accuracy",
+    "baseline_iteration": null,
+    "status": "skipped",
+    "reason": "no_baseline"
+  },
+  "model_path": "bench\\runs\\random\\adult-seed44\\draw_03\\model.joblib",
+  "schema_path": "bench\\runs\\random\\adult-seed44\\draw_03\\feature_schema.json"
+}

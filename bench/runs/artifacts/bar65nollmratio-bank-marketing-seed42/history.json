@@ -1,0 +1,348 @@
+{
+  "thread_id": "bar65nollmratio-bank-marketing-seed42",
+  "goal": {
+    "metric": "balanced_accuracy",
+    "direction": "maximize",
+    "mode": "auto",
+    "threshold": 0.8817,
+    "source": "derived",
+    "reference": {
+      "source": "baseline",
+      "metric": "balanced_accuracy",
+      "baseline": 0.662,
+      "margin": 0.65,
+      "ks": 0.6801,
+      "ranking_ceiling": 0.84,
+      "exceeds_ranking_ceiling": true,
+      "required_ks": 0.7634,
+      "ks_shortfall": 0.0833,
+      "passable_margin": 0.526,
+      "baseline_ci": [
+        0.6496,
+        0.6765
+      ],
+      "baseline_ci_unit": "row",
+      "chance": 0.5
+    }
+  },
+  "iterations": 4,
+  "stop_reason": "stalled",
+  "critic_runs": 3,
+  "budget": {
+    "spent_sec": 39.078,
+    "total_sec": 3600.0
+  },
+  "best": {
+    "iteration": 2,
+    "model": "hist_gbdt",
+    "hyperparams": {
+      "max_iter": 400,
+      "learning_rate": 0.15,
+      "max_depth": 12,
+      "class_weight": {
+        "0": 1.0,
+        "1": 7.547
+      }
+    },
+    "preprocessing": {
+      "impute": "median",
+      "scale": false,
+      "missing_indicator": false,
+      "missing_count": false
+    },
+    "metric": "balanced_accuracy",
+    "score": 0.8789116512798754,
+    "metrics": {
+      "f1": 0.597758405977584,
+      "accuracy": 0.8571112585711126,
+      "balanced_accuracy": 0.8789116512798754,
+      "precision": 0.4456824512534819,
+      "recall": 0.9073724007561437,
+      "roc_auc": 0.9412421842740301,
+      "pr_auc": 0.6389521678473267,
+      "average_precision": 0.6389521678473267,
+      "specificity": 0.850451,
+      "balanced_accuracy_at_best_cut": 0.8821,
+      "cut_headroom": 0.003188,
+      "brier": 0.099633,
+      "calibration_error": 0.13683,
+      "balanced_accuracy_ci_low": 0.868804,
+      "balanced_accuracy_ci_high": 0.887641,
+      "train_f1": 0.6213773761296354,
+      "train_accuracy": 0.8656270736562708,
+      "train_balanced_accuracy": 0.8990331207102196,
+      "train_val_gap": 0.020121
+    },
+    "train_time_sec": 4.838,
+    "plan_strategy": "하이퍼파라미터 재탐색: learning_rate와 깊이 조합을 이전과 다른 지점에서 시도한다"
+  },
+  "holdout": {
+    "status": "ok",
+    "split": "test",
+    "test_fraction": 0.2,
+    "iteration": 2,
+    "model": "hist_gbdt",
+    "metric": "balanced_accuracy",
+    "score": 0.8649713605259388,
+    "val_score": 0.8789116512798754,
+    "metrics": {
+      "f1": 0.5823970037453183,
+      "accuracy": 0.8520402521287184,
+      "balanced_accuracy": 0.8649713605259388,
+      "precision": 0.434762348555452,
+      "recall": 0.8818525519848771,
+      "roc_auc": 0.9324934630504028,
+      "pr_auc": 0.6217925672812362,
+      "average_precision": 0.6217925672812362,
+      "specificity": 0.84809,
+      "balanced_accuracy_at_best_cut": 0.8724,
+      "cut_headroom": 0.007429,
+      "brier": 0.1021,
+      "calibration_error": 0.135425,
+      "balanced_accuracy_ci_low": 0.854301,
+      "balanced_accuracy_ci_high": 0.875822
+    },
+    "wall_time_sec": 5.194,
+    "selection_gap": 0.01394,
+    "score_ci": [
+      0.854301,
+      0.875822
+    ],
+    "val_inside_ci": false
+  },
+  "models": {
+    "mode": "all",
+    "kept_iteration": 2,
+    "removed": [],
+    "freed_bytes": 0
+  },
+  "history": [
+    {
+      "iteration": 1,
+      "model": "hist_gbdt",
+      "hyperparams": {
+        "max_iter": 150,
+        "learning_rate": 0.1
+      },
+      "dropped_hyperparams": [],
+      "preprocessing": {
+        "impute": "median",
+        "scale": false,
+        "missing_indicator": false,
+        "missing_count": false
+      },
+      "internal_validation": {
+        "held_out_rows": 2713,
+        "fit_rows": 24413,
+        "validation_fraction": 0.1,
+        "stopped_at_iter": 80,
+        "max_iter": 150
+      },
+      "unsupported_claims": [],
+      "status": "ok",
+      "error_type": null,
+      "metrics": {
+        "f1": 0.5671159029649596,
+        "accuracy": 0.9111922141119222,
+        "balanced_accuracy": 0.7316107877380469,
+        "precision": 0.6599749058971142,
+        "recall": 0.497164461247637,
+        "roc_auc": 0.9436008714025405,
+        "pr_auc": 0.6488385750289315,
+        "average_precision": 0.6488385750289315,
+        "specificity": 0.966057,
+        "balanced_accuracy_at_best_cut": 0.887,
+        "cut_headroom": 0.155389,
+        "brier": 0.059035,
+        "calibration_error": 0.011319,
+        "balanced_accuracy_ci_low": 0.717984,
+        "balanced_accuracy_ci_high": 0.746729,
+        "train_f1": 0.6585844178998039,
+        "train_accuracy": 0.9294035242940353,
+        "train_balanced_accuracy": 0.7787545691202789,
+        "train_val_gap": 0.047144
+      },
+      "train_time_sec": 4.051,
+      "critic": {
+        "failure_type": "hyperparam",
+        "evidence": "balanced_accuracy=0.7316는 recall=0.4972와 specificity=0.9661의 평균이고 둘의 차이가 0.4689다 — recall가 낮아 운영점이 한쪽으로 기울어 있다.",
+        "direction": "balanced_accuracy는 recall과 specificity의 평균이므로 둘이 같아지는 지점이 최적이다. recall(0.4972)가 specificity(0.9661)보다 낮으니 양성 클래스 가중치를 올린다: 1 → 7.547. 가중치가 없던 시도이므로 한 스텝을 밟는 대신 카드가 적은 클래스 불균형 비율 7.547에서 시작한다. train과 validation의 격차는 용량에 대한 증거이므로 가중치 방향의 근거가 되지 못한다.",
+        "concrete_changes": {
+          "class_weight": {
+            "0": 1,
+            "1": 7.547
+          }
+        },
+        "unsupported_claims": [],
+        "source": "heuristic"
+      }
+    },
+    {
+      "iteration": 2,
+      "model": "hist_gbdt",
+      "hyperparams": {
+        "max_iter": 400,
+        "learning_rate": 0.15,
+        "max_depth": 12,
+        "class_weight": {
+          "0": 1.0,
+          "1": 7.547
+        }
+      },
+      "dropped_hyperparams": [],
+      "preprocessing": {
+        "impute": "median",
+        "scale": false,
+        "missing_indicator": false,
+        "missing_count": false
+      },
+      "internal_validation": {
+        "held_out_rows": 2713,
+        "fit_rows": 24413,
+        "validation_fraction": 0.1,
+        "stopped_at_iter": 44,
+        "max_iter": 400
+      },
+      "unsupported_claims": [],
+      "status": "ok",
+      "error_type": null,
+      "metrics": {
+        "f1": 0.597758405977584,
+        "accuracy": 0.8571112585711126,
+        "balanced_accuracy": 0.8789116512798754,
+        "precision": 0.4456824512534819,
+        "recall": 0.9073724007561437,
+        "roc_auc": 0.9412421842740301,
+        "pr_auc": 0.6389521678473267,
+        "average_precision": 0.6389521678473267,
+        "specificity": 0.850451,
+        "balanced_accuracy_at_best_cut": 0.8821,
+        "cut_headroom": 0.003188,
+        "brier": 0.099633,
+        "calibration_error": 0.13683,
+        "balanced_accuracy_ci_low": 0.868804,
+        "balanced_accuracy_ci_high": 0.887641,
+        "train_f1": 0.6213773761296354,
+        "train_accuracy": 0.8656270736562708,
+        "train_balanced_accuracy": 0.8990331207102196,
+        "train_val_gap": 0.020121
+      },
+      "train_time_sec": 4.838,
+      "critic": {
+        "failure_type": "hyperparam",
+        "evidence": "balanced_accuracy=0.8789로 목표 0.8817에 미달하나 과적합/과소적합 징후는 뚜렷하지 않음.",
+        "direction": "계열은 유지하고 learning_rate와 깊이 조합을 다르게 탐색한다.",
+        "concrete_changes": {
+          "learning_rate": 0.02,
+          "max_depth": 5,
+          "max_iter": 800
+        },
+        "unsupported_claims": [],
+        "source": "heuristic"
+      }
+    },
+    {
+      "iteration": 3,
+      "model": "hist_gbdt",
+      "hyperparams": {
+        "max_iter": 800,
+        "learning_rate": 0.02,
+        "max_depth": 5,
+        "class_weight": {
+          "0": 1.0,
+          "1": 7.547
+        }
+      },
+      "dropped_hyperparams": [],
+      "preprocessing": {
+        "impute": "median",
+        "scale": false,
+        "missing_indicator": false,
+        "missing_count": false
+      },
+      "internal_validation": {
+        "held_out_rows": 2713,
+        "fit_rows": 24413,
+        "validation_fraction": 0.1,
+        "stopped_at_iter": 521,
+        "max_iter": 800
+      },
+      "unsupported_claims": [],
+      "status": "ok",
+      "error_type": null,
+      "metrics": {
+        "f1": 0.5907539559416692,
+        "accuracy": 0.8541251935412519,
+        "balanced_accuracy": 0.8739410531838725,
+        "precision": 0.4397228637413395,
+        "recall": 0.8998109640831758,
+        "roc_auc": 0.9389889182902666,
+        "pr_auc": 0.6317039706978678,
+        "average_precision": 0.6317039706978678,
+        "specificity": 0.848071,
+        "balanced_accuracy_at_best_cut": 0.8782,
+        "cut_headroom": 0.004259,
+        "brier": 0.101833,
+        "calibration_error": 0.146928,
+        "balanced_accuracy_ci_low": 0.86414,
+        "balanced_accuracy_ci_high": 0.882347,
+        "train_f1": 0.6136101499423299,
+        "train_accuracy": 0.8641524736415247,
+        "train_balanced_accuracy": 0.8893123034605444,
+        "train_val_gap": 0.015371
+      },
+      "train_time_sec": 9.661,
+      "critic": {
+        "failure_type": "wrong_model_family",
+        "evidence": "같은 계열 모델로 3회 시도했으나 balanced_accuracy=0.8739로 목표 0.8817에 정체됨.",
+        "direction": "모델 계열 자체를 바꾼다.",
+        "concrete_changes": {
+          "model_family": "different"
+        },
+        "unsupported_claims": [],
+        "source": "heuristic"
+      }
+    },
+    {
+      "iteration": 4,
+      "model": "random_forest",
+      "hyperparams": {
+        "n_estimators": 300
+      },
+      "dropped_hyperparams": [],
+      "preprocessing": {
+        "impute": "median",
+        "scale": false,
+        "missing_indicator": false,
+        "missing_count": false
+      },
+      "internal_validation": {},
+      "unsupported_claims": [],
+      "status": "ok",
+      "error_type": null,
+      "metrics": {
+        "f1": 0.5014925373134328,
+        "accuracy": 0.9076531740765318,
+        "balanced_accuracy": 0.686150538316709,
+        "precision": 0.6807131280388979,
+        "recall": 0.39697542533081287,
+        "roc_auc": 0.9362518752059885,
+        "pr_auc": 0.6347464822518344,
+        "average_precision": 0.6347464822518344,
+        "specificity": 0.975326,
+        "balanced_accuracy_at_best_cut": 0.8783,
+        "cut_headroom": 0.192149,
+        "brier": 0.061717,
+        "calibration_error": 0.017395,
+        "balanced_accuracy_ci_low": 0.67189,
+        "balanced_accuracy_ci_high": 0.703208,
+        "train_f1": 1.0,
+        "train_accuracy": 1.0,
+        "train_balanced_accuracy": 1.0,
+        "train_val_gap": 0.313849
+      },
+      "train_time_sec": 4.995,
+      "critic": null
+    }
+  ]
+}

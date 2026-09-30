@@ -1,0 +1,30 @@
+{
+  "metrics": {
+    "f1": 0.8130382100014106,
+    "accuracy": 0.8636769299419902,
+    "balanced_accuracy": 0.8089120052822354,
+    "precision": 0.8174629380227101,
+    "recall": 0.8089120052822354,
+    "balanced_accuracy_ci_low": 0.796234,
+    "balanced_accuracy_ci_high": 0.820007
+  },
+  "split": "test",
+  "applied_hyperparams": {},
+  "dropped_hyperparams": [],
+  "applied_preprocessing": {
+    "impute": "median",
+    "scale": false,
+    "missing_indicator": false,
+    "missing_count": false
+  },
+  "train_time_sec": 2.094,
+  "status": "ok",
+  "error_type": null,
+  "log_tail": "encoding from feature_schema.json: 6 columns\nloaded bench/data/jungle-chess.csv: 44819 rows x 6 encoded features\nscoring the held-back test split: 8964 rows, model=model.joblib\nroc_auc skipped: defined for binary targets only (average=macro)\npr_auc skipped: defined for binary targets only (average=macro)\nbalanced_accuracy=0.8089 (95% CI 0.7962~0.8200, 폭 0.0238) — row 단위 재표집 400회\ntest metrics: {\"f1\": 0.813, \"accuracy\": 0.8637, \"balanced_accuracy\": 0.8089, \"precision\": 0.8175, \"recall\": 0.8089, \"balanced_accuracy_ci_low\": 0.7962, \"balanced_accuracy_ci_high\": 0.82}",
+  "threads": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "cpu_count": 20
+  }
+}

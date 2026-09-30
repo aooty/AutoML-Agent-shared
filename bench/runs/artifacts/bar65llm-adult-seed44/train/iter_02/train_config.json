@@ -1,0 +1,35 @@
+{
+  "model": "xgboost",
+  "hyperparams": {
+    "learning_rate": 0.04,
+    "n_estimators": 2000,
+    "max_depth": 8,
+    "min_child_weight": 2,
+    "subsample": 0.8,
+    "colsample_bytree": 0.8,
+    "reg_lambda": 2.0,
+    "early_stopping_rounds": 50,
+    "scale_pos_weight": 3.18
+  },
+  "preprocessing": {
+    "impute": "none",
+    "scale": false,
+    "missing_indicator": false,
+    "missing_count": false
+  },
+  "target_missing": {
+    "policy": "reject"
+  },
+  "data": {
+    "path": "bench/data/adult.csv",
+    "target_column": "class"
+  },
+  "metric": "balanced_accuracy",
+  "task": "classification",
+  "seed": 44,
+  "paired_baseline": {
+    "iteration": 1,
+    "path": "bench\\runs\\artifacts\\bar65llm-adult-seed44\\train\\iter_01\\val_predictions.npz"
+  },
+  "memory_limit_mb": 2048
+}

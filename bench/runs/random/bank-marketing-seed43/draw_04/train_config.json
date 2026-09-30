@@ -1,0 +1,26 @@
+{
+  "model": "random_forest",
+  "hyperparams": {
+    "n_estimators": 1813,
+    "max_depth": 40,
+    "min_samples_leaf": 539,
+    "class_weight": "balanced"
+  },
+  "preprocessing": {
+    "impute": "median",
+    "scale": true,
+    "missing_indicator": true,
+    "missing_count": false
+  },
+  "target_missing": {
+    "policy": "reject"
+  },
+  "data": {
+    "path": "bench/data/bank-marketing.csv",
+    "target_column": "Class"
+  },
+  "metric": "balanced_accuracy",
+  "task": "classification",
+  "seed": 43,
+  "memory_limit_mb": 2048
+}

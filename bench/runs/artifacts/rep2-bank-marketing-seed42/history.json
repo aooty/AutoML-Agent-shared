@@ -1,0 +1,168 @@
+{
+  "thread_id": "rep2-bank-marketing-seed42",
+  "goal": {
+    "metric": "balanced_accuracy",
+    "direction": "maximize",
+    "mode": "auto",
+    "threshold": 0.7465,
+    "source": "derived",
+    "reference": {
+      "source": "baseline",
+      "metric": "balanced_accuracy",
+      "baseline": 0.662,
+      "margin": 0.25,
+      "ks": 0.6801,
+      "ranking_ceiling": 0.84,
+      "baseline_ci": [
+        0.6496,
+        0.6765
+      ],
+      "baseline_ci_unit": "row",
+      "chance": 0.5
+    }
+  },
+  "iterations": 1,
+  "stop_reason": "goal_reached",
+  "critic_runs": 0,
+  "best": {
+    "iteration": 1,
+    "model": "hist_gbdt",
+    "hyperparams": {
+      "max_iter": 400,
+      "learning_rate": 0.06,
+      "max_leaf_nodes": 31,
+      "min_samples_leaf": 40,
+      "l2_regularization": 1.0,
+      "early_stopping": false,
+      "class_weight": {
+        "0": 1.0,
+        "1": 6.0
+      }
+    },
+    "preprocessing": {
+      "impute": "median",
+      "scale": false,
+      "missing_indicator": false,
+      "missing_count": false
+    },
+    "metric": "balanced_accuracy",
+    "score": 0.8763358474983995,
+    "metrics": {
+      "f1": 0.6391608391608392,
+      "accuracy": 0.8858659588586596,
+      "balanced_accuracy": 0.8763358474983995,
+      "precision": 0.5072142064372919,
+      "recall": 0.8638941398865785,
+      "roc_auc": 0.9415339421754662,
+      "pr_auc": 0.6397078164989155,
+      "average_precision": 0.6397078164989155,
+      "specificity": 0.888778,
+      "balanced_accuracy_at_best_cut": 0.8859,
+      "cut_headroom": 0.009564,
+      "brier": 0.081202,
+      "calibration_error": 0.091778,
+      "balanced_accuracy_ci_low": 0.864722,
+      "balanced_accuracy_ci_high": 0.886592,
+      "train_f1": 0.7259677609130486,
+      "train_accuracy": 0.9141414141414141,
+      "train_balanced_accuracy": 0.9393538880749357,
+      "train_val_gap": 0.063018
+    },
+    "train_time_sec": 7.771,
+    "plan_strategy": "Attempt 1: switch from the linear baseline to a gradient-boosted tree ensemble (hist_gbdt) to improve the ranking itself, and move the operating point at the same time with an explicit class weight. Concretely: hist_gbdt with max_iter=400, learning_rate=0.06, max_leaf_nodes=31, min_samples_leaf=40, l2_regularization=1.0, early_stopping=false (so the fit sees all 27,126 training rows and the score is comparable to the baseline), class_weight={\"0\": 1, \"1\": 6}. Preprocessing: median impute, no scaling (trees are scale-invariant), no missingness columns (this file has no NaNs — the 'unknown' levels are real one-hot categories, so there is nothing for the indicator to mark). Read on return: roc_auc / pr_auc / balanced_accuracy_at_best_cut for the ranking axis, and cut_headroom plus the recall-vs-specificity pair for the operating point, so the next attempt can be aimed at whichever axis still holds the gap."
+  },
+  "holdout": {
+    "status": "ok",
+    "split": "test",
+    "test_fraction": 0.2,
+    "iteration": 1,
+    "model": "hist_gbdt",
+    "metric": "balanced_accuracy",
+    "score": 0.8529815473956959,
+    "val_score": 0.8763358474983995,
+    "metrics": {
+      "f1": 0.6090304515225762,
+      "accuracy": 0.8764790445648568,
+      "balanced_accuracy": 0.8529815473956959,
+      "precision": 0.48360200111172874,
+      "recall": 0.8223062381852552,
+      "roc_auc": 0.9305561112340839,
+      "pr_auc": 0.6235797317224179,
+      "average_precision": 0.6235797317224179,
+      "specificity": 0.883657,
+      "balanced_accuracy_at_best_cut": 0.869,
+      "cut_headroom": 0.016018,
+      "brier": 0.084431,
+      "calibration_error": 0.088609,
+      "balanced_accuracy_ci_low": 0.841515,
+      "balanced_accuracy_ci_high": 0.864495
+    },
+    "wall_time_sec": 5.254,
+    "selection_gap": 0.023354,
+    "score_ci": [
+      0.841515,
+      0.864495
+    ],
+    "val_inside_ci": false
+  },
+  "models": {
+    "mode": "best",
+    "kept_iteration": 1,
+    "removed": [],
+    "freed_bytes": 0
+  },
+  "history": [
+    {
+      "iteration": 1,
+      "model": "hist_gbdt",
+      "hyperparams": {
+        "max_iter": 400,
+        "learning_rate": 0.06,
+        "max_leaf_nodes": 31,
+        "min_samples_leaf": 40,
+        "l2_regularization": 1.0,
+        "early_stopping": false,
+        "class_weight": {
+          "0": 1.0,
+          "1": 6.0
+        }
+      },
+      "dropped_hyperparams": [],
+      "preprocessing": {
+        "impute": "median",
+        "scale": false,
+        "missing_indicator": false,
+        "missing_count": false
+      },
+      "internal_validation": {},
+      "unsupported_claims": [
+        "feature_engineering"
+      ],
+      "status": "ok",
+      "error_type": null,
+      "metrics": {
+        "f1": 0.6391608391608392,
+        "accuracy": 0.8858659588586596,
+        "balanced_accuracy": 0.8763358474983995,
+        "precision": 0.5072142064372919,
+        "recall": 0.8638941398865785,
+        "roc_auc": 0.9415339421754662,
+        "pr_auc": 0.6397078164989155,
+        "average_precision": 0.6397078164989155,
+        "specificity": 0.888778,
+        "balanced_accuracy_at_best_cut": 0.8859,
+        "cut_headroom": 0.009564,
+        "brier": 0.081202,
+        "calibration_error": 0.091778,
+        "balanced_accuracy_ci_low": 0.864722,
+        "balanced_accuracy_ci_high": 0.886592,
+        "train_f1": 0.7259677609130486,
+        "train_accuracy": 0.9141414141414141,
+        "train_balanced_accuracy": 0.9393538880749357,
+        "train_val_gap": 0.063018
+      },
+      "train_time_sec": 7.771,
+      "critic": null
+    }
+  ]
+}

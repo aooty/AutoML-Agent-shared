@@ -1,0 +1,27 @@
+{
+  "model": "xgboost",
+  "hyperparams": {
+    "n_estimators": 27,
+    "learning_rate": 0.046151,
+    "max_depth": 21,
+    "reg_lambda": 75.411799,
+    "subsample": 0.406331
+  },
+  "preprocessing": {
+    "impute": "median",
+    "scale": false,
+    "missing_indicator": true,
+    "missing_count": false
+  },
+  "target_missing": {
+    "policy": "reject"
+  },
+  "data": {
+    "path": "bench/data/house_sales.csv",
+    "target_column": "price"
+  },
+  "metric": "r2",
+  "task": "regression",
+  "seed": 42,
+  "memory_limit_mb": 2048
+}

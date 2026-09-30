@@ -1,0 +1,25 @@
+{
+  "model": "random_forest",
+  "hyperparams": {
+    "n_estimators": 211,
+    "max_depth": 23,
+    "min_samples_leaf": 530
+  },
+  "preprocessing": {
+    "impute": "mean",
+    "scale": true,
+    "missing_indicator": true,
+    "missing_count": false
+  },
+  "target_missing": {
+    "policy": "reject"
+  },
+  "data": {
+    "path": "bench/data/house_sales.csv",
+    "target_column": "price"
+  },
+  "metric": "r2",
+  "task": "regression",
+  "seed": 43,
+  "memory_limit_mb": 2048
+}

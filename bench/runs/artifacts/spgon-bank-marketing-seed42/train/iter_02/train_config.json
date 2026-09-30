@@ -1,0 +1,36 @@
+{
+  "model": "xgboost",
+  "hyperparams": {
+    "n_estimators": 700,
+    "learning_rate": 0.04,
+    "max_depth": 6,
+    "subsample": 0.8,
+    "colsample_bytree": 0.8,
+    "reg_lambda": 2.0,
+    "min_child_weight": 5,
+    "scale_pos_weight": 5.0,
+    "random_state": 42,
+    "n_jobs": 4
+  },
+  "preprocessing": {
+    "impute": "median",
+    "scale": false,
+    "missing_indicator": false,
+    "missing_count": false
+  },
+  "target_missing": {
+    "policy": "reject"
+  },
+  "data": {
+    "path": "bench/data/bank-marketing.csv",
+    "target_column": "Class"
+  },
+  "metric": "balanced_accuracy",
+  "task": "classification",
+  "seed": 42,
+  "paired_baseline": {
+    "iteration": 1,
+    "path": "bench\\runs\\artifacts\\spgon-bank-marketing-seed42\\train\\iter_01\\val_predictions.npz"
+  },
+  "memory_limit_mb": 2048
+}

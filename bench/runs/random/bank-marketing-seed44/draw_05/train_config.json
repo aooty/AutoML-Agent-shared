@@ -1,0 +1,26 @@
+{
+  "model": "gradient_boosting",
+  "hyperparams": {
+    "n_estimators": 1,
+    "learning_rate": 0.019896,
+    "max_depth": 13,
+    "subsample": 0.586814
+  },
+  "preprocessing": {
+    "impute": "median",
+    "scale": true,
+    "missing_indicator": false,
+    "missing_count": true
+  },
+  "target_missing": {
+    "policy": "reject"
+  },
+  "data": {
+    "path": "bench/data/bank-marketing.csv",
+    "target_column": "Class"
+  },
+  "metric": "balanced_accuracy",
+  "task": "classification",
+  "seed": 44,
+  "memory_limit_mb": 2048
+}

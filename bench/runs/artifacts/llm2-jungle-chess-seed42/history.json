@@ -1,0 +1,138 @@
+{
+  "thread_id": "llm2-jungle-chess-seed42",
+  "goal": {
+    "metric": "balanced_accuracy",
+    "direction": "maximize",
+    "mode": "auto",
+    "threshold": 0.633,
+    "source": "derived",
+    "reference": {
+      "source": "baseline",
+      "metric": "balanced_accuracy",
+      "baseline": 0.5106,
+      "margin": 0.25,
+      "baseline_ci": [
+        0.5024,
+        0.5177
+      ],
+      "baseline_ci_unit": "row",
+      "chance": 0.3333
+    }
+  },
+  "iterations": 1,
+  "stop_reason": "goal_reached",
+  "critic_runs": 0,
+  "budget": {
+    "spent_sec": 65.172,
+    "total_sec": 3600.0
+  },
+  "best": {
+    "iteration": 1,
+    "model": "hist_gbdt",
+    "hyperparams": {
+      "max_iter": 600,
+      "learning_rate": 0.1,
+      "max_leaf_nodes": 255,
+      "min_samples_leaf": 20,
+      "l2_regularization": 1.0,
+      "class_weight": "balanced",
+      "early_stopping": false
+    },
+    "preprocessing": {
+      "impute": "median",
+      "scale": false,
+      "missing_indicator": false,
+      "missing_count": false
+    },
+    "metric": "balanced_accuracy",
+    "score": 0.7995234137527006,
+    "metrics": {
+      "f1": 0.7942240421244793,
+      "accuracy": 0.8512940651494868,
+      "balanced_accuracy": 0.7995234137527006,
+      "precision": 0.7894505467951287,
+      "recall": 0.7995234137527006,
+      "balanced_accuracy_ci_low": 0.78912,
+      "balanced_accuracy_ci_high": 0.811543,
+      "train_f1": 0.9984416610924671,
+      "train_accuracy": 0.9989215722732513,
+      "train_balanced_accuracy": 0.999238999819234,
+      "train_val_gap": 0.199716
+    },
+    "train_time_sec": 28.146,
+    "plan_strategy": "Attempt 1: abandon the linear baseline's ranking and fit a high-capacity gradient-boosted tree ensemble (hist_gbdt) on the 6 discrete board-state columns. Jungle-chess class labels are a highly non-linear function of piece strengths and board coordinates, so the whole gap to 0.633 balanced_accuracy is in the ranking, not in the cut. Configure hist_gbdt for deep interaction discovery: learning_rate 0.1, max_iter 600, max_leaf_nodes 255, min_samples_leaf 20, l2_regularization 1.0, early_stopping disabled so all 26,891 training rows are used (the feature space is only 6 low-cardinality integer columns, so 600 iterations at 255 leaves is well inside the 600 s / 2 GB budget). class_weight='balanced' to lift the 9.7% minority class into the argmax, since balanced_accuracy weights all three classes equally. Preprocessing: median impute (no missing values exist anyway), no scaling — trees are scale-invariant. Then read train_val_gap and cut_headroom: if cut_headroom is small the ranking is what remains and attempt 2 goes deeper/longer or swaps to xgboost; if train_val_gap is large, regularise."
+  },
+  "holdout": {
+    "status": "ok",
+    "split": "test",
+    "test_fraction": 0.2,
+    "iteration": 1,
+    "model": "hist_gbdt",
+    "metric": "balanced_accuracy",
+    "score": 0.797755830251222,
+    "val_score": 0.7995234137527006,
+    "metrics": {
+      "f1": 0.7899323400934053,
+      "accuracy": 0.8449352967425257,
+      "balanced_accuracy": 0.797755830251222,
+      "precision": 0.7833557661424854,
+      "recall": 0.797755830251222,
+      "balanced_accuracy_ci_low": 0.786433,
+      "balanced_accuracy_ci_high": 0.808676
+    },
+    "wall_time_sec": 6.84,
+    "selection_gap": 0.001768,
+    "score_ci": [
+      0.786433,
+      0.808676
+    ],
+    "val_inside_ci": true
+  },
+  "models": {
+    "mode": "all",
+    "kept_iteration": 1,
+    "removed": [],
+    "freed_bytes": 0
+  },
+  "history": [
+    {
+      "iteration": 1,
+      "model": "hist_gbdt",
+      "hyperparams": {
+        "max_iter": 600,
+        "learning_rate": 0.1,
+        "max_leaf_nodes": 255,
+        "min_samples_leaf": 20,
+        "l2_regularization": 1.0,
+        "class_weight": "balanced",
+        "early_stopping": false
+      },
+      "dropped_hyperparams": [],
+      "preprocessing": {
+        "impute": "median",
+        "scale": false,
+        "missing_indicator": false,
+        "missing_count": false
+      },
+      "internal_validation": {},
+      "unsupported_claims": [],
+      "status": "ok",
+      "error_type": null,
+      "metrics": {
+        "f1": 0.7942240421244793,
+        "accuracy": 0.8512940651494868,
+        "balanced_accuracy": 0.7995234137527006,
+        "precision": 0.7894505467951287,
+        "recall": 0.7995234137527006,
+        "balanced_accuracy_ci_low": 0.78912,
+        "balanced_accuracy_ci_high": 0.811543,
+        "train_f1": 0.9984416610924671,
+        "train_accuracy": 0.9989215722732513,
+        "train_balanced_accuracy": 0.999238999819234,
+        "train_val_gap": 0.199716
+      },
+      "train_time_sec": 28.146,
+      "critic": null
+    }
+  ]
+}

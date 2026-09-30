@@ -1,0 +1,329 @@
+{
+  "arm": "random",
+  "dataset": "jungle-chess",
+  "data_id": 41027,
+  "seed": 44,
+  "metric": "balanced_accuracy",
+  "task": "classification",
+  "draws": 5,
+  "omp_num_threads": "1",
+  "timeout_sec": 3600,
+  "candidates": [
+    "logreg",
+    "decision_tree",
+    "knn",
+    "hist_gbdt",
+    "random_forest",
+    "extra_trees",
+    "gradient_boosting",
+    "xgboost",
+    "mlp"
+  ],
+  "excluded_by_rows": [
+    "svc"
+  ],
+  "card": "bench/cards/jungle-chess-seed44.json",
+  "train_script": "automl_agent/scripts/train.py",
+  "best_by_val_for_k": {
+    "1": 1,
+    "2": 1,
+    "3": 3,
+    "4": 3,
+    "5": 3
+  },
+  "records": [
+    {
+      "draw": 1,
+      "model": "decision_tree",
+      "hyperparams": {
+        "max_depth": 14,
+        "min_samples_leaf": 25,
+        "class_weight": "balanced"
+      },
+      "preprocessing": {
+        "impute": "most_frequent",
+        "scale": false,
+        "missing_indicator": true,
+        "missing_count": false
+      },
+      "untouched_params": [],
+      "applied_hyperparams": {
+        "max_depth": 14,
+        "min_samples_leaf": 25,
+        "class_weight": "balanced"
+      },
+      "dropped_hyperparams": [],
+      "applied_preprocessing": {
+        "impute": "most_frequent",
+        "scale": false,
+        "missing_indicator": true,
+        "missing_count": false
+      },
+      "status": "ok",
+      "returncode": 0,
+      "error_type": null,
+      "val_score": 0.8156653171957012,
+      "val_metrics": {
+        "f1": 0.7417906466791191,
+        "accuracy": 0.784024988844266,
+        "balanced_accuracy": 0.8156653171957012,
+        "precision": 0.723862662517384,
+        "recall": 0.8156653171957012,
+        "balanced_accuracy_ci_low": 0.805657,
+        "balanced_accuracy_ci_high": 0.824629,
+        "train_f1": 0.7574001688293159,
+        "train_accuracy": 0.7984827637499535,
+        "train_balanced_accuracy": 0.8386417366948172,
+        "train_val_gap": 0.022976
+      },
+      "val_split": "val",
+      "model_file": "bench/runs/random/jungle-chess-seed44/draw_01/model.joblib",
+      "elapsed_sec": 4.43,
+      "dir": "bench/runs/random/jungle-chess-seed44/draw_01",
+      "test": {
+        "status": "ok",
+        "test_score": 0.8093753472231949,
+        "test_metrics": {
+          "f1": 0.7340020317165113,
+          "accuracy": 0.7768853190539937,
+          "balanced_accuracy": 0.8093753472231949,
+          "precision": 0.7176174585242495,
+          "recall": 0.8093753472231949,
+          "balanced_accuracy_ci_low": 0.799481,
+          "balanced_accuracy_ci_high": 0.818375
+        },
+        "split": "test"
+      },
+      "selection_gap": 0.00629
+    },
+    {
+      "draw": 2,
+      "model": "mlp",
+      "hyperparams": {
+        "hidden_layer_sizes": [
+          241
+        ],
+        "alpha": 3.2e-05,
+        "learning_rate_init": 1.9e-05,
+        "batch_size": 1044,
+        "max_iter": 44
+      },
+      "preprocessing": {
+        "impute": "most_frequent",
+        "scale": true,
+        "missing_indicator": true,
+        "missing_count": false
+      },
+      "untouched_params": [],
+      "applied_hyperparams": {
+        "hidden_layer_sizes": [
+          241
+        ],
+        "alpha": 3.2e-05,
+        "learning_rate_init": 1.9e-05,
+        "batch_size": 1044,
+        "max_iter": 44
+      },
+      "dropped_hyperparams": [],
+      "applied_preprocessing": {
+        "impute": "most_frequent",
+        "scale": true,
+        "missing_indicator": true,
+        "missing_count": false
+      },
+      "status": "ok",
+      "returncode": 0,
+      "error_type": null,
+      "val_score": 0.5085821903063681,
+      "val_metrics": {
+        "f1": 0.4845804452209464,
+        "accuracy": 0.6982373940205265,
+        "balanced_accuracy": 0.5085821903063681,
+        "precision": 0.46429774102169397,
+        "recall": 0.5085821903063681,
+        "balanced_accuracy_ci_low": 0.502288,
+        "balanced_accuracy_ci_high": 0.514208,
+        "train_f1": 0.48740385353016774,
+        "train_accuracy": 0.7018333271354729,
+        "train_balanced_accuracy": 0.5114724253165802,
+        "train_val_gap": 0.00289
+      },
+      "val_split": "val",
+      "model_file": "bench/runs/random/jungle-chess-seed44/draw_02/model.joblib",
+      "elapsed_sec": 8.56,
+      "dir": "bench/runs/random/jungle-chess-seed44/draw_02"
+    },
+    {
+      "draw": 3,
+      "model": "mlp",
+      "hyperparams": {
+        "hidden_layer_sizes": [
+          251
+        ],
+        "alpha": 1e-06,
+        "learning_rate_init": 0.029651,
+        "batch_size": 6008,
+        "max_iter": 130
+      },
+      "preprocessing": {
+        "impute": "most_frequent",
+        "scale": true,
+        "missing_indicator": true,
+        "missing_count": true
+      },
+      "untouched_params": [],
+      "applied_hyperparams": {
+        "hidden_layer_sizes": [
+          251
+        ],
+        "alpha": 1e-06,
+        "learning_rate_init": 0.029651,
+        "batch_size": 6008,
+        "max_iter": 130
+      },
+      "dropped_hyperparams": [],
+      "applied_preprocessing": {
+        "impute": "most_frequent",
+        "scale": true,
+        "missing_indicator": true,
+        "missing_count": true
+      },
+      "status": "ok",
+      "returncode": 0,
+      "error_type": null,
+      "val_score": 0.8203687021729934,
+      "val_metrics": {
+        "f1": 0.8134644605365375,
+        "accuracy": 0.858210620258813,
+        "balanced_accuracy": 0.8203687021729934,
+        "precision": 0.8072861054663139,
+        "recall": 0.8203687021729934,
+        "balanced_accuracy_ci_low": 0.808087,
+        "balanced_accuracy_ci_high": 0.831773,
+        "train_f1": 0.8338013678884538,
+        "train_accuracy": 0.8753486296530437,
+        "train_balanced_accuracy": 0.8388223784074916,
+        "train_val_gap": 0.018454
+      },
+      "val_split": "val",
+      "model_file": "bench/runs/random/jungle-chess-seed44/draw_03/model.joblib",
+      "elapsed_sec": 16.26,
+      "dir": "bench/runs/random/jungle-chess-seed44/draw_03",
+      "test": {
+        "status": "ok",
+        "test_score": 0.8124909219062437,
+        "test_metrics": {
+          "f1": 0.807676877917206,
+          "accuracy": 0.85698348951361,
+          "balanced_accuracy": 0.8124909219062437,
+          "precision": 0.8033462138585011,
+          "recall": 0.8124909219062437,
+          "balanced_accuracy_ci_low": 0.800586,
+          "balanced_accuracy_ci_high": 0.823316
+        },
+        "split": "test"
+      },
+      "selection_gap": 0.007878
+    },
+    {
+      "draw": 4,
+      "model": "extra_trees",
+      "hyperparams": {
+        "n_estimators": 19,
+        "max_depth": 54,
+        "min_samples_leaf": 108,
+        "class_weight": "balanced"
+      },
+      "preprocessing": {
+        "impute": "median",
+        "scale": true,
+        "missing_indicator": false,
+        "missing_count": false
+      },
+      "untouched_params": [],
+      "applied_hyperparams": {
+        "n_estimators": 19,
+        "max_depth": 54,
+        "min_samples_leaf": 108,
+        "class_weight": "balanced"
+      },
+      "dropped_hyperparams": [],
+      "applied_preprocessing": {
+        "impute": "median",
+        "scale": true,
+        "missing_indicator": false,
+        "missing_count": false
+      },
+      "status": "ok",
+      "returncode": 0,
+      "error_type": null,
+      "val_score": 0.7951691160540232,
+      "val_metrics": {
+        "f1": 0.708683999507159,
+        "accuracy": 0.751561802766622,
+        "balanced_accuracy": 0.7951691160540232,
+        "precision": 0.6996796193224765,
+        "recall": 0.7951691160540232,
+        "balanced_accuracy_ci_low": 0.785848,
+        "balanced_accuracy_ci_high": 0.804057,
+        "train_f1": 0.7112993952318826,
+        "train_accuracy": 0.753635045182403,
+        "train_balanced_accuracy": 0.8021206236322739,
+        "train_val_gap": 0.006952
+      },
+      "val_split": "val",
+      "model_file": "bench/runs/random/jungle-chess-seed44/draw_04/model.joblib",
+      "elapsed_sec": 4.5,
+      "dir": "bench/runs/random/jungle-chess-seed44/draw_04"
+    },
+    {
+      "draw": 5,
+      "model": "decision_tree",
+      "hyperparams": {
+        "max_depth": 11,
+        "min_samples_leaf": 9,
+        "class_weight": null
+      },
+      "preprocessing": {
+        "impute": "most_frequent",
+        "scale": true,
+        "missing_indicator": false,
+        "missing_count": true
+      },
+      "untouched_params": [],
+      "applied_hyperparams": {
+        "max_depth": 11,
+        "min_samples_leaf": 9,
+        "class_weight": null
+      },
+      "dropped_hyperparams": [],
+      "applied_preprocessing": {
+        "impute": "most_frequent",
+        "scale": true,
+        "missing_indicator": false,
+        "missing_count": true
+      },
+      "status": "ok",
+      "returncode": 0,
+      "error_type": null,
+      "val_score": 0.7298119031346818,
+      "val_metrics": {
+        "f1": 0.7443850790293661,
+        "accuracy": 0.8155957161981259,
+        "balanced_accuracy": 0.7298119031346818,
+        "precision": 0.7655746847041042,
+        "recall": 0.7298119031346818,
+        "balanced_accuracy_ci_low": 0.717162,
+        "balanced_accuracy_ci_high": 0.742651,
+        "train_f1": 0.783337211916908,
+        "train_accuracy": 0.8482763749953516,
+        "train_balanced_accuracy": 0.7692375752742867,
+        "train_val_gap": 0.039426
+      },
+      "val_split": "val",
+      "model_file": "bench/runs/random/jungle-chess-seed44/draw_05/model.joblib",
+      "elapsed_sec": 4.44,
+      "dir": "bench/runs/random/jungle-chess-seed44/draw_05"
+    }
+  ]
+}

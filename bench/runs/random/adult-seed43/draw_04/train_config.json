@@ -1,0 +1,27 @@
+{
+  "model": "xgboost",
+  "hyperparams": {
+    "n_estimators": 64,
+    "learning_rate": 0.018557,
+    "max_depth": 53,
+    "reg_lambda": 17.747991,
+    "subsample": 0.945115
+  },
+  "preprocessing": {
+    "impute": "none",
+    "scale": false,
+    "missing_indicator": false,
+    "missing_count": false
+  },
+  "target_missing": {
+    "policy": "reject"
+  },
+  "data": {
+    "path": "bench/data/adult.csv",
+    "target_column": "class"
+  },
+  "metric": "balanced_accuracy",
+  "task": "classification",
+  "seed": 43,
+  "memory_limit_mb": 2048
+}

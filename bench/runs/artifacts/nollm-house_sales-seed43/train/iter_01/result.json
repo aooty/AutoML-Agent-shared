@@ -1,0 +1,39 @@
+{
+  "metrics": {
+    "r2": 0.8833152590659645,
+    "mae": 68443.15829883379,
+    "rmse": 125441.23523836263,
+    "mean_absolute_error": 68443.15829883379,
+    "root_mean_squared_error": 125441.23523836263,
+    "r2_score": 0.8833152590659645,
+    "r2_ci_low": 0.864274,
+    "r2_ci_high": 0.899186,
+    "train_r2": 0.9467409900376791,
+    "train_mae": 51176.490797356506,
+    "train_val_gap": 0.063426
+  },
+  "split": "val",
+  "applied_hyperparams": {
+    "max_iter": 150,
+    "learning_rate": 0.1
+  },
+  "dropped_hyperparams": [],
+  "applied_preprocessing": {
+    "impute": "median",
+    "scale": false,
+    "missing_indicator": false,
+    "missing_count": false
+  },
+  "train_time_sec": 2.421,
+  "status": "ok",
+  "error_type": null,
+  "log_tail": "features: 수치 21개 + 범주형 0개를 one-hot 0열로\nloaded bench/data/house_sales.csv: 21613 rows x 21 encoded features\nmemory estimate 6.9 MB vs budget 2048.0 MB\nsplit: train 60% / val 20% / test 20% (not stratified, seed=43) — test는 반복 밖에서 저장된 모델로 1회만 채점합니다 {'train': 12967, 'val': 4323, 'test': 4323}\nestimator=hist_gbdt applied_hyperparams={'max_iter': 150, 'learning_rate': 0.1}\npreprocessing applied: impute=median scale=False missing_indicator=False missing_count=False\nfitting on 12967 rows, validating on 4323 rows\nmodel saved to model.joblib (489 KB)\nfeature schema saved to feature_schema.json (21 columns)\nr2=0.8833 (95% CI 0.8643~0.8992, 폭 0.0349) — row 단위 재표집 400회\nval predictions saved to val_predictions.npz (32 KB)\npaired comparison skipped (no_baseline)\ntrain_val_gap measured on r2 (maximize)\nmetrics: {\"r2\": 0.8833, \"mae\": 68443.1583, \"rmse\": 125441.2352, \"mean_absolute_error\": 68443.1583, \"root_mean_squared_error\": 125441.2352, \"r2_score\": 0.8833, \"r2_ci_low\": 0.8643, \"r2_ci_high\": 0.8992, \"train_r2\": 0.9467, \"train_mae\": 51176.4908, \"train_val_gap\": 0.0634}",
+  "paired": {
+    "metric": "r2",
+    "baseline_iteration": null,
+    "status": "skipped",
+    "reason": "no_baseline"
+  },
+  "model_path": "bench\\runs\\artifacts\\nollm-house_sales-seed43\\train\\iter_01\\model.joblib",
+  "schema_path": "bench\\runs\\artifacts\\nollm-house_sales-seed43\\train\\iter_01\\feature_schema.json"
+}

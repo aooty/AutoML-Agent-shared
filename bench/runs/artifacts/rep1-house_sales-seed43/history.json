@@ -1,0 +1,133 @@
+{
+  "thread_id": "rep1-house_sales-seed43",
+  "goal": {
+    "metric": "r2",
+    "direction": "maximize",
+    "mode": "auto",
+    "threshold": 0.7831,
+    "source": "derived",
+    "reference": {
+      "source": "baseline",
+      "metric": "r2",
+      "baseline": 0.7108,
+      "margin": 0.25,
+      "baseline_ci": [
+        0.6849,
+        0.7328
+      ],
+      "baseline_ci_unit": "row",
+      "chance": -0.0001
+    }
+  },
+  "iterations": 1,
+  "stop_reason": "goal_reached",
+  "critic_runs": 0,
+  "best": {
+    "iteration": 1,
+    "model": "hist_gbdt",
+    "hyperparams": {
+      "max_iter": 600,
+      "learning_rate": 0.06,
+      "max_leaf_nodes": 63,
+      "min_samples_leaf": 20,
+      "l2_regularization": 1.0,
+      "early_stopping": false
+    },
+    "preprocessing": {
+      "impute": "median",
+      "scale": false,
+      "missing_indicator": false,
+      "missing_count": false
+    },
+    "metric": "r2",
+    "score": 0.8699095594830449,
+    "metrics": {
+      "r2": 0.8699095594830449,
+      "mae": 67663.61252851479,
+      "rmse": 132451.22549318697,
+      "mean_absolute_error": 67663.61252851479,
+      "root_mean_squared_error": 132451.22549318697,
+      "r2_score": 0.8699095594830449,
+      "r2_ci_low": 0.83416,
+      "r2_ci_high": 0.896085,
+      "train_r2": 0.9897463567208462,
+      "train_mae": 25399.22892907388,
+      "train_val_gap": 0.119837
+    },
+    "train_time_sec": 5.505,
+    "plan_strategy": "Switch families from the linear baseline to a gradient-boosted tree ensemble: fit a single hist_gbdt regressor on all 21 numeric columns with median imputation and no scaling (trees are scale-invariant). Capacity set for a 12,967-row training split with strong non-linear structure (lat/long/zipcode interacting with sqft_living and grade): max_iter 600, learning_rate 0.06, max_leaf_nodes 63, max_depth None, min_samples_leaf 20, l2_regularization 1.0, early_stopping False so the fit uses all 12,967 training rows and the reported score is comparable to the baseline's."
+  },
+  "holdout": {
+    "status": "ok",
+    "split": "test",
+    "test_fraction": 0.2,
+    "iteration": 1,
+    "model": "hist_gbdt",
+    "metric": "r2",
+    "score": 0.8934142422858933,
+    "val_score": 0.8699095594830449,
+    "metrics": {
+      "r2": 0.8934142422858933,
+      "mae": 65349.28201602375,
+      "rmse": 123095.77097585273,
+      "mean_absolute_error": 65349.28201602375,
+      "root_mean_squared_error": 123095.77097585273,
+      "r2_score": 0.8934142422858933,
+      "r2_ci_low": 0.87383,
+      "r2_ci_high": 0.91321
+    },
+    "wall_time_sec": 4.384,
+    "selection_gap": -0.023505,
+    "score_ci": [
+      0.87383,
+      0.91321
+    ],
+    "val_inside_ci": false
+  },
+  "models": {
+    "mode": "best",
+    "kept_iteration": 1,
+    "removed": [],
+    "freed_bytes": 0
+  },
+  "history": [
+    {
+      "iteration": 1,
+      "model": "hist_gbdt",
+      "hyperparams": {
+        "max_iter": 600,
+        "learning_rate": 0.06,
+        "max_leaf_nodes": 63,
+        "min_samples_leaf": 20,
+        "l2_regularization": 1.0,
+        "early_stopping": false
+      },
+      "dropped_hyperparams": [],
+      "preprocessing": {
+        "impute": "median",
+        "scale": false,
+        "missing_indicator": false,
+        "missing_count": false
+      },
+      "internal_validation": {},
+      "unsupported_claims": [],
+      "status": "ok",
+      "error_type": null,
+      "metrics": {
+        "r2": 0.8699095594830449,
+        "mae": 67663.61252851479,
+        "rmse": 132451.22549318697,
+        "mean_absolute_error": 67663.61252851479,
+        "root_mean_squared_error": 132451.22549318697,
+        "r2_score": 0.8699095594830449,
+        "r2_ci_low": 0.83416,
+        "r2_ci_high": 0.896085,
+        "train_r2": 0.9897463567208462,
+        "train_mae": 25399.22892907388,
+        "train_val_gap": 0.119837
+      },
+      "train_time_sec": 5.505,
+      "critic": null
+    }
+  ]
+}

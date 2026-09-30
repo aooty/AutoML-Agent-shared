@@ -1,0 +1,27 @@
+{
+  "model": "random_forest",
+  "hyperparams": {
+    "n_estimators": 300,
+    "l2_regularization": 1.0,
+    "max_depth": 4,
+    "learning_rate": 0.05
+  },
+  "preprocessing": {
+    "impute": "median"
+  },
+  "target_missing": {
+    "policy": "reject"
+  },
+  "data": {
+    "path": "bench/data/adult.csv",
+    "target_column": "class"
+  },
+  "metric": "balanced_accuracy",
+  "task": "classification",
+  "seed": 42,
+  "paired_baseline": {
+    "iteration": 3,
+    "path": "bench\\runs\\artifacts\\hardnollm-adult-seed42\\train\\iter_03\\val_predictions.npz"
+  },
+  "memory_limit_mb": 2048
+}

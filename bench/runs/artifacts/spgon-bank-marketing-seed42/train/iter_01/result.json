@@ -1,0 +1,58 @@
+{
+  "metrics": {
+    "f1": 0.6354883081155434,
+    "accuracy": 0.882769298827693,
+    "balanced_accuracy": 0.8786819858999663,
+    "precision": 0.49945945945945946,
+    "recall": 0.8733459357277883,
+    "roc_auc": 0.9422571513537472,
+    "pr_auc": 0.6499017301967597,
+    "average_precision": 0.6499017301967597,
+    "specificity": 0.884018,
+    "balanced_accuracy_at_best_cut": 0.8865,
+    "cut_headroom": 0.007818,
+    "brier": 0.081952,
+    "calibration_error": 0.098712,
+    "balanced_accuracy_ci_low": 0.867564,
+    "balanced_accuracy_ci_high": 0.888657,
+    "train_f1": 0.6734764145529668,
+    "train_accuracy": 0.8951190739511907,
+    "train_balanced_accuracy": 0.9079402844647878,
+    "train_val_gap": 0.029258
+  },
+  "split": "val",
+  "applied_hyperparams": {
+    "max_iter": 400,
+    "learning_rate": 0.06,
+    "max_leaf_nodes": 31,
+    "l2_regularization": 1.0,
+    "min_samples_leaf": 30,
+    "early_stopping": true,
+    "validation_fraction": 0.1,
+    "n_iter_no_change": 25,
+    "class_weight": {
+      "0": 1.0,
+      "1": 5.0
+    },
+    "random_state": 42
+  },
+  "dropped_hyperparams": [],
+  "applied_preprocessing": {
+    "impute": "median",
+    "scale": false,
+    "missing_indicator": false,
+    "missing_count": false
+  },
+  "train_time_sec": 5.069,
+  "status": "ok",
+  "error_type": null,
+  "log_tail": "features: 수치 7개 + 범주형 9개를 one-hot 44열로\nloaded bench/data/bank-marketing.csv: 45211 rows x 51 encoded features\nmemory estimate 35.2 MB vs budget 2048.0 MB\nsplit: train 60% / val 20% / test 20% (stratified, seed=42) — test는 반복 밖에서 저장된 모델로 1회만 채점합니다 {'train': 27126, 'val': 9042, 'test': 9043}\nestimator=hist_gbdt applied_hyperparams={'max_iter': 400, 'learning_rate': 0.06, 'max_leaf_nodes': 31, 'l2_regularization': 1.0, 'min_samples_leaf': 30, 'early_stopping': True, 'validation_fraction': 0.1, 'n_iter_no_change': 25, 'class_weight': {0: 1.0, 1: 5.0}, 'random_state': 42}\npreprocessing applied: impute=median scale=False missing_indicator=False missing_count=False\nfitting on 27126 rows, validating on 9042 rows\nmodel saved to model.joblib (644 KB)\nfeature schema saved to feature_schema.json (51 columns)\nbalanced_accuracy=0.8787 (95% CI 0.8676~0.8887, 폭 0.0211) — row 단위 재표집 400회\nval predictions saved to val_predictions.npz (69 KB)\npaired comparison skipped (no_baseline)\ntrain_val_gap measured on balanced_accuracy (maximize)\nmetrics: {\"f1\": 0.6355, \"accuracy\": 0.8828, \"balanced_accuracy\": 0.8787, \"precision\": 0.4995, \"recall\": 0.8733, \"roc_auc\": 0.9423, \"pr_auc\": 0.6499, \"average_precision\": 0.6499, \"specificity\": 0.884, \"balanced_accuracy_at_best_cut\": 0.8865, \"cut_headroom\": 0.0078, \"brier\": 0.082, \"calibration_error\": 0.0987, \"balanced_accuracy_ci_low\": 0.8676, \"balanced_accuracy_ci_high\": 0.8887, \"train_f1\": 0.6735, \"train_accuracy\": 0.8951, \"train_balanced_accuracy\": 0.9079, \"train_val_gap\": 0.0293}",
+  "paired": {
+    "metric": "balanced_accuracy",
+    "baseline_iteration": null,
+    "status": "skipped",
+    "reason": "no_baseline"
+  },
+  "model_path": "bench\\runs\\artifacts\\spgon-bank-marketing-seed42\\train\\iter_01\\model.joblib",
+  "schema_path": "bench\\runs\\artifacts\\spgon-bank-marketing-seed42\\train\\iter_01\\feature_schema.json"
+}

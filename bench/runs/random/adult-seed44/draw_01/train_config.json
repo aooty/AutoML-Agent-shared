@@ -1,0 +1,25 @@
+{
+  "model": "logreg",
+  "hyperparams": {
+    "C": 0.117789,
+    "max_iter": 23,
+    "class_weight": "balanced"
+  },
+  "preprocessing": {
+    "impute": "most_frequent",
+    "scale": true,
+    "missing_indicator": true,
+    "missing_count": true
+  },
+  "target_missing": {
+    "policy": "reject"
+  },
+  "data": {
+    "path": "bench/data/adult.csv",
+    "target_column": "class"
+  },
+  "metric": "balanced_accuracy",
+  "task": "classification",
+  "seed": 44,
+  "memory_limit_mb": 2048
+}

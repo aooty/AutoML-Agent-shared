@@ -1,0 +1,24 @@
+{
+  "model": "decision_tree",
+  "hyperparams": {
+    "max_depth": 41,
+    "min_samples_leaf": 4
+  },
+  "preprocessing": {
+    "impute": "most_frequent",
+    "scale": true,
+    "missing_indicator": false,
+    "missing_count": true
+  },
+  "target_missing": {
+    "policy": "reject"
+  },
+  "data": {
+    "path": "bench/data/house_sales.csv",
+    "target_column": "price"
+  },
+  "metric": "r2",
+  "task": "regression",
+  "seed": 43,
+  "memory_limit_mb": 2048
+}

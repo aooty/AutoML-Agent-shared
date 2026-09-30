@@ -1,0 +1,3005 @@
+{
+  "generated_by": "bench/weight_start.py",
+  "preregistration": "docs/WEIGHT-START.md",
+  "acts_on": "docs/WEIGHT-LEVER.md",
+  "re_judges": "docs/HARD-BAR.md",
+  "lever_commit": "d37217e",
+  "margin": 0.65,
+  "reuses_recorded_arms": [
+    "bar65nollm",
+    "bar65llm"
+  ],
+  "test_rows_shared_with": "docs/HARD-BAR.md",
+  "run_seeds": [
+    42,
+    43,
+    44
+  ],
+  "seed": 42,
+  "resamples": 4000,
+  "score_tolerance": 1e-06,
+  "threads": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "cpu_count": 20
+  },
+  "datasets": [
+    {
+      "dataset": "adult-seed42",
+      "run_seed": 42,
+      "metric": "balanced_accuracy",
+      "task": "binary",
+      "verdict": "ok",
+      "refusal": null,
+      "test_rows": 9769,
+      "test_fingerprint": "35bc63e35f35b70596c7052ac7688bf5",
+      "missing_arms": [],
+      "arms": {
+        "bar65nollmratio": {
+          "label": "iteration 2",
+          "fits": 4,
+          "val_score": 0.8467379090891923,
+          "test_recorded": 0.8406243053428295,
+          "test_reproduced": 0.8406243053428295,
+          "selection_gap": 0.006113603746362828,
+          "class_weight": {
+            "0": 1.0,
+            "1": 3.179
+          },
+          "model": "hist_gbdt",
+          "dir": "bench/runs/artifacts/bar65nollmratio-adult-seed42/train/iter_02",
+          "stop_reason": "stalled",
+          "critic_runs": 3,
+          "goal_threshold": 0.9182
+        },
+        "bar65nollm": {
+          "label": "iteration 3",
+          "fits": 5,
+          "val_score": 0.8419899687850201,
+          "test_recorded": 0.8399406562041728,
+          "test_reproduced": 0.8399406562041728,
+          "selection_gap": 0.0020493125808472845,
+          "class_weight": {
+            "0": 1.0,
+            "1": 2.25
+          },
+          "model": "hist_gbdt",
+          "dir": "bench/runs/artifacts/bar65nollm-adult-seed42/train/iter_03",
+          "stop_reason": "max_iterations",
+          "critic_runs": 4,
+          "goal_threshold": 0.9182
+        },
+        "bar65llm": {
+          "label": "iteration 2",
+          "fits": 4,
+          "val_score": 0.8467203486478806,
+          "test_recorded": 0.8425588698029283,
+          "test_reproduced": 0.8425588698029283,
+          "selection_gap": 0.0041614788449523266,
+          "class_weight": null,
+          "model": "xgboost",
+          "dir": "bench/runs/artifacts/bar65llm-adult-seed42/train/iter_02",
+          "stop_reason": "stalled",
+          "critic_runs": 3,
+          "goal_threshold": 0.9182
+        },
+        "bar65nollmratio@it1": {
+          "label": "iteration 1",
+          "fits": 1,
+          "val_score": 0.8030964412527815,
+          "test_recorded": NaN,
+          "test_reproduced": 0.7992118882369064,
+          "selection_gap": 0.003884553015875092,
+          "class_weight": null,
+          "model": "hist_gbdt",
+          "dir": "bench/runs/artifacts/bar65nollmratio-adult-seed42/train/iter_01"
+        },
+        "random@k=4": {
+          "label": "draw 3",
+          "fits": 4,
+          "val_score": 0.8188702947805071,
+          "test_recorded": 0.8150681450410213,
+          "test_reproduced": 0.8150681450410213,
+          "selection_gap": 0.003802149739485783,
+          "class_weight": "balanced",
+          "model": "logreg",
+          "dir": "bench/runs/random/adult-seed42/draw_03"
+        }
+      },
+      "pairs": [
+        {
+          "a": "bar65nollmratio",
+          "b": "bar65nollm",
+          "kind": "prescription",
+          "delta": 0.0006836491386567056,
+          "ci_low": -0.004152106512374026,
+          "ci_high": 0.005635503612605642,
+          "p_better": 0.61575,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "bar65llm",
+          "b": "bar65nollmratio",
+          "kind": "headline",
+          "delta": 0.0019345644600987644,
+          "ci_low": -0.002488827842977434,
+          "ci_high": 0.006504423131739924,
+          "p_better": 0.7995,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "bar65llm",
+          "b": "bar65nollm",
+          "kind": "main",
+          "delta": 0.00261821359875547,
+          "ci_low": -0.0024325152303679375,
+          "ci_high": 0.007934341929787567,
+          "p_better": 0.85075,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "bar65nollmratio",
+          "b": "bar65nollmratio@it1",
+          "kind": "ratio_replan_gain",
+          "delta": 0.04141241710592314,
+          "ci_low": 0.03282926284222353,
+          "ci_high": 0.05069419204817391,
+          "p_better": 1.0,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "bar65nollmratio",
+          "b": "random@k=4",
+          "kind": "ratio_matched_level",
+          "delta": 0.025556160301808184,
+          "ci_low": 0.019229250269804765,
+          "ci_high": 0.032170028725002305,
+          "p_better": 1.0,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        }
+      ]
+    },
+    {
+      "dataset": "adult-seed43",
+      "run_seed": 43,
+      "metric": "balanced_accuracy",
+      "task": "binary",
+      "verdict": "ok",
+      "refusal": null,
+      "test_rows": 9769,
+      "test_fingerprint": "5f70716669e546ab5768478022516d31",
+      "missing_arms": [],
+      "arms": {
+        "bar65nollmratio": {
+          "label": "iteration 2",
+          "fits": 4,
+          "val_score": 0.8462456985555069,
+          "test_recorded": 0.8468236259472519,
+          "test_reproduced": 0.8468236259472519,
+          "selection_gap": -0.0005779273917450034,
+          "class_weight": {
+            "0": 1.0,
+            "1": 3.179
+          },
+          "model": "hist_gbdt",
+          "dir": "bench/runs/artifacts/bar65nollmratio-adult-seed43/train/iter_02",
+          "stop_reason": "stalled",
+          "critic_runs": 3,
+          "goal_threshold": 0.9194
+        },
+        "bar65nollm": {
+          "label": "iteration 3",
+          "fits": 5,
+          "val_score": 0.8420008505011116,
+          "test_recorded": 0.8476129809704083,
+          "test_reproduced": 0.8476129809704083,
+          "selection_gap": -0.00561213046929665,
+          "class_weight": {
+            "0": 1.0,
+            "1": 2.25
+          },
+          "model": "hist_gbdt",
+          "dir": "bench/runs/artifacts/bar65nollm-adult-seed43/train/iter_03",
+          "stop_reason": "max_iterations",
+          "critic_runs": 4,
+          "goal_threshold": 0.9194
+        },
+        "bar65llm": {
+          "label": "iteration 2",
+          "fits": 4,
+          "val_score": 0.8379474400446231,
+          "test_recorded": 0.8375791815642031,
+          "test_reproduced": 0.8375791815642031,
+          "selection_gap": 0.00036825848041999176,
+          "class_weight": null,
+          "model": "xgboost",
+          "dir": "bench/runs/artifacts/bar65llm-adult-seed43/train/iter_02",
+          "stop_reason": "stalled",
+          "critic_runs": 3,
+          "goal_threshold": 0.9194
+        },
+        "bar65nollmratio@it1": {
+          "label": "iteration 1",
+          "fits": 1,
+          "val_score": 0.8017091088139368,
+          "test_recorded": NaN,
+          "test_reproduced": 0.8070067834801589,
+          "selection_gap": -0.0052976746662221075,
+          "class_weight": null,
+          "model": "hist_gbdt",
+          "dir": "bench/runs/artifacts/bar65nollmratio-adult-seed43/train/iter_01"
+        },
+        "random@k=4": {
+          "label": "draw 4",
+          "fits": 4,
+          "val_score": 0.7374644070005938,
+          "test_recorded": 0.7402264506110912,
+          "test_reproduced": 0.7402264506110912,
+          "selection_gap": -0.0027620436104973667,
+          "class_weight": null,
+          "model": "xgboost",
+          "dir": "bench/runs/random/adult-seed43/draw_04"
+        }
+      },
+      "pairs": [
+        {
+          "a": "bar65nollmratio",
+          "b": "bar65nollm",
+          "kind": "prescription",
+          "delta": -0.0007893550231563573,
+          "ci_low": -0.005244668132005498,
+          "ci_high": 0.003873286485340466,
+          "p_better": 0.35675,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "bar65llm",
+          "b": "bar65nollmratio",
+          "kind": "headline",
+          "delta": -0.009244444383048833,
+          "ci_low": -0.015661672320683356,
+          "ci_high": -0.0032776817309978553,
+          "p_better": 0.00075,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "bar65llm",
+          "b": "bar65nollm",
+          "kind": "main",
+          "delta": -0.01003379940620519,
+          "ci_low": -0.01525834441923177,
+          "ci_high": -0.004826827238494782,
+          "p_better": 0.0,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "bar65nollmratio",
+          "b": "bar65nollmratio@it1",
+          "kind": "ratio_replan_gain",
+          "delta": 0.03981684246709305,
+          "ci_low": 0.030975489097090397,
+          "ci_high": 0.04894315651719594,
+          "p_better": 1.0,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "bar65nollmratio",
+          "b": "random@k=4",
+          "kind": "ratio_matched_level",
+          "delta": 0.10659717533616075,
+          "ci_low": 0.09600111983784065,
+          "ci_high": 0.11712224419376775,
+          "p_better": 1.0,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        }
+      ]
+    },
+    {
+      "dataset": "adult-seed44",
+      "run_seed": 44,
+      "metric": "balanced_accuracy",
+      "task": "binary",
+      "verdict": "ok",
+      "refusal": null,
+      "test_rows": 9769,
+      "test_fingerprint": "993d06f84c9df3e5e50cf2077988e9b9",
+      "missing_arms": [],
+      "arms": {
+        "bar65nollmratio": {
+          "label": "iteration 2",
+          "fits": 4,
+          "val_score": 0.843881372252338,
+          "test_recorded": 0.8381034516698191,
+          "test_reproduced": 0.8381034516698191,
+          "selection_gap": 0.005777920582518803,
+          "class_weight": {
+            "0": 1.0,
+            "1": 3.179
+          },
+          "model": "hist_gbdt",
+          "dir": "bench/runs/artifacts/bar65nollmratio-adult-seed44/train/iter_02",
+          "stop_reason": "stalled",
+          "critic_runs": 3,
+          "goal_threshold": 0.9189
+        },
+        "bar65nollm": {
+          "label": "iteration 4",
+          "fits": 5,
+          "val_score": 0.8425027048837141,
+          "test_recorded": 0.8350626447664105,
+          "test_reproduced": 0.8350626447664105,
+          "selection_gap": 0.007440060117303693,
+          "class_weight": {
+            "0": 1.0,
+            "1": 2.25
+          },
+          "model": "hist_gbdt",
+          "dir": "bench/runs/artifacts/bar65nollm-adult-seed44/train/iter_04",
+          "stop_reason": "max_iterations",
+          "critic_runs": 4,
+          "goal_threshold": 0.9189
+        },
+        "bar65llm": {
+          "label": "iteration 3",
+          "fits": 5,
+          "val_score": 0.8480567270193126,
+          "test_recorded": 0.8402373118691391,
+          "test_reproduced": 0.8402373118691391,
+          "selection_gap": 0.007819415150173481,
+          "class_weight": "balanced",
+          "model": "hist_gbdt",
+          "dir": "bench/runs/artifacts/bar65llm-adult-seed44/train/iter_03",
+          "stop_reason": "max_iterations",
+          "critic_runs": 4,
+          "goal_threshold": 0.9189
+        },
+        "bar65nollmratio@it1": {
+          "label": "iteration 1",
+          "fits": 1,
+          "val_score": 0.8033400707852754,
+          "test_recorded": NaN,
+          "test_reproduced": 0.7972125994277091,
+          "selection_gap": 0.006127471357566305,
+          "class_weight": null,
+          "model": "hist_gbdt",
+          "dir": "bench/runs/artifacts/bar65nollmratio-adult-seed44/train/iter_01"
+        },
+        "random@k=4": {
+          "label": "draw 1",
+          "fits": 4,
+          "val_score": 0.8233523527306543,
+          "test_recorded": 0.8142152743938272,
+          "test_reproduced": 0.8142152743938272,
+          "selection_gap": 0.009137078336827087,
+          "class_weight": "balanced",
+          "model": "logreg",
+          "dir": "bench/runs/random/adult-seed44/draw_01"
+        }
+      },
+      "pairs": [
+        {
+          "a": "bar65nollmratio",
+          "b": "bar65nollm",
+          "kind": "prescription",
+          "delta": 0.003040806903408688,
+          "ci_low": -0.0017508544358464718,
+          "ci_high": 0.00795106292803331,
+          "p_better": 0.892,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "bar65llm",
+          "b": "bar65nollmratio",
+          "kind": "headline",
+          "delta": 0.002133860199319937,
+          "ci_low": -0.0017639200540536526,
+          "ci_high": 0.0060233234685436315,
+          "p_better": 0.84825,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "bar65llm",
+          "b": "bar65nollm",
+          "kind": "main",
+          "delta": 0.005174667102728625,
+          "ci_low": 0.00015674730801034932,
+          "ci_high": 0.01045233360511156,
+          "p_better": 0.97825,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "bar65nollmratio",
+          "b": "bar65nollmratio@it1",
+          "kind": "ratio_replan_gain",
+          "delta": 0.04089085224211009,
+          "ci_low": 0.03175803108159942,
+          "ci_high": 0.05025108161774384,
+          "p_better": 1.0,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "bar65nollmratio",
+          "b": "random@k=4",
+          "kind": "ratio_matched_level",
+          "delta": 0.023888177275991906,
+          "ci_low": 0.017600661613584263,
+          "ci_high": 0.03015260720630563,
+          "p_better": 1.0,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        }
+      ]
+    },
+    {
+      "dataset": "bank-marketing-seed42",
+      "run_seed": 42,
+      "metric": "balanced_accuracy",
+      "task": "binary",
+      "verdict": "ok",
+      "refusal": null,
+      "test_rows": 9043,
+      "test_fingerprint": "2df57cb2794050d1c92eec82b5892022",
+      "missing_arms": [],
+      "arms": {
+        "bar65nollmratio": {
+          "label": "iteration 2",
+          "fits": 4,
+          "val_score": 0.8789116512798754,
+          "test_recorded": 0.8649713605259388,
+          "test_reproduced": 0.8649713605259388,
+          "selection_gap": 0.013940290753936546,
+          "class_weight": {
+            "0": 1.0,
+            "1": 7.547
+          },
+          "model": "hist_gbdt",
+          "dir": "bench/runs/artifacts/bar65nollmratio-bank-marketing-seed42/train/iter_02",
+          "stop_reason": "stalled",
+          "critic_runs": 3,
+          "goal_threshold": 0.8817
+        },
+        "bar65nollm": {
+          "label": "iteration 5",
+          "fits": 5,
+          "val_score": 0.8774294808899463,
+          "test_recorded": 0.8577878181325335,
+          "test_reproduced": 0.8577878181325335,
+          "selection_gap": 0.01964166275741286,
+          "class_weight": {
+            "0": 1.0,
+            "1": 5.062
+          },
+          "model": "hist_gbdt",
+          "dir": "bench/runs/artifacts/bar65nollm-bank-marketing-seed42/train/iter_05",
+          "stop_reason": "max_iterations",
+          "critic_runs": 4,
+          "goal_threshold": 0.8817
+        },
+        "bar65llm": {
+          "label": "iteration 1",
+          "fits": 1,
+          "val_score": 0.8826291524447761,
+          "test_recorded": 0.8634554629249314,
+          "test_reproduced": 0.8634554629249314,
+          "selection_gap": 0.019173689519844772,
+          "class_weight": "balanced",
+          "model": "hist_gbdt",
+          "dir": "bench/runs/artifacts/bar65llm-bank-marketing-seed42/train/iter_01",
+          "stop_reason": "goal_reached",
+          "critic_runs": 0,
+          "goal_threshold": 0.8817
+        },
+        "bar65nollmratio@it1": {
+          "label": "iteration 1",
+          "fits": 1,
+          "val_score": 0.7316107877380469,
+          "test_recorded": NaN,
+          "test_reproduced": 0.7174978367993864,
+          "selection_gap": 0.014112950938660496,
+          "class_weight": null,
+          "model": "hist_gbdt",
+          "dir": "bench/runs/artifacts/bar65nollmratio-bank-marketing-seed42/train/iter_01"
+        },
+        "random@k=4": {
+          "label": "draw 3",
+          "fits": 4,
+          "val_score": 0.7849742490652383,
+          "test_recorded": 0.7913093193404931,
+          "test_reproduced": 0.7913093193404931,
+          "selection_gap": -0.006335070275254817,
+          "class_weight": "balanced",
+          "model": "random_forest",
+          "dir": "bench/runs/random/bank-marketing-seed42/draw_03"
+        }
+      },
+      "pairs": [
+        {
+          "a": "bar65nollmratio",
+          "b": "bar65nollm",
+          "kind": "prescription",
+          "delta": 0.007183542393405351,
+          "ci_low": 0.0003575535911139295,
+          "ci_high": 0.014197868103721261,
+          "p_better": 0.9825,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "bar65llm",
+          "b": "bar65nollmratio",
+          "kind": "headline",
+          "delta": -0.0015158976010074543,
+          "ci_low": -0.007076699931087224,
+          "ci_high": 0.003910153262917873,
+          "p_better": 0.288,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "bar65llm",
+          "b": "bar65nollm",
+          "kind": "main",
+          "delta": 0.005667644792397897,
+          "ci_low": -0.000976272256086097,
+          "ci_high": 0.012739028375455038,
+          "p_better": 0.954,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "bar65nollmratio",
+          "b": "bar65nollmratio@it1",
+          "kind": "ratio_replan_gain",
+          "delta": 0.14747352372655242,
+          "ci_low": 0.13219662234478163,
+          "ci_high": 0.16299881841891908,
+          "p_better": 1.0,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "bar65nollmratio",
+          "b": "random@k=4",
+          "kind": "ratio_matched_level",
+          "delta": 0.07366204118544573,
+          "ci_low": 0.06045322822591855,
+          "ci_high": 0.08683834189544924,
+          "p_better": 1.0,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        }
+      ]
+    },
+    {
+      "dataset": "bank-marketing-seed43",
+      "run_seed": 43,
+      "metric": "balanced_accuracy",
+      "task": "binary",
+      "verdict": "ok",
+      "refusal": null,
+      "test_rows": 9043,
+      "test_fingerprint": "8905074b8fe6e6b762da533d3399aaf6",
+      "missing_arms": [],
+      "arms": {
+        "bar65nollmratio": {
+          "label": "iteration 2",
+          "fits": 4,
+          "val_score": 0.865143330138538,
+          "test_recorded": 0.864099392409918,
+          "test_reproduced": 0.864099392409918,
+          "selection_gap": 0.0010439377286199925,
+          "class_weight": {
+            "0": 1.0,
+            "1": 7.547
+          },
+          "model": "hist_gbdt",
+          "dir": "bench/runs/artifacts/bar65nollmratio-bank-marketing-seed43/train/iter_02",
+          "stop_reason": "stalled",
+          "critic_runs": 3,
+          "goal_threshold": 0.8816
+        },
+        "bar65nollm": {
+          "label": "iteration 5",
+          "fits": 5,
+          "val_score": 0.8639238543249069,
+          "test_recorded": 0.8604473416010407,
+          "test_reproduced": 0.8604473416010407,
+          "selection_gap": 0.0034765127238661764,
+          "class_weight": {
+            "0": 1.0,
+            "1": 5.062
+          },
+          "model": "hist_gbdt",
+          "dir": "bench/runs/artifacts/bar65nollm-bank-marketing-seed43/train/iter_05",
+          "stop_reason": "max_iterations",
+          "critic_runs": 4,
+          "goal_threshold": 0.8816
+        },
+        "bar65llm": {
+          "label": "iteration 4",
+          "fits": 5,
+          "val_score": 0.8750277019066488,
+          "test_recorded": 0.8654710569084519,
+          "test_reproduced": 0.8654710569084519,
+          "selection_gap": 0.009556644998196862,
+          "class_weight": null,
+          "model": "xgboost",
+          "dir": "bench/runs/artifacts/bar65llm-bank-marketing-seed43/train/iter_04",
+          "stop_reason": "max_iterations",
+          "critic_runs": 4,
+          "goal_threshold": 0.8816
+        },
+        "bar65nollmratio@it1": {
+          "label": "iteration 1",
+          "fits": 1,
+          "val_score": 0.7298172668588595,
+          "test_recorded": NaN,
+          "test_reproduced": 0.7186427055454876,
+          "selection_gap": 0.011174561313371911,
+          "class_weight": null,
+          "model": "hist_gbdt",
+          "dir": "bench/runs/artifacts/bar65nollmratio-bank-marketing-seed43/train/iter_01"
+        },
+        "random@k=4": {
+          "label": "draw 2",
+          "fits": 4,
+          "val_score": 0.8147873014459921,
+          "test_recorded": 0.8017814001441739,
+          "test_reproduced": 0.8017814001441739,
+          "selection_gap": 0.013005901301818223,
+          "class_weight": "balanced",
+          "model": "extra_trees",
+          "dir": "bench/runs/random/bank-marketing-seed43/draw_02"
+        }
+      },
+      "pairs": [
+        {
+          "a": "bar65nollmratio",
+          "b": "bar65nollm",
+          "kind": "prescription",
+          "delta": 0.0036520508088772052,
+          "ci_low": -0.0031584138639336786,
+          "ci_high": 0.010449696812030172,
+          "p_better": 0.84725,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "bar65llm",
+          "b": "bar65nollmratio",
+          "kind": "headline",
+          "delta": 0.0013716644985339865,
+          "ci_low": -0.0061032879093302315,
+          "ci_high": 0.009128993803583452,
+          "p_better": 0.646,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "bar65llm",
+          "b": "bar65nollm",
+          "kind": "main",
+          "delta": 0.005023715307411192,
+          "ci_low": -0.0026021283354770797,
+          "ci_high": 0.012990236455401037,
+          "p_better": 0.89975,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "bar65nollmratio",
+          "b": "bar65nollmratio@it1",
+          "kind": "ratio_replan_gain",
+          "delta": 0.14545668686443036,
+          "ci_low": 0.13020364013782856,
+          "ci_high": 0.16034448075700689,
+          "p_better": 1.0,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "bar65nollmratio",
+          "b": "random@k=4",
+          "kind": "ratio_matched_level",
+          "delta": 0.06231799226574408,
+          "ci_low": 0.04947179520039966,
+          "ci_high": 0.07495484785058058,
+          "p_better": 1.0,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        }
+      ]
+    },
+    {
+      "dataset": "bank-marketing-seed44",
+      "run_seed": 44,
+      "metric": "balanced_accuracy",
+      "task": "binary",
+      "verdict": "ok",
+      "refusal": null,
+      "test_rows": 9043,
+      "test_fingerprint": "c8ff0afb83713af79117cda7caa3a18b",
+      "missing_arms": [],
+      "arms": {
+        "bar65nollmratio": {
+          "label": "iteration 2",
+          "fits": 4,
+          "val_score": 0.859421229036523,
+          "test_recorded": 0.8629887916024019,
+          "test_reproduced": 0.8629887916024019,
+          "selection_gap": -0.003567562565878979,
+          "class_weight": {
+            "0": 1.0,
+            "1": 7.547
+          },
+          "model": "hist_gbdt",
+          "dir": "bench/runs/artifacts/bar65nollmratio-bank-marketing-seed44/train/iter_02",
+          "stop_reason": "stalled",
+          "critic_runs": 3,
+          "goal_threshold": 0.8811
+        },
+        "bar65nollm": {
+          "label": "iteration 5",
+          "fits": 5,
+          "val_score": 0.8567723821934985,
+          "test_recorded": 0.8517977351200798,
+          "test_reproduced": 0.8517977351200798,
+          "selection_gap": 0.004974647073418659,
+          "class_weight": {
+            "0": 1.0,
+            "1": 5.062
+          },
+          "model": "hist_gbdt",
+          "dir": "bench/runs/artifacts/bar65nollm-bank-marketing-seed44/train/iter_05",
+          "stop_reason": "max_iterations",
+          "critic_runs": 4,
+          "goal_threshold": 0.8811
+        },
+        "bar65llm": {
+          "label": "iteration 4",
+          "fits": 5,
+          "val_score": 0.8652111642945627,
+          "test_recorded": 0.864621519791954,
+          "test_reproduced": 0.864621519791954,
+          "selection_gap": 0.0005896445026086772,
+          "class_weight": {
+            "0": 1.0,
+            "1": 8.5
+          },
+          "model": "hist_gbdt",
+          "dir": "bench/runs/artifacts/bar65llm-bank-marketing-seed44/train/iter_04",
+          "stop_reason": "max_iterations",
+          "critic_runs": 4,
+          "goal_threshold": 0.8811
+        },
+        "bar65nollmratio@it1": {
+          "label": "iteration 1",
+          "fits": 1,
+          "val_score": 0.727773244977668,
+          "test_recorded": NaN,
+          "test_reproduced": 0.723459570342786,
+          "selection_gap": 0.004313674634882081,
+          "class_weight": null,
+          "model": "hist_gbdt",
+          "dir": "bench/runs/artifacts/bar65nollmratio-bank-marketing-seed44/train/iter_01"
+        },
+        "random@k=4": {
+          "label": "draw 3",
+          "fits": 4,
+          "val_score": 0.8151966740664693,
+          "test_recorded": 0.8129615666425588,
+          "test_reproduced": 0.8129615666425588,
+          "selection_gap": 0.0022351074239105317,
+          "class_weight": "balanced",
+          "model": "decision_tree",
+          "dir": "bench/runs/random/bank-marketing-seed44/draw_03"
+        }
+      },
+      "pairs": [
+        {
+          "a": "bar65nollmratio",
+          "b": "bar65nollm",
+          "kind": "prescription",
+          "delta": 0.011191056482322104,
+          "ci_low": 0.0040253513108335194,
+          "ci_high": 0.01835983657280957,
+          "p_better": 0.99925,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "bar65llm",
+          "b": "bar65nollmratio",
+          "kind": "headline",
+          "delta": 0.0016327281895520684,
+          "ci_low": -0.005622677022005496,
+          "ci_high": 0.008834795092152119,
+          "p_better": 0.6715,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "bar65llm",
+          "b": "bar65nollm",
+          "kind": "main",
+          "delta": 0.012823784671874172,
+          "ci_low": 0.004877323846345735,
+          "ci_high": 0.020861307660841055,
+          "p_better": 0.99875,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "bar65nollmratio",
+          "b": "bar65nollmratio@it1",
+          "kind": "ratio_replan_gain",
+          "delta": 0.13952922125961598,
+          "ci_low": 0.12515711257316708,
+          "ci_high": 0.15418232248789265,
+          "p_better": 1.0,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "bar65nollmratio",
+          "b": "random@k=4",
+          "kind": "ratio_matched_level",
+          "delta": 0.05002722495984313,
+          "ci_low": 0.03763569258087994,
+          "ci_high": 0.06218850064140458,
+          "p_better": 1.0,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        }
+      ]
+    },
+    {
+      "dataset": "speeddating-seed42",
+      "run_seed": 42,
+      "metric": "balanced_accuracy",
+      "task": "binary",
+      "verdict": "ok",
+      "refusal": null,
+      "test_rows": 1676,
+      "test_fingerprint": "1cb427764715caa82986be0169a1467d",
+      "missing_arms": [],
+      "arms": {
+        "bar65nollmratio": {
+          "label": "iteration 5",
+          "fits": 5,
+          "val_score": 0.7621428571428571,
+          "test_recorded": 0.7707919254658385,
+          "test_reproduced": 0.7707919254658385,
+          "selection_gap": -0.008649068322981401,
+          "class_weight": {
+            "0": 1.0,
+            "1": 5.072
+          },
+          "model": "logreg",
+          "dir": "bench/runs/artifacts/bar65nollmratio-speeddating-seed42/train/iter_05",
+          "stop_reason": "max_iterations",
+          "critic_runs": 4,
+          "goal_threshold": 0.884
+        },
+        "bar65nollm": {
+          "label": "iteration 5",
+          "fits": 5,
+          "val_score": 0.6998447204968944,
+          "test_recorded": 0.7157660455486543,
+          "test_reproduced": 0.7157660455486543,
+          "selection_gap": -0.015921325051759916,
+          "class_weight": {
+            "0": 1.0,
+            "1": 1.5
+          },
+          "model": "logreg",
+          "dir": "bench/runs/artifacts/bar65nollm-speeddating-seed42/train/iter_05",
+          "stop_reason": "max_iterations",
+          "critic_runs": 4,
+          "goal_threshold": 0.884
+        },
+        "bar65llm": {
+          "label": "iteration 2",
+          "fits": 4,
+          "val_score": 0.7864544513457556,
+          "test_recorded": 0.7977070393374741,
+          "test_reproduced": 0.7977070393374741,
+          "selection_gap": -0.011252587991718466,
+          "class_weight": "balanced",
+          "model": "hist_gbdt",
+          "dir": "bench/runs/artifacts/bar65llm-speeddating-seed42/train/iter_02",
+          "stop_reason": "stalled",
+          "critic_runs": 3,
+          "goal_threshold": 0.884
+        },
+        "bar65nollmratio@it1": {
+          "label": "iteration 1",
+          "fits": 1,
+          "val_score": 0.6586076604554866,
+          "test_recorded": NaN,
+          "test_reproduced": 0.676061076604555,
+          "selection_gap": -0.017453416149068368,
+          "class_weight": null,
+          "model": "hist_gbdt",
+          "dir": "bench/runs/artifacts/bar65nollmratio-speeddating-seed42/train/iter_01"
+        },
+        "random@k=5": {
+          "label": "draw 1",
+          "fits": 5,
+          "val_score": 0.6481728778467909,
+          "test_recorded": 0.6543219461697722,
+          "test_reproduced": 0.6543219461697722,
+          "selection_gap": -0.006149068322981344,
+          "class_weight": null,
+          "model": "logreg",
+          "dir": "bench/runs/random/speeddating-seed42/draw_01"
+        }
+      },
+      "pairs": [
+        {
+          "a": "bar65nollmratio",
+          "b": "bar65nollm",
+          "kind": "prescription",
+          "delta": 0.05502587991718422,
+          "ci_low": 0.028011279563235632,
+          "ci_high": 0.08249193957818557,
+          "p_better": 1.0,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "bar65llm",
+          "b": "bar65nollmratio",
+          "kind": "headline",
+          "delta": 0.026915113871635588,
+          "ci_low": 0.005399550769283267,
+          "ci_high": 0.047736053850484926,
+          "p_better": 0.993,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "bar65llm",
+          "b": "bar65nollm",
+          "kind": "main",
+          "delta": 0.0819409937888198,
+          "ci_low": 0.05436342252638443,
+          "ci_high": 0.10965831595243815,
+          "p_better": 1.0,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "bar65nollmratio",
+          "b": "bar65nollmratio@it1",
+          "kind": "ratio_replan_gain",
+          "delta": 0.09473084886128358,
+          "ci_low": 0.06365742484198889,
+          "ci_high": 0.1262881789718811,
+          "p_better": 1.0,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "bar65nollmratio",
+          "b": "random@k=5",
+          "kind": "ratio_matched_level",
+          "delta": 0.11646997929606628,
+          "ci_low": 0.08587805760783766,
+          "ci_high": 0.1483819678353829,
+          "p_better": 1.0,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        }
+      ]
+    },
+    {
+      "dataset": "speeddating-seed43",
+      "run_seed": 43,
+      "metric": "balanced_accuracy",
+      "task": "binary",
+      "verdict": "ok",
+      "refusal": null,
+      "test_rows": 1676,
+      "test_fingerprint": "6cf28a0074ee1c3ad89a3557fb831650",
+      "missing_arms": [],
+      "arms": {
+        "bar65nollmratio": {
+          "label": "iteration 4",
+          "fits": 5,
+          "val_score": 0.7825983436853001,
+          "test_recorded": 0.7818322981366459,
+          "test_reproduced": 0.7818322981366459,
+          "selection_gap": 0.0007660455486542261,
+          "class_weight": {
+            "0": 1.0,
+            "1": 5.072
+          },
+          "model": "hist_gbdt",
+          "dir": "bench/runs/artifacts/bar65nollmratio-speeddating-seed43/train/iter_04",
+          "stop_reason": "max_iterations",
+          "critic_runs": 4,
+          "goal_threshold": 0.8879
+        },
+        "bar65nollm": {
+          "label": "iteration 4",
+          "fits": 5,
+          "val_score": 0.7326552795031056,
+          "test_recorded": 0.7163250517598344,
+          "test_reproduced": 0.7163250517598344,
+          "selection_gap": 0.016330227743271197,
+          "class_weight": {
+            "0": 1.0,
+            "1": 1.5
+          },
+          "model": "hist_gbdt",
+          "dir": "bench/runs/artifacts/bar65nollm-speeddating-seed43/train/iter_04",
+          "stop_reason": "max_iterations",
+          "critic_runs": 4,
+          "goal_threshold": 0.8879
+        },
+        "bar65llm": {
+          "label": "iteration 2",
+          "fits": 4,
+          "val_score": 0.7843115942028985,
+          "test_recorded": 0.7940062111801243,
+          "test_reproduced": 0.7940062111801243,
+          "selection_gap": -0.009694616977225734,
+          "class_weight": {
+            "0": 1.0,
+            "1": 4.0
+          },
+          "model": "hist_gbdt",
+          "dir": "bench/runs/artifacts/bar65llm-speeddating-seed43/train/iter_02",
+          "stop_reason": "stalled",
+          "critic_runs": 3,
+          "goal_threshold": 0.8879
+        },
+        "bar65nollmratio@it1": {
+          "label": "iteration 1",
+          "fits": 1,
+          "val_score": 0.6959627329192547,
+          "test_recorded": NaN,
+          "test_reproduced": 0.697391304347826,
+          "selection_gap": -0.0014285714285713347,
+          "class_weight": null,
+          "model": "hist_gbdt",
+          "dir": "bench/runs/artifacts/bar65nollmratio-speeddating-seed43/train/iter_01"
+        },
+        "random@k=5": {
+          "label": "draw 5",
+          "fits": 5,
+          "val_score": 0.5733592132505176,
+          "test_recorded": 0.5617753623188406,
+          "test_reproduced": 0.5617753623188406,
+          "selection_gap": 0.01158385093167702,
+          "class_weight": "balanced",
+          "model": "svc",
+          "dir": "bench/runs/random/speeddating-seed43/draw_05"
+        }
+      },
+      "pairs": [
+        {
+          "a": "bar65nollmratio",
+          "b": "bar65nollm",
+          "kind": "prescription",
+          "delta": 0.06550724637681149,
+          "ci_low": 0.04119378683690171,
+          "ci_high": 0.09129755051381187,
+          "p_better": 1.0,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "bar65llm",
+          "b": "bar65nollmratio",
+          "kind": "headline",
+          "delta": 0.012173913043478368,
+          "ci_low": -0.00635456224630263,
+          "ci_high": 0.03163877714043666,
+          "p_better": 0.899,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "bar65llm",
+          "b": "bar65nollm",
+          "kind": "main",
+          "delta": 0.07768115942028986,
+          "ci_low": 0.05019380779686225,
+          "ci_high": 0.10592732730415208,
+          "p_better": 1.0,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "bar65nollmratio",
+          "b": "bar65nollmratio@it1",
+          "kind": "ratio_replan_gain",
+          "delta": 0.08444099378881986,
+          "ci_low": 0.056714115473011216,
+          "ci_high": 0.11332558685227953,
+          "p_better": 1.0,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "bar65nollmratio",
+          "b": "random@k=5",
+          "kind": "ratio_matched_level",
+          "delta": 0.22005693581780528,
+          "ci_low": 0.18834086644376782,
+          "ci_high": 0.25209166371187436,
+          "p_better": 1.0,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        }
+      ]
+    },
+    {
+      "dataset": "speeddating-seed44",
+      "run_seed": 44,
+      "metric": "balanced_accuracy",
+      "task": "binary",
+      "verdict": "ok",
+      "refusal": null,
+      "test_rows": 1676,
+      "test_fingerprint": "94a26571f6c91c0047d8e864c0c958c0",
+      "missing_arms": [],
+      "arms": {
+        "bar65nollmratio": {
+          "label": "iteration 4",
+          "fits": 5,
+          "val_score": 0.770527950310559,
+          "test_recorded": 0.8020393374741202,
+          "test_reproduced": 0.8020393374741202,
+          "selection_gap": -0.031511387163561166,
+          "class_weight": {
+            "0": 1.0,
+            "1": 5.072
+          },
+          "model": "hist_gbdt",
+          "dir": "bench/runs/artifacts/bar65nollmratio-speeddating-seed44/train/iter_04",
+          "stop_reason": "max_iterations",
+          "critic_runs": 4,
+          "goal_threshold": 0.8882
+        },
+        "bar65nollm": {
+          "label": "iteration 4",
+          "fits": 5,
+          "val_score": 0.7080072463768116,
+          "test_recorded": 0.7174223602484472,
+          "test_reproduced": 0.7174223602484472,
+          "selection_gap": -0.009415113871635628,
+          "class_weight": {
+            "0": 1.0,
+            "1": 1.5
+          },
+          "model": "hist_gbdt",
+          "dir": "bench/runs/artifacts/bar65nollm-speeddating-seed44/train/iter_04",
+          "stop_reason": "max_iterations",
+          "critic_runs": 4,
+          "goal_threshold": 0.8882
+        },
+        "bar65llm": {
+          "label": "iteration 4",
+          "fits": 5,
+          "val_score": 0.7790838509316771,
+          "test_recorded": 0.7935507246376812,
+          "test_reproduced": 0.7935507246376812,
+          "selection_gap": -0.01446687370600408,
+          "class_weight": "balanced",
+          "model": "hist_gbdt",
+          "dir": "bench/runs/artifacts/bar65llm-speeddating-seed44/train/iter_04",
+          "stop_reason": "max_iterations",
+          "critic_runs": 4,
+          "goal_threshold": 0.8882
+        },
+        "bar65nollmratio@it1": {
+          "label": "iteration 1",
+          "fits": 1,
+          "val_score": 0.6582505175983437,
+          "test_recorded": NaN,
+          "test_reproduced": 0.6792236024844721,
+          "selection_gap": -0.020973084886128368,
+          "class_weight": null,
+          "model": "hist_gbdt",
+          "dir": "bench/runs/artifacts/bar65nollmratio-speeddating-seed44/train/iter_01"
+        },
+        "random@k=5": {
+          "label": "draw 3",
+          "fits": 5,
+          "val_score": 0.7618115942028986,
+          "test_recorded": 0.7694151138716356,
+          "test_reproduced": 0.7694151138716356,
+          "selection_gap": -0.007603519668737069,
+          "class_weight": "balanced",
+          "model": "logreg",
+          "dir": "bench/runs/random/speeddating-seed44/draw_03"
+        }
+      },
+      "pairs": [
+        {
+          "a": "bar65nollmratio",
+          "b": "bar65nollm",
+          "kind": "prescription",
+          "delta": 0.08461697722567296,
+          "ci_low": 0.05886691250723441,
+          "ci_high": 0.11245397698964771,
+          "p_better": 1.0,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "bar65llm",
+          "b": "bar65nollmratio",
+          "kind": "headline",
+          "delta": -0.00848861283643898,
+          "ci_low": -0.02790401728117877,
+          "ci_high": 0.01157633605031247,
+          "p_better": 0.2005,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "bar65llm",
+          "b": "bar65nollm",
+          "kind": "main",
+          "delta": 0.07612836438923398,
+          "ci_low": 0.04917057358773021,
+          "ci_high": 0.10652308027277486,
+          "p_better": 1.0,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "bar65nollmratio",
+          "b": "bar65nollmratio@it1",
+          "kind": "ratio_replan_gain",
+          "delta": 0.12281573498964804,
+          "ci_low": 0.09281326826857794,
+          "ci_high": 0.153475629227373,
+          "p_better": 1.0,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "bar65nollmratio",
+          "b": "random@k=5",
+          "kind": "ratio_matched_level",
+          "delta": 0.032624223602484514,
+          "ci_low": 0.009734954812890504,
+          "ci_high": 0.05518472353246082,
+          "p_better": 0.99825,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        }
+      ]
+    },
+    {
+      "dataset": "spambase-seed42",
+      "run_seed": 42,
+      "metric": "balanced_accuracy",
+      "task": "binary",
+      "verdict": "ok",
+      "refusal": null,
+      "test_rows": 921,
+      "test_fingerprint": "e2b91bd7f4fbf56b6f68af097a3ea79a",
+      "missing_arms": [],
+      "arms": {
+        "bar65nollmratio": {
+          "label": "iteration 1",
+          "fits": 3,
+          "val_score": 0.959419988514624,
+          "test_recorded": 0.9490210018069256,
+          "test_reproduced": 0.9490210018069256,
+          "selection_gap": 0.010398986707698343,
+          "class_weight": null,
+          "model": "hist_gbdt",
+          "dir": "bench/runs/artifacts/bar65nollmratio-spambase-seed42/train/iter_01",
+          "stop_reason": "stalled",
+          "critic_runs": 2,
+          "goal_threshold": 0.973
+        },
+        "bar65nollm": {
+          "label": "iteration 1",
+          "fits": 3,
+          "val_score": 0.959419988514624,
+          "test_recorded": 0.9490210018069256,
+          "test_reproduced": 0.9490210018069256,
+          "selection_gap": 0.010398986707698343,
+          "class_weight": null,
+          "model": "hist_gbdt",
+          "dir": "bench/runs/artifacts/bar65nollm-spambase-seed42/train/iter_01",
+          "stop_reason": "stalled",
+          "critic_runs": 2,
+          "goal_threshold": 0.973
+        },
+        "bar65llm": {
+          "label": "iteration 2",
+          "fits": 4,
+          "val_score": 0.949340581001604,
+          "test_recorded": 0.9417192452383067,
+          "test_reproduced": 0.9417192452383067,
+          "selection_gap": 0.007621335763297266,
+          "class_weight": null,
+          "model": "xgboost",
+          "dir": "bench/runs/artifacts/bar65llm-spambase-seed42/train/iter_02",
+          "stop_reason": "stalled",
+          "critic_runs": 3,
+          "goal_threshold": 0.973
+        },
+        "bar65nollmratio@it1": {
+          "label": "iteration 1",
+          "fits": 1,
+          "val_score": 0.959419988514624,
+          "test_recorded": NaN,
+          "test_reproduced": 0.9490210018069256,
+          "selection_gap": 0.010398986707698343,
+          "class_weight": null,
+          "model": "hist_gbdt",
+          "dir": "bench/runs/artifacts/bar65nollmratio-spambase-seed42/train/iter_01"
+        },
+        "random@k=3": {
+          "label": "draw 1",
+          "fits": 3,
+          "val_score": 0.9485187825501495,
+          "test_recorded": 0.9380683669539975,
+          "test_reproduced": 0.9380683669539975,
+          "selection_gap": 0.010450415596152007,
+          "class_weight": "balanced",
+          "model": "random_forest",
+          "dir": "bench/runs/random/spambase-seed42/draw_01"
+        }
+      },
+      "pairs": [
+        {
+          "a": "bar65nollmratio",
+          "b": "bar65nollm",
+          "kind": "prescription",
+          "delta": 0.0,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "p_better": NaN,
+          "resamples_used": 0,
+          "identical_predictions": true
+        },
+        {
+          "a": "bar65llm",
+          "b": "bar65nollmratio",
+          "kind": "headline",
+          "delta": -0.007301756568618867,
+          "ci_low": -0.017234120006510093,
+          "ci_high": 0.001814983942025467,
+          "p_better": 0.0615,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "bar65llm",
+          "b": "bar65nollm",
+          "kind": "main",
+          "delta": -0.007301756568618867,
+          "ci_low": -0.017234120006510093,
+          "ci_high": 0.001814983942025467,
+          "p_better": 0.0615,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "bar65nollmratio",
+          "b": "bar65nollmratio@it1",
+          "kind": "ratio_replan_gain",
+          "delta": 0.0,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "p_better": NaN,
+          "resamples_used": 0,
+          "identical_predictions": true
+        },
+        {
+          "a": "bar65nollmratio",
+          "b": "random@k=3",
+          "kind": "ratio_matched_level",
+          "delta": 0.010952634852928078,
+          "ci_low": 0.000529947942534187,
+          "ci_high": 0.021702493519500467,
+          "p_better": 0.98125,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        }
+      ]
+    },
+    {
+      "dataset": "spambase-seed43",
+      "run_seed": 43,
+      "metric": "balanced_accuracy",
+      "task": "binary",
+      "verdict": "ok",
+      "refusal": null,
+      "test_rows": 921,
+      "test_fingerprint": "02a6d47d5875a78c6b1d6e66d0af1ef3",
+      "missing_arms": [],
+      "arms": {
+        "bar65nollmratio": {
+          "label": "iteration 1",
+          "fits": 3,
+          "val_score": 0.957479356026852,
+          "test_recorded": 0.9526718800912349,
+          "test_reproduced": 0.9526718800912349,
+          "selection_gap": 0.004807475935617034,
+          "class_weight": null,
+          "model": "hist_gbdt",
+          "dir": "bench/runs/artifacts/bar65nollmratio-spambase-seed43/train/iter_01",
+          "stop_reason": "stalled",
+          "critic_runs": 2,
+          "goal_threshold": 0.9711
+        },
+        "bar65nollm": {
+          "label": "iteration 1",
+          "fits": 3,
+          "val_score": 0.957479356026852,
+          "test_recorded": 0.9526718800912349,
+          "test_reproduced": 0.9526718800912349,
+          "selection_gap": 0.004807475935617034,
+          "class_weight": null,
+          "model": "hist_gbdt",
+          "dir": "bench/runs/artifacts/bar65nollm-spambase-seed43/train/iter_01",
+          "stop_reason": "stalled",
+          "critic_runs": 2,
+          "goal_threshold": 0.9711
+        },
+        "bar65llm": {
+          "label": "iteration 1",
+          "fits": 3,
+          "val_score": 0.9538208677399552,
+          "test_recorded": 0.9490210018069256,
+          "test_reproduced": 0.9490210018069256,
+          "selection_gap": 0.004799865933029612,
+          "class_weight": null,
+          "model": "hist_gbdt",
+          "dir": "bench/runs/artifacts/bar65llm-spambase-seed43/train/iter_01",
+          "stop_reason": "stalled",
+          "critic_runs": 2,
+          "goal_threshold": 0.9711
+        },
+        "bar65nollmratio@it1": {
+          "label": "iteration 1",
+          "fits": 1,
+          "val_score": 0.957479356026852,
+          "test_recorded": NaN,
+          "test_reproduced": 0.9526718800912349,
+          "selection_gap": 0.004807475935617034,
+          "class_weight": null,
+          "model": "hist_gbdt",
+          "dir": "bench/runs/artifacts/bar65nollmratio-spambase-seed43/train/iter_01"
+        },
+        "random@k=3": {
+          "label": "draw 1",
+          "fits": 3,
+          "val_score": 0.7608170458820966,
+          "test_recorded": 0.7654477324565301,
+          "test_reproduced": 0.7654477324565301,
+          "selection_gap": -0.00463068657443344,
+          "class_weight": null,
+          "model": "mlp",
+          "dir": "bench/runs/random/spambase-seed43/draw_01"
+        }
+      },
+      "pairs": [
+        {
+          "a": "bar65nollmratio",
+          "b": "bar65nollm",
+          "kind": "prescription",
+          "delta": 0.0,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "p_better": NaN,
+          "resamples_used": 0,
+          "identical_predictions": true
+        },
+        {
+          "a": "bar65llm",
+          "b": "bar65nollmratio",
+          "kind": "headline",
+          "delta": -0.0036508782843093224,
+          "ci_low": -0.011564439263055665,
+          "ci_high": 0.0035906642728905647,
+          "p_better": 0.161,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "bar65llm",
+          "b": "bar65nollm",
+          "kind": "main",
+          "delta": -0.0036508782843093224,
+          "ci_low": -0.011564439263055665,
+          "ci_high": 0.0035906642728905647,
+          "p_better": 0.161,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "bar65nollmratio",
+          "b": "bar65nollmratio@it1",
+          "kind": "ratio_replan_gain",
+          "delta": 0.0,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "p_better": NaN,
+          "resamples_used": 0,
+          "identical_predictions": true
+        },
+        {
+          "a": "bar65nollmratio",
+          "b": "random@k=3",
+          "kind": "ratio_matched_level",
+          "delta": 0.18722414763470485,
+          "ci_low": 0.1584348622293819,
+          "ci_high": 0.21627894343810794,
+          "p_better": 1.0,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        }
+      ]
+    },
+    {
+      "dataset": "spambase-seed44",
+      "run_seed": 44,
+      "metric": "balanced_accuracy",
+      "task": "binary",
+      "verdict": "ok",
+      "refusal": null,
+      "test_rows": 921,
+      "test_fingerprint": "b201b7b2cc07636f8ac31181a92d6c8f",
+      "missing_arms": [],
+      "arms": {
+        "bar65nollmratio": {
+          "label": "iteration 2",
+          "fits": 4,
+          "val_score": 0.9360878433236302,
+          "test_recorded": 0.9599069877662253,
+          "test_reproduced": 0.9599069877662253,
+          "selection_gap": -0.02381914444259514,
+          "class_weight": null,
+          "model": "hist_gbdt",
+          "dir": "bench/runs/artifacts/bar65nollmratio-spambase-seed44/train/iter_02",
+          "stop_reason": "stalled",
+          "critic_runs": 3,
+          "goal_threshold": 0.967
+        },
+        "bar65nollm": {
+          "label": "iteration 2",
+          "fits": 4,
+          "val_score": 0.9360878433236302,
+          "test_recorded": 0.9599069877662253,
+          "test_reproduced": 0.9599069877662253,
+          "selection_gap": -0.02381914444259514,
+          "class_weight": null,
+          "model": "hist_gbdt",
+          "dir": "bench/runs/artifacts/bar65nollm-spambase-seed44/train/iter_02",
+          "stop_reason": "stalled",
+          "critic_runs": 3,
+          "goal_threshold": 0.967
+        },
+        "bar65llm": {
+          "label": "iteration 3",
+          "fits": 5,
+          "val_score": 0.9384393750371295,
+          "test_recorded": 0.9461328830830298,
+          "test_reproduced": 0.9461328830830298,
+          "selection_gap": -0.007693508045900299,
+          "class_weight": null,
+          "model": "extra_trees",
+          "dir": "bench/runs/artifacts/bar65llm-spambase-seed44/train/iter_03",
+          "stop_reason": "max_iterations",
+          "critic_runs": 4,
+          "goal_threshold": 0.967
+        },
+        "bar65nollmratio@it1": {
+          "label": "iteration 1",
+          "fits": 1,
+          "val_score": 0.9347066278540168,
+          "test_recorded": NaN,
+          "test_reproduced": 0.9490210018069256,
+          "selection_gap": -0.014314373952908799,
+          "class_weight": null,
+          "model": "hist_gbdt",
+          "dir": "bench/runs/artifacts/bar65nollmratio-spambase-seed44/train/iter_01"
+        },
+        "random@k=4": {
+          "label": "draw 4",
+          "fits": 4,
+          "val_score": 0.9007356581318442,
+          "test_recorded": 0.8995008738410498,
+          "test_reproduced": 0.8995008738410498,
+          "selection_gap": 0.0012347842907943773,
+          "class_weight": null,
+          "model": "mlp",
+          "dir": "bench/runs/random/spambase-seed44/draw_04"
+        }
+      },
+      "pairs": [
+        {
+          "a": "bar65nollmratio",
+          "b": "bar65nollm",
+          "kind": "prescription",
+          "delta": 0.0,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "p_better": NaN,
+          "resamples_used": 0,
+          "identical_predictions": true
+        },
+        {
+          "a": "bar65llm",
+          "b": "bar65nollmratio",
+          "kind": "headline",
+          "delta": -0.01377410468319551,
+          "ci_low": -0.02710423892583384,
+          "ci_high": -0.0011394010621240836,
+          "p_better": 0.01575,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "bar65llm",
+          "b": "bar65nollm",
+          "kind": "main",
+          "delta": -0.01377410468319551,
+          "ci_low": -0.02710423892583384,
+          "ci_high": -0.0011394010621240836,
+          "p_better": 0.01575,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "bar65nollmratio",
+          "b": "bar65nollmratio@it1",
+          "kind": "ratio_replan_gain",
+          "delta": 0.010885985959299682,
+          "ci_low": 0.003400161784336639,
+          "ci_high": 0.019383021638667557,
+          "p_better": 0.998,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "bar65nollmratio",
+          "b": "random@k=4",
+          "kind": "ratio_matched_level",
+          "delta": 0.060406113925175475,
+          "ci_low": 0.04163354709804523,
+          "ci_high": 0.07946630553406471,
+          "p_better": 1.0,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        }
+      ]
+    }
+  ],
+  "gates": {
+    "first_rung": true,
+    "verdict_sources": true,
+    "bars": true
+  },
+  "first_rung_check": [
+    {
+      "dataset": "adult",
+      "seed": 42,
+      "arm": "bar65nollmratio",
+      "expected_iteration": 1,
+      "expected_weight": 3.179,
+      "actual_iteration": 1,
+      "actual_weight": 3.179,
+      "run_present": true,
+      "matches": true
+    },
+    {
+      "dataset": "adult",
+      "seed": 43,
+      "arm": "bar65nollmratio",
+      "expected_iteration": 1,
+      "expected_weight": 3.179,
+      "actual_iteration": 1,
+      "actual_weight": 3.179,
+      "run_present": true,
+      "matches": true
+    },
+    {
+      "dataset": "adult",
+      "seed": 44,
+      "arm": "bar65nollmratio",
+      "expected_iteration": 1,
+      "expected_weight": 3.179,
+      "actual_iteration": 1,
+      "actual_weight": 3.179,
+      "run_present": true,
+      "matches": true
+    },
+    {
+      "dataset": "bank-marketing",
+      "seed": 42,
+      "arm": "bar65nollmratio",
+      "expected_iteration": 1,
+      "expected_weight": 7.547,
+      "actual_iteration": 1,
+      "actual_weight": 7.547,
+      "run_present": true,
+      "matches": true
+    },
+    {
+      "dataset": "bank-marketing",
+      "seed": 43,
+      "arm": "bar65nollmratio",
+      "expected_iteration": 1,
+      "expected_weight": 7.547,
+      "actual_iteration": 1,
+      "actual_weight": 7.547,
+      "run_present": true,
+      "matches": true
+    },
+    {
+      "dataset": "bank-marketing",
+      "seed": 44,
+      "arm": "bar65nollmratio",
+      "expected_iteration": 1,
+      "expected_weight": 7.547,
+      "actual_iteration": 1,
+      "actual_weight": 7.547,
+      "run_present": true,
+      "matches": true
+    },
+    {
+      "dataset": "speeddating",
+      "seed": 42,
+      "arm": "bar65nollmratio",
+      "expected_iteration": 2,
+      "expected_weight": 5.072,
+      "actual_iteration": 2,
+      "actual_weight": 5.072,
+      "run_present": true,
+      "matches": true
+    },
+    {
+      "dataset": "speeddating",
+      "seed": 43,
+      "arm": "bar65nollmratio",
+      "expected_iteration": 2,
+      "expected_weight": 5.072,
+      "actual_iteration": 2,
+      "actual_weight": 5.072,
+      "run_present": true,
+      "matches": true
+    },
+    {
+      "dataset": "speeddating",
+      "seed": 44,
+      "arm": "bar65nollmratio",
+      "expected_iteration": 2,
+      "expected_weight": 5.072,
+      "actual_iteration": 2,
+      "actual_weight": 5.072,
+      "run_present": true,
+      "matches": true
+    },
+    {
+      "dataset": "spambase",
+      "seed": 42,
+      "arm": "bar65nollmratio",
+      "expected_iteration": null,
+      "expected_weight": null,
+      "actual_iteration": null,
+      "actual_weight": null,
+      "run_present": true,
+      "matches": true
+    },
+    {
+      "dataset": "spambase",
+      "seed": 43,
+      "arm": "bar65nollmratio",
+      "expected_iteration": null,
+      "expected_weight": null,
+      "actual_iteration": null,
+      "actual_weight": null,
+      "run_present": true,
+      "matches": true
+    },
+    {
+      "dataset": "spambase",
+      "seed": 44,
+      "arm": "bar65nollmratio",
+      "expected_iteration": null,
+      "expected_weight": null,
+      "actual_iteration": null,
+      "actual_weight": null,
+      "run_present": true,
+      "matches": true
+    }
+  ],
+  "source_check": [
+    {
+      "arm": "bar65llm",
+      "runs_present": 12,
+      "sources": {
+        "llm": 37
+      },
+      "expected_source": "llm",
+      "expected_count": 37,
+      "matches": true
+    },
+    {
+      "arm": "bar65nollm",
+      "runs_present": 12,
+      "sources": {
+        "heuristic": 43
+      },
+      "expected_source": "heuristic",
+      "expected_count": 43,
+      "matches": true
+    },
+    {
+      "arm": "bar65nollmratio",
+      "runs_present": 12,
+      "sources": {
+        "heuristic": 37
+      },
+      "expected_source": "heuristic",
+      "expected_count": null,
+      "matches": true
+    }
+  ],
+  "bar_check": [
+    {
+      "dataset": "adult",
+      "seed": 42,
+      "arm": "bar65nollmratio",
+      "predicted_bar": 0.9182,
+      "actual_bar": 0.9182,
+      "off_by": 0.0,
+      "matches": true
+    },
+    {
+      "dataset": "adult",
+      "seed": 43,
+      "arm": "bar65nollmratio",
+      "predicted_bar": 0.9194,
+      "actual_bar": 0.9194,
+      "off_by": 0.0,
+      "matches": true
+    },
+    {
+      "dataset": "adult",
+      "seed": 44,
+      "arm": "bar65nollmratio",
+      "predicted_bar": 0.9189,
+      "actual_bar": 0.9189,
+      "off_by": 0.0,
+      "matches": true
+    },
+    {
+      "dataset": "bank-marketing",
+      "seed": 42,
+      "arm": "bar65nollmratio",
+      "predicted_bar": 0.8817,
+      "actual_bar": 0.8817,
+      "off_by": 0.0,
+      "matches": true
+    },
+    {
+      "dataset": "bank-marketing",
+      "seed": 43,
+      "arm": "bar65nollmratio",
+      "predicted_bar": 0.8816,
+      "actual_bar": 0.8816,
+      "off_by": 0.0,
+      "matches": true
+    },
+    {
+      "dataset": "bank-marketing",
+      "seed": 44,
+      "arm": "bar65nollmratio",
+      "predicted_bar": 0.8811,
+      "actual_bar": 0.8811,
+      "off_by": 0.0,
+      "matches": true
+    },
+    {
+      "dataset": "speeddating",
+      "seed": 42,
+      "arm": "bar65nollmratio",
+      "predicted_bar": 0.884,
+      "actual_bar": 0.884,
+      "off_by": 0.0,
+      "matches": true
+    },
+    {
+      "dataset": "speeddating",
+      "seed": 43,
+      "arm": "bar65nollmratio",
+      "predicted_bar": 0.8879,
+      "actual_bar": 0.8879,
+      "off_by": 0.0,
+      "matches": true
+    },
+    {
+      "dataset": "speeddating",
+      "seed": 44,
+      "arm": "bar65nollmratio",
+      "predicted_bar": 0.8882,
+      "actual_bar": 0.8882,
+      "off_by": 0.0,
+      "matches": true
+    },
+    {
+      "dataset": "spambase",
+      "seed": 42,
+      "arm": "bar65nollmratio",
+      "predicted_bar": 0.973,
+      "actual_bar": 0.973,
+      "off_by": 0.0,
+      "matches": true
+    },
+    {
+      "dataset": "spambase",
+      "seed": 43,
+      "arm": "bar65nollmratio",
+      "predicted_bar": 0.9711,
+      "actual_bar": 0.9711,
+      "off_by": 0.0,
+      "matches": true
+    },
+    {
+      "dataset": "spambase",
+      "seed": 44,
+      "arm": "bar65nollmratio",
+      "predicted_bar": 0.967,
+      "actual_bar": 0.967,
+      "off_by": 0.0,
+      "matches": true
+    }
+  ],
+  "identity_check": [
+    {
+      "dataset": "adult",
+      "seed": 42,
+      "identical_predictions": false,
+      "delta": 0.0006836491386567056,
+      "same_fits": false,
+      "same_stop_reason": false,
+      "same_winner_label": false,
+      "predicted_identical": false
+    },
+    {
+      "dataset": "adult",
+      "seed": 43,
+      "identical_predictions": false,
+      "delta": -0.0007893550231563573,
+      "same_fits": false,
+      "same_stop_reason": false,
+      "same_winner_label": false,
+      "predicted_identical": false
+    },
+    {
+      "dataset": "adult",
+      "seed": 44,
+      "identical_predictions": false,
+      "delta": 0.003040806903408688,
+      "same_fits": false,
+      "same_stop_reason": false,
+      "same_winner_label": false,
+      "predicted_identical": false
+    },
+    {
+      "dataset": "bank-marketing",
+      "seed": 42,
+      "identical_predictions": false,
+      "delta": 0.007183542393405351,
+      "same_fits": false,
+      "same_stop_reason": false,
+      "same_winner_label": false,
+      "predicted_identical": false
+    },
+    {
+      "dataset": "bank-marketing",
+      "seed": 43,
+      "identical_predictions": false,
+      "delta": 0.0036520508088772052,
+      "same_fits": false,
+      "same_stop_reason": false,
+      "same_winner_label": false,
+      "predicted_identical": false
+    },
+    {
+      "dataset": "bank-marketing",
+      "seed": 44,
+      "identical_predictions": false,
+      "delta": 0.011191056482322104,
+      "same_fits": false,
+      "same_stop_reason": false,
+      "same_winner_label": false,
+      "predicted_identical": false
+    },
+    {
+      "dataset": "speeddating",
+      "seed": 42,
+      "identical_predictions": false,
+      "delta": 0.05502587991718422,
+      "same_fits": true,
+      "same_stop_reason": true,
+      "same_winner_label": true,
+      "predicted_identical": false
+    },
+    {
+      "dataset": "speeddating",
+      "seed": 43,
+      "identical_predictions": false,
+      "delta": 0.06550724637681149,
+      "same_fits": true,
+      "same_stop_reason": true,
+      "same_winner_label": true,
+      "predicted_identical": false
+    },
+    {
+      "dataset": "speeddating",
+      "seed": 44,
+      "identical_predictions": false,
+      "delta": 0.08461697722567296,
+      "same_fits": true,
+      "same_stop_reason": true,
+      "same_winner_label": true,
+      "predicted_identical": false
+    },
+    {
+      "dataset": "spambase",
+      "seed": 42,
+      "identical_predictions": true,
+      "delta": 0.0,
+      "same_fits": true,
+      "same_stop_reason": true,
+      "same_winner_label": true,
+      "predicted_identical": true
+    },
+    {
+      "dataset": "spambase",
+      "seed": 43,
+      "identical_predictions": true,
+      "delta": 0.0,
+      "same_fits": true,
+      "same_stop_reason": true,
+      "same_winner_label": true,
+      "predicted_identical": true
+    },
+    {
+      "dataset": "spambase",
+      "seed": 44,
+      "identical_predictions": true,
+      "delta": 0.0,
+      "same_fits": true,
+      "same_stop_reason": true,
+      "same_winner_label": true,
+      "predicted_identical": true
+    }
+  ],
+  "published_check": [
+    {
+      "dataset": "speeddating",
+      "seed": 42,
+      "published": 0.0819,
+      "recomputed": 0.0819409937888198,
+      "off_by": 0.0,
+      "matches": true
+    },
+    {
+      "dataset": "speeddating",
+      "seed": 43,
+      "published": 0.0777,
+      "recomputed": 0.07768115942028986,
+      "off_by": 0.0,
+      "matches": true
+    },
+    {
+      "dataset": "speeddating",
+      "seed": 44,
+      "published": 0.0761,
+      "recomputed": 0.07612836438923398,
+      "off_by": 0.0,
+      "matches": true
+    }
+  ],
+  "budget": [
+    {
+      "dataset": "adult",
+      "seed": 42,
+      "bar65nollmratio": {
+        "fits": 4,
+        "stop_reason": "stalled",
+        "critic_runs": 3,
+        "winner": "iteration 2",
+        "model": "hist_gbdt",
+        "class_weight": {
+          "0": 1.0,
+          "1": 3.179
+        },
+        "val_score": 0.8467379090891923,
+        "test_reproduced": 0.8406243053428295
+      },
+      "bar65nollm": {
+        "fits": 5,
+        "stop_reason": "max_iterations",
+        "critic_runs": 4,
+        "winner": "iteration 3",
+        "model": "hist_gbdt",
+        "class_weight": {
+          "0": 1.0,
+          "1": 2.25
+        },
+        "val_score": 0.8419899687850201,
+        "test_reproduced": 0.8399406562041728
+      },
+      "bar65llm": {
+        "fits": 4,
+        "stop_reason": "stalled",
+        "critic_runs": 3,
+        "winner": "iteration 2",
+        "model": "xgboost",
+        "class_weight": null,
+        "val_score": 0.8467203486478806,
+        "test_reproduced": 0.8425588698029283
+      }
+    },
+    {
+      "dataset": "adult",
+      "seed": 43,
+      "bar65nollmratio": {
+        "fits": 4,
+        "stop_reason": "stalled",
+        "critic_runs": 3,
+        "winner": "iteration 2",
+        "model": "hist_gbdt",
+        "class_weight": {
+          "0": 1.0,
+          "1": 3.179
+        },
+        "val_score": 0.8462456985555069,
+        "test_reproduced": 0.8468236259472519
+      },
+      "bar65nollm": {
+        "fits": 5,
+        "stop_reason": "max_iterations",
+        "critic_runs": 4,
+        "winner": "iteration 3",
+        "model": "hist_gbdt",
+        "class_weight": {
+          "0": 1.0,
+          "1": 2.25
+        },
+        "val_score": 0.8420008505011116,
+        "test_reproduced": 0.8476129809704083
+      },
+      "bar65llm": {
+        "fits": 4,
+        "stop_reason": "stalled",
+        "critic_runs": 3,
+        "winner": "iteration 2",
+        "model": "xgboost",
+        "class_weight": null,
+        "val_score": 0.8379474400446231,
+        "test_reproduced": 0.8375791815642031
+      }
+    },
+    {
+      "dataset": "adult",
+      "seed": 44,
+      "bar65nollmratio": {
+        "fits": 4,
+        "stop_reason": "stalled",
+        "critic_runs": 3,
+        "winner": "iteration 2",
+        "model": "hist_gbdt",
+        "class_weight": {
+          "0": 1.0,
+          "1": 3.179
+        },
+        "val_score": 0.843881372252338,
+        "test_reproduced": 0.8381034516698191
+      },
+      "bar65nollm": {
+        "fits": 5,
+        "stop_reason": "max_iterations",
+        "critic_runs": 4,
+        "winner": "iteration 4",
+        "model": "hist_gbdt",
+        "class_weight": {
+          "0": 1.0,
+          "1": 2.25
+        },
+        "val_score": 0.8425027048837141,
+        "test_reproduced": 0.8350626447664105
+      },
+      "bar65llm": {
+        "fits": 5,
+        "stop_reason": "max_iterations",
+        "critic_runs": 4,
+        "winner": "iteration 3",
+        "model": "hist_gbdt",
+        "class_weight": "balanced",
+        "val_score": 0.8480567270193126,
+        "test_reproduced": 0.8402373118691391
+      }
+    },
+    {
+      "dataset": "bank-marketing",
+      "seed": 42,
+      "bar65nollmratio": {
+        "fits": 4,
+        "stop_reason": "stalled",
+        "critic_runs": 3,
+        "winner": "iteration 2",
+        "model": "hist_gbdt",
+        "class_weight": {
+          "0": 1.0,
+          "1": 7.547
+        },
+        "val_score": 0.8789116512798754,
+        "test_reproduced": 0.8649713605259388
+      },
+      "bar65nollm": {
+        "fits": 5,
+        "stop_reason": "max_iterations",
+        "critic_runs": 4,
+        "winner": "iteration 5",
+        "model": "hist_gbdt",
+        "class_weight": {
+          "0": 1.0,
+          "1": 5.062
+        },
+        "val_score": 0.8774294808899463,
+        "test_reproduced": 0.8577878181325335
+      },
+      "bar65llm": {
+        "fits": 1,
+        "stop_reason": "goal_reached",
+        "critic_runs": 0,
+        "winner": "iteration 1",
+        "model": "hist_gbdt",
+        "class_weight": "balanced",
+        "val_score": 0.8826291524447761,
+        "test_reproduced": 0.8634554629249314
+      }
+    },
+    {
+      "dataset": "bank-marketing",
+      "seed": 43,
+      "bar65nollmratio": {
+        "fits": 4,
+        "stop_reason": "stalled",
+        "critic_runs": 3,
+        "winner": "iteration 2",
+        "model": "hist_gbdt",
+        "class_weight": {
+          "0": 1.0,
+          "1": 7.547
+        },
+        "val_score": 0.865143330138538,
+        "test_reproduced": 0.864099392409918
+      },
+      "bar65nollm": {
+        "fits": 5,
+        "stop_reason": "max_iterations",
+        "critic_runs": 4,
+        "winner": "iteration 5",
+        "model": "hist_gbdt",
+        "class_weight": {
+          "0": 1.0,
+          "1": 5.062
+        },
+        "val_score": 0.8639238543249069,
+        "test_reproduced": 0.8604473416010407
+      },
+      "bar65llm": {
+        "fits": 5,
+        "stop_reason": "max_iterations",
+        "critic_runs": 4,
+        "winner": "iteration 4",
+        "model": "xgboost",
+        "class_weight": null,
+        "val_score": 0.8750277019066488,
+        "test_reproduced": 0.8654710569084519
+      }
+    },
+    {
+      "dataset": "bank-marketing",
+      "seed": 44,
+      "bar65nollmratio": {
+        "fits": 4,
+        "stop_reason": "stalled",
+        "critic_runs": 3,
+        "winner": "iteration 2",
+        "model": "hist_gbdt",
+        "class_weight": {
+          "0": 1.0,
+          "1": 7.547
+        },
+        "val_score": 0.859421229036523,
+        "test_reproduced": 0.8629887916024019
+      },
+      "bar65nollm": {
+        "fits": 5,
+        "stop_reason": "max_iterations",
+        "critic_runs": 4,
+        "winner": "iteration 5",
+        "model": "hist_gbdt",
+        "class_weight": {
+          "0": 1.0,
+          "1": 5.062
+        },
+        "val_score": 0.8567723821934985,
+        "test_reproduced": 0.8517977351200798
+      },
+      "bar65llm": {
+        "fits": 5,
+        "stop_reason": "max_iterations",
+        "critic_runs": 4,
+        "winner": "iteration 4",
+        "model": "hist_gbdt",
+        "class_weight": {
+          "0": 1.0,
+          "1": 8.5
+        },
+        "val_score": 0.8652111642945627,
+        "test_reproduced": 0.864621519791954
+      }
+    },
+    {
+      "dataset": "speeddating",
+      "seed": 42,
+      "bar65nollmratio": {
+        "fits": 5,
+        "stop_reason": "max_iterations",
+        "critic_runs": 4,
+        "winner": "iteration 5",
+        "model": "logreg",
+        "class_weight": {
+          "0": 1.0,
+          "1": 5.072
+        },
+        "val_score": 0.7621428571428571,
+        "test_reproduced": 0.7707919254658385
+      },
+      "bar65nollm": {
+        "fits": 5,
+        "stop_reason": "max_iterations",
+        "critic_runs": 4,
+        "winner": "iteration 5",
+        "model": "logreg",
+        "class_weight": {
+          "0": 1.0,
+          "1": 1.5
+        },
+        "val_score": 0.6998447204968944,
+        "test_reproduced": 0.7157660455486543
+      },
+      "bar65llm": {
+        "fits": 4,
+        "stop_reason": "stalled",
+        "critic_runs": 3,
+        "winner": "iteration 2",
+        "model": "hist_gbdt",
+        "class_weight": "balanced",
+        "val_score": 0.7864544513457556,
+        "test_reproduced": 0.7977070393374741
+      }
+    },
+    {
+      "dataset": "speeddating",
+      "seed": 43,
+      "bar65nollmratio": {
+        "fits": 5,
+        "stop_reason": "max_iterations",
+        "critic_runs": 4,
+        "winner": "iteration 4",
+        "model": "hist_gbdt",
+        "class_weight": {
+          "0": 1.0,
+          "1": 5.072
+        },
+        "val_score": 0.7825983436853001,
+        "test_reproduced": 0.7818322981366459
+      },
+      "bar65nollm": {
+        "fits": 5,
+        "stop_reason": "max_iterations",
+        "critic_runs": 4,
+        "winner": "iteration 4",
+        "model": "hist_gbdt",
+        "class_weight": {
+          "0": 1.0,
+          "1": 1.5
+        },
+        "val_score": 0.7326552795031056,
+        "test_reproduced": 0.7163250517598344
+      },
+      "bar65llm": {
+        "fits": 4,
+        "stop_reason": "stalled",
+        "critic_runs": 3,
+        "winner": "iteration 2",
+        "model": "hist_gbdt",
+        "class_weight": {
+          "0": 1.0,
+          "1": 4.0
+        },
+        "val_score": 0.7843115942028985,
+        "test_reproduced": 0.7940062111801243
+      }
+    },
+    {
+      "dataset": "speeddating",
+      "seed": 44,
+      "bar65nollmratio": {
+        "fits": 5,
+        "stop_reason": "max_iterations",
+        "critic_runs": 4,
+        "winner": "iteration 4",
+        "model": "hist_gbdt",
+        "class_weight": {
+          "0": 1.0,
+          "1": 5.072
+        },
+        "val_score": 0.770527950310559,
+        "test_reproduced": 0.8020393374741202
+      },
+      "bar65nollm": {
+        "fits": 5,
+        "stop_reason": "max_iterations",
+        "critic_runs": 4,
+        "winner": "iteration 4",
+        "model": "hist_gbdt",
+        "class_weight": {
+          "0": 1.0,
+          "1": 1.5
+        },
+        "val_score": 0.7080072463768116,
+        "test_reproduced": 0.7174223602484472
+      },
+      "bar65llm": {
+        "fits": 5,
+        "stop_reason": "max_iterations",
+        "critic_runs": 4,
+        "winner": "iteration 4",
+        "model": "hist_gbdt",
+        "class_weight": "balanced",
+        "val_score": 0.7790838509316771,
+        "test_reproduced": 0.7935507246376812
+      }
+    },
+    {
+      "dataset": "spambase",
+      "seed": 42,
+      "bar65nollmratio": {
+        "fits": 3,
+        "stop_reason": "stalled",
+        "critic_runs": 2,
+        "winner": "iteration 1",
+        "model": "hist_gbdt",
+        "class_weight": null,
+        "val_score": 0.959419988514624,
+        "test_reproduced": 0.9490210018069256
+      },
+      "bar65nollm": {
+        "fits": 3,
+        "stop_reason": "stalled",
+        "critic_runs": 2,
+        "winner": "iteration 1",
+        "model": "hist_gbdt",
+        "class_weight": null,
+        "val_score": 0.959419988514624,
+        "test_reproduced": 0.9490210018069256
+      },
+      "bar65llm": {
+        "fits": 4,
+        "stop_reason": "stalled",
+        "critic_runs": 3,
+        "winner": "iteration 2",
+        "model": "xgboost",
+        "class_weight": null,
+        "val_score": 0.949340581001604,
+        "test_reproduced": 0.9417192452383067
+      }
+    },
+    {
+      "dataset": "spambase",
+      "seed": 43,
+      "bar65nollmratio": {
+        "fits": 3,
+        "stop_reason": "stalled",
+        "critic_runs": 2,
+        "winner": "iteration 1",
+        "model": "hist_gbdt",
+        "class_weight": null,
+        "val_score": 0.957479356026852,
+        "test_reproduced": 0.9526718800912349
+      },
+      "bar65nollm": {
+        "fits": 3,
+        "stop_reason": "stalled",
+        "critic_runs": 2,
+        "winner": "iteration 1",
+        "model": "hist_gbdt",
+        "class_weight": null,
+        "val_score": 0.957479356026852,
+        "test_reproduced": 0.9526718800912349
+      },
+      "bar65llm": {
+        "fits": 3,
+        "stop_reason": "stalled",
+        "critic_runs": 2,
+        "winner": "iteration 1",
+        "model": "hist_gbdt",
+        "class_weight": null,
+        "val_score": 0.9538208677399552,
+        "test_reproduced": 0.9490210018069256
+      }
+    },
+    {
+      "dataset": "spambase",
+      "seed": 44,
+      "bar65nollmratio": {
+        "fits": 4,
+        "stop_reason": "stalled",
+        "critic_runs": 3,
+        "winner": "iteration 2",
+        "model": "hist_gbdt",
+        "class_weight": null,
+        "val_score": 0.9360878433236302,
+        "test_reproduced": 0.9599069877662253
+      },
+      "bar65nollm": {
+        "fits": 4,
+        "stop_reason": "stalled",
+        "critic_runs": 3,
+        "winner": "iteration 2",
+        "model": "hist_gbdt",
+        "class_weight": null,
+        "val_score": 0.9360878433236302,
+        "test_reproduced": 0.9599069877662253
+      },
+      "bar65llm": {
+        "fits": 5,
+        "stop_reason": "max_iterations",
+        "critic_runs": 4,
+        "winner": "iteration 3",
+        "model": "extra_trees",
+        "class_weight": null,
+        "val_score": 0.9384393750371295,
+        "test_reproduced": 0.9461328830830298
+      }
+    }
+  ],
+  "noise_floor": 0.0122,
+  "noise_floor_source": "docs/REPEATS.md (낡은 프롬프트·낡은 바에서 잰 수입니다)",
+  "prescription": {
+    "treatment": "bar65nollmratio",
+    "baseline": "bar65nollm",
+    "lever_commit": "d37217e",
+    "scope_datasets": [
+      "adult",
+      "bank-marketing",
+      "speeddating",
+      "spambase"
+    ],
+    "scope_seeds": [
+      42,
+      43,
+      44
+    ],
+    "positive_prediction_on": "speeddating",
+    "identity_prediction_on": "spambase",
+    "resample_seed": 42,
+    "expected_first_rung": {
+      "adult": [
+        1,
+        3.179
+      ],
+      "bank-marketing": [
+        1,
+        7.547
+      ],
+      "speeddating": [
+        2,
+        5.072
+      ],
+      "spambase": null
+    },
+    "recorded_first_rung": {
+      "adult": [
+        1,
+        1.5
+      ],
+      "bank-marketing": [
+        1,
+        1.5
+      ],
+      "speeddating": [
+        2,
+        1.5
+      ],
+      "spambase": null
+    },
+    "gates": {
+      "first_rung": true,
+      "verdict_sources": true,
+      "bars": true
+    },
+    "failed_gates": [],
+    "cells": {
+      "adult-seed42": {
+        "evaluated": true,
+        "main": 0.00261821359875547,
+        "half_of_main": 0.001309106799377735,
+        "prescription": 0.0006836491386567056,
+        "prescription_ci": [
+          -0.004152106512374026,
+          0.005635503612605642
+        ],
+        "identical_predictions": false,
+        "clears_zero": false,
+        "reaches_half": false,
+        "identical_to_recorded": false,
+        "below_zero": false
+      },
+      "adult-seed43": {
+        "evaluated": true,
+        "main": -0.01003379940620519,
+        "half_of_main": -0.005016899703102595,
+        "prescription": -0.0007893550231563573,
+        "prescription_ci": [
+          -0.005244668132005498,
+          0.003873286485340466
+        ],
+        "identical_predictions": false,
+        "clears_zero": false,
+        "reaches_half": true,
+        "identical_to_recorded": false,
+        "below_zero": false
+      },
+      "adult-seed44": {
+        "evaluated": true,
+        "main": 0.005174667102728625,
+        "half_of_main": 0.0025873335513643125,
+        "prescription": 0.003040806903408688,
+        "prescription_ci": [
+          -0.0017508544358464718,
+          0.00795106292803331
+        ],
+        "identical_predictions": false,
+        "clears_zero": false,
+        "reaches_half": true,
+        "identical_to_recorded": false,
+        "below_zero": false
+      },
+      "bank-marketing-seed42": {
+        "evaluated": true,
+        "main": 0.005667644792397897,
+        "half_of_main": 0.0028338223961989484,
+        "prescription": 0.007183542393405351,
+        "prescription_ci": [
+          0.0003575535911139295,
+          0.014197868103721261
+        ],
+        "identical_predictions": false,
+        "clears_zero": true,
+        "reaches_half": true,
+        "identical_to_recorded": false,
+        "below_zero": false
+      },
+      "bank-marketing-seed43": {
+        "evaluated": true,
+        "main": 0.005023715307411192,
+        "half_of_main": 0.002511857653705596,
+        "prescription": 0.0036520508088772052,
+        "prescription_ci": [
+          -0.0031584138639336786,
+          0.010449696812030172
+        ],
+        "identical_predictions": false,
+        "clears_zero": false,
+        "reaches_half": true,
+        "identical_to_recorded": false,
+        "below_zero": false
+      },
+      "bank-marketing-seed44": {
+        "evaluated": true,
+        "main": 0.012823784671874172,
+        "half_of_main": 0.006411892335937086,
+        "prescription": 0.011191056482322104,
+        "prescription_ci": [
+          0.0040253513108335194,
+          0.01835983657280957
+        ],
+        "identical_predictions": false,
+        "clears_zero": true,
+        "reaches_half": true,
+        "identical_to_recorded": false,
+        "below_zero": false
+      },
+      "speeddating-seed42": {
+        "evaluated": true,
+        "main": 0.0819409937888198,
+        "half_of_main": 0.0409704968944099,
+        "prescription": 0.05502587991718422,
+        "prescription_ci": [
+          0.028011279563235632,
+          0.08249193957818557
+        ],
+        "identical_predictions": false,
+        "clears_zero": true,
+        "reaches_half": true,
+        "identical_to_recorded": false,
+        "below_zero": false
+      },
+      "speeddating-seed43": {
+        "evaluated": true,
+        "main": 0.07768115942028986,
+        "half_of_main": 0.03884057971014493,
+        "prescription": 0.06550724637681149,
+        "prescription_ci": [
+          0.04119378683690171,
+          0.09129755051381187
+        ],
+        "identical_predictions": false,
+        "clears_zero": true,
+        "reaches_half": true,
+        "identical_to_recorded": false,
+        "below_zero": false
+      },
+      "speeddating-seed44": {
+        "evaluated": true,
+        "main": 0.07612836438923398,
+        "half_of_main": 0.03806418219461699,
+        "prescription": 0.08461697722567296,
+        "prescription_ci": [
+          0.05886691250723441,
+          0.11245397698964771
+        ],
+        "identical_predictions": false,
+        "clears_zero": true,
+        "reaches_half": true,
+        "identical_to_recorded": false,
+        "below_zero": false
+      },
+      "spambase-seed42": {
+        "evaluated": true,
+        "main": -0.007301756568618867,
+        "half_of_main": -0.0036508782843094334,
+        "prescription": 0.0,
+        "prescription_ci": [
+          NaN,
+          NaN
+        ],
+        "identical_predictions": true,
+        "clears_zero": false,
+        "reaches_half": true,
+        "identical_to_recorded": true,
+        "below_zero": false
+      },
+      "spambase-seed43": {
+        "evaluated": true,
+        "main": -0.0036508782843093224,
+        "half_of_main": -0.0018254391421546612,
+        "prescription": 0.0,
+        "prescription_ci": [
+          NaN,
+          NaN
+        ],
+        "identical_predictions": true,
+        "clears_zero": false,
+        "reaches_half": true,
+        "identical_to_recorded": true,
+        "below_zero": false
+      },
+      "spambase-seed44": {
+        "evaluated": true,
+        "main": -0.01377410468319551,
+        "half_of_main": -0.006887052341597755,
+        "prescription": 0.0,
+        "prescription_ci": [
+          NaN,
+          NaN
+        ],
+        "identical_predictions": true,
+        "clears_zero": false,
+        "reaches_half": true,
+        "identical_to_recorded": true,
+        "below_zero": false
+      }
+    },
+    "condition_1_recovery": true,
+    "condition_2_identical": true,
+    "condition_3_no_loss": true,
+    "below_zero_cells": [],
+    "not_evaluated": [],
+    "verdict": "처방이 산다",
+    "status": "처방이 산다 — speeddating 세 시드 전부에서 고친 사다리가 주 Δ의 절반 이상을 회수했고, spambase는 예측까지 동일하고, 짐이 된 칸이 없습니다"
+  },
+  "headline": {
+    "challenger": "bar65llm",
+    "baseline": "bar65nollmratio",
+    "margin": 0.65,
+    "scope_datasets": [
+      "adult",
+      "bank-marketing",
+      "speeddating",
+      "spambase"
+    ],
+    "scope_seeds": [
+      42,
+      43,
+      44
+    ],
+    "resample_seed": 42,
+    "required_wins": 3,
+    "per_dataset": {
+      "adult": {
+        "dataset": "adult",
+        "judged": [
+          "seed42",
+          "seed43",
+          "seed44"
+        ],
+        "above_zero": [],
+        "below_zero": [
+          "seed43"
+        ],
+        "spans_zero": [
+          "seed42",
+          "seed44"
+        ],
+        "not_looped": [],
+        "not_evaluated": [],
+        "deltas": {
+          "seed42": 0.0019345644600987644,
+          "seed43": -0.009244444383048833,
+          "seed44": 0.002133860199319937
+        },
+        "smallest_win": NaN,
+        "unanimous": false,
+        "wins": false,
+        "loses": true,
+        "spread": 0.01137830458236877,
+        "median": 0.0019345644600987644
+      },
+      "bank-marketing": {
+        "dataset": "bank-marketing",
+        "judged": [
+          "seed43",
+          "seed44"
+        ],
+        "above_zero": [],
+        "below_zero": [],
+        "spans_zero": [
+          "seed43",
+          "seed44"
+        ],
+        "not_looped": [
+          "seed42"
+        ],
+        "not_evaluated": [],
+        "deltas": {
+          "seed43": 0.0013716644985339865,
+          "seed44": 0.0016327281895520684
+        },
+        "smallest_win": NaN,
+        "unanimous": false,
+        "wins": false,
+        "loses": false,
+        "spread": 0.0002610636910180819,
+        "median": 0.0015021963440430275
+      },
+      "speeddating": {
+        "dataset": "speeddating",
+        "judged": [
+          "seed42",
+          "seed43",
+          "seed44"
+        ],
+        "above_zero": [
+          "seed42"
+        ],
+        "below_zero": [],
+        "spans_zero": [
+          "seed43",
+          "seed44"
+        ],
+        "not_looped": [],
+        "not_evaluated": [],
+        "deltas": {
+          "seed42": 0.026915113871635588,
+          "seed43": 0.012173913043478368,
+          "seed44": -0.00848861283643898
+        },
+        "smallest_win": 0.026915113871635588,
+        "unanimous": false,
+        "wins": false,
+        "loses": false,
+        "spread": 0.03540372670807457,
+        "median": 0.012173913043478368
+      },
+      "spambase": {
+        "dataset": "spambase",
+        "judged": [
+          "seed42",
+          "seed43",
+          "seed44"
+        ],
+        "above_zero": [],
+        "below_zero": [
+          "seed44"
+        ],
+        "spans_zero": [
+          "seed42",
+          "seed43"
+        ],
+        "not_looped": [],
+        "not_evaluated": [],
+        "deltas": {
+          "seed42": -0.007301756568618867,
+          "seed43": -0.0036508782843093224,
+          "seed44": -0.01377410468319551
+        },
+        "smallest_win": NaN,
+        "unanimous": false,
+        "wins": false,
+        "loses": true,
+        "spread": 0.010123226398886187,
+        "median": -0.007301756568618867
+      }
+    },
+    "wins": [],
+    "losses": [
+      "adult",
+      "spambase"
+    ],
+    "not_evaluated": [],
+    "not_looped": [
+      "bank-marketing-seed42"
+    ],
+    "looped_cells": 11,
+    "total_cells": 12,
+    "noise_floor": 0.0122,
+    "noise_floor_source": "docs/REPEATS.md (낡은 프롬프트·낡은 바에서 잰 수입니다)",
+    "rules_seed_spread": {
+      "adult": 0.008720174277432768,
+      "bank-marketing": 0.001982568923536876,
+      "speeddating": 0.031247412008281628,
+      "spambase": 0.010885985959299682
+    },
+    "complete": true,
+    "status": "구분되지 않음 — 이김이 0개로 3개에 미치지 못합니다 (이김 0 / 그 밖 2 / 짐 2). CI가 0 아래인 데이터셋: adult, spambase / 재계획이 안 돈 칸 1개는 분모 밖입니다",
+    "criterion_from": "bench/hard_bar.py criterion (글자 그대로 재사용)",
+    "compared_against": "docs/HARD-BAR.md의 구분되지 않음 (이김 1 / 그 밖 1 / 짐 2)",
+    "gates": {
+      "first_rung": true,
+      "verdict_sources": true,
+      "bars": true
+    },
+    "failed_gates": []
+  }
+}

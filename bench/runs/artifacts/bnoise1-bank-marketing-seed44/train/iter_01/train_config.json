@@ -1,0 +1,31 @@
+{
+  "model": "hist_gbdt",
+  "hyperparams": {
+    "learning_rate": 0.06,
+    "max_iter": 500,
+    "max_leaf_nodes": 63,
+    "l2_regularization": 1.0,
+    "early_stopping": false,
+    "class_weight": {
+      "0": 1.0,
+      "1": 6.0
+    }
+  },
+  "preprocessing": {
+    "impute": "none",
+    "scale": false,
+    "missing_indicator": false,
+    "missing_count": false
+  },
+  "target_missing": {
+    "policy": "reject"
+  },
+  "data": {
+    "path": "bench/data/bank-marketing.csv",
+    "target_column": "Class"
+  },
+  "metric": "balanced_accuracy",
+  "task": "classification",
+  "seed": 44,
+  "memory_limit_mb": 2048
+}

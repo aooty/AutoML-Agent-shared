@@ -1,0 +1,24 @@
+{
+  "model": "knn",
+  "hyperparams": {
+    "n_neighbors": 74,
+    "weights": "distance"
+  },
+  "preprocessing": {
+    "impute": "median",
+    "scale": false,
+    "missing_indicator": true,
+    "missing_count": true
+  },
+  "target_missing": {
+    "policy": "reject"
+  },
+  "data": {
+    "path": "bench/data/spambase.csv",
+    "target_column": "class"
+  },
+  "metric": "balanced_accuracy",
+  "task": "classification",
+  "seed": 43,
+  "memory_limit_mb": 2048
+}

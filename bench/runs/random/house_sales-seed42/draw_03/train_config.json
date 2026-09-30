@@ -1,0 +1,25 @@
+{
+  "model": "elasticnet",
+  "hyperparams": {
+    "alpha": 16.23933,
+    "l1_ratio": 0.571764,
+    "max_iter": 115
+  },
+  "preprocessing": {
+    "impute": "median",
+    "scale": false,
+    "missing_indicator": false,
+    "missing_count": false
+  },
+  "target_missing": {
+    "policy": "reject"
+  },
+  "data": {
+    "path": "bench/data/house_sales.csv",
+    "target_column": "price"
+  },
+  "metric": "r2",
+  "task": "regression",
+  "seed": 42,
+  "memory_limit_mb": 2048
+}

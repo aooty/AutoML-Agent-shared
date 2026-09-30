@@ -1,0 +1,162 @@
+{
+  "thread_id": "spgoff-spambase-seed42",
+  "goal": {
+    "metric": "balanced_accuracy",
+    "direction": "maximize",
+    "mode": "auto",
+    "threshold": 0.9421,
+    "source": "derived",
+    "reference": {
+      "source": "baseline",
+      "metric": "balanced_accuracy",
+      "baseline": 0.9228,
+      "margin": 0.25,
+      "ks": 0.883,
+      "ranking_ceiling": 0.9415,
+      "exceeds_ranking_ceiling": true,
+      "required_ks": 0.8842,
+      "ks_shortfall": 0.0012,
+      "passable_margin": 0.242,
+      "baseline_ci": [
+        0.903,
+        0.941
+      ],
+      "baseline_ci_unit": "row",
+      "chance": 0.5
+    }
+  },
+  "iterations": 1,
+  "stop_reason": "goal_reached",
+  "best": {
+    "iteration": 1,
+    "model": "hist_gbdt",
+    "hyperparams": {
+      "max_iter": 300,
+      "learning_rate": 0.08,
+      "max_depth": 7,
+      "max_leaf_nodes": 31,
+      "l2_regularization": 1.0,
+      "early_stopping": true,
+      "validation_fraction": 0.1
+    },
+    "preprocessing": {
+      "impute": "median",
+      "scale": false,
+      "missing_indicator": false,
+      "missing_count": false
+    },
+    "metric": "balanced_accuracy",
+    "score": 0.949340581001604,
+    "metrics": {
+      "f1": 0.9400278940027894,
+      "accuracy": 0.9532608695652174,
+      "balanced_accuracy": 0.949340581001604,
+      "precision": 0.9492957746478873,
+      "recall": 0.930939226519337,
+      "roc_auc": 0.9908116992415692,
+      "pr_auc": 0.986927963337104,
+      "average_precision": 0.986927963337104,
+      "specificity": 0.967742,
+      "balanced_accuracy_at_best_cut": 0.957,
+      "cut_headroom": 0.007659,
+      "brier": 0.035822,
+      "calibration_error": 0.019038,
+      "balanced_accuracy_ci_low": 0.93191,
+      "balanced_accuracy_ci_high": 0.963985,
+      "train_f1": 0.9772832637923041,
+      "train_accuracy": 0.9822463768115942,
+      "train_balanced_accuracy": 0.9798893540669856,
+      "train_val_gap": 0.030549
+    },
+    "train_time_sec": 2.3,
+    "plan_strategy": "Switch family from the linear baseline to a gradient-boosted tree ensemble (hist_gbdt) to raise the ranking itself, which is where the remaining distance to 0.9421 balanced_accuracy sits. Fit a single HistGradientBoostingClassifier with moderate depth and enough iterations to exploit the strongly non-linear, highly skewed frequency features (spambase is a known sweet spot for boosted trees: ~0.95+ balanced accuracy). Keep median imputation (no missing values anyway) and drop scaling since trees are scale-invariant. Leave the default decision rule alone on attempt 1 and read cut_headroom / recall vs specificity from the report to decide whether a later attempt should touch class_weight at all."
+  },
+  "holdout": {
+    "status": "ok",
+    "split": "test",
+    "test_fraction": 0.2,
+    "iteration": 1,
+    "model": "hist_gbdt",
+    "metric": "balanced_accuracy",
+    "score": 0.939445777422317,
+    "val_score": 0.949340581001604,
+    "metrics": {
+      "f1": 0.9277777777777778,
+      "accuracy": 0.9435396308360477,
+      "balanced_accuracy": 0.939445777422317,
+      "precision": 0.9355742296918768,
+      "recall": 0.9201101928374655,
+      "roc_auc": 0.9828095223989651,
+      "pr_auc": 0.9710407147265137,
+      "average_precision": 0.9710407147265137,
+      "specificity": 0.958781,
+      "balanced_accuracy_at_best_cut": 0.9438,
+      "cut_headroom": 0.004354,
+      "brier": 0.044019,
+      "calibration_error": 0.019051,
+      "balanced_accuracy_ci_low": 0.921593,
+      "balanced_accuracy_ci_high": 0.954661
+    },
+    "wall_time_sec": 4.308,
+    "selection_gap": 0.009895,
+    "score_ci": [
+      0.921593,
+      0.954661
+    ],
+    "val_inside_ci": true
+  },
+  "models": {
+    "mode": "best",
+    "kept_iteration": 1,
+    "removed": [],
+    "freed_bytes": 0
+  },
+  "history": [
+    {
+      "iteration": 1,
+      "model": "hist_gbdt",
+      "hyperparams": {
+        "max_iter": 300,
+        "learning_rate": 0.08,
+        "max_depth": 7,
+        "max_leaf_nodes": 31,
+        "l2_regularization": 1.0,
+        "early_stopping": true,
+        "validation_fraction": 0.1
+      },
+      "dropped_hyperparams": [],
+      "preprocessing": {
+        "impute": "median",
+        "scale": false,
+        "missing_indicator": false,
+        "missing_count": false
+      },
+      "unsupported_claims": [],
+      "status": "ok",
+      "error_type": null,
+      "metrics": {
+        "f1": 0.9400278940027894,
+        "accuracy": 0.9532608695652174,
+        "balanced_accuracy": 0.949340581001604,
+        "precision": 0.9492957746478873,
+        "recall": 0.930939226519337,
+        "roc_auc": 0.9908116992415692,
+        "pr_auc": 0.986927963337104,
+        "average_precision": 0.986927963337104,
+        "specificity": 0.967742,
+        "balanced_accuracy_at_best_cut": 0.957,
+        "cut_headroom": 0.007659,
+        "brier": 0.035822,
+        "calibration_error": 0.019038,
+        "balanced_accuracy_ci_low": 0.93191,
+        "balanced_accuracy_ci_high": 0.963985,
+        "train_f1": 0.9772832637923041,
+        "train_accuracy": 0.9822463768115942,
+        "train_balanced_accuracy": 0.9798893540669856,
+        "train_val_gap": 0.030549
+      },
+      "train_time_sec": 2.3,
+      "critic": null
+    }
+  ]
+}

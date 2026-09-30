@@ -1,0 +1,27 @@
+{
+  "model": "hist_gbdt",
+  "hyperparams": {
+    "max_iter": 3,
+    "learning_rate": 0.001038,
+    "max_depth": 19,
+    "max_leaf_nodes": 1020,
+    "l2_regularization": 60.999968
+  },
+  "preprocessing": {
+    "impute": "none",
+    "scale": true,
+    "missing_indicator": false,
+    "missing_count": true
+  },
+  "target_missing": {
+    "policy": "reject"
+  },
+  "data": {
+    "path": "bench/data/jungle-chess.csv",
+    "target_column": "class"
+  },
+  "metric": "balanced_accuracy",
+  "task": "classification",
+  "seed": 43,
+  "memory_limit_mb": 2048
+}

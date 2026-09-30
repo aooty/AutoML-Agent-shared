@@ -1,0 +1,38 @@
+{
+  "metrics": {
+    "f1": 0.5963756177924218,
+    "accuracy": 0.8645361052747982,
+    "balanced_accuracy": 0.8605679008253897,
+    "precision": 0.45776428932726354,
+    "recall": 0.8553875236294896,
+    "roc_auc": 0.9323871673376238,
+    "pr_auc": 0.626203989820321,
+    "average_precision": 0.626203989820321,
+    "specificity": 0.865748,
+    "balanced_accuracy_at_best_cut": 0.869,
+    "cut_headroom": 0.008432,
+    "brier": 0.091392,
+    "calibration_error": 0.111189,
+    "balanced_accuracy_ci_low": 0.849015,
+    "balanced_accuracy_ci_high": 0.87119
+  },
+  "split": "test",
+  "applied_hyperparams": {},
+  "dropped_hyperparams": [],
+  "applied_preprocessing": {
+    "impute": "median",
+    "scale": false,
+    "missing_indicator": false,
+    "missing_count": false
+  },
+  "train_time_sec": 2.353,
+  "status": "ok",
+  "error_type": null,
+  "log_tail": "encoding from feature_schema.json: 51 columns\nloaded bench/data/bank-marketing.csv: 45211 rows x 51 encoded features\nscoring the held-back test split: 9043 rows, model=model.joblib\nbalanced_accuracy=0.8606 (95% CI 0.8490~0.8712, 폭 0.0222) — row 단위 재표집 400회\ntest metrics: {\"f1\": 0.5964, \"accuracy\": 0.8645, \"balanced_accuracy\": 0.8606, \"precision\": 0.4578, \"recall\": 0.8554, \"roc_auc\": 0.9324, \"pr_auc\": 0.6262, \"average_precision\": 0.6262, \"specificity\": 0.8657, \"balanced_accuracy_at_best_cut\": 0.869, \"cut_headroom\": 0.0084, \"brier\": 0.0914, \"calibration_error\": 0.1112, \"balanced_accuracy_ci_low\": 0.849, \"balanced_accuracy_ci_high\": 0.8712}",
+  "threads": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "cpu_count": 20
+  }
+}

@@ -1,0 +1,64 @@
+{
+  "metrics": {
+    "f1": 0.9085794655414908,
+    "accuracy": 0.9293478260869565,
+    "balanced_accuracy": 0.9228351056456563,
+    "precision": 0.9255014326647565,
+    "recall": 0.8922651933701657,
+    "roc_auc": 0.9762668567694409,
+    "pr_auc": 0.9585697904654337,
+    "average_precision": 0.9585697904654337,
+    "specificity": 0.953405,
+    "balanced_accuracy_at_best_cut": 0.9302,
+    "cut_headroom": 0.007365,
+    "brier": 0.052974,
+    "calibration_error": 0.026886,
+    "balanced_accuracy_ci_low": 0.905379,
+    "balanced_accuracy_ci_high": 0.940224,
+    "train_f1": 0.9693023255813954,
+    "train_accuracy": 0.9760869565217392,
+    "train_balanced_accuracy": 0.9728794328736279,
+    "train_val_gap": 0.050044
+  },
+  "split": "val",
+  "applied_hyperparams": {
+    "n_estimators": 600,
+    "learning_rate": 0.03,
+    "max_depth": 4,
+    "reg_lambda": 10.0,
+    "subsample": 0.8,
+    "colsample_bytree": 0.7,
+    "min_child_weight": 3
+  },
+  "dropped_hyperparams": [],
+  "applied_preprocessing": {
+    "impute": "median",
+    "scale": false,
+    "missing_indicator": false,
+    "missing_count": false
+  },
+  "train_time_sec": 3.914,
+  "status": "ok",
+  "error_type": null,
+  "log_tail": "features: 수치 57개 + 범주형 0개를 one-hot 0열로\nloaded bench/data/spambase.csv: 4601 rows x 57 encoded features\nmemory estimate 4.0 MB vs budget 2048.0 MB\nsplit: train 60% / val 20% / test 20% (stratified, seed=44) — test는 반복 밖에서 저장된 모델로 1회만 채점합니다 {'train': 2760, 'val': 920, 'test': 921}\nestimator=xgboost applied_hyperparams={'n_estimators': 600, 'learning_rate': 0.03, 'max_depth': 4, 'reg_lambda': 10.0, 'subsample': 0.8, 'colsample_bytree': 0.7, 'min_child_weight': 3}\npreprocessing applied: impute=median scale=False missing_indicator=False missing_count=False\nfitting on 2760 rows, validating on 920 rows\nmodel saved to model.joblib (712 KB)\nfeature schema saved to feature_schema.json (57 columns)\nbalanced_accuracy=0.9228 (95% CI 0.9054~0.9402, 폭 0.0348) — row 단위 재표집 400회\nval predictions saved to val_predictions.npz (4 KB)\nbalanced_accuracy vs iteration 1: [짝지은 Δ(iteration 1 대비) -0.0074, 95% CI -0.0150~+0.0011, P(개선) 0.045 — 이 행들로는 0과 구분되지 않음]\ntrain_val_gap measured on balanced_accuracy (maximize)\nmetrics: {\"f1\": 0.9086, \"accuracy\": 0.9293, \"balanced_accuracy\": 0.9228, \"precision\": 0.9255, \"recall\": 0.8923, \"roc_auc\": 0.9763, \"pr_auc\": 0.9586, \"average_precision\": 0.9586, \"specificity\": 0.9534, \"balanced_accuracy_at_best_cut\": 0.9302, \"cut_headroom\": 0.0074, \"brier\": 0.053, \"calibration_error\": 0.0269, \"balanced_accuracy_ci_low\": 0.9054, \"balanced_accuracy_ci_high\": 0.9402, \"train_f1\": 0.9693, \"train_accuracy\": 0.9761, \"train_balanced_accuracy\": 0.9729, \"train_val_gap\": 0.05}",
+  "threads": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "cpu_count": 20
+  },
+  "paired": {
+    "metric": "balanced_accuracy",
+    "baseline_iteration": 1,
+    "threads_changed": false,
+    "status": "measured",
+    "resamples": 400,
+    "unit": "row",
+    "delta_vs_best": -0.007391,
+    "delta_ci_low": -0.014981,
+    "delta_ci_high": 0.001093,
+    "p_better": 0.045
+  },
+  "model_path": "bench/runs/artifacts/bnoise1-spambase-seed44/train/iter_02/model.joblib",
+  "schema_path": "bench/runs/artifacts/bnoise1-spambase-seed44/train/iter_02/feature_schema.json"
+}

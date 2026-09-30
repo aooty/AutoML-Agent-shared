@@ -1,0 +1,37 @@
+{
+  "model": "hist_gbdt",
+  "hyperparams": {
+    "max_iter": 250,
+    "learning_rate": 0.06,
+    "max_depth": 4,
+    "max_leaf_nodes": 15,
+    "l2_regularization": 5.0,
+    "min_samples_leaf": 40,
+    "early_stopping": false,
+    "class_weight": {
+      "0": 1.0,
+      "1": 9.0
+    }
+  },
+  "preprocessing": {
+    "impute": "none",
+    "scale": false,
+    "missing_indicator": false,
+    "missing_count": false
+  },
+  "target_missing": {
+    "policy": "reject"
+  },
+  "data": {
+    "path": "bench/data/speeddating.csv",
+    "target_column": "match"
+  },
+  "metric": "balanced_accuracy",
+  "task": "classification",
+  "seed": 43,
+  "paired_baseline": {
+    "iteration": 1,
+    "path": "bench\\runs\\artifacts\\rep1-speeddating-seed43\\train\\iter_01\\val_predictions.npz"
+  },
+  "memory_limit_mb": 2048
+}

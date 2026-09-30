@@ -1,0 +1,26 @@
+{
+  "model": "gradient_boosting",
+  "hyperparams": {
+    "n_estimators": 2,
+    "learning_rate": 0.02626,
+    "max_depth": 56,
+    "subsample": 0.785494
+  },
+  "preprocessing": {
+    "impute": "mean",
+    "scale": true,
+    "missing_indicator": false,
+    "missing_count": false
+  },
+  "target_missing": {
+    "policy": "reject"
+  },
+  "data": {
+    "path": "bench/data/speeddating.csv",
+    "target_column": "match"
+  },
+  "metric": "balanced_accuracy",
+  "task": "classification",
+  "seed": 43,
+  "memory_limit_mb": 2048
+}

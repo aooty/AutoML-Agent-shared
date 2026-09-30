@@ -1,0 +1,62 @@
+{
+  "metrics": {
+    "f1": 0.7255625230542235,
+    "accuracy": 0.8476814412938888,
+    "balanced_accuracy": 0.8456233968180711,
+    "precision": 0.6376012965964344,
+    "recall": 0.8416773641420625,
+    "roc_auc": 0.9289174062779096,
+    "pr_auc": 0.8291731396486735,
+    "average_precision": 0.8291731396486735,
+    "specificity": 0.849569,
+    "balanced_accuracy_at_best_cut": 0.85,
+    "cut_headroom": 0.004377,
+    "brier": 0.100826,
+    "calibration_error": 0.079366,
+    "balanced_accuracy_ci_low": 0.836949,
+    "balanced_accuracy_ci_high": 0.853081,
+    "train_f1": 0.7632062752788332,
+    "train_accuracy": 0.8681408681408681,
+    "train_balanced_accuracy": 0.8749638798178284,
+    "train_val_gap": 0.02934
+  },
+  "split": "val",
+  "applied_hyperparams": {
+    "max_iter": 800,
+    "learning_rate": 0.03,
+    "max_leaf_nodes": 63,
+    "min_samples_leaf": 40,
+    "l2_regularization": 1.0,
+    "early_stopping": true,
+    "validation_fraction": 0.1,
+    "n_iter_no_change": 40,
+    "class_weight": {
+      "0": 1.0,
+      "1": 2.6
+    }
+  },
+  "dropped_hyperparams": [],
+  "applied_preprocessing": {
+    "impute": "none",
+    "scale": false,
+    "missing_indicator": false,
+    "missing_count": false
+  },
+  "train_time_sec": 12.848,
+  "status": "ok",
+  "error_type": null,
+  "log_tail": "features: 수치 6개 + 범주형 8개를 one-hot 102열로\nloaded bench/data/adult.csv: 48842 rows x 108 encoded features\nmemory estimate 80.5 MB vs budget 2048.0 MB\nsplit: train 60% / val 20% / test 20% (stratified, seed=42) — test는 반복 밖에서 저장된 모델로 1회만 채점합니다 {'train': 29304, 'val': 9769, 'test': 9769}\nestimator=hist_gbdt applied_hyperparams={'max_iter': 800, 'learning_rate': 0.03, 'max_leaf_nodes': 63, 'min_samples_leaf': 40, 'l2_regularization': 1.0, 'early_stopping': True, 'validation_fraction': 0.1, 'n_iter_no_change': 40, 'class_weight': {0: 1.0, 1: 2.6}}\npreprocessing applied: impute=none scale=False missing_indicator=False missing_count=False\nfitting on 29304 rows, validating on 9769 rows\nmodel saved to model.joblib (1.8 MB)\nfeature schema saved to feature_schema.json (108 columns)\nbalanced_accuracy=0.8456 (95% CI 0.8369~0.8531, 폭 0.0161) — row 단위 재표집 400회\nval predictions saved to val_predictions.npz (74 KB)\nbalanced_accuracy vs iteration 1: [짝지은 Δ(iteration 1 대비) +0.0035, 95% CI -0.0007~+0.0073, P(개선) 0.938 — 이 행들로는 0과 구분되지 않음]\ntrain_val_gap measured on balanced_accuracy (maximize)\nmetrics: {\"f1\": 0.7256, \"accuracy\": 0.8477, \"balanced_accuracy\": 0.8456, \"precision\": 0.6376, \"recall\": 0.8417, \"roc_auc\": 0.9289, \"pr_auc\": 0.8292, \"average_precision\": 0.8292, \"specificity\": 0.8496, \"balanced_accuracy_at_best_cut\": 0.85, \"cut_headroom\": 0.0044, \"brier\": 0.1008, \"calibration_error\": 0.0794, \"balanced_accuracy_ci_low\": 0.8369, \"balanced_accuracy_ci_high\": 0.8531, \"train_f1\": 0.7632, \"train_accuracy\": 0.8681, \"train_balanced_accuracy\": 0.875, \"train_val_gap\": 0.0293}",
+  "paired": {
+    "metric": "balanced_accuracy",
+    "baseline_iteration": 1,
+    "status": "measured",
+    "resamples": 400,
+    "unit": "row",
+    "delta_vs_best": 0.003477,
+    "delta_ci_low": -0.00067,
+    "delta_ci_high": 0.007302,
+    "p_better": 0.9375
+  },
+  "model_path": "bench\\runs\\artifacts\\spgon-adult-seed42\\train\\iter_02\\model.joblib",
+  "schema_path": "bench\\runs\\artifacts\\spgon-adult-seed42\\train\\iter_02\\feature_schema.json"
+}

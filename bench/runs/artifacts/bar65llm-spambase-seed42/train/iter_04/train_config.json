@@ -1,0 +1,32 @@
+{
+  "model": "svc",
+  "hyperparams": {
+    "kernel": "rbf",
+    "C": 10.0,
+    "probability": true,
+    "class_weight": null,
+    "cache_size": 500,
+    "random_state": 42
+  },
+  "preprocessing": {
+    "impute": "median",
+    "scale": true,
+    "missing_indicator": false,
+    "missing_count": false
+  },
+  "target_missing": {
+    "policy": "reject"
+  },
+  "data": {
+    "path": "bench/data/spambase.csv",
+    "target_column": "class"
+  },
+  "metric": "balanced_accuracy",
+  "task": "classification",
+  "seed": 42,
+  "paired_baseline": {
+    "iteration": 2,
+    "path": "bench\\runs\\artifacts\\bar65llm-spambase-seed42\\train\\iter_02\\val_predictions.npz"
+  },
+  "memory_limit_mb": 2048
+}

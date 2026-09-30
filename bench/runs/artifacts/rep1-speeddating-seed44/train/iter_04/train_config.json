@@ -1,0 +1,35 @@
+{
+  "model": "extra_trees",
+  "hyperparams": {
+    "n_estimators": 800,
+    "min_samples_leaf": 2,
+    "bootstrap": false,
+    "class_weight": {
+      "0": 1.0,
+      "1": 6.0
+    },
+    "n_jobs": -1,
+    "random_state": 44
+  },
+  "preprocessing": {
+    "impute": "median",
+    "scale": false,
+    "missing_indicator": false,
+    "missing_count": false
+  },
+  "target_missing": {
+    "policy": "reject"
+  },
+  "data": {
+    "path": "bench/data/speeddating.csv",
+    "target_column": "match"
+  },
+  "metric": "balanced_accuracy",
+  "task": "classification",
+  "seed": 44,
+  "paired_baseline": {
+    "iteration": 2,
+    "path": "bench\\runs\\artifacts\\rep1-speeddating-seed44\\train\\iter_02\\val_predictions.npz"
+  },
+  "memory_limit_mb": 2048
+}

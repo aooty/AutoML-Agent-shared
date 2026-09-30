@@ -1,0 +1,38 @@
+{
+  "metrics": {
+    "f1": 0.5569620253164557,
+    "accuracy": 0.7911694510739857,
+    "balanced_accuracy": 0.7935507246376812,
+    "precision": 0.4280155642023346,
+    "recall": 0.7971014492753623,
+    "roc_auc": 0.8653545548654245,
+    "pr_auc": 0.5895571408354622,
+    "average_precision": 0.5895571408354622,
+    "specificity": 0.79,
+    "balanced_accuracy_at_best_cut": 0.795,
+    "cut_headroom": 0.001449,
+    "brier": 0.141789,
+    "calibration_error": 0.182937,
+    "balanced_accuracy_ci_low": 0.769421,
+    "balanced_accuracy_ci_high": 0.820419
+  },
+  "split": "test",
+  "applied_hyperparams": {},
+  "dropped_hyperparams": [],
+  "applied_preprocessing": {
+    "impute": "none",
+    "scale": false,
+    "missing_indicator": false,
+    "missing_count": true
+  },
+  "train_time_sec": 2.602,
+  "status": "ok",
+  "error_type": null,
+  "log_tail": "encoding from feature_schema.json: 241 columns\n학습 때도 인코딩되지 않아 제외된 컬럼 1개는 무시했습니다 (field)\nloaded bench/data/speeddating.csv: 8378 rows x 241 encoded features\nscoring the held-back test split: 1676 rows, model=model.joblib\nbalanced_accuracy=0.7936 (95% CI 0.7694~0.8204, 폭 0.0510) — row 단위 재표집 400회\ntest metrics: {\"f1\": 0.557, \"accuracy\": 0.7912, \"balanced_accuracy\": 0.7936, \"precision\": 0.428, \"recall\": 0.7971, \"roc_auc\": 0.8654, \"pr_auc\": 0.5896, \"average_precision\": 0.5896, \"specificity\": 0.79, \"balanced_accuracy_at_best_cut\": 0.795, \"cut_headroom\": 0.0014, \"brier\": 0.1418, \"calibration_error\": 0.1829, \"balanced_accuracy_ci_low\": 0.7694, \"balanced_accuracy_ci_high\": 0.8204}",
+  "threads": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "cpu_count": 20
+  }
+}

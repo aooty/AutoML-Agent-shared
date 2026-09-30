@@ -1,0 +1,168 @@
+{
+  "thread_id": "spgoff-adult-seed42",
+  "goal": {
+    "metric": "balanced_accuracy",
+    "direction": "maximize",
+    "mode": "auto",
+    "threshold": 0.8248,
+    "source": "derived",
+    "reference": {
+      "source": "baseline",
+      "metric": "balanced_accuracy",
+      "baseline": 0.7664,
+      "margin": 0.25,
+      "ks": 0.6476,
+      "ranking_ceiling": 0.8238,
+      "exceeds_ranking_ceiling": true,
+      "required_ks": 0.6496,
+      "ks_shortfall": 0.002,
+      "passable_margin": 0.245,
+      "baseline_ci": [
+        0.7575,
+        0.7762
+      ],
+      "baseline_ci_unit": "row",
+      "chance": 0.5
+    }
+  },
+  "iterations": 1,
+  "stop_reason": "goal_reached",
+  "best": {
+    "iteration": 1,
+    "model": "hist_gbdt",
+    "hyperparams": {
+      "max_iter": 400,
+      "learning_rate": 0.06,
+      "max_leaf_nodes": 31,
+      "l2_regularization": 1.0,
+      "min_samples_leaf": 20,
+      "early_stopping": true,
+      "validation_fraction": 0.1,
+      "n_iter_no_change": 25,
+      "class_weight": "balanced"
+    },
+    "preprocessing": {
+      "impute": "none",
+      "scale": false,
+      "missing_indicator": false,
+      "missing_count": false
+    },
+    "metric": "balanced_accuracy",
+    "score": 0.8484428264273012,
+    "metrics": {
+      "f1": 0.720855614973262,
+      "accuracy": 0.8396970007165524,
+      "balanced_accuracy": 0.8484428264273012,
+      "precision": 0.617781851512374,
+      "recall": 0.865211810012837,
+      "roc_auc": 0.9295320505114291,
+      "pr_auc": 0.8294016889206273,
+      "average_precision": 0.8294016889206273,
+      "specificity": 0.831674,
+      "balanced_accuracy_at_best_cut": 0.8497,
+      "cut_headroom": 0.001257,
+      "brier": 0.107308,
+      "calibration_error": 0.100639,
+      "balanced_accuracy_ci_low": 0.839981,
+      "balanced_accuracy_ci_high": 0.855557,
+      "train_f1": 0.7438307873090482,
+      "train_accuracy": 0.8512148512148512,
+      "train_balanced_accuracy": 0.8688731188972503,
+      "train_val_gap": 0.02043
+    },
+    "train_time_sec": 8.132,
+    "plan_strategy": "Attempt 1: replace the linear baseline with a gradient-boosted tree ensemble (hist_gbdt) to raise the ranking itself, and pair it with an explicit positive-class weight so the default predict() cut lands near the balanced point. Configuration: hist_gbdt with max_iter=400, learning_rate=0.06, max_leaf_nodes=31, max_depth=None, l2_regularization=1.0, early_stopping=True with validation_fraction=0.1 and n_iter_no_change=25 so the iteration count self-limits inside the 600 s budget. Preprocessing: impute='none' so the trees split on NaN in workclass/occupation/native-country directly (these are one-hot encoded categoricals with ~5.7% missing), scale=false (trees are scale-invariant, and fnlwgt/capital-gain skew does not matter to split finding), and no missing_indicator (documented as bit-for-bit redundant under impute='none') and no missing_count (bought nothing in the recorded measurements, and here missingness is a survey non-response, not a recording-regime marker). Imbalance: class_weight is not accepted by HistGradientBoostingClassifier's set_params in all versions, so I pass class_weight='balanced' and expect it to apply where supported; if it is dropped it will show in dropped_hyperparams and attempt 2 will move the operating point instead. Then read, in this order: balanced_accuracy_at_best_cut (the new ranking ceiling — the bar 0.8248 sits above the baseline's 0.8238 ceiling, so this number is the gate), cut_headroom (which axis the remaining gap is on), roc_auc/pr_auc against 0.9075/0.7706, and recall vs specificity to see which side the cut is biased toward. If the new ceiling clears 0.8248 but the achieved score does not, attempt 2 tunes only the weight (explicit {\"0\":1,\"1\":2.5}-style map) on this same ranking; if the ceiling itself falls short, attempt 2 switches ranking generator (xgboost with deeper trees, or random_forest) rather than touching the cut."
+  },
+  "holdout": {
+    "status": "ok",
+    "split": "test",
+    "test_fraction": 0.2,
+    "iteration": 1,
+    "model": "hist_gbdt",
+    "metric": "balanced_accuracy",
+    "score": 0.8434884657123265,
+    "val_score": 0.8484428264273012,
+    "metrics": {
+      "f1": 0.7124448367166814,
+      "accuracy": 0.8332480294810114,
+      "balanced_accuracy": 0.8434884657123265,
+      "precision": 0.6065524496543433,
+      "recall": 0.863130881094953,
+      "roc_auc": 0.9284474479151739,
+      "pr_auc": 0.8295626686518722,
+      "average_precision": 0.8295626686518722,
+      "specificity": 0.823846,
+      "balanced_accuracy_at_best_cut": 0.8471,
+      "cut_headroom": 0.003612,
+      "brier": 0.108124,
+      "calibration_error": 0.101082,
+      "balanced_accuracy_ci_low": 0.835234,
+      "balanced_accuracy_ci_high": 0.851761
+    },
+    "wall_time_sec": 5.24,
+    "selection_gap": 0.004954,
+    "score_ci": [
+      0.835234,
+      0.851761
+    ],
+    "val_inside_ci": true
+  },
+  "models": {
+    "mode": "best",
+    "kept_iteration": 1,
+    "removed": [],
+    "freed_bytes": 0
+  },
+  "history": [
+    {
+      "iteration": 1,
+      "model": "hist_gbdt",
+      "hyperparams": {
+        "max_iter": 400,
+        "learning_rate": 0.06,
+        "max_leaf_nodes": 31,
+        "l2_regularization": 1.0,
+        "min_samples_leaf": 20,
+        "early_stopping": true,
+        "validation_fraction": 0.1,
+        "n_iter_no_change": 25,
+        "class_weight": "balanced"
+      },
+      "dropped_hyperparams": [],
+      "preprocessing": {
+        "impute": "none",
+        "scale": false,
+        "missing_indicator": false,
+        "missing_count": false
+      },
+      "unsupported_claims": [
+        "feature_engineering"
+      ],
+      "status": "ok",
+      "error_type": null,
+      "metrics": {
+        "f1": 0.720855614973262,
+        "accuracy": 0.8396970007165524,
+        "balanced_accuracy": 0.8484428264273012,
+        "precision": 0.617781851512374,
+        "recall": 0.865211810012837,
+        "roc_auc": 0.9295320505114291,
+        "pr_auc": 0.8294016889206273,
+        "average_precision": 0.8294016889206273,
+        "specificity": 0.831674,
+        "balanced_accuracy_at_best_cut": 0.8497,
+        "cut_headroom": 0.001257,
+        "brier": 0.107308,
+        "calibration_error": 0.100639,
+        "balanced_accuracy_ci_low": 0.839981,
+        "balanced_accuracy_ci_high": 0.855557,
+        "train_f1": 0.7438307873090482,
+        "train_accuracy": 0.8512148512148512,
+        "train_balanced_accuracy": 0.8688731188972503,
+        "train_val_gap": 0.02043
+      },
+      "train_time_sec": 8.132,
+      "critic": null
+    }
+  ]
+}

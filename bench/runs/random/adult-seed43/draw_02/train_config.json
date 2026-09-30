@@ -1,0 +1,26 @@
+{
+  "model": "gradient_boosting",
+  "hyperparams": {
+    "n_estimators": 2,
+    "learning_rate": 0.019048,
+    "max_depth": 48,
+    "subsample": 0.181652
+  },
+  "preprocessing": {
+    "impute": "median",
+    "scale": true,
+    "missing_indicator": true,
+    "missing_count": true
+  },
+  "target_missing": {
+    "policy": "reject"
+  },
+  "data": {
+    "path": "bench/data/adult.csv",
+    "target_column": "class"
+  },
+  "metric": "balanced_accuracy",
+  "task": "classification",
+  "seed": 43,
+  "memory_limit_mb": 2048
+}

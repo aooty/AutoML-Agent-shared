@@ -1,0 +1,17 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "automl-agent",
+  "description": "A plugin for running AutoML loops in Claude Code.",
+  "owner": {
+    "name": "aooty",
+    "url": "https://github.com/aooty/AutoML-Agent-shared"
+  },
+  "plugins": [
+    {
+      "name": "automl-agent",
+      "description": "Profiles the dataset to create a card, runs the AutoML loop, and parses the results. Uses Ollama gemma4:12b for proposals and Claude for validation.",
+      "source": "./",
+      "category": "data-science"
+    }
+  ]
+}

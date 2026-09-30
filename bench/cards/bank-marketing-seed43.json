@@ -1,0 +1,312 @@
+{
+  "name": "bank-marketing",
+  "description": "csv 데이터에서 자동 생성된 카드입니다. 원본 행은 이 카드에 포함되지 않습니다 — 모든 수치는 열 전체에 대한 집계입니다.",
+  "task": "binary_classification",
+  "target_column": "Class",
+  "n_rows": 45211,
+  "n_features": 16,
+  "n_features_dropped_non_numeric": 0,
+  "encoding": {
+    "numeric": 7,
+    "one_hot_columns": 9,
+    "one_hot_levels": 44,
+    "dropped_high_cardinality": [],
+    "dropped_unsupported_dtype": [],
+    "max_cardinality": 50
+  },
+  "n_classes": 2,
+  "class_balance": [
+    0.883,
+    0.117
+  ],
+  "imbalance_ratio": 7.55,
+  "missing": {
+    "overall_rate": 0.0,
+    "columns_with_missing": 0,
+    "worst_rate": 0.0
+  },
+  "features": [
+    {
+      "name": "V1",
+      "dtype": "int64",
+      "missing_rate": 0.0,
+      "distinct": "medium",
+      "usable_by_executor": true,
+      "kind": "continuous",
+      "magnitude": "tens",
+      "skew": "moderate",
+      "outlier_rate": 0.0108,
+      "target_corr": "none"
+    },
+    {
+      "name": "V2",
+      "dtype": "str",
+      "missing_rate": 0.0,
+      "distinct": "medium",
+      "usable_by_executor": true,
+      "kind": "categorical",
+      "sentinel_suspects": [
+        {
+          "kind": "text_marker",
+          "value": "unknown",
+          "rate": 0.0064
+        }
+      ]
+    },
+    {
+      "name": "V3",
+      "dtype": "str",
+      "missing_rate": 0.0,
+      "distinct": "low",
+      "usable_by_executor": true,
+      "kind": "categorical"
+    },
+    {
+      "name": "V4",
+      "dtype": "str",
+      "missing_rate": 0.0,
+      "distinct": "low",
+      "usable_by_executor": true,
+      "kind": "categorical",
+      "sentinel_suspects": [
+        {
+          "kind": "text_marker",
+          "value": "unknown",
+          "rate": 0.0411
+        }
+      ]
+    },
+    {
+      "name": "V5",
+      "dtype": "str",
+      "missing_rate": 0.0,
+      "distinct": "binary",
+      "usable_by_executor": true,
+      "kind": "binary"
+    },
+    {
+      "name": "V6",
+      "dtype": "int64",
+      "missing_rate": 0.0,
+      "distinct": "high",
+      "usable_by_executor": true,
+      "kind": "continuous",
+      "magnitude": "hundreds",
+      "skew": "high",
+      "outlier_rate": 0.1046,
+      "target_corr": "weak"
+    },
+    {
+      "name": "V7",
+      "dtype": "str",
+      "missing_rate": 0.0,
+      "distinct": "binary",
+      "usable_by_executor": true,
+      "kind": "binary"
+    },
+    {
+      "name": "V8",
+      "dtype": "str",
+      "missing_rate": 0.0,
+      "distinct": "binary",
+      "usable_by_executor": true,
+      "kind": "binary"
+    },
+    {
+      "name": "V9",
+      "dtype": "str",
+      "missing_rate": 0.0,
+      "distinct": "low",
+      "usable_by_executor": true,
+      "kind": "categorical",
+      "sentinel_suspects": [
+        {
+          "kind": "text_marker",
+          "value": "unknown",
+          "rate": 0.288
+        }
+      ]
+    },
+    {
+      "name": "V10",
+      "dtype": "int64",
+      "missing_rate": 0.0,
+      "distinct": "medium",
+      "usable_by_executor": true,
+      "kind": "continuous",
+      "magnitude": "tens",
+      "skew": "low",
+      "outlier_rate": 0.0,
+      "target_corr": "none"
+    },
+    {
+      "name": "V11",
+      "dtype": "str",
+      "missing_rate": 0.0,
+      "distinct": "medium",
+      "usable_by_executor": true,
+      "kind": "categorical"
+    },
+    {
+      "name": "V12",
+      "dtype": "int64",
+      "missing_rate": 0.0,
+      "distinct": "high",
+      "usable_by_executor": true,
+      "kind": "continuous",
+      "magnitude": "hundreds",
+      "skew": "high",
+      "outlier_rate": 0.0716,
+      "target_corr": "strong"
+    },
+    {
+      "name": "V13",
+      "dtype": "int64",
+      "missing_rate": 0.0,
+      "distinct": "medium",
+      "usable_by_executor": true,
+      "kind": "continuous",
+      "magnitude": "unit",
+      "skew": "high",
+      "outlier_rate": 0.0678,
+      "target_corr": "weak"
+    },
+    {
+      "name": "V14",
+      "dtype": "int64",
+      "missing_rate": 0.0,
+      "distinct": "high",
+      "usable_by_executor": true,
+      "kind": "continuous",
+      "magnitude": "sub_unit",
+      "skew": "high",
+      "target_corr": "weak"
+    },
+    {
+      "name": "V15",
+      "dtype": "int64",
+      "missing_rate": 0.0,
+      "distinct": "medium",
+      "usable_by_executor": true,
+      "kind": "continuous",
+      "magnitude": "sub_unit",
+      "skew": "high",
+      "target_corr": "weak"
+    },
+    {
+      "name": "V16",
+      "dtype": "str",
+      "missing_rate": 0.0,
+      "distinct": "low",
+      "usable_by_executor": true,
+      "kind": "categorical",
+      "sentinel_suspects": [
+        {
+          "kind": "text_marker",
+          "value": "unknown",
+          "rate": 0.8175
+        }
+      ]
+    }
+  ],
+  "target_missing": {
+    "policy": "reject",
+    "n_dropped": 0
+  },
+  "preprocessing": {
+    "impute": "median",
+    "scale": true
+  },
+  "constraints": {
+    "memory_limit_mb": 2048,
+    "max_train_time_sec": 600
+  },
+  "profile": {
+    "generated_by": "automl_agent.scripts.profile",
+    "policy": "aggregates only — no cell values, no min/max, no class labels"
+  },
+  "data": {
+    "path": "bench/data/bank-marketing.csv",
+    "target_column": "Class"
+  },
+  "caveats": [
+    "V2: 결측 표기로 자주 쓰이는 범주값 'unknown' 이 0.6%. 변환하지 않았으므로 이 열의 magnitude·skew·outlier_rate·target_corr와 기준선 점수는 이 값을 실제 측정치로 계산한 결과입니다. 이 열에 의존하는 계획은 그 점을 감안하세요.",
+    "V4: 결측 표기로 자주 쓰이는 범주값 'unknown' 이 4.1%. 변환하지 않았으므로 이 열의 magnitude·skew·outlier_rate·target_corr와 기준선 점수는 이 값을 실제 측정치로 계산한 결과입니다. 이 열에 의존하는 계획은 그 점을 감안하세요.",
+    "V9: 결측 표기로 자주 쓰이는 범주값 'unknown' 이 28.8%. 변환하지 않았으므로 이 열의 magnitude·skew·outlier_rate·target_corr와 기준선 점수는 이 값을 실제 측정치로 계산한 결과입니다. 이 열에 의존하는 계획은 그 점을 감안하세요.",
+    "V16: 결측 표기로 자주 쓰이는 범주값 'unknown' 이 81.8%. 변환하지 않았으므로 이 열의 magnitude·skew·outlier_rate·target_corr와 기준선 점수는 이 값을 실제 측정치로 계산한 결과입니다. 이 열에 의존하는 계획은 그 점을 감안하세요."
+  ],
+  "baseline": {
+    "model": "logreg (median impute + standard scale)",
+    "note": "LogisticRegression fitted on the training split and scored on the validation split of automl_agent.scoring.splits' protocol, seed 43 — the same split scripts/train.py uses, so the numbers are directly comparable. The test slice is not read here.",
+    "n_rows_used": 45211,
+    "protocol": {
+      "train_fraction": 0.6,
+      "val_fraction": 0.2,
+      "test_fraction": 0.2,
+      "stratified": true,
+      "grouped_by": null,
+      "seed": 43
+    },
+    "scores": {
+      "f1": 0.4548,
+      "accuracy": 0.9027,
+      "balanced_accuracy": 0.6616,
+      "precision": 0.6601,
+      "recall": 0.3469,
+      "roc_auc": 0.9064,
+      "pr_auc": 0.5628,
+      "average_precision": 0.5628
+    },
+    "chance": {
+      "f1": 0.0,
+      "accuracy": 0.883,
+      "balanced_accuracy": 0.5,
+      "precision": 0.0,
+      "recall": 0.0,
+      "roc_auc": 0.5,
+      "pr_auc": 0.117,
+      "average_precision": 0.117
+    },
+    "ks": 0.683,
+    "balanced_accuracy_at_best_cut": 0.8415,
+    "ci": {
+      "level": 0.95,
+      "unit": "row",
+      "resamples": 400,
+      "scores": {
+        "f1": {
+          "low": 0.4202,
+          "high": 0.4833
+        },
+        "accuracy": {
+          "low": 0.8962,
+          "high": 0.908
+        },
+        "balanced_accuracy": {
+          "low": 0.6456,
+          "high": 0.6757
+        },
+        "precision": {
+          "low": 0.621,
+          "high": 0.6964
+        },
+        "recall": {
+          "low": 0.3154,
+          "high": 0.3754
+        },
+        "roc_auc": {
+          "low": 0.8959,
+          "high": 0.9146
+        },
+        "pr_auc": {
+          "low": 0.5276,
+          "high": 0.5957
+        },
+        "average_precision": {
+          "low": 0.5276,
+          "high": 0.5957
+        }
+      }
+    }
+  }
+}

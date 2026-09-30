@@ -1,0 +1,25 @@
+{
+  "metrics": {
+    "r2": 0.8040616440005774,
+    "mae": 94561.53494817311,
+    "rmse": 166898.8230910907,
+    "mean_absolute_error": 94561.53494817311,
+    "root_mean_squared_error": 166898.8230910907,
+    "r2_score": 0.8040616440005774,
+    "r2_ci_low": 0.772012,
+    "r2_ci_high": 0.834226
+  },
+  "split": "test",
+  "applied_hyperparams": {},
+  "dropped_hyperparams": [],
+  "applied_preprocessing": {
+    "impute": "most_frequent",
+    "scale": true,
+    "missing_indicator": false,
+    "missing_count": true
+  },
+  "train_time_sec": 1.601,
+  "status": "ok",
+  "error_type": null,
+  "log_tail": "encoding from feature_schema.json: 21 columns\nloaded bench/data/house_sales.csv: 21613 rows x 21 encoded features\nscoring the held-back test split: 4323 rows, model=model.joblib\nr2=0.8041 (95% CI 0.7720~0.8342, 폭 0.0622) — row 단위 재표집 400회\ntest metrics: {\"r2\": 0.8041, \"mae\": 94561.5349, \"rmse\": 166898.8231, \"mean_absolute_error\": 94561.5349, \"root_mean_squared_error\": 166898.8231, \"r2_score\": 0.8041, \"r2_ci_low\": 0.772, \"r2_ci_high\": 0.8342}"
+}

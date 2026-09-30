@@ -1,0 +1,37 @@
+{
+  "model": "xgboost",
+  "hyperparams": {
+    "n_estimators": 700,
+    "learning_rate": 0.04,
+    "max_depth": 5,
+    "min_child_weight": 5,
+    "subsample": 0.8,
+    "colsample_bytree": 0.7,
+    "reg_lambda": 3.0,
+    "reg_alpha": 0.5,
+    "scale_pos_weight": 5.07,
+    "early_stopping_rounds": 50,
+    "gamma": 1e-06
+  },
+  "preprocessing": {
+    "impute": "none",
+    "scale": false,
+    "missing_indicator": false,
+    "missing_count": false
+  },
+  "target_missing": {
+    "policy": "reject"
+  },
+  "data": {
+    "path": "bench/data/speeddating.csv",
+    "target_column": "match"
+  },
+  "metric": "balanced_accuracy",
+  "task": "classification",
+  "seed": 42,
+  "paired_baseline": {
+    "iteration": 2,
+    "path": "bench\\runs\\artifacts\\bar65llm-speeddating-seed42\\train\\iter_02\\val_predictions.npz"
+  },
+  "memory_limit_mb": 2048
+}

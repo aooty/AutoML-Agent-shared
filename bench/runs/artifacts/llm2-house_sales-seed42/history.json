@@ -1,0 +1,141 @@
+{
+  "thread_id": "llm2-house_sales-seed42",
+  "goal": {
+    "metric": "r2",
+    "direction": "maximize",
+    "mode": "auto",
+    "threshold": 0.7718,
+    "source": "derived",
+    "reference": {
+      "source": "baseline",
+      "metric": "r2",
+      "baseline": 0.6957,
+      "margin": 0.25,
+      "baseline_ci": [
+        0.6735,
+        0.713
+      ],
+      "baseline_ci_unit": "row",
+      "chance": -0.0
+    }
+  },
+  "iterations": 1,
+  "stop_reason": "goal_reached",
+  "critic_runs": 0,
+  "budget": {
+    "spent_sec": 43.843,
+    "total_sec": 3600.0
+  },
+  "best": {
+    "iteration": 1,
+    "model": "hist_gbdt",
+    "hyperparams": {
+      "max_iter": 600,
+      "learning_rate": 0.06,
+      "max_leaf_nodes": 63,
+      "max_depth": 8,
+      "min_samples_leaf": 20,
+      "l2_regularization": 1.0,
+      "early_stopping": false,
+      "random_state": 42
+    },
+    "preprocessing": {
+      "impute": "median",
+      "scale": false,
+      "missing_indicator": false,
+      "missing_count": false
+    },
+    "metric": "r2",
+    "score": 0.8880302834867331,
+    "metrics": {
+      "r2": 0.8880302834867331,
+      "mae": 63918.76634614707,
+      "rmse": 116930.15909892811,
+      "mean_absolute_error": 63918.76634614707,
+      "root_mean_squared_error": 116930.15909892811,
+      "r2_score": 0.8880302834867331,
+      "r2_ci_low": 0.870022,
+      "r2_ci_high": 0.903683,
+      "train_r2": 0.9778249087776898,
+      "train_mae": 37630.26642235831,
+      "train_val_gap": 0.089795
+    },
+    "train_time_sec": 6.031,
+    "plan_strategy": "Switch from the linear baseline to a gradient-boosted tree ensemble (hist_gbdt) fitted on all 12,967 training rows with early stopping disabled, so the fit sees every training row. House prices in this dataset are driven by strongly non-linear, interacting effects — lat/long/zipcode define location premia that no additive linear model can express, and sqft_living interacts with grade and location. A depth-limited but many-iteration boosted ensemble with a modest learning rate captures exactly that. Configuration: max_iter 600, learning_rate 0.06, max_leaf_nodes 63, max_depth 8, min_samples_leaf 20, l2_regularization 1.0, early_stopping false. Preprocessing: median impute (there is no missingness, so this is a no-op), no scaling since trees are scale-invariant, and no missingness columns (missing rate is 0.0 everywhere, so they would be constant and buy nothing). Judge on validation r2 against the 0.7718 bar and read train_val_gap: if the gap is large (>0.10) the next attempt lowers max_leaf_nodes / raises min_samples_leaf and l2; if validation r2 is still climbing with a small gap, the next attempt raises max_iter and leaf count."
+  },
+  "holdout": {
+    "status": "ok",
+    "split": "test",
+    "test_fraction": 0.2,
+    "iteration": 1,
+    "model": "hist_gbdt",
+    "metric": "r2",
+    "score": 0.8639111107652766,
+    "val_score": 0.8880302834867331,
+    "metrics": {
+      "r2": 0.8639111107652766,
+      "mae": 67929.08688647786,
+      "rmse": 143434.5524941358,
+      "mean_absolute_error": 67929.08688647786,
+      "root_mean_squared_error": 143434.5524941358,
+      "r2_score": 0.8639111107652766,
+      "r2_ci_low": 0.808405,
+      "r2_ci_high": 0.909377
+    },
+    "wall_time_sec": 4.92,
+    "selection_gap": 0.024119,
+    "score_ci": [
+      0.808405,
+      0.909377
+    ],
+    "val_inside_ci": true
+  },
+  "models": {
+    "mode": "all",
+    "kept_iteration": 1,
+    "removed": [],
+    "freed_bytes": 0
+  },
+  "history": [
+    {
+      "iteration": 1,
+      "model": "hist_gbdt",
+      "hyperparams": {
+        "max_iter": 600,
+        "learning_rate": 0.06,
+        "max_leaf_nodes": 63,
+        "max_depth": 8,
+        "min_samples_leaf": 20,
+        "l2_regularization": 1.0,
+        "early_stopping": false,
+        "random_state": 42
+      },
+      "dropped_hyperparams": [],
+      "preprocessing": {
+        "impute": "median",
+        "scale": false,
+        "missing_indicator": false,
+        "missing_count": false
+      },
+      "internal_validation": {},
+      "unsupported_claims": [],
+      "status": "ok",
+      "error_type": null,
+      "metrics": {
+        "r2": 0.8880302834867331,
+        "mae": 63918.76634614707,
+        "rmse": 116930.15909892811,
+        "mean_absolute_error": 63918.76634614707,
+        "root_mean_squared_error": 116930.15909892811,
+        "r2_score": 0.8880302834867331,
+        "r2_ci_low": 0.870022,
+        "r2_ci_high": 0.903683,
+        "train_r2": 0.9778249087776898,
+        "train_mae": 37630.26642235831,
+        "train_val_gap": 0.089795
+      },
+      "train_time_sec": 6.031,
+      "critic": null
+    }
+  ]
+}

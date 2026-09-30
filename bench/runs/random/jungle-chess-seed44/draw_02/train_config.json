@@ -1,0 +1,29 @@
+{
+  "model": "mlp",
+  "hyperparams": {
+    "hidden_layer_sizes": [
+      241
+    ],
+    "alpha": 3.2e-05,
+    "learning_rate_init": 1.9e-05,
+    "batch_size": 1044,
+    "max_iter": 44
+  },
+  "preprocessing": {
+    "impute": "most_frequent",
+    "scale": true,
+    "missing_indicator": true,
+    "missing_count": false
+  },
+  "target_missing": {
+    "policy": "reject"
+  },
+  "data": {
+    "path": "bench/data/jungle-chess.csv",
+    "target_column": "class"
+  },
+  "metric": "balanced_accuracy",
+  "task": "classification",
+  "seed": 44,
+  "memory_limit_mb": 2048
+}

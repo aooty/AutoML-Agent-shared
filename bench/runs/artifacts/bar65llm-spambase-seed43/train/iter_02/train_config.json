@@ -1,0 +1,33 @@
+{
+  "model": "hist_gbdt",
+  "hyperparams": {
+    "max_iter": 800,
+    "learning_rate": 0.04,
+    "max_leaf_nodes": 15,
+    "min_samples_leaf": 40,
+    "l2_regularization": 10.0,
+    "max_features": 0.6,
+    "early_stopping": false
+  },
+  "preprocessing": {
+    "impute": "median",
+    "scale": false,
+    "missing_indicator": false,
+    "missing_count": false
+  },
+  "target_missing": {
+    "policy": "reject"
+  },
+  "data": {
+    "path": "bench/data/spambase.csv",
+    "target_column": "class"
+  },
+  "metric": "balanced_accuracy",
+  "task": "classification",
+  "seed": 43,
+  "paired_baseline": {
+    "iteration": 1,
+    "path": "bench\\runs\\artifacts\\bar65llm-spambase-seed43\\train\\iter_01\\val_predictions.npz"
+  },
+  "memory_limit_mb": 2048
+}

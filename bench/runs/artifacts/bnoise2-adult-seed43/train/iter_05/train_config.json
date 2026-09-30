@@ -1,0 +1,39 @@
+{
+  "model": "hist_gbdt",
+  "hyperparams": {
+    "max_iter": 1500,
+    "learning_rate": 0.025,
+    "max_leaf_nodes": 15,
+    "max_depth": 6,
+    "min_samples_leaf": 40,
+    "l2_regularization": 1.5,
+    "max_features": 0.7,
+    "max_bins": 255,
+    "class_weight": {
+      "0": 1.0,
+      "1": 2.6
+    },
+    "early_stopping": false
+  },
+  "preprocessing": {
+    "impute": "none",
+    "scale": false,
+    "missing_indicator": false,
+    "missing_count": false
+  },
+  "target_missing": {
+    "policy": "reject"
+  },
+  "data": {
+    "path": "bench/data/adult.csv",
+    "target_column": "class"
+  },
+  "metric": "balanced_accuracy",
+  "task": "classification",
+  "seed": 43,
+  "paired_baseline": {
+    "iteration": 3,
+    "path": "bench/runs/artifacts/bnoise2-adult-seed43/train/iter_03/val_predictions.npz"
+  },
+  "memory_limit_mb": 2048
+}

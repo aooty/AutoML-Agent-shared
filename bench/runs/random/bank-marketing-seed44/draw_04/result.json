@@ -1,0 +1,49 @@
+{
+  "metrics": {
+    "f1": 0.43385579937304075,
+    "accuracy": 0.9001327140013271,
+    "balanced_accuracy": 0.6515546452072387,
+    "precision": 0.6443202979515829,
+    "recall": 0.3270321361058601,
+    "roc_auc": 0.9177153929787741,
+    "pr_auc": 0.5778877901345889,
+    "average_precision": 0.5778877901345889,
+    "specificity": 0.976077,
+    "balanced_accuracy_at_best_cut": 0.8654,
+    "cut_headroom": 0.213845,
+    "brier": 0.074224,
+    "calibration_error": 0.049974,
+    "balanced_accuracy_ci_low": 0.638103,
+    "balanced_accuracy_ci_high": 0.665658,
+    "train_f1": 1.0,
+    "train_accuracy": 1.0,
+    "train_balanced_accuracy": 1.0,
+    "train_val_gap": 0.348445
+  },
+  "split": "val",
+  "applied_hyperparams": {
+    "n_estimators": 112,
+    "learning_rate": 0.026129,
+    "max_depth": 52,
+    "subsample": 0.775198
+  },
+  "dropped_hyperparams": [],
+  "applied_preprocessing": {
+    "impute": "median",
+    "scale": true,
+    "missing_indicator": true,
+    "missing_count": true
+  },
+  "train_time_sec": 75.321,
+  "status": "ok",
+  "error_type": null,
+  "log_tail": "features: 수치 7개 + 범주형 9개를 one-hot 44열로\nloaded bench/data/bank-marketing.csv: 45211 rows x 51 encoded features\nmemory estimate 70.4 MB vs budget 2048.0 MB\nsplit: train 60% / val 20% / test 20% (stratified, seed=44) — test는 반복 밖에서 저장된 모델로 1회만 채점합니다 {'train': 27126, 'val': 9042, 'test': 9043}\nestimator=gradient_boosting applied_hyperparams={'n_estimators': 112, 'learning_rate': 0.026129, 'max_depth': 52, 'subsample': 0.775198}\npreprocessing applied: impute=median scale=True missing_indicator=True missing_count=True\nfitting on 27126 rows, validating on 9042 rows\nmodel saved to model.joblib (188.8 MB) — over 100.0 MB, driven by this iteration's hyperparameters (tree count and depth, mostly). The run keeps it; the disk is what bounds a long loop, not memory\nfeature schema saved to feature_schema.json (51 columns)\nbalanced_accuracy=0.6516 (95% CI 0.6381~0.6657, 폭 0.0276) — row 단위 재표집 400회\nval predictions saved to val_predictions.npz (64 KB)\npaired comparison skipped (no_baseline)\ntrain_val_gap measured on balanced_accuracy (maximize)\nmetrics: {\"f1\": 0.4339, \"accuracy\": 0.9001, \"balanced_accuracy\": 0.6516, \"precision\": 0.6443, \"recall\": 0.327, \"roc_auc\": 0.9177, \"pr_auc\": 0.5779, \"average_precision\": 0.5779, \"specificity\": 0.9761, \"balanced_accuracy_at_best_cut\": 0.8654, \"cut_headroom\": 0.2138, \"brier\": 0.0742, \"calibration_error\": 0.05, \"balanced_accuracy_ci_low\": 0.6381, \"balanced_accuracy_ci_high\": 0.6657, \"train_f1\": 1.0, \"train_accuracy\": 1.0, \"train_balanced_accuracy\": 1.0, \"train_val_gap\": 0.3484}",
+  "paired": {
+    "metric": "balanced_accuracy",
+    "baseline_iteration": null,
+    "status": "skipped",
+    "reason": "no_baseline"
+  },
+  "model_path": "bench\\runs\\random\\bank-marketing-seed44\\draw_04\\model.joblib",
+  "schema_path": "bench\\runs\\random\\bank-marketing-seed44\\draw_04\\feature_schema.json"
+}

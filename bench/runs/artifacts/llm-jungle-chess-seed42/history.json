@@ -1,0 +1,136 @@
+{
+  "thread_id": "llm-jungle-chess-seed42",
+  "goal": {
+    "metric": "balanced_accuracy",
+    "direction": "maximize",
+    "mode": "auto",
+    "threshold": 0.633,
+    "source": "derived",
+    "reference": {
+      "source": "baseline",
+      "metric": "balanced_accuracy",
+      "baseline": 0.5106,
+      "margin": 0.25,
+      "baseline_ci": [
+        0.5024,
+        0.5177
+      ],
+      "baseline_ci_unit": "row",
+      "chance": 0.3333
+    }
+  },
+  "iterations": 1,
+  "stop_reason": "goal_reached",
+  "critic_runs": 0,
+  "budget": {
+    "spent_sec": 56.11,
+    "total_sec": 3600.0
+  },
+  "best": {
+    "iteration": 1,
+    "model": "hist_gbdt",
+    "hyperparams": {
+      "max_iter": 600,
+      "learning_rate": 0.1,
+      "max_leaf_nodes": 128,
+      "l2_regularization": 0.1,
+      "early_stopping": false,
+      "max_depth": 12
+    },
+    "preprocessing": {
+      "impute": "median",
+      "scale": false,
+      "missing_indicator": false,
+      "missing_count": false
+    },
+    "metric": "balanced_accuracy",
+    "score": 0.7957111145610956,
+    "metrics": {
+      "f1": 0.7967715678999747,
+      "accuracy": 0.854529228023204,
+      "balanced_accuracy": 0.7957111145610956,
+      "precision": 0.7978874369731591,
+      "recall": 0.7957111145610956,
+      "balanced_accuracy_ci_low": 0.785806,
+      "balanced_accuracy_ci_high": 0.807331,
+      "train_f1": 0.995412769964834,
+      "train_accuracy": 0.9959837863969357,
+      "train_balanced_accuracy": 0.9956866805904007,
+      "train_val_gap": 0.199976
+    },
+    "train_time_sec": 19.044,
+    "plan_strategy": "Attempt 1: abandon the linear baseline and go straight to a high-capacity gradient-boosted tree ensemble (hist_gbdt) on the six raw discrete board features. Jungle-chess class boundaries are highly non-linear interactions of piece strength/file/rank, so the whole remaining gap (0.5106 → 0.633) is on the ranking axis, which only a much more expressive family can supply. Fit hist_gbdt with deep trees and many boosting iterations, no early stopping (so all 26,891 train rows are used), and class_weight is unavailable for this estimator so the operating point is left at the default argmax rule — with three classes the default multiclass argmax already spreads over all classes, and any residual operating-point loss will be read from cut_headroom / per-class recall for attempt 2."
+  },
+  "holdout": {
+    "status": "ok",
+    "split": "test",
+    "test_fraction": 0.2,
+    "iteration": 1,
+    "model": "hist_gbdt",
+    "metric": "balanced_accuracy",
+    "score": 0.7864312324487845,
+    "val_score": 0.7957111145610956,
+    "metrics": {
+      "f1": 0.7872635402210871,
+      "accuracy": 0.8462739848282017,
+      "balanced_accuracy": 0.7864312324487845,
+      "precision": 0.7881387072876578,
+      "recall": 0.7864312324487845,
+      "balanced_accuracy_ci_low": 0.77533,
+      "balanced_accuracy_ci_high": 0.797118
+    },
+    "wall_time_sec": 6.22,
+    "selection_gap": 0.00928,
+    "score_ci": [
+      0.77533,
+      0.797118
+    ],
+    "val_inside_ci": true
+  },
+  "models": {
+    "mode": "best",
+    "kept_iteration": 1,
+    "removed": [],
+    "freed_bytes": 0
+  },
+  "history": [
+    {
+      "iteration": 1,
+      "model": "hist_gbdt",
+      "hyperparams": {
+        "max_iter": 600,
+        "learning_rate": 0.1,
+        "max_leaf_nodes": 128,
+        "l2_regularization": 0.1,
+        "early_stopping": false,
+        "max_depth": 12
+      },
+      "dropped_hyperparams": [],
+      "preprocessing": {
+        "impute": "median",
+        "scale": false,
+        "missing_indicator": false,
+        "missing_count": false
+      },
+      "internal_validation": {},
+      "unsupported_claims": [],
+      "status": "ok",
+      "error_type": null,
+      "metrics": {
+        "f1": 0.7967715678999747,
+        "accuracy": 0.854529228023204,
+        "balanced_accuracy": 0.7957111145610956,
+        "precision": 0.7978874369731591,
+        "recall": 0.7957111145610956,
+        "balanced_accuracy_ci_low": 0.785806,
+        "balanced_accuracy_ci_high": 0.807331,
+        "train_f1": 0.995412769964834,
+        "train_accuracy": 0.9959837863969357,
+        "train_balanced_accuracy": 0.9956866805904007,
+        "train_val_gap": 0.199976
+      },
+      "train_time_sec": 19.044,
+      "critic": null
+    }
+  ]
+}

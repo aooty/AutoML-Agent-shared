@@ -1,0 +1,34 @@
+{
+  "model": "random_forest",
+  "hyperparams": {
+    "n_estimators": 1200,
+    "min_samples_leaf": 1,
+    "class_weight": {
+      "0": 1.0,
+      "1": 1.35
+    },
+    "n_jobs": -1,
+    "random_state": 42
+  },
+  "preprocessing": {
+    "impute": "median",
+    "scale": false,
+    "missing_indicator": false,
+    "missing_count": false
+  },
+  "target_missing": {
+    "policy": "reject"
+  },
+  "data": {
+    "path": "bench/data/spambase.csv",
+    "target_column": "class"
+  },
+  "metric": "balanced_accuracy",
+  "task": "classification",
+  "seed": 42,
+  "paired_baseline": {
+    "iteration": 1,
+    "path": "bench\\runs\\artifacts\\hardllm-spambase-seed42\\train\\iter_01\\val_predictions.npz"
+  },
+  "memory_limit_mb": 2048
+}

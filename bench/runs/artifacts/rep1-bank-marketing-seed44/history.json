@@ -1,0 +1,168 @@
+{
+  "thread_id": "rep1-bank-marketing-seed44",
+  "goal": {
+    "metric": "balanced_accuracy",
+    "direction": "maximize",
+    "mode": "auto",
+    "threshold": 0.7452,
+    "source": "derived",
+    "reference": {
+      "source": "baseline",
+      "metric": "balanced_accuracy",
+      "baseline": 0.6603,
+      "margin": 0.25,
+      "ks": 0.6765,
+      "ranking_ceiling": 0.8382,
+      "baseline_ci": [
+        0.6465,
+        0.6746
+      ],
+      "baseline_ci_unit": "row",
+      "chance": 0.5
+    }
+  },
+  "iterations": 1,
+  "stop_reason": "goal_reached",
+  "critic_runs": 0,
+  "best": {
+    "iteration": 1,
+    "model": "hist_gbdt",
+    "hyperparams": {
+      "max_iter": 400,
+      "learning_rate": 0.06,
+      "max_leaf_nodes": 31,
+      "min_samples_leaf": 20,
+      "l2_regularization": 1.0,
+      "early_stopping": false,
+      "class_weight": {
+        "0": 1.0,
+        "1": 6.0
+      }
+    },
+    "preprocessing": {
+      "impute": "median",
+      "scale": false,
+      "missing_indicator": false,
+      "missing_count": false
+    },
+    "metric": "balanced_accuracy",
+    "score": 0.8514706634440905,
+    "metrics": {
+      "f1": 0.6164334409759599,
+      "accuracy": 0.8817739438177394,
+      "balanced_accuracy": 0.8514706634440905,
+      "precision": 0.496818970503181,
+      "recall": 0.8119092627599244,
+      "roc_auc": 0.9320777661182478,
+      "pr_auc": 0.6214733388483193,
+      "average_precision": 0.6214733388483193,
+      "specificity": 0.891032,
+      "balanced_accuracy_at_best_cut": 0.8698,
+      "cut_headroom": 0.018329,
+      "brier": 0.082023,
+      "calibration_error": 0.0827,
+      "balanced_accuracy_ci_low": 0.838201,
+      "balanced_accuracy_ci_high": 0.861383,
+      "train_f1": 0.7272082298687478,
+      "train_accuracy": 0.9149524441495245,
+      "train_balanced_accuracy": 0.9384460670820203,
+      "train_val_gap": 0.086975
+    },
+    "train_time_sec": 7.392,
+    "plan_strategy": "Attempt 1: replace the linear baseline with a gradient-boosted tree ensemble (hist_gbdt) to move the ranking axis, and set an explicit class weight so the default 0.5 cut lands near the balanced point rather than deep in the majority class. Fit hist_gbdt on all 27,126 training rows with early_stopping disabled (so the fit is not compared against attempts that kept 10% back), 400 boosting iterations at learning_rate 0.06, max_leaf_nodes 31, min_samples_leaf 20, l2_regularization 1.0, and class_weight {\"0\": 1, \"1\": 6} — slightly below the 7.55 frequency ratio that 'balanced' would pin, since 'balanced' tends to overshoot recall at the cost of specificity. Keep median imputation and no scaling (tree family is scale-invariant); no missingness columns, since the card reports 0% true missing and the 'unknown' levels are already real one-hot categories carrying signal (notably V16 at 81.8%, which encodes 'no prior campaign contact' — a state, not a recording artefact). Read roc_auc/pr_auc and balanced_accuracy_at_best_cut for the ranking gain, and cut_headroom plus recall vs specificity to decide in attempt 2 whether the remainder is in the operating point (retune the weight) or the ranking (deepen capacity / switch to xgboost)."
+  },
+  "holdout": {
+    "status": "ok",
+    "split": "test",
+    "test_fraction": 0.2,
+    "iteration": 1,
+    "model": "hist_gbdt",
+    "metric": "balanced_accuracy",
+    "score": 0.8557993307394653,
+    "val_score": 0.8514706634440905,
+    "metrics": {
+      "f1": 0.6187766714082503,
+      "accuracy": 0.8814552692690479,
+      "balanced_accuracy": 0.8557993307394653,
+      "precision": 0.4960091220068415,
+      "recall": 0.8223062381852552,
+      "roc_auc": 0.9335507384474434,
+      "pr_auc": 0.6253899334587867,
+      "average_precision": 0.6253899334587867,
+      "specificity": 0.889292,
+      "balanced_accuracy_at_best_cut": 0.8762,
+      "cut_headroom": 0.020401,
+      "brier": 0.081347,
+      "calibration_error": 0.084136,
+      "balanced_accuracy_ci_low": 0.843576,
+      "balanced_accuracy_ci_high": 0.868151
+    },
+    "wall_time_sec": 5.101,
+    "selection_gap": -0.004329,
+    "score_ci": [
+      0.843576,
+      0.868151
+    ],
+    "val_inside_ci": true
+  },
+  "models": {
+    "mode": "best",
+    "kept_iteration": 1,
+    "removed": [],
+    "freed_bytes": 0
+  },
+  "history": [
+    {
+      "iteration": 1,
+      "model": "hist_gbdt",
+      "hyperparams": {
+        "max_iter": 400,
+        "learning_rate": 0.06,
+        "max_leaf_nodes": 31,
+        "min_samples_leaf": 20,
+        "l2_regularization": 1.0,
+        "early_stopping": false,
+        "class_weight": {
+          "0": 1.0,
+          "1": 6.0
+        }
+      },
+      "dropped_hyperparams": [],
+      "preprocessing": {
+        "impute": "median",
+        "scale": false,
+        "missing_indicator": false,
+        "missing_count": false
+      },
+      "internal_validation": {},
+      "unsupported_claims": [
+        "feature_engineering"
+      ],
+      "status": "ok",
+      "error_type": null,
+      "metrics": {
+        "f1": 0.6164334409759599,
+        "accuracy": 0.8817739438177394,
+        "balanced_accuracy": 0.8514706634440905,
+        "precision": 0.496818970503181,
+        "recall": 0.8119092627599244,
+        "roc_auc": 0.9320777661182478,
+        "pr_auc": 0.6214733388483193,
+        "average_precision": 0.6214733388483193,
+        "specificity": 0.891032,
+        "balanced_accuracy_at_best_cut": 0.8698,
+        "cut_headroom": 0.018329,
+        "brier": 0.082023,
+        "calibration_error": 0.0827,
+        "balanced_accuracy_ci_low": 0.838201,
+        "balanced_accuracy_ci_high": 0.861383,
+        "train_f1": 0.7272082298687478,
+        "train_accuracy": 0.9149524441495245,
+        "train_balanced_accuracy": 0.9384460670820203,
+        "train_val_gap": 0.086975
+      },
+      "train_time_sec": 7.392,
+      "critic": null
+    }
+  ]
+}

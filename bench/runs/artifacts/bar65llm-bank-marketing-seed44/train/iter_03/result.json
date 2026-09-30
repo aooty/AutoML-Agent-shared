@@ -1,0 +1,63 @@
+{
+  "metrics": {
+    "f1": 0.6223365172667157,
+    "accuracy": 0.8863083388630834,
+    "balanced_accuracy": 0.8491187242159177,
+    "precision": 0.5090144230769231,
+    "recall": 0.8005671077504726,
+    "roc_auc": 0.9320808441078755,
+    "pr_auc": 0.6200615020880846,
+    "average_precision": 0.6200615020880846,
+    "specificity": 0.89767,
+    "balanced_accuracy_at_best_cut": 0.8701,
+    "cut_headroom": 0.020981,
+    "brier": 0.081366,
+    "calibration_error": 0.077138,
+    "balanced_accuracy_ci_low": 0.835793,
+    "balanced_accuracy_ci_high": 0.86003,
+    "train_f1": 0.7853416149068323,
+    "train_accuracy": 0.9362972793629728,
+    "train_balanced_accuracy": 0.9622888972783383,
+    "train_val_gap": 0.11317
+  },
+  "split": "val",
+  "applied_hyperparams": {
+    "n_estimators": 700,
+    "learning_rate": 0.05,
+    "max_depth": 6,
+    "subsample": 0.8,
+    "reg_lambda": 2.0,
+    "scale_pos_weight": 9.0
+  },
+  "dropped_hyperparams": [],
+  "applied_preprocessing": {
+    "impute": "median",
+    "scale": false,
+    "missing_indicator": false,
+    "missing_count": false
+  },
+  "train_time_sec": 7.448,
+  "status": "ok",
+  "error_type": null,
+  "log_tail": "features: 수치 7개 + 범주형 9개를 one-hot 44열로\nloaded bench/data/bank-marketing.csv: 45211 rows x 51 encoded features\nmemory estimate 35.2 MB vs budget 2048.0 MB\nsplit: train 60% / val 20% / test 20% (stratified, seed=44) — test는 반복 밖에서 저장된 모델로 1회만 채점합니다 {'train': 27126, 'val': 9042, 'test': 9043}\nestimator=xgboost applied_hyperparams={'n_estimators': 700, 'learning_rate': 0.05, 'max_depth': 6, 'subsample': 0.8, 'reg_lambda': 2.0, 'scale_pos_weight': 9.0}\npreprocessing applied: impute=median scale=False missing_indicator=False missing_count=False\nfitting on 27126 rows, validating on 9042 rows\nmodel saved to model.joblib (2.6 MB)\nfeature schema saved to feature_schema.json (51 columns)\nbalanced_accuracy=0.8491 (95% CI 0.8358~0.8600, 폭 0.0242) — row 단위 재표집 400회\nval predictions saved to val_predictions.npz (36 KB)\nbalanced_accuracy vs iteration 2: [짝지은 Δ(iteration 2 대비) -0.0160, 95% CI -0.0239~-0.0069, P(개선) 0.000 — 0과 구분됨]\ntrain_val_gap measured on balanced_accuracy (maximize)\nmetrics: {\"f1\": 0.6223, \"accuracy\": 0.8863, \"balanced_accuracy\": 0.8491, \"precision\": 0.509, \"recall\": 0.8006, \"roc_auc\": 0.9321, \"pr_auc\": 0.6201, \"average_precision\": 0.6201, \"specificity\": 0.8977, \"balanced_accuracy_at_best_cut\": 0.8701, \"cut_headroom\": 0.021, \"brier\": 0.0814, \"calibration_error\": 0.0771, \"balanced_accuracy_ci_low\": 0.8358, \"balanced_accuracy_ci_high\": 0.86, \"train_f1\": 0.7853, \"train_accuracy\": 0.9363, \"train_balanced_accuracy\": 0.9623, \"train_val_gap\": 0.1132}",
+  "threads": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "cpu_count": 20
+  },
+  "paired": {
+    "metric": "balanced_accuracy",
+    "baseline_iteration": 2,
+    "threads_changed": false,
+    "status": "measured",
+    "resamples": 400,
+    "unit": "row",
+    "delta_vs_best": -0.016041,
+    "delta_ci_low": -0.023914,
+    "delta_ci_high": -0.006863,
+    "p_better": 0.0
+  },
+  "model_path": "bench\\runs\\artifacts\\bar65llm-bank-marketing-seed44\\train\\iter_03\\model.joblib",
+  "schema_path": "bench\\runs\\artifacts\\bar65llm-bank-marketing-seed44\\train\\iter_03\\feature_schema.json"
+}

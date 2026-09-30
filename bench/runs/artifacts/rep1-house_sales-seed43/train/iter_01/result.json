@@ -1,0 +1,49 @@
+{
+  "metrics": {
+    "r2": 0.8699095594830449,
+    "mae": 67663.61252851479,
+    "rmse": 132451.22549318697,
+    "mean_absolute_error": 67663.61252851479,
+    "root_mean_squared_error": 132451.22549318697,
+    "r2_score": 0.8699095594830449,
+    "r2_ci_low": 0.83416,
+    "r2_ci_high": 0.896085,
+    "train_r2": 0.9897463567208462,
+    "train_mae": 25399.22892907388,
+    "train_val_gap": 0.119837
+  },
+  "split": "val",
+  "applied_hyperparams": {
+    "max_iter": 600,
+    "learning_rate": 0.06,
+    "max_leaf_nodes": 63,
+    "min_samples_leaf": 20,
+    "l2_regularization": 1.0,
+    "early_stopping": false
+  },
+  "dropped_hyperparams": [],
+  "applied_preprocessing": {
+    "impute": "median",
+    "scale": false,
+    "missing_indicator": false,
+    "missing_count": false
+  },
+  "train_time_sec": 5.505,
+  "status": "ok",
+  "error_type": null,
+  "log_tail": "features: 수치 21개 + 범주형 0개를 one-hot 0열로\nloaded bench/data/house_sales.csv: 21613 rows x 21 encoded features\nmemory estimate 6.9 MB vs budget 2048.0 MB\nsplit: train 60% / val 20% / test 20% (not stratified, seed=43) — test는 반복 밖에서 저장된 모델로 1회만 채점합니다 {'train': 12967, 'val': 4323, 'test': 4323}\nestimator=hist_gbdt applied_hyperparams={'max_iter': 600, 'learning_rate': 0.06, 'max_leaf_nodes': 63, 'min_samples_leaf': 20, 'l2_regularization': 1.0, 'early_stopping': False}\npreprocessing applied: impute=median scale=False missing_indicator=False missing_count=False\nfitting on 12967 rows, validating on 4323 rows\nmodel saved to model.joblib (4.1 MB)\nfeature schema saved to feature_schema.json (21 columns)\nr2=0.8699 (95% CI 0.8342~0.8961, 폭 0.0619) — row 단위 재표집 400회\nval predictions saved to val_predictions.npz (33 KB)\npaired comparison skipped (no_baseline)\ntrain_val_gap measured on r2 (maximize)\nmetrics: {\"r2\": 0.8699, \"mae\": 67663.6125, \"rmse\": 132451.2255, \"mean_absolute_error\": 67663.6125, \"root_mean_squared_error\": 132451.2255, \"r2_score\": 0.8699, \"r2_ci_low\": 0.8342, \"r2_ci_high\": 0.8961, \"train_r2\": 0.9897, \"train_mae\": 25399.2289, \"train_val_gap\": 0.1198}",
+  "threads": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "cpu_count": 20
+  },
+  "paired": {
+    "metric": "r2",
+    "baseline_iteration": null,
+    "status": "skipped",
+    "reason": "no_baseline"
+  },
+  "model_path": "bench\\runs\\artifacts\\rep1-house_sales-seed43\\train\\iter_01\\model.joblib",
+  "schema_path": "bench\\runs\\artifacts\\rep1-house_sales-seed43\\train\\iter_01\\feature_schema.json"
+}

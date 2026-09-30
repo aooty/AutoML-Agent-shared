@@ -1,0 +1,597 @@
+{
+  "generated_by": "bench/replan_seeds.py",
+  "preregistration": "docs/REPLAN-SEEDS.md",
+  "reproduces": "docs/REPLAN.md",
+  "dataset": "speeddating",
+  "margin": 0.5,
+  "run_seeds": [
+    42,
+    43,
+    44
+  ],
+  "seed": 42,
+  "resamples": 4000,
+  "score_tolerance": 1e-06,
+  "threads": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "cpu_count": 20
+  },
+  "datasets": [
+    {
+      "dataset": "speeddating-seed42",
+      "run_seed": 42,
+      "metric": "balanced_accuracy",
+      "task": "binary",
+      "verdict": "ok",
+      "refusal": null,
+      "test_rows": 1676,
+      "test_fingerprint": "1cb427764715caa82986be0169a1467d",
+      "missing_arms": [],
+      "arms": {
+        "hard_llm2": {
+          "label": "iteration 2",
+          "fits": 4,
+          "val_score": 0.7989648033126294,
+          "test_recorded": 0.788276397515528,
+          "test_reproduced": 0.788276397515528,
+          "selection_gap": 0.010688405797101397,
+          "dir": "bench/runs/artifacts/hardllm2-speeddating-seed42/train/iter_02",
+          "stop_reason": "stalled",
+          "critic_runs": 3,
+          "goal_threshold": 0.8342
+        },
+        "hard_llm2@it1": {
+          "label": "iteration 1",
+          "fits": 1,
+          "val_score": 0.704896480331263,
+          "test_recorded": NaN,
+          "test_reproduced": 0.7375310559006212,
+          "selection_gap": -0.032634575569358226,
+          "dir": "bench/runs/artifacts/hardllm2-speeddating-seed42/train/iter_01"
+        },
+        "hard_nollm2": {
+          "label": "iteration 5",
+          "fits": 5,
+          "val_score": 0.6998447204968944,
+          "test_recorded": 0.7157660455486543,
+          "test_reproduced": 0.7157660455486543,
+          "selection_gap": -0.015921325051759916,
+          "dir": "bench/runs/artifacts/hardnollm2-speeddating-seed42/train/iter_05",
+          "stop_reason": "max_iterations",
+          "critic_runs": 4,
+          "goal_threshold": 0.8342
+        },
+        "hard_nollm2@it1": {
+          "label": "iteration 1",
+          "fits": 1,
+          "val_score": 0.6586076604554866,
+          "test_recorded": NaN,
+          "test_reproduced": 0.676061076604555,
+          "selection_gap": -0.017453416149068368,
+          "dir": "bench/runs/artifacts/hardnollm2-speeddating-seed42/train/iter_01"
+        },
+        "hard_nollm": {
+          "label": "iteration 5",
+          "fits": 5,
+          "val_score": 0.6998447204968944,
+          "test_recorded": 0.7157660455486543,
+          "test_reproduced": 0.7157660455486543,
+          "selection_gap": -0.015921325051759916,
+          "dir": "bench/runs/artifacts/hardnollm-speeddating-seed42/train/iter_05",
+          "stop_reason": "max_iterations",
+          "critic_runs": 4,
+          "goal_threshold": 0.8342
+        },
+        "hard_llm": {
+          "label": "iteration 4",
+          "fits": 5,
+          "val_score": 0.7782867494824017,
+          "test_recorded": 0.7830072463768116,
+          "test_reproduced": 0.7830072463768116,
+          "selection_gap": -0.004720496894409898,
+          "dir": "bench/runs/artifacts/hardllm-speeddating-seed42/train/iter_04",
+          "stop_reason": "max_iterations",
+          "critic_runs": 4,
+          "goal_threshold": 0.8342
+        },
+        "random@k=1": {
+          "label": "draw 1",
+          "fits": 1,
+          "val_score": 0.6481728778467909,
+          "test_recorded": 0.6543219461697722,
+          "test_reproduced": 0.6543219461697722,
+          "selection_gap": -0.006149068322981344,
+          "dir": "bench/runs/random/speeddating-seed42/draw_01"
+        },
+        "random@k=4": {
+          "label": "draw 1",
+          "fits": 4,
+          "val_score": 0.6481728778467909,
+          "test_recorded": 0.6543219461697722,
+          "test_reproduced": 0.6543219461697722,
+          "selection_gap": -0.006149068322981344,
+          "dir": "bench/runs/random/speeddating-seed42/draw_01"
+        }
+      },
+      "pairs": [
+        {
+          "a": "hard_llm2",
+          "b": "hard_llm2@it1",
+          "kind": "primary",
+          "delta": 0.05074534161490685,
+          "ci_low": 0.023083483643137122,
+          "ci_high": 0.08048557134898995,
+          "p_better": 1.0,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "random@k=4",
+          "b": "random@k=1",
+          "kind": "blind_gain",
+          "delta": 0.0,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "p_better": NaN,
+          "resamples_used": 0,
+          "identical_predictions": true
+        },
+        {
+          "a": "hard_llm2",
+          "b": "random@k=4",
+          "kind": "matched_level",
+          "delta": 0.1339544513457558,
+          "ci_low": 0.10191457294575054,
+          "ci_high": 0.16628205463034915,
+          "p_better": 1.0,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "hard_llm2",
+          "b": "hard_nollm2",
+          "kind": "vs_rules",
+          "delta": 0.07251035196687372,
+          "ci_low": 0.042598390272963346,
+          "ci_high": 0.103052322131149,
+          "p_better": 1.0,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "hard_nollm2",
+          "b": "hard_nollm2@it1",
+          "kind": "rules_gain",
+          "delta": 0.03970496894409936,
+          "ci_low": 0.014262476096942603,
+          "ci_high": 0.06644399856002625,
+          "p_better": 0.99875,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "hard_nollm2",
+          "b": "hard_nollm",
+          "kind": "code_shift",
+          "delta": 0.0,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "p_better": NaN,
+          "resamples_used": 0,
+          "identical_predictions": true
+        },
+        {
+          "a": "hard_llm2",
+          "b": "hard_llm",
+          "kind": "prompt_shift",
+          "delta": 0.005269151138716399,
+          "ci_low": -0.015952195506019774,
+          "ci_high": 0.02934288274960567,
+          "p_better": 0.6835,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        }
+      ]
+    },
+    {
+      "dataset": "speeddating-seed43",
+      "run_seed": 43,
+      "metric": "balanced_accuracy",
+      "task": "binary",
+      "verdict": "ok",
+      "refusal": null,
+      "test_rows": 1676,
+      "test_fingerprint": "6cf28a0074ee1c3ad89a3557fb831650",
+      "missing_arms": [],
+      "arms": {
+        "hard_llm2": {
+          "label": "iteration 2",
+          "fits": 4,
+          "val_score": 0.7725258799171844,
+          "test_recorded": 0.7944409937888199,
+          "test_reproduced": 0.7944409937888199,
+          "selection_gap": -0.021915113871635583,
+          "dir": "bench/runs/artifacts/hardllm2-speeddating-seed43/train/iter_02",
+          "stop_reason": "stalled",
+          "critic_runs": 3,
+          "goal_threshold": 0.8399
+        },
+        "hard_llm2@it1": {
+          "label": "iteration 1",
+          "fits": 1,
+          "val_score": 0.7491149068322982,
+          "test_recorded": NaN,
+          "test_reproduced": 0.740388198757764,
+          "selection_gap": 0.00872670807453424,
+          "dir": "bench/runs/artifacts/hardllm2-speeddating-seed43/train/iter_01"
+        },
+        "hard_nollm2": {
+          "label": "iteration 4",
+          "fits": 5,
+          "val_score": 0.7326552795031056,
+          "test_recorded": 0.7163250517598344,
+          "test_reproduced": 0.7163250517598344,
+          "selection_gap": 0.016330227743271197,
+          "dir": "bench/runs/artifacts/hardnollm2-speeddating-seed43/train/iter_04",
+          "stop_reason": "max_iterations",
+          "critic_runs": 4,
+          "goal_threshold": 0.8399
+        },
+        "hard_nollm2@it1": {
+          "label": "iteration 1",
+          "fits": 1,
+          "val_score": 0.6959627329192547,
+          "test_recorded": NaN,
+          "test_reproduced": 0.697391304347826,
+          "selection_gap": -0.0014285714285713347,
+          "dir": "bench/runs/artifacts/hardnollm2-speeddating-seed43/train/iter_01"
+        },
+        "hard_nollm": {
+          "label": "iteration 4",
+          "fits": 5,
+          "val_score": 0.7326552795031056,
+          "test_recorded": 0.7163250517598344,
+          "test_reproduced": 0.7163250517598344,
+          "selection_gap": 0.016330227743271197,
+          "dir": "bench/runs/artifacts/hardnollm-speeddating-seed43/train/iter_04",
+          "stop_reason": "max_iterations",
+          "critic_runs": 4,
+          "goal_threshold": 0.8399
+        },
+        "random@k=1": {
+          "label": "draw 1",
+          "fits": 1,
+          "val_score": 0.5,
+          "test_recorded": 0.5,
+          "test_reproduced": 0.5,
+          "selection_gap": 0.0,
+          "dir": "bench/runs/random/speeddating-seed43/draw_01"
+        },
+        "random@k=4": {
+          "label": "draw 1",
+          "fits": 4,
+          "val_score": 0.5,
+          "test_recorded": 0.5,
+          "test_reproduced": 0.5,
+          "selection_gap": 0.0,
+          "dir": "bench/runs/random/speeddating-seed43/draw_01"
+        }
+      },
+      "pairs": [
+        {
+          "a": "hard_llm2",
+          "b": "hard_llm2@it1",
+          "kind": "primary",
+          "delta": 0.05405279503105598,
+          "ci_low": 0.029108551566739915,
+          "ci_high": 0.07948757806897075,
+          "p_better": 1.0,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "random@k=4",
+          "b": "random@k=1",
+          "kind": "blind_gain",
+          "delta": 0.0,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "p_better": NaN,
+          "resamples_used": 0,
+          "identical_predictions": true
+        },
+        {
+          "a": "hard_llm2",
+          "b": "random@k=4",
+          "kind": "matched_level",
+          "delta": 0.29444099378881994,
+          "ci_low": 0.2667959163625616,
+          "ci_high": 0.3207312620374185,
+          "p_better": 1.0,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "hard_llm2",
+          "b": "hard_nollm2",
+          "kind": "vs_rules",
+          "delta": 0.07811594202898553,
+          "ci_low": 0.051814640793098284,
+          "ci_high": 0.1061633264526156,
+          "p_better": 1.0,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "hard_nollm2",
+          "b": "hard_nollm2@it1",
+          "kind": "rules_gain",
+          "delta": 0.018933747412008373,
+          "ci_low": -0.0008382570727619303,
+          "ci_high": 0.04078266600256213,
+          "p_better": 0.968,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "hard_nollm2",
+          "b": "hard_nollm",
+          "kind": "code_shift",
+          "delta": 0.0,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "p_better": NaN,
+          "resamples_used": 0,
+          "identical_predictions": true
+        }
+      ]
+    },
+    {
+      "dataset": "speeddating-seed44",
+      "run_seed": 44,
+      "metric": "balanced_accuracy",
+      "task": "binary",
+      "verdict": "ok",
+      "refusal": null,
+      "test_rows": 1676,
+      "test_fingerprint": "94a26571f6c91c0047d8e864c0c958c0",
+      "missing_arms": [],
+      "arms": {
+        "hard_llm2": {
+          "label": "iteration 2",
+          "fits": 4,
+          "val_score": 0.7752536231884057,
+          "test_recorded": 0.801304347826087,
+          "test_reproduced": 0.801304347826087,
+          "selection_gap": -0.02605072463768121,
+          "dir": "bench/runs/artifacts/hardllm2-speeddating-seed44/train/iter_02",
+          "stop_reason": "stalled",
+          "critic_runs": 3,
+          "goal_threshold": 0.8403
+        },
+        "hard_llm2@it1": {
+          "label": "iteration 1",
+          "fits": 1,
+          "val_score": 0.724824016563147,
+          "test_recorded": NaN,
+          "test_reproduced": 0.7353623188405798,
+          "selection_gap": -0.010538302277432798,
+          "dir": "bench/runs/artifacts/hardllm2-speeddating-seed44/train/iter_01"
+        },
+        "hard_nollm2": {
+          "label": "iteration 4",
+          "fits": 5,
+          "val_score": 0.7080072463768116,
+          "test_recorded": 0.7174223602484472,
+          "test_reproduced": 0.7174223602484472,
+          "selection_gap": -0.009415113871635628,
+          "dir": "bench/runs/artifacts/hardnollm2-speeddating-seed44/train/iter_04",
+          "stop_reason": "max_iterations",
+          "critic_runs": 4,
+          "goal_threshold": 0.8403
+        },
+        "hard_nollm2@it1": {
+          "label": "iteration 1",
+          "fits": 1,
+          "val_score": 0.6582505175983437,
+          "test_recorded": NaN,
+          "test_reproduced": 0.6792236024844721,
+          "selection_gap": -0.020973084886128368,
+          "dir": "bench/runs/artifacts/hardnollm2-speeddating-seed44/train/iter_01"
+        },
+        "hard_nollm": {
+          "label": "iteration 4",
+          "fits": 5,
+          "val_score": 0.7080072463768116,
+          "test_recorded": 0.7174223602484472,
+          "test_reproduced": 0.7174223602484472,
+          "selection_gap": -0.009415113871635628,
+          "dir": "bench/runs/artifacts/hardnollm-speeddating-seed44/train/iter_04",
+          "stop_reason": "max_iterations",
+          "critic_runs": 4,
+          "goal_threshold": 0.8403
+        },
+        "random@k=1": {
+          "label": "draw 1",
+          "fits": 1,
+          "val_score": 0.7560973084886129,
+          "test_recorded": 0.7817650103519669,
+          "test_reproduced": 0.7817650103519669,
+          "selection_gap": -0.025667701863353987,
+          "dir": "bench/runs/random/speeddating-seed44/draw_01"
+        },
+        "random@k=4": {
+          "label": "draw 3",
+          "fits": 4,
+          "val_score": 0.7618115942028986,
+          "test_recorded": 0.7694151138716356,
+          "test_reproduced": 0.7694151138716356,
+          "selection_gap": -0.007603519668737069,
+          "dir": "bench/runs/random/speeddating-seed44/draw_03"
+        }
+      },
+      "pairs": [
+        {
+          "a": "hard_llm2",
+          "b": "hard_llm2@it1",
+          "kind": "primary",
+          "delta": 0.06594202898550716,
+          "ci_low": 0.03942894106074621,
+          "ci_high": 0.09426922933335968,
+          "p_better": 1.0,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "random@k=4",
+          "b": "random@k=1",
+          "kind": "blind_gain",
+          "delta": -0.012349896480331246,
+          "ci_low": -0.028525029562013623,
+          "ci_high": 0.003085889040536292,
+          "p_better": 0.065,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "hard_llm2",
+          "b": "random@k=4",
+          "kind": "matched_level",
+          "delta": 0.03188923395445131,
+          "ci_low": 0.011556989490599332,
+          "ci_high": 0.0523413376800352,
+          "p_better": 0.999,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "hard_llm2",
+          "b": "hard_nollm2",
+          "kind": "vs_rules",
+          "delta": 0.08388198757763976,
+          "ci_low": 0.05683996466565434,
+          "ci_high": 0.1121579799951985,
+          "p_better": 1.0,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "hard_nollm2",
+          "b": "hard_nollm2@it1",
+          "kind": "rules_gain",
+          "delta": 0.03819875776397508,
+          "ci_low": 0.016673682449004395,
+          "ci_high": 0.059868641923945566,
+          "p_better": 0.99975,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "hard_nollm2",
+          "b": "hard_nollm",
+          "kind": "code_shift",
+          "delta": 0.0,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "p_better": NaN,
+          "resamples_used": 0,
+          "identical_predictions": true
+        }
+      ]
+    }
+  ],
+  "budget": [
+    {
+      "seed": 42,
+      "hard_llm2": {
+        "fits": 4,
+        "stop_reason": "stalled",
+        "critic_runs": 3,
+        "goal_threshold": 0.8342,
+        "winner": "iteration 2"
+      },
+      "hard_nollm2": {
+        "fits": 5,
+        "stop_reason": "max_iterations",
+        "critic_runs": 4,
+        "goal_threshold": 0.8342,
+        "winner": "iteration 5"
+      }
+    },
+    {
+      "seed": 43,
+      "hard_llm2": {
+        "fits": 4,
+        "stop_reason": "stalled",
+        "critic_runs": 3,
+        "goal_threshold": 0.8399,
+        "winner": "iteration 2"
+      },
+      "hard_nollm2": {
+        "fits": 5,
+        "stop_reason": "max_iterations",
+        "critic_runs": 4,
+        "goal_threshold": 0.8399,
+        "winner": "iteration 4"
+      }
+    },
+    {
+      "seed": 44,
+      "hard_llm2": {
+        "fits": 4,
+        "stop_reason": "stalled",
+        "critic_runs": 3,
+        "goal_threshold": 0.8403,
+        "winner": "iteration 2"
+      },
+      "hard_nollm2": {
+        "fits": 5,
+        "stop_reason": "max_iterations",
+        "critic_runs": 4,
+        "goal_threshold": 0.8403,
+        "winner": "iteration 4"
+      }
+    }
+  ],
+  "criterion": {
+    "challenger": "hard_llm2",
+    "baseline": "hard_llm2@it1",
+    "dataset": "speeddating",
+    "scope_seeds": [
+      42,
+      43,
+      44
+    ],
+    "resample_seed": 42,
+    "judged": [
+      "seed42",
+      "seed43",
+      "seed44"
+    ],
+    "wins": [
+      "seed42",
+      "seed43",
+      "seed44"
+    ],
+    "losses": [],
+    "indistinguishable": [],
+    "not_looped": [],
+    "not_evaluated": [],
+    "unanimous": true,
+    "primary_deltas": {
+      "seed42": 0.05074534161490685,
+      "seed43": 0.05405279503105598,
+      "seed44": 0.06594202898550716
+    },
+    "smallest_win": 0.05074534161490685,
+    "noise_floor": 0.0122,
+    "recorded_primary": 0.0935,
+    "rules_seed_spread": 0.0017,
+    "spread_of_primary": 0.015196687370600315,
+    "median_of_primary": 0.05405279503105598,
+    "complete": true,
+    "status": "기준 충족 — 판정한 시드 3개 전부에서 재계획이 자기 iteration 1을 이겼고, 가장 작은 Δ가 +0.0507로 잡음 바닥 0.0122를 넘습니다. blind_gain과 hard_nollm2 시드 산포를 반드시 함께 인용합니다 (기록된 관측 +0.0935, 규칙 팔 시드 산포 0.0017)"
+  }
+}

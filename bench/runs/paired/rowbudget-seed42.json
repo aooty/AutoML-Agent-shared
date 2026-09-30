@@ -1,0 +1,916 @@
+{
+  "generated_by": "bench/rowbudget.py",
+  "preregistration": "docs/ROWBUDGET.md",
+  "seed": 42,
+  "iterations_per_run": 1,
+  "resamples": 4000,
+  "score_tolerance": 1e-06,
+  "plan_keys": [
+    "early_stopping",
+    "validation_fraction",
+    "n_estimators",
+    "max_iter"
+  ],
+  "threads": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "cpu_count": 20
+  },
+  "datasets": [
+    {
+      "dataset": "adult",
+      "metric": "balanced_accuracy",
+      "task": "binary",
+      "verdict": "ok",
+      "refusal": null,
+      "test_rows": 9769,
+      "test_fingerprint": "35bc63e35f35b70596c7052ac7688bf5",
+      "missing_arms": [],
+      "caveat": null,
+      "forecast": {
+        "card_rows": 48842,
+        "train": 29304,
+        "early_stopping_auto_on": true,
+        "held_out_at_default_fraction": 2931,
+        "self_validating_models": [
+          "hist_gbdt",
+          "mlp"
+        ]
+      },
+      "plan": {
+        "differs": false,
+        "differing_keys": [],
+        "model": {
+          "rb_off": "hist_gbdt",
+          "rb_on": "hist_gbdt"
+        },
+        "model_differs": false,
+        "keys": {
+          "rb_off": {
+            "early_stopping": true,
+            "validation_fraction": 0.1,
+            "n_estimators": null,
+            "max_iter": 500
+          },
+          "rb_on": {
+            "early_stopping": true,
+            "validation_fraction": 0.1,
+            "n_estimators": null,
+            "max_iter": 500
+          }
+        }
+      },
+      "p2": [
+        {
+          "arm": "rb_off",
+          "checked": true,
+          "forecast_train": 29304,
+          "forecast_held_out_at_default": 2931,
+          "measured_train": 29304,
+          "measured_held_out": 2931,
+          "measured_fit": 26373,
+          "validation_fraction": 0.1,
+          "expected_held_out": 2931,
+          "matches": true,
+          "problems": []
+        },
+        {
+          "arm": "rb_on",
+          "checked": true,
+          "forecast_train": 29304,
+          "forecast_held_out_at_default": 2931,
+          "measured_train": 29304,
+          "measured_held_out": 2931,
+          "measured_fit": 26373,
+          "validation_fraction": 0.1,
+          "expected_held_out": 2931,
+          "matches": true,
+          "problems": []
+        }
+      ],
+      "arms": {
+        "rb_off": {
+          "label": "iteration 1",
+          "fits": 1,
+          "val_score": 0.8401371407133708,
+          "test_recorded": 0.8357547837596622,
+          "test_reproduced": 0.8357547837596622,
+          "selection_gap": 0.004382356953708588,
+          "dir": "bench/runs/artifacts/rboff-adult-seed42/train/iter_01",
+          "threads": {
+            "OMP_NUM_THREADS": "1",
+            "OPENBLAS_NUM_THREADS": "1",
+            "MKL_NUM_THREADS": "1",
+            "cpu_count": 20
+          },
+          "threads_pinned": true
+        },
+        "rb_on": {
+          "label": "iteration 1",
+          "fits": 1,
+          "val_score": 0.8030964412527815,
+          "test_recorded": 0.8008314647019474,
+          "test_reproduced": 0.8008314647019474,
+          "selection_gap": 0.002264976550834019,
+          "dir": "bench/runs/artifacts/rbon-adult-seed42/train/iter_01",
+          "threads": {
+            "OMP_NUM_THREADS": "1",
+            "OPENBLAS_NUM_THREADS": "1",
+            "MKL_NUM_THREADS": "1",
+            "cpu_count": 20
+          },
+          "threads_pinned": true
+        }
+      },
+      "delta": {
+        "a": "rb_on",
+        "b": "rb_off",
+        "kind": "observation",
+        "delta": -0.03492331905771473,
+        "ci_low": -0.043082806974662484,
+        "ci_high": -0.02686511981869256,
+        "p_better": 0.0,
+        "resamples_used": 4000,
+        "identical_predictions": false
+      }
+    },
+    {
+      "dataset": "bank-marketing",
+      "metric": "balanced_accuracy",
+      "task": "binary",
+      "verdict": "ok",
+      "refusal": null,
+      "test_rows": 9043,
+      "test_fingerprint": "2df57cb2794050d1c92eec82b5892022",
+      "missing_arms": [],
+      "caveat": null,
+      "forecast": {
+        "card_rows": 45211,
+        "train": 27126,
+        "early_stopping_auto_on": true,
+        "held_out_at_default_fraction": 2713,
+        "self_validating_models": [
+          "hist_gbdt",
+          "mlp"
+        ]
+      },
+      "plan": {
+        "differs": true,
+        "differing_keys": [
+          "early_stopping",
+          "validation_fraction"
+        ],
+        "model": {
+          "rb_off": "hist_gbdt",
+          "rb_on": "hist_gbdt"
+        },
+        "model_differs": false,
+        "keys": {
+          "rb_off": {
+            "early_stopping": true,
+            "validation_fraction": 0.1,
+            "n_estimators": null,
+            "max_iter": 400
+          },
+          "rb_on": {
+            "early_stopping": false,
+            "validation_fraction": null,
+            "n_estimators": null,
+            "max_iter": 400
+          }
+        }
+      },
+      "p2": [
+        {
+          "arm": "rb_off",
+          "checked": true,
+          "forecast_train": 27126,
+          "forecast_held_out_at_default": 2713,
+          "measured_train": 27126,
+          "measured_held_out": 2713,
+          "measured_fit": 24413,
+          "validation_fraction": 0.1,
+          "expected_held_out": 2713,
+          "matches": true,
+          "problems": []
+        },
+        {
+          "arm": "rb_on",
+          "checked": false,
+          "reason": "이 실행은 행을 떼어 두지 않았습니다 — internal_validation이 없으므로 예고와 대조할 것이 없습니다 (계획이 early_stopping을 false로 껐습니다)",
+          "forecast_train": 27126
+        }
+      ],
+      "arms": {
+        "rb_off": {
+          "label": "iteration 1",
+          "fits": 1,
+          "val_score": 0.8772421970595254,
+          "test_recorded": 0.8605679008253897,
+          "test_reproduced": 0.8605679008253897,
+          "selection_gap": 0.016674296234135744,
+          "dir": "bench/runs/artifacts/rboff-bank-marketing-seed42/train/iter_01",
+          "threads": {
+            "OMP_NUM_THREADS": "1",
+            "OPENBLAS_NUM_THREADS": "1",
+            "MKL_NUM_THREADS": "1",
+            "cpu_count": 20
+          },
+          "threads_pinned": true
+        },
+        "rb_on": {
+          "label": "iteration 1",
+          "fits": 1,
+          "val_score": 0.8704942967219884,
+          "test_recorded": 0.8537447932264299,
+          "test_reproduced": 0.8537447932264299,
+          "selection_gap": 0.016749503495558482,
+          "dir": "bench/runs/artifacts/rbon-bank-marketing-seed42/train/iter_01",
+          "threads": {
+            "OMP_NUM_THREADS": "1",
+            "OPENBLAS_NUM_THREADS": "1",
+            "MKL_NUM_THREADS": "1",
+            "cpu_count": 20
+          },
+          "threads_pinned": true
+        }
+      },
+      "delta": {
+        "a": "rb_on",
+        "b": "rb_off",
+        "kind": "observation",
+        "delta": -0.006823107598959766,
+        "ci_low": -0.01487457202623059,
+        "ci_high": 0.0008757758522283982,
+        "p_better": 0.04675,
+        "resamples_used": 4000,
+        "identical_predictions": false
+      }
+    },
+    {
+      "dataset": "speeddating",
+      "metric": "balanced_accuracy",
+      "task": "binary",
+      "verdict": "ok",
+      "refusal": null,
+      "test_rows": 1676,
+      "test_fingerprint": "1cb427764715caa82986be0169a1467d",
+      "missing_arms": [],
+      "caveat": null,
+      "forecast": {
+        "card_rows": 8378,
+        "train": 5026,
+        "early_stopping_auto_on": false,
+        "held_out_at_default_fraction": 503,
+        "self_validating_models": [
+          "hist_gbdt",
+          "mlp"
+        ]
+      },
+      "plan": {
+        "differs": true,
+        "differing_keys": [
+          "early_stopping",
+          "validation_fraction"
+        ],
+        "model": {
+          "rb_off": "hist_gbdt",
+          "rb_on": "hist_gbdt"
+        },
+        "model_differs": false,
+        "keys": {
+          "rb_off": {
+            "early_stopping": true,
+            "validation_fraction": 0.1,
+            "n_estimators": null,
+            "max_iter": 400
+          },
+          "rb_on": {
+            "early_stopping": false,
+            "validation_fraction": null,
+            "n_estimators": null,
+            "max_iter": 400
+          }
+        }
+      },
+      "p2": [
+        {
+          "arm": "rb_off",
+          "checked": true,
+          "forecast_train": 5026,
+          "forecast_held_out_at_default": 503,
+          "measured_train": 5026,
+          "measured_held_out": 503,
+          "measured_fit": 4523,
+          "validation_fraction": 0.1,
+          "expected_held_out": 503,
+          "matches": true,
+          "problems": []
+        },
+        {
+          "arm": "rb_on",
+          "checked": false,
+          "reason": "이 실행은 행을 떼어 두지 않았습니다 — internal_validation이 없으므로 예고와 대조할 것이 없습니다 (계획이 early_stopping을 false로 껐습니다)",
+          "forecast_train": 5026
+        }
+      ],
+      "arms": {
+        "rb_off": {
+          "label": "iteration 1",
+          "fits": 1,
+          "val_score": 0.7577950310559006,
+          "test_recorded": 0.7780797101449275,
+          "test_reproduced": 0.7780797101449275,
+          "selection_gap": -0.02028467908902687,
+          "dir": "bench/runs/artifacts/rboff-speeddating-seed42/train/iter_01",
+          "threads": {
+            "OMP_NUM_THREADS": "1",
+            "OPENBLAS_NUM_THREADS": "1",
+            "MKL_NUM_THREADS": "1",
+            "cpu_count": 20
+          },
+          "threads_pinned": true
+        },
+        "rb_on": {
+          "label": "iteration 1",
+          "fits": 1,
+          "val_score": 0.6853002070393375,
+          "test_recorded": 0.728064182194617,
+          "test_reproduced": 0.728064182194617,
+          "selection_gap": -0.04276397515527952,
+          "dir": "bench/runs/artifacts/rbon-speeddating-seed42/train/iter_01",
+          "threads": {
+            "OMP_NUM_THREADS": "1",
+            "OPENBLAS_NUM_THREADS": "1",
+            "MKL_NUM_THREADS": "1",
+            "cpu_count": 20
+          },
+          "threads_pinned": true
+        }
+      },
+      "delta": {
+        "a": "rb_on",
+        "b": "rb_off",
+        "kind": "observation",
+        "delta": -0.0500155279503105,
+        "ci_low": -0.07676659543796845,
+        "ci_high": -0.02440115244519313,
+        "p_better": 0.0,
+        "resamples_used": 4000,
+        "identical_predictions": false
+      }
+    },
+    {
+      "dataset": "spambase",
+      "metric": "balanced_accuracy",
+      "task": "binary",
+      "verdict": "ok",
+      "refusal": null,
+      "test_rows": 921,
+      "test_fingerprint": "e2b91bd7f4fbf56b6f68af097a3ea79a",
+      "missing_arms": [],
+      "caveat": null,
+      "forecast": {
+        "card_rows": 4601,
+        "train": 2760,
+        "early_stopping_auto_on": false,
+        "held_out_at_default_fraction": 276,
+        "self_validating_models": [
+          "hist_gbdt",
+          "mlp"
+        ]
+      },
+      "plan": {
+        "differs": true,
+        "differing_keys": [
+          "early_stopping",
+          "max_iter",
+          "validation_fraction"
+        ],
+        "model": {
+          "rb_off": "hist_gbdt",
+          "rb_on": "hist_gbdt"
+        },
+        "model_differs": false,
+        "keys": {
+          "rb_off": {
+            "early_stopping": true,
+            "validation_fraction": 0.1,
+            "n_estimators": null,
+            "max_iter": 500
+          },
+          "rb_on": {
+            "early_stopping": false,
+            "validation_fraction": null,
+            "n_estimators": null,
+            "max_iter": 400
+          }
+        }
+      },
+      "p2": [
+        {
+          "arm": "rb_off",
+          "checked": true,
+          "forecast_train": 2760,
+          "forecast_held_out_at_default": 276,
+          "measured_train": 2760,
+          "measured_held_out": 276,
+          "measured_fit": 2484,
+          "validation_fraction": 0.1,
+          "expected_held_out": 276,
+          "matches": true,
+          "problems": []
+        },
+        {
+          "arm": "rb_on",
+          "checked": false,
+          "reason": "이 실행은 행을 떼어 두지 않았습니다 — internal_validation이 없으므로 예고와 대조할 것이 없습니다 (계획이 early_stopping을 false로 껐습니다)",
+          "forecast_train": 2760
+        }
+      ],
+      "arms": {
+        "rb_off": {
+          "label": "iteration 1",
+          "fits": 1,
+          "val_score": 0.949340581001604,
+          "test_recorded": 0.9385497200746468,
+          "test_reproduced": 0.9385497200746468,
+          "selection_gap": 0.010790860926957246,
+          "dir": "bench/runs/artifacts/rboff-spambase-seed42/train/iter_01",
+          "threads": {
+            "OMP_NUM_THREADS": "1",
+            "OPENBLAS_NUM_THREADS": "1",
+            "MKL_NUM_THREADS": "1",
+            "cpu_count": 20
+          },
+          "threads_pinned": true
+        },
+        "rb_on": {
+          "label": "iteration 1",
+          "fits": 1,
+          "val_score": 0.953895126636171,
+          "test_recorded": 0.9454367724162446,
+          "test_reproduced": 0.9454367724162446,
+          "selection_gap": 0.008458354219926467,
+          "dir": "bench/runs/artifacts/rbon-spambase-seed42/train/iter_01",
+          "threads": {
+            "OMP_NUM_THREADS": "1",
+            "OPENBLAS_NUM_THREADS": "1",
+            "MKL_NUM_THREADS": "1",
+            "cpu_count": 20
+          },
+          "threads_pinned": true
+        }
+      },
+      "delta": {
+        "a": "rb_on",
+        "b": "rb_off",
+        "kind": "observation",
+        "delta": 0.00688705234159781,
+        "ci_low": -0.0011887044088370047,
+        "ci_high": 0.015145804592211815,
+        "p_better": 0.95425,
+        "resamples_used": 4000,
+        "identical_predictions": false
+      }
+    },
+    {
+      "dataset": "house_sales",
+      "metric": "r2",
+      "task": "regression",
+      "verdict": "ok",
+      "refusal": null,
+      "test_rows": 4323,
+      "test_fingerprint": "52d19699ed4519d4414f8d8afb82f3af",
+      "missing_arms": [],
+      "caveat": null,
+      "forecast": {
+        "card_rows": 21613,
+        "train": 12967,
+        "early_stopping_auto_on": true,
+        "held_out_at_default_fraction": 1297,
+        "self_validating_models": [
+          "hist_gbdt",
+          "mlp"
+        ]
+      },
+      "plan": {
+        "differs": true,
+        "differing_keys": [
+          "max_iter"
+        ],
+        "model": {
+          "rb_off": "hist_gbdt",
+          "rb_on": "hist_gbdt"
+        },
+        "model_differs": false,
+        "keys": {
+          "rb_off": {
+            "early_stopping": true,
+            "validation_fraction": 0.1,
+            "n_estimators": null,
+            "max_iter": 800
+          },
+          "rb_on": {
+            "early_stopping": true,
+            "validation_fraction": 0.1,
+            "n_estimators": null,
+            "max_iter": 900
+          }
+        }
+      },
+      "p2": [
+        {
+          "arm": "rb_off",
+          "checked": true,
+          "forecast_train": 12967,
+          "forecast_held_out_at_default": 1297,
+          "measured_train": 12967,
+          "measured_held_out": 1297,
+          "measured_fit": 11670,
+          "validation_fraction": 0.1,
+          "expected_held_out": 1297,
+          "matches": true,
+          "problems": []
+        },
+        {
+          "arm": "rb_on",
+          "checked": true,
+          "forecast_train": 12967,
+          "forecast_held_out_at_default": 1297,
+          "measured_train": 12967,
+          "measured_held_out": 1297,
+          "measured_fit": 11670,
+          "validation_fraction": 0.1,
+          "expected_held_out": 1297,
+          "matches": true,
+          "problems": []
+        }
+      ],
+      "arms": {
+        "rb_off": {
+          "label": "iteration 1",
+          "fits": 1,
+          "val_score": 0.890479227529879,
+          "test_recorded": 0.8830637180457762,
+          "test_reproduced": 0.8830637180457762,
+          "selection_gap": 0.007415509484102745,
+          "dir": "bench/runs/artifacts/rboff-house_sales-seed42/train/iter_01",
+          "threads": {
+            "OMP_NUM_THREADS": "1",
+            "OPENBLAS_NUM_THREADS": "1",
+            "MKL_NUM_THREADS": "1",
+            "cpu_count": 20
+          },
+          "threads_pinned": true
+        },
+        "rb_on": {
+          "label": "iteration 1",
+          "fits": 1,
+          "val_score": 0.8875550376091721,
+          "test_recorded": 0.8763826430122559,
+          "test_reproduced": 0.8763826430122559,
+          "selection_gap": 0.011172394596916213,
+          "dir": "bench/runs/artifacts/rbon-house_sales-seed42/train/iter_01",
+          "threads": {
+            "OMP_NUM_THREADS": "1",
+            "OPENBLAS_NUM_THREADS": "1",
+            "MKL_NUM_THREADS": "1",
+            "cpu_count": 20
+          },
+          "threads_pinned": true
+        }
+      },
+      "delta": {
+        "a": "rb_on",
+        "b": "rb_off",
+        "kind": "observation",
+        "delta": -0.006681075033520334,
+        "ci_low": -0.02179029638158579,
+        "ci_high": 0.0057603091802540226,
+        "p_better": 0.16225,
+        "resamples_used": 4000,
+        "identical_predictions": false
+      }
+    }
+  ],
+  "P1": {
+    "threshold": 2,
+    "expected_binary": [
+      "adult",
+      "bank-marketing",
+      "spambase",
+      "speeddating"
+    ],
+    "measured": [
+      "adult",
+      "bank-marketing",
+      "spambase",
+      "speeddating"
+    ],
+    "changed": [
+      "bank-marketing",
+      "spambase",
+      "speeddating"
+    ],
+    "unchanged": [
+      "adult"
+    ],
+    "not_evaluated": [],
+    "per_dataset": {
+      "adult": {
+        "differs": false,
+        "differing_keys": [],
+        "model": {
+          "rb_off": "hist_gbdt",
+          "rb_on": "hist_gbdt"
+        },
+        "model_differs": false,
+        "keys": {
+          "rb_off": {
+            "early_stopping": true,
+            "validation_fraction": 0.1,
+            "n_estimators": null,
+            "max_iter": 500
+          },
+          "rb_on": {
+            "early_stopping": true,
+            "validation_fraction": 0.1,
+            "n_estimators": null,
+            "max_iter": 500
+          }
+        }
+      },
+      "bank-marketing": {
+        "differs": true,
+        "differing_keys": [
+          "early_stopping",
+          "validation_fraction"
+        ],
+        "model": {
+          "rb_off": "hist_gbdt",
+          "rb_on": "hist_gbdt"
+        },
+        "model_differs": false,
+        "keys": {
+          "rb_off": {
+            "early_stopping": true,
+            "validation_fraction": 0.1,
+            "n_estimators": null,
+            "max_iter": 400
+          },
+          "rb_on": {
+            "early_stopping": false,
+            "validation_fraction": null,
+            "n_estimators": null,
+            "max_iter": 400
+          }
+        }
+      },
+      "speeddating": {
+        "differs": true,
+        "differing_keys": [
+          "early_stopping",
+          "validation_fraction"
+        ],
+        "model": {
+          "rb_off": "hist_gbdt",
+          "rb_on": "hist_gbdt"
+        },
+        "model_differs": false,
+        "keys": {
+          "rb_off": {
+            "early_stopping": true,
+            "validation_fraction": 0.1,
+            "n_estimators": null,
+            "max_iter": 400
+          },
+          "rb_on": {
+            "early_stopping": false,
+            "validation_fraction": null,
+            "n_estimators": null,
+            "max_iter": 400
+          }
+        }
+      },
+      "spambase": {
+        "differs": true,
+        "differing_keys": [
+          "early_stopping",
+          "max_iter",
+          "validation_fraction"
+        ],
+        "model": {
+          "rb_off": "hist_gbdt",
+          "rb_on": "hist_gbdt"
+        },
+        "model_differs": false,
+        "keys": {
+          "rb_off": {
+            "early_stopping": true,
+            "validation_fraction": 0.1,
+            "n_estimators": null,
+            "max_iter": 500
+          },
+          "rb_on": {
+            "early_stopping": false,
+            "validation_fraction": null,
+            "n_estimators": null,
+            "max_iter": 400
+          }
+        }
+      },
+      "house_sales": {
+        "differs": true,
+        "differing_keys": [
+          "max_iter"
+        ],
+        "model": {
+          "rb_off": "hist_gbdt",
+          "rb_on": "hist_gbdt"
+        },
+        "model_differs": false,
+        "keys": {
+          "rb_off": {
+            "early_stopping": true,
+            "validation_fraction": 0.1,
+            "n_estimators": null,
+            "max_iter": 800
+          },
+          "rb_on": {
+            "early_stopping": true,
+            "validation_fraction": 0.1,
+            "n_estimators": null,
+            "max_iter": 900
+          }
+        }
+      }
+    },
+    "complete": true,
+    "status": "P1 충족 — 이 절은 계획을 바꿉니다 (3개: bank-marketing, spambase, speeddating). 달라짐 3 / 같음 1"
+  },
+  "P2": {
+    "checks": [
+      {
+        "arm": "rb_off",
+        "checked": true,
+        "forecast_train": 29304,
+        "forecast_held_out_at_default": 2931,
+        "measured_train": 29304,
+        "measured_held_out": 2931,
+        "measured_fit": 26373,
+        "validation_fraction": 0.1,
+        "expected_held_out": 2931,
+        "matches": true,
+        "problems": []
+      },
+      {
+        "arm": "rb_on",
+        "checked": true,
+        "forecast_train": 29304,
+        "forecast_held_out_at_default": 2931,
+        "measured_train": 29304,
+        "measured_held_out": 2931,
+        "measured_fit": 26373,
+        "validation_fraction": 0.1,
+        "expected_held_out": 2931,
+        "matches": true,
+        "problems": []
+      },
+      {
+        "arm": "rb_off",
+        "checked": true,
+        "forecast_train": 27126,
+        "forecast_held_out_at_default": 2713,
+        "measured_train": 27126,
+        "measured_held_out": 2713,
+        "measured_fit": 24413,
+        "validation_fraction": 0.1,
+        "expected_held_out": 2713,
+        "matches": true,
+        "problems": []
+      },
+      {
+        "arm": "rb_on",
+        "checked": false,
+        "reason": "이 실행은 행을 떼어 두지 않았습니다 — internal_validation이 없으므로 예고와 대조할 것이 없습니다 (계획이 early_stopping을 false로 껐습니다)",
+        "forecast_train": 27126
+      },
+      {
+        "arm": "rb_off",
+        "checked": true,
+        "forecast_train": 5026,
+        "forecast_held_out_at_default": 503,
+        "measured_train": 5026,
+        "measured_held_out": 503,
+        "measured_fit": 4523,
+        "validation_fraction": 0.1,
+        "expected_held_out": 503,
+        "matches": true,
+        "problems": []
+      },
+      {
+        "arm": "rb_on",
+        "checked": false,
+        "reason": "이 실행은 행을 떼어 두지 않았습니다 — internal_validation이 없으므로 예고와 대조할 것이 없습니다 (계획이 early_stopping을 false로 껐습니다)",
+        "forecast_train": 5026
+      },
+      {
+        "arm": "rb_off",
+        "checked": true,
+        "forecast_train": 2760,
+        "forecast_held_out_at_default": 276,
+        "measured_train": 2760,
+        "measured_held_out": 276,
+        "measured_fit": 2484,
+        "validation_fraction": 0.1,
+        "expected_held_out": 276,
+        "matches": true,
+        "problems": []
+      },
+      {
+        "arm": "rb_on",
+        "checked": false,
+        "reason": "이 실행은 행을 떼어 두지 않았습니다 — internal_validation이 없으므로 예고와 대조할 것이 없습니다 (계획이 early_stopping을 false로 껐습니다)",
+        "forecast_train": 2760
+      },
+      {
+        "arm": "rb_off",
+        "checked": true,
+        "forecast_train": 12967,
+        "forecast_held_out_at_default": 1297,
+        "measured_train": 12967,
+        "measured_held_out": 1297,
+        "measured_fit": 11670,
+        "validation_fraction": 0.1,
+        "expected_held_out": 1297,
+        "matches": true,
+        "problems": []
+      },
+      {
+        "arm": "rb_on",
+        "checked": true,
+        "forecast_train": 12967,
+        "forecast_held_out_at_default": 1297,
+        "measured_train": 12967,
+        "measured_held_out": 1297,
+        "measured_fit": 11670,
+        "validation_fraction": 0.1,
+        "expected_held_out": 1297,
+        "matches": true,
+        "problems": []
+      }
+    ],
+    "checked": 7,
+    "unchecked": 3,
+    "mismatched": [],
+    "halt": false,
+    "status": "P2 일치 — 7개 실행에서 예고한 행 수가 실측과 같습니다 (대조 불가 3개: 떼어 둔 행이 없음)"
+  },
+  "P3": {
+    "observation_only": true,
+    "per_dataset": {
+      "adult": {
+        "delta": -0.03492331905771473,
+        "ci_low": -0.043082806974662484,
+        "ci_high": -0.02686511981869256,
+        "excludes_zero": true,
+        "identical_predictions": false
+      },
+      "bank-marketing": {
+        "delta": -0.006823107598959766,
+        "ci_low": -0.01487457202623059,
+        "ci_high": 0.0008757758522283982,
+        "excludes_zero": false,
+        "identical_predictions": false
+      },
+      "speeddating": {
+        "delta": -0.0500155279503105,
+        "ci_low": -0.07676659543796845,
+        "ci_high": -0.02440115244519313,
+        "excludes_zero": true,
+        "identical_predictions": false
+      },
+      "spambase": {
+        "delta": 0.00688705234159781,
+        "ci_low": -0.0011887044088370047,
+        "ci_high": 0.015145804592211815,
+        "excludes_zero": false,
+        "identical_predictions": false
+      },
+      "house_sales": {
+        "delta": -0.006681075033520334,
+        "ci_low": -0.02179029638158579,
+        "ci_high": 0.0057603091802540226,
+        "excludes_zero": false,
+        "identical_predictions": false
+      }
+    },
+    "excluding_zero": [
+      "adult",
+      "speeddating"
+    ],
+    "status": "P3 관찰 — Δ를 낸 데이터셋 5개, 그중 CI가 0을 벗어난 것 2개(adult, speeddating). 판정으로 쓰지 않습니다 — 실행 간 잡음이 이 Δ에 섞여 있습니다 (REPEATS.md)"
+  }
+}

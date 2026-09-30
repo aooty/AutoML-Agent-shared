@@ -1,0 +1,53 @@
+{
+  "metrics": {
+    "f1": 0.45901639344262296,
+    "accuracy": 0.8621718377088305,
+    "balanced_accuracy": 0.6586076604554866,
+    "precision": 0.6490066225165563,
+    "recall": 0.35507246376811596,
+    "roc_auc": 0.8732194616977226,
+    "pr_auc": 0.6090775789647862,
+    "average_precision": 0.6090775789647862,
+    "specificity": 0.962143,
+    "balanced_accuracy_at_best_cut": 0.8016,
+    "cut_headroom": 0.142992,
+    "brier": 0.100337,
+    "calibration_error": 0.0576,
+    "balanced_accuracy_ci_low": 0.630491,
+    "balanced_accuracy_ci_high": 0.686872,
+    "train_f1": 0.9993964996982498,
+    "train_accuracy": 0.9998010346199762,
+    "train_balanced_accuracy": 0.9998808956646021,
+    "train_val_gap": 0.341273
+  },
+  "split": "val",
+  "applied_hyperparams": {
+    "max_iter": 150,
+    "learning_rate": 0.1
+  },
+  "dropped_hyperparams": [],
+  "applied_preprocessing": {
+    "impute": "median",
+    "scale": false,
+    "missing_indicator": false,
+    "missing_count": false
+  },
+  "train_time_sec": 5.681,
+  "status": "ok",
+  "error_type": null,
+  "log_tail": "features: 수치 61개 + 범주형 58개를 one-hot 180열로; 고유값 50개 초과로 제외 1개 (field)\nloaded bench/data/speeddating.csv: 8378 rows x 241 encoded features\nmemory estimate 30.8 MB vs budget 2048.0 MB\nsplit: train 60% / val 20% / test 20% (stratified, seed=42) — test는 반복 밖에서 저장된 모델로 1회만 채점합니다 {'train': 5026, 'val': 1676, 'test': 1676}\nestimator=hist_gbdt applied_hyperparams={'max_iter': 150, 'learning_rate': 0.1}\npreprocessing applied: impute=median scale=False missing_indicator=False missing_count=False\nfitting on 5026 rows, validating on 1676 rows\nmodel saved to model.joblib (564 KB)\nfeature schema saved to feature_schema.json (241 columns)\nbalanced_accuracy=0.6586 (95% CI 0.6305~0.6869, 폭 0.0564) — row 단위 재표집 400회\nval predictions saved to val_predictions.npz (13 KB)\npaired comparison skipped (no_baseline)\ntrain_val_gap measured on balanced_accuracy (maximize)\nmetrics: {\"f1\": 0.459, \"accuracy\": 0.8622, \"balanced_accuracy\": 0.6586, \"precision\": 0.649, \"recall\": 0.3551, \"roc_auc\": 0.8732, \"pr_auc\": 0.6091, \"average_precision\": 0.6091, \"specificity\": 0.9621, \"balanced_accuracy_at_best_cut\": 0.8016, \"cut_headroom\": 0.143, \"brier\": 0.1003, \"calibration_error\": 0.0576, \"balanced_accuracy_ci_low\": 0.6305, \"balanced_accuracy_ci_high\": 0.6869, \"train_f1\": 0.9994, \"train_accuracy\": 0.9998, \"train_balanced_accuracy\": 0.9999, \"train_val_gap\": 0.3413}",
+  "threads": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "cpu_count": 20
+  },
+  "paired": {
+    "metric": "balanced_accuracy",
+    "baseline_iteration": null,
+    "status": "skipped",
+    "reason": "no_baseline"
+  },
+  "model_path": "bench\\runs\\artifacts\\bar65nollm-speeddating-seed42\\train\\iter_01\\model.joblib",
+  "schema_path": "bench\\runs\\artifacts\\bar65nollm-speeddating-seed42\\train\\iter_01\\feature_schema.json"
+}

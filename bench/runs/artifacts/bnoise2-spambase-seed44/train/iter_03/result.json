@@ -1,0 +1,52 @@
+{
+  "metrics": {
+    "f1": 0.9032258064516129,
+    "accuracy": 0.925,
+    "balanced_accuracy": 0.9187657181330323,
+    "precision": 0.9173789173789174,
+    "recall": 0.8895027624309392,
+    "specificity": 0.948029,
+    "balanced_accuracy_ci_low": 0.898438,
+    "balanced_accuracy_ci_high": 0.937137,
+    "train_f1": 0.9622025198320112,
+    "train_accuracy": 0.9706521739130435,
+    "train_balanced_accuracy": 0.9666281135660006,
+    "train_val_gap": 0.047862
+  },
+  "split": "val",
+  "applied_hyperparams": {
+    "kernel": "rbf",
+    "C": 10.0
+  },
+  "dropped_hyperparams": [],
+  "applied_preprocessing": {
+    "impute": "median",
+    "scale": true,
+    "missing_indicator": false,
+    "missing_count": false
+  },
+  "train_time_sec": 3.35,
+  "status": "ok",
+  "error_type": null,
+  "log_tail": "features: 수치 57개 + 범주형 0개를 one-hot 0열로\nloaded bench/data/spambase.csv: 4601 rows x 57 encoded features\nmemory estimate 4.0 MB vs budget 2048.0 MB\nsplit: train 60% / val 20% / test 20% (stratified, seed=44) — test는 반복 밖에서 저장된 모델로 1회만 채점합니다 {'train': 2760, 'val': 920, 'test': 921}\nestimator=svc applied_hyperparams={'kernel': 'rbf', 'C': 10.0}\npreprocessing applied: impute=median scale=True missing_indicator=False missing_count=False\nfitting on 2760 rows, validating on 920 rows\nmodel saved to model.joblib (317 KB)\nfeature schema saved to feature_schema.json (57 columns)\nbalanced_accuracy=0.9188 (95% CI 0.8984~0.9371, 폭 0.0387) — row 단위 재표집 400회\nval predictions saved to val_predictions.npz (1 KB)\nbalanced_accuracy vs iteration 1: [짝지은 Δ(iteration 1 대비) -0.0115, 95% CI -0.0293~+0.0035, P(개선) 0.072 — 이 행들로는 0과 구분되지 않음]\ntrain_val_gap measured on balanced_accuracy (maximize)\nmetrics: {\"f1\": 0.9032, \"accuracy\": 0.925, \"balanced_accuracy\": 0.9188, \"precision\": 0.9174, \"recall\": 0.8895, \"specificity\": 0.948, \"balanced_accuracy_ci_low\": 0.8984, \"balanced_accuracy_ci_high\": 0.9371, \"train_f1\": 0.9622, \"train_accuracy\": 0.9707, \"train_balanced_accuracy\": 0.9666, \"train_val_gap\": 0.0479}",
+  "threads": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "cpu_count": 20
+  },
+  "paired": {
+    "metric": "balanced_accuracy",
+    "baseline_iteration": 1,
+    "threads_changed": false,
+    "status": "measured",
+    "resamples": 400,
+    "unit": "row",
+    "delta_vs_best": -0.011461,
+    "delta_ci_low": -0.029308,
+    "delta_ci_high": 0.003459,
+    "p_better": 0.0725
+  },
+  "model_path": "bench/runs/artifacts/bnoise2-spambase-seed44/train/iter_03/model.joblib",
+  "schema_path": "bench/runs/artifacts/bnoise2-spambase-seed44/train/iter_03/feature_schema.json"
+}

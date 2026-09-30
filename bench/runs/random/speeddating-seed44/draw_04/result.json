@@ -1,0 +1,42 @@
+{
+  "metrics": {
+    "f1": 0.02127659574468085,
+    "accuracy": 0.8353221957040573,
+    "balanced_accuracy": 0.5043633540372671,
+    "precision": 0.5,
+    "recall": 0.010869565217391304,
+    "specificity": 0.997857,
+    "balanced_accuracy_ci_low": 0.499381,
+    "balanced_accuracy_ci_high": 0.511675,
+    "train_f1": 0.047058823529411764,
+    "train_accuracy": 0.8388380421806606,
+    "train_balanced_accuracy": 0.5118390860151948,
+    "train_val_gap": 0.007476
+  },
+  "split": "val",
+  "applied_hyperparams": {
+    "C": 0.003309,
+    "kernel": "poly",
+    "gamma": 0.007843,
+    "class_weight": null
+  },
+  "dropped_hyperparams": [],
+  "applied_preprocessing": {
+    "impute": "median",
+    "scale": true,
+    "missing_indicator": true,
+    "missing_count": false
+  },
+  "train_time_sec": 6.737,
+  "status": "ok",
+  "error_type": null,
+  "log_tail": "features: 수치 61개 + 범주형 58개를 one-hot 180열로; 고유값 50개 초과로 제외 1개 (field)\nloaded bench/data/speeddating.csv: 8378 rows x 241 encoded features\nmemory estimate 30.8 MB vs budget 2048.0 MB\nsplit: train 60% / val 20% / test 20% (stratified, seed=44) — test는 반복 밖에서 저장된 모델로 1회만 채점합니다 {'train': 5026, 'val': 1676, 'test': 1676}\nestimator=svc applied_hyperparams={'C': 0.003309, 'kernel': 'poly', 'gamma': 0.007843, 'class_weight': None}\npreprocessing applied: impute=median scale=True missing_indicator=True missing_count=False\nfitting on 5026 rows, validating on 1676 rows\nmodel saved to model.joblib (10.5 MB)\nfeature schema saved to feature_schema.json (241 columns)\nbalanced_accuracy=0.5044 (95% CI 0.4994~0.5117, 폭 0.0123) — row 단위 재표집 400회\nval predictions saved to val_predictions.npz (0 KB)\npaired comparison skipped (no_baseline)\ntrain_val_gap measured on balanced_accuracy (maximize)\nmetrics: {\"f1\": 0.0213, \"accuracy\": 0.8353, \"balanced_accuracy\": 0.5044, \"precision\": 0.5, \"recall\": 0.0109, \"specificity\": 0.9979, \"balanced_accuracy_ci_low\": 0.4994, \"balanced_accuracy_ci_high\": 0.5117, \"train_f1\": 0.0471, \"train_accuracy\": 0.8388, \"train_balanced_accuracy\": 0.5118, \"train_val_gap\": 0.0075}",
+  "paired": {
+    "metric": "balanced_accuracy",
+    "baseline_iteration": null,
+    "status": "skipped",
+    "reason": "no_baseline"
+  },
+  "model_path": "bench\\runs\\random\\speeddating-seed44\\draw_04\\model.joblib",
+  "schema_path": "bench\\runs\\random\\speeddating-seed44\\draw_04\\feature_schema.json"
+}

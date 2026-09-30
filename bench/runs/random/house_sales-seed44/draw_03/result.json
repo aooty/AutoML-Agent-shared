@@ -1,0 +1,39 @@
+{
+  "metrics": {
+    "r2": 0.7132439220223891,
+    "mae": 125222.58295234662,
+    "rmse": 194231.61845341523,
+    "mean_absolute_error": 125222.58295234662,
+    "root_mean_squared_error": 194231.61845341523,
+    "r2_score": 0.7132439220223891,
+    "r2_ci_low": 0.692153,
+    "r2_ci_high": 0.730658,
+    "train_r2": 0.694817222416829,
+    "train_mae": 125939.27580209194,
+    "train_val_gap": -0.018427
+  },
+  "split": "val",
+  "applied_hyperparams": {
+    "alpha": 0.286516,
+    "max_iter": 2
+  },
+  "dropped_hyperparams": [],
+  "applied_preprocessing": {
+    "impute": "median",
+    "scale": false,
+    "missing_indicator": false,
+    "missing_count": true
+  },
+  "train_time_sec": 1.621,
+  "status": "ok",
+  "error_type": null,
+  "log_tail": "features: 수치 21개 + 범주형 0개를 one-hot 0열로\nloaded bench/data/house_sales.csv: 21613 rows x 21 encoded features\nmemory estimate 6.9 MB vs budget 2048.0 MB\nsplit: train 60% / val 20% / test 20% (not stratified, seed=44) — test는 반복 밖에서 저장된 모델로 1회만 채점합니다 {'train': 12967, 'val': 4323, 'test': 4323}\nestimator=ridge applied_hyperparams={'alpha': 0.286516, 'max_iter': 2}\npreprocessing applied: impute=median scale=False missing_indicator=False missing_count=True\nfitting on 12967 rows, validating on 4323 rows\nmodel saved to model.joblib (2 KB)\nfeature schema saved to feature_schema.json (21 columns)\nr2=0.7132 (95% CI 0.6922~0.7307, 폭 0.0385) — row 단위 재표집 400회\nval predictions saved to val_predictions.npz (30 KB)\npaired comparison skipped (no_baseline)\ntrain_val_gap measured on r2 (maximize)\nmetrics: {\"r2\": 0.7132, \"mae\": 125222.583, \"rmse\": 194231.6185, \"mean_absolute_error\": 125222.583, \"root_mean_squared_error\": 194231.6185, \"r2_score\": 0.7132, \"r2_ci_low\": 0.6922, \"r2_ci_high\": 0.7307, \"train_r2\": 0.6948, \"train_mae\": 125939.2758, \"train_val_gap\": -0.0184}",
+  "paired": {
+    "metric": "r2",
+    "baseline_iteration": null,
+    "status": "skipped",
+    "reason": "no_baseline"
+  },
+  "model_path": "bench\\runs\\random\\house_sales-seed44\\draw_03\\model.joblib",
+  "schema_path": "bench\\runs\\random\\house_sales-seed44\\draw_03\\feature_schema.json"
+}

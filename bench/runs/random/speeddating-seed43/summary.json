@@ -1,0 +1,359 @@
+{
+  "arm": "random",
+  "dataset": "speeddating",
+  "data_id": 40536,
+  "seed": 43,
+  "metric": "balanced_accuracy",
+  "task": "classification",
+  "draws": 5,
+  "omp_num_threads": "1",
+  "timeout_sec": 3600,
+  "candidates": [
+    "logreg",
+    "decision_tree",
+    "knn",
+    "hist_gbdt",
+    "random_forest",
+    "extra_trees",
+    "gradient_boosting",
+    "xgboost",
+    "mlp",
+    "svc"
+  ],
+  "excluded_by_rows": [],
+  "card": "bench/cards/speeddating-seed43.json",
+  "train_script": "automl_agent/scripts/train.py",
+  "best_by_val_for_k": {
+    "1": 1,
+    "2": 1,
+    "3": 1,
+    "4": 1,
+    "5": 5
+  },
+  "records": [
+    {
+      "draw": 1,
+      "model": "hist_gbdt",
+      "hyperparams": {
+        "max_iter": 7,
+        "learning_rate": 0.007836,
+        "max_depth": 48,
+        "max_leaf_nodes": 3,
+        "l2_regularization": 12.103485
+      },
+      "preprocessing": {
+        "impute": "mean",
+        "scale": true,
+        "missing_indicator": true,
+        "missing_count": true
+      },
+      "untouched_params": [],
+      "applied_hyperparams": {
+        "max_iter": 7,
+        "learning_rate": 0.007836,
+        "max_depth": 48,
+        "max_leaf_nodes": 3,
+        "l2_regularization": 12.103485
+      },
+      "dropped_hyperparams": [],
+      "applied_preprocessing": {
+        "impute": "mean",
+        "scale": true,
+        "missing_indicator": true,
+        "missing_count": true
+      },
+      "status": "ok",
+      "returncode": 0,
+      "error_type": null,
+      "val_score": 0.5,
+      "val_metrics": {
+        "f1": 0.0,
+        "accuracy": 0.8353221957040573,
+        "balanced_accuracy": 0.5,
+        "precision": 0.0,
+        "recall": 0.0,
+        "roc_auc": 0.7578183229813664,
+        "pr_auc": 0.35241324793842266,
+        "average_precision": 0.35241324793842266,
+        "specificity": 1.0,
+        "balanced_accuracy_at_best_cut": 0.7159,
+        "cut_headroom": 0.2159,
+        "brier": 0.135425,
+        "calibration_error": 0.0,
+        "balanced_accuracy_ci_low": 0.5,
+        "balanced_accuracy_ci_high": 0.5,
+        "train_f1": 0.0,
+        "train_accuracy": 0.8352566653402308,
+        "train_balanced_accuracy": 0.5,
+        "train_val_gap": 0.0
+      },
+      "val_split": "val",
+      "model_file": "bench/runs/random/speeddating-seed43/draw_01/model.joblib",
+      "elapsed_sec": 5.13,
+      "dir": "bench/runs/random/speeddating-seed43/draw_01",
+      "test": {
+        "status": "ok",
+        "test_score": 0.5,
+        "test_metrics": {
+          "f1": 0.0,
+          "accuracy": 0.8353221957040573,
+          "balanced_accuracy": 0.5,
+          "precision": 0.0,
+          "recall": 0.0,
+          "roc_auc": 0.747590579710145,
+          "pr_auc": 0.358981648188515,
+          "average_precision": 0.358981648188515,
+          "specificity": 1.0,
+          "balanced_accuracy_at_best_cut": 0.7274,
+          "cut_headroom": 0.2274,
+          "brier": 0.135371,
+          "calibration_error": 0.0001,
+          "balanced_accuracy_ci_low": 0.5,
+          "balanced_accuracy_ci_high": 0.5
+        },
+        "split": "test"
+      },
+      "selection_gap": 0.0
+    },
+    {
+      "draw": 2,
+      "model": "gradient_boosting",
+      "hyperparams": {
+        "n_estimators": 2,
+        "learning_rate": 0.02626,
+        "max_depth": 56,
+        "subsample": 0.785494
+      },
+      "preprocessing": {
+        "impute": "mean",
+        "scale": true,
+        "missing_indicator": false,
+        "missing_count": false
+      },
+      "untouched_params": [],
+      "applied_hyperparams": {
+        "n_estimators": 2,
+        "learning_rate": 0.02626,
+        "max_depth": 56,
+        "subsample": 0.785494
+      },
+      "dropped_hyperparams": [],
+      "applied_preprocessing": {
+        "impute": "mean",
+        "scale": true,
+        "missing_indicator": false,
+        "missing_count": false
+      },
+      "status": "ok",
+      "returncode": 0,
+      "error_type": null,
+      "val_score": 0.5,
+      "val_metrics": {
+        "f1": 0.0,
+        "accuracy": 0.8353221957040573,
+        "balanced_accuracy": 0.5,
+        "precision": 0.0,
+        "recall": 0.0,
+        "roc_auc": 0.6674792960662526,
+        "pr_auc": 0.2779447793270727,
+        "average_precision": 0.2779447793270727,
+        "specificity": 1.0,
+        "balanced_accuracy_at_best_cut": 0.6628,
+        "cut_headroom": 0.1628,
+        "brier": 0.134522,
+        "calibration_error": 0.029439,
+        "balanced_accuracy_ci_low": 0.5,
+        "balanced_accuracy_ci_high": 0.5,
+        "train_f1": 0.0,
+        "train_accuracy": 0.8352566653402308,
+        "train_balanced_accuracy": 0.5,
+        "train_val_gap": 0.0
+      },
+      "val_split": "val",
+      "model_file": "bench/runs/random/speeddating-seed43/draw_02/model.joblib",
+      "elapsed_sec": 5.03,
+      "dir": "bench/runs/random/speeddating-seed43/draw_02"
+    },
+    {
+      "draw": 3,
+      "model": "svc",
+      "hyperparams": {
+        "C": 0.000271,
+        "kernel": "poly",
+        "gamma": 0.000387,
+        "class_weight": "balanced"
+      },
+      "preprocessing": {
+        "impute": "median",
+        "scale": true,
+        "missing_indicator": false,
+        "missing_count": false
+      },
+      "untouched_params": [],
+      "applied_hyperparams": {
+        "C": 0.000271,
+        "kernel": "poly",
+        "gamma": 0.000387,
+        "class_weight": "balanced"
+      },
+      "dropped_hyperparams": [],
+      "applied_preprocessing": {
+        "impute": "median",
+        "scale": true,
+        "missing_indicator": false,
+        "missing_count": false
+      },
+      "status": "ok",
+      "returncode": 0,
+      "error_type": null,
+      "val_score": 0.5,
+      "val_metrics": {
+        "f1": 0.2827868852459016,
+        "accuracy": 0.16467780429594273,
+        "balanced_accuracy": 0.5,
+        "precision": 0.16467780429594273,
+        "recall": 1.0,
+        "specificity": 0.0,
+        "balanced_accuracy_ci_low": 0.5,
+        "balanced_accuracy_ci_high": 0.5,
+        "train_f1": 0.2828834984625897,
+        "train_accuracy": 0.1647433346597692,
+        "train_balanced_accuracy": 0.5,
+        "train_val_gap": 0.0
+      },
+      "val_split": "val",
+      "model_file": "bench/runs/random/speeddating-seed43/draw_03/model.joblib",
+      "elapsed_sec": 9.36,
+      "dir": "bench/runs/random/speeddating-seed43/draw_03"
+    },
+    {
+      "draw": 4,
+      "model": "hist_gbdt",
+      "hyperparams": {
+        "max_iter": 1,
+        "learning_rate": 0.031321,
+        "max_depth": 38,
+        "max_leaf_nodes": 11,
+        "l2_regularization": 50.502066
+      },
+      "preprocessing": {
+        "impute": "mean",
+        "scale": false,
+        "missing_indicator": true,
+        "missing_count": true
+      },
+      "untouched_params": [],
+      "applied_hyperparams": {
+        "max_iter": 1,
+        "learning_rate": 0.031321,
+        "max_depth": 38,
+        "max_leaf_nodes": 11,
+        "l2_regularization": 50.502066
+      },
+      "dropped_hyperparams": [],
+      "applied_preprocessing": {
+        "impute": "mean",
+        "scale": false,
+        "missing_indicator": true,
+        "missing_count": true
+      },
+      "status": "ok",
+      "returncode": 0,
+      "error_type": null,
+      "val_score": 0.5,
+      "val_metrics": {
+        "f1": 0.0,
+        "accuracy": 0.8353221957040573,
+        "balanced_accuracy": 0.5,
+        "precision": 0.0,
+        "recall": 0.0,
+        "roc_auc": 0.7917611283643893,
+        "pr_auc": 0.4059934716200262,
+        "average_precision": 0.4059934716200262,
+        "specificity": 1.0,
+        "balanced_accuracy_at_best_cut": 0.7555,
+        "cut_headroom": 0.2555,
+        "brier": 0.136285,
+        "calibration_error": 0.0001,
+        "balanced_accuracy_ci_low": 0.5,
+        "balanced_accuracy_ci_high": 0.5,
+        "train_f1": 0.0,
+        "train_accuracy": 0.8352566653402308,
+        "train_balanced_accuracy": 0.5,
+        "train_val_gap": 0.0
+      },
+      "val_split": "val",
+      "model_file": "bench/runs/random/speeddating-seed43/draw_04/model.joblib",
+      "elapsed_sec": 5.01,
+      "dir": "bench/runs/random/speeddating-seed43/draw_04"
+    },
+    {
+      "draw": 5,
+      "model": "svc",
+      "hyperparams": {
+        "C": 10.588207,
+        "kernel": "poly",
+        "gamma": 0.000523,
+        "class_weight": "balanced"
+      },
+      "preprocessing": {
+        "impute": "median",
+        "scale": true,
+        "missing_indicator": true,
+        "missing_count": false
+      },
+      "untouched_params": [],
+      "applied_hyperparams": {
+        "C": 10.588207,
+        "kernel": "poly",
+        "gamma": 0.000523,
+        "class_weight": "balanced"
+      },
+      "dropped_hyperparams": [],
+      "applied_preprocessing": {
+        "impute": "median",
+        "scale": true,
+        "missing_indicator": true,
+        "missing_count": false
+      },
+      "status": "ok",
+      "returncode": 0,
+      "error_type": null,
+      "val_score": 0.5733592132505176,
+      "val_metrics": {
+        "f1": 0.2640449438202247,
+        "accuracy": 0.8436754176610979,
+        "balanced_accuracy": 0.5733592132505176,
+        "precision": 0.5875,
+        "recall": 0.17028985507246377,
+        "specificity": 0.976429,
+        "balanced_accuracy_ci_low": 0.552579,
+        "balanced_accuracy_ci_high": 0.597114,
+        "train_f1": 0.3549862763037511,
+        "train_accuracy": 0.8597294070831675,
+        "train_balanced_accuracy": 0.6086933506408618,
+        "train_val_gap": 0.035334
+      },
+      "val_split": "val",
+      "model_file": "bench/runs/random/speeddating-seed43/draw_05/model.joblib",
+      "elapsed_sec": 15.53,
+      "dir": "bench/runs/random/speeddating-seed43/draw_05",
+      "test": {
+        "status": "ok",
+        "test_score": 0.5617753623188406,
+        "test_metrics": {
+          "f1": 0.23295454545454544,
+          "accuracy": 0.8389021479713604,
+          "balanced_accuracy": 0.5617753623188406,
+          "precision": 0.5394736842105263,
+          "recall": 0.14855072463768115,
+          "specificity": 0.975,
+          "balanced_accuracy_ci_low": 0.541386,
+          "balanced_accuracy_ci_high": 0.58248
+        },
+        "split": "test"
+      },
+      "selection_gap": 0.011584
+    }
+  ]
+}

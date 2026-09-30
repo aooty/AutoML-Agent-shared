@@ -1,0 +1,30 @@
+{
+  "model": "mlp",
+  "hyperparams": {
+    "hidden_layer_sizes": [
+      142,
+      225
+    ],
+    "alpha": 3e-06,
+    "learning_rate_init": 0.000292,
+    "batch_size": 816,
+    "max_iter": 77
+  },
+  "preprocessing": {
+    "impute": "mean",
+    "scale": false,
+    "missing_indicator": false,
+    "missing_count": true
+  },
+  "target_missing": {
+    "policy": "reject"
+  },
+  "data": {
+    "path": "bench/data/house_sales.csv",
+    "target_column": "price"
+  },
+  "metric": "r2",
+  "task": "regression",
+  "seed": 44,
+  "memory_limit_mb": 2048
+}

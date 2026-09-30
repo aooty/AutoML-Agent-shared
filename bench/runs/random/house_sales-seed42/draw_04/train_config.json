@@ -1,0 +1,25 @@
+{
+  "model": "extra_trees",
+  "hyperparams": {
+    "n_estimators": 179,
+    "max_depth": 17,
+    "min_samples_leaf": 7
+  },
+  "preprocessing": {
+    "impute": "mean",
+    "scale": false,
+    "missing_indicator": true,
+    "missing_count": false
+  },
+  "target_missing": {
+    "policy": "reject"
+  },
+  "data": {
+    "path": "bench/data/house_sales.csv",
+    "target_column": "price"
+  },
+  "metric": "r2",
+  "task": "regression",
+  "seed": 42,
+  "memory_limit_mb": 2048
+}

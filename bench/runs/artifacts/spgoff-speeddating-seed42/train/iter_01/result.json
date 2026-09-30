@@ -1,0 +1,58 @@
+{
+  "metrics": {
+    "f1": 0.5381944444444444,
+    "accuracy": 0.8412887828162291,
+    "balanced_accuracy": 0.7290113871635611,
+    "precision": 0.5166666666666667,
+    "recall": 0.5615942028985508,
+    "roc_auc": 0.867238612836439,
+    "pr_auc": 0.5857548287803577,
+    "average_precision": 0.5857548287803577,
+    "specificity": 0.896429,
+    "balanced_accuracy_at_best_cut": 0.8017,
+    "cut_headroom": 0.072689,
+    "brier": 0.105648,
+    "calibration_error": 0.066571,
+    "balanced_accuracy_ci_low": 0.699702,
+    "balanced_accuracy_ci_high": 0.759719,
+    "train_f1": 0.859504132231405,
+    "train_accuracy": 0.9492638280939116,
+    "train_balanced_accuracy": 0.9463598953262768,
+    "train_val_gap": 0.217349
+  },
+  "split": "val",
+  "applied_hyperparams": {
+    "max_iter": 400,
+    "learning_rate": 0.06,
+    "max_leaf_nodes": 31,
+    "min_samples_leaf": 20,
+    "l2_regularization": 1.0,
+    "early_stopping": true,
+    "validation_fraction": 0.15,
+    "n_iter_no_change": 25,
+    "class_weight": {
+      "0": 1.0,
+      "1": 4.0
+    },
+    "random_state": 42
+  },
+  "dropped_hyperparams": [],
+  "applied_preprocessing": {
+    "impute": "none",
+    "scale": false,
+    "missing_indicator": false,
+    "missing_count": false
+  },
+  "train_time_sec": 4.477,
+  "status": "ok",
+  "error_type": null,
+  "log_tail": "features: 수치 61개 + 범주형 58개를 one-hot 180열로; 고유값 50개 초과로 제외 1개 (field)\nloaded bench/data/speeddating.csv: 8378 rows x 241 encoded features\nmemory estimate 30.8 MB vs budget 2048.0 MB\nsplit: train 60% / val 20% / test 20% (stratified, seed=42) — test는 반복 밖에서 저장된 모델로 1회만 채점합니다 {'train': 5026, 'val': 1676, 'test': 1676}\nestimator=hist_gbdt applied_hyperparams={'max_iter': 400, 'learning_rate': 0.06, 'max_leaf_nodes': 31, 'min_samples_leaf': 20, 'l2_regularization': 1.0, 'early_stopping': True, 'validation_fraction': 0.15, 'n_iter_no_change': 25, 'class_weight': {0: 1.0, 1: 4.0}, 'random_state': 42}\npreprocessing applied: impute=none scale=False missing_indicator=False missing_count=False\nfitting on 5026 rows, validating on 1676 rows\nmodel saved to model.joblib (415 KB)\nfeature schema saved to feature_schema.json (241 columns)\nbalanced_accuracy=0.7290 (95% CI 0.6997~0.7597, 폭 0.0600) — row 단위 재표집 400회\nval predictions saved to val_predictions.npz (13 KB)\npaired comparison skipped (no_baseline)\ntrain_val_gap measured on balanced_accuracy (maximize)\nmetrics: {\"f1\": 0.5382, \"accuracy\": 0.8413, \"balanced_accuracy\": 0.729, \"precision\": 0.5167, \"recall\": 0.5616, \"roc_auc\": 0.8672, \"pr_auc\": 0.5858, \"average_precision\": 0.5858, \"specificity\": 0.8964, \"balanced_accuracy_at_best_cut\": 0.8017, \"cut_headroom\": 0.0727, \"brier\": 0.1056, \"calibration_error\": 0.0666, \"balanced_accuracy_ci_low\": 0.6997, \"balanced_accuracy_ci_high\": 0.7597, \"train_f1\": 0.8595, \"train_accuracy\": 0.9493, \"train_balanced_accuracy\": 0.9464, \"train_val_gap\": 0.2173}",
+  "paired": {
+    "metric": "balanced_accuracy",
+    "baseline_iteration": null,
+    "status": "skipped",
+    "reason": "no_baseline"
+  },
+  "model_path": "bench\\runs\\artifacts\\spgoff-speeddating-seed42\\train\\iter_01\\model.joblib",
+  "schema_path": "bench\\runs\\artifacts\\spgoff-speeddating-seed42\\train\\iter_01\\feature_schema.json"
+}

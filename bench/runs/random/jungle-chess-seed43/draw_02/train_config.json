@@ -1,0 +1,25 @@
+{
+  "model": "decision_tree",
+  "hyperparams": {
+    "max_depth": 22,
+    "min_samples_leaf": 67,
+    "class_weight": null
+  },
+  "preprocessing": {
+    "impute": "median",
+    "scale": true,
+    "missing_indicator": false,
+    "missing_count": false
+  },
+  "target_missing": {
+    "policy": "reject"
+  },
+  "data": {
+    "path": "bench/data/jungle-chess.csv",
+    "target_column": "class"
+  },
+  "metric": "balanced_accuracy",
+  "task": "classification",
+  "seed": 43,
+  "memory_limit_mb": 2048
+}

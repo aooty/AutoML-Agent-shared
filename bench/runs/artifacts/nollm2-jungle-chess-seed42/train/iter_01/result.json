@@ -1,0 +1,52 @@
+{
+  "metrics": {
+    "f1": 0.8279562068461354,
+    "accuracy": 0.8739402052655064,
+    "balanced_accuracy": 0.8248215184009787,
+    "precision": 0.8312513957394828,
+    "recall": 0.8248215184009787,
+    "balanced_accuracy_ci_low": 0.812811,
+    "balanced_accuracy_ci_high": 0.836515,
+    "train_f1": 0.876488675184662,
+    "train_accuracy": 0.9057677289799562,
+    "train_balanced_accuracy": 0.8710461075908462,
+    "train_val_gap": 0.046225
+  },
+  "split": "val",
+  "applied_hyperparams": {
+    "max_iter": 150,
+    "learning_rate": 0.1
+  },
+  "dropped_hyperparams": [],
+  "applied_preprocessing": {
+    "impute": "median",
+    "scale": false,
+    "missing_indicator": false,
+    "missing_count": false
+  },
+  "train_time_sec": 4.493,
+  "status": "ok",
+  "error_type": null,
+  "log_tail": "features: 수치 6개 + 범주형 0개를 one-hot 0열로\nloaded bench/data/jungle-chess.csv: 44819 rows x 6 encoded features\nmemory estimate 4.1 MB vs budget 2048.0 MB\nsplit: train 60% / val 20% / test 20% (stratified, seed=42) — test는 반복 밖에서 저장된 모델로 1회만 채점합니다 {'train': 26891, 'val': 8964, 'test': 8964}\nestimator=hist_gbdt applied_hyperparams={'max_iter': 150, 'learning_rate': 0.1}\npreprocessing applied: impute=median scale=False missing_indicator=False missing_count=False\nfitting on 26891 rows, validating on 8964 rows\nearly_stopping이 위 26891행 중 2690행을 자체 검증으로 떼어 갔습니다 — 실제 학습은 24201행, iteration 150/150에서 멈춤\nmodel saved to model.joblib (1.6 MB)\nfeature schema saved to feature_schema.json (6 columns)\nroc_auc skipped: defined for binary targets only (average=macro)\npr_auc skipped: defined for binary targets only (average=macro)\nbalanced_accuracy=0.8248 (95% CI 0.8128~0.8365, 폭 0.0237) — row 단위 재표집 400회\nval predictions saved to val_predictions.npz (3 KB)\npaired comparison skipped (no_baseline)\ntrain_val_gap measured on balanced_accuracy (maximize)\nmetrics: {\"f1\": 0.828, \"accuracy\": 0.8739, \"balanced_accuracy\": 0.8248, \"precision\": 0.8313, \"recall\": 0.8248, \"balanced_accuracy_ci_low\": 0.8128, \"balanced_accuracy_ci_high\": 0.8365, \"train_f1\": 0.8765, \"train_accuracy\": 0.9058, \"train_balanced_accuracy\": 0.871, \"train_val_gap\": 0.0462}",
+  "threads": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "cpu_count": 20
+  },
+  "paired": {
+    "metric": "balanced_accuracy",
+    "baseline_iteration": null,
+    "status": "skipped",
+    "reason": "no_baseline"
+  },
+  "internal_validation": {
+    "held_out_rows": 2690,
+    "fit_rows": 24201,
+    "validation_fraction": 0.1,
+    "stopped_at_iter": 150,
+    "max_iter": 150
+  },
+  "model_path": "bench\\runs\\artifacts\\nollm2-jungle-chess-seed42\\train\\iter_01\\model.joblib",
+  "schema_path": "bench\\runs\\artifacts\\nollm2-jungle-chess-seed42\\train\\iter_01\\feature_schema.json"
+}

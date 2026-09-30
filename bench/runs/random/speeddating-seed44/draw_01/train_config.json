@@ -1,0 +1,26 @@
+{
+  "model": "svc",
+  "hyperparams": {
+    "C": 0.755518,
+    "kernel": "linear",
+    "gamma": 22.543602,
+    "class_weight": "balanced"
+  },
+  "preprocessing": {
+    "impute": "mean",
+    "scale": false,
+    "missing_indicator": false,
+    "missing_count": false
+  },
+  "target_missing": {
+    "policy": "reject"
+  },
+  "data": {
+    "path": "bench/data/speeddating.csv",
+    "target_column": "match"
+  },
+  "metric": "balanced_accuracy",
+  "task": "classification",
+  "seed": 44,
+  "memory_limit_mb": 2048
+}

@@ -1,0 +1,387 @@
+{
+  "generated_by": "bench/spg.py",
+  "preregistration": "docs/SPG.md",
+  "seed": 42,
+  "resamples": 4000,
+  "score_tolerance": 1e-06,
+  "threads": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "cpu_count": 20
+  },
+  "datasets": [
+    {
+      "dataset": "adult",
+      "metric": "balanced_accuracy",
+      "task": "binary",
+      "verdict": "ok",
+      "refusal": null,
+      "test_rows": 9769,
+      "test_fingerprint": "35bc63e35f35b70596c7052ac7688bf5",
+      "missing_arms": [],
+      "arms": {
+        "spg_off": {
+          "label": "iteration 1",
+          "fits": 1,
+          "val_score": 0.8484428264273012,
+          "test_recorded": 0.8434884657123265,
+          "test_reproduced": 0.8434884657123265,
+          "selection_gap": 0.0049543607149746816,
+          "dir": "bench/runs/artifacts/spgoff-adult-seed42/train/iter_01"
+        },
+        "spg_on": {
+          "label": "iteration 2",
+          "fits": 4,
+          "val_score": 0.8456233968180711,
+          "test_recorded": 0.8385585366552781,
+          "test_reproduced": 0.8385585366552781,
+          "selection_gap": 0.007064860162792952,
+          "dir": "bench/runs/artifacts/spgon-adult-seed42/train/iter_02"
+        },
+        "llm_recorded": {
+          "label": "iteration 1",
+          "fits": 1,
+          "val_score": 0.848149480694569,
+          "test_recorded": 0.8445337538775612,
+          "test_reproduced": 0.8445337538775612,
+          "selection_gap": 0.003615726817007725,
+          "dir": "bench/runs/artifacts/llm-adult-seed42/train/iter_01"
+        }
+      },
+      "pairs": [
+        {
+          "a": "spg_on",
+          "b": "spg_off",
+          "kind": "primary",
+          "delta": -0.004929929057048366,
+          "ci_low": -0.009512627190971146,
+          "ci_high": -0.0006744361175038725,
+          "p_better": 0.01225,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "spg_off",
+          "b": "llm_recorded",
+          "kind": "observation",
+          "delta": -0.0010452881652347479,
+          "ci_low": -0.003603421386001029,
+          "ci_high": 0.0015577188355169534,
+          "p_better": 0.215,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        }
+      ]
+    },
+    {
+      "dataset": "bank-marketing",
+      "metric": "balanced_accuracy",
+      "task": "binary",
+      "verdict": "ok",
+      "refusal": null,
+      "test_rows": 9043,
+      "test_fingerprint": "2df57cb2794050d1c92eec82b5892022",
+      "missing_arms": [],
+      "arms": {
+        "spg_off": {
+          "label": "iteration 1",
+          "fits": 1,
+          "val_score": 0.8762396011304272,
+          "test_recorded": 0.8572585294023648,
+          "test_reproduced": 0.8572585294023648,
+          "selection_gap": 0.018981071728062404,
+          "dir": "bench/runs/artifacts/spgoff-bank-marketing-seed42/train/iter_01"
+        },
+        "spg_on": {
+          "label": "iteration 1",
+          "fits": 3,
+          "val_score": 0.8786819858999663,
+          "test_recorded": 0.8582485709855316,
+          "test_reproduced": 0.8582485709855316,
+          "selection_gap": 0.020433414914434622,
+          "dir": "bench/runs/artifacts/spgon-bank-marketing-seed42/train/iter_01"
+        },
+        "llm_recorded": {
+          "label": "iteration 1",
+          "fits": 1,
+          "val_score": 0.8779937000655376,
+          "test_recorded": 0.8655666993760749,
+          "test_reproduced": 0.8655666993760749,
+          "selection_gap": 0.012427000689462675,
+          "dir": "bench/runs/artifacts/llm-bank-marketing-seed42/train/iter_01"
+        }
+      },
+      "pairs": [
+        {
+          "a": "spg_on",
+          "b": "spg_off",
+          "kind": "primary",
+          "delta": 0.0009900415831668452,
+          "ci_low": -0.005409133851333334,
+          "ci_high": 0.007332236963577757,
+          "p_better": 0.62025,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "spg_off",
+          "b": "llm_recorded",
+          "kind": "observation",
+          "delta": -0.008308169973710089,
+          "ci_low": -0.014489720973977969,
+          "ci_high": -0.0024762981564918356,
+          "p_better": 0.00275,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        }
+      ]
+    },
+    {
+      "dataset": "speeddating",
+      "metric": "balanced_accuracy",
+      "task": "binary",
+      "verdict": "ok",
+      "refusal": null,
+      "test_rows": 1676,
+      "test_fingerprint": "1cb427764715caa82986be0169a1467d",
+      "missing_arms": [],
+      "arms": {
+        "spg_off": {
+          "label": "iteration 2",
+          "fits": 2,
+          "val_score": 0.7855848861283644,
+          "test_recorded": 0.7780072463768115,
+          "test_reproduced": 0.7780072463768115,
+          "selection_gap": 0.0075776397515529,
+          "dir": "bench/runs/artifacts/spgoff-speeddating-seed42/train/iter_02"
+        },
+        "spg_on": {
+          "label": "iteration 2",
+          "fits": 4,
+          "val_score": 0.7784420289855072,
+          "test_recorded": 0.7864544513457556,
+          "test_reproduced": 0.7864544513457556,
+          "selection_gap": -0.008012422360248461,
+          "dir": "bench/runs/artifacts/spgon-speeddating-seed42/train/iter_02"
+        },
+        "llm_recorded": {
+          "label": "iteration 2",
+          "fits": 2,
+          "val_score": 0.7903830227743271,
+          "test_recorded": 0.7809937888198757,
+          "test_reproduced": 0.7809937888198757,
+          "selection_gap": 0.00938923395445146,
+          "dir": "bench/runs/artifacts/llm-speeddating-seed42/train/iter_02"
+        }
+      },
+      "pairs": [
+        {
+          "a": "spg_on",
+          "b": "spg_off",
+          "kind": "primary",
+          "delta": 0.008447204968944133,
+          "ci_low": -0.005811648682249215,
+          "ci_high": 0.02391798840422206,
+          "p_better": 0.8705,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "spg_off",
+          "b": "llm_recorded",
+          "kind": "observation",
+          "delta": -0.0029865424430641774,
+          "ci_low": -0.020758492590337786,
+          "ci_high": 0.015304376791628412,
+          "p_better": 0.38425,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        }
+      ]
+    },
+    {
+      "dataset": "spambase",
+      "metric": "balanced_accuracy",
+      "task": "binary",
+      "verdict": "ok",
+      "refusal": null,
+      "test_rows": 921,
+      "test_fingerprint": "e2b91bd7f4fbf56b6f68af097a3ea79a",
+      "missing_arms": [],
+      "arms": {
+        "spg_off": {
+          "label": "iteration 1",
+          "fits": 1,
+          "val_score": 0.949340581001604,
+          "test_recorded": 0.939445777422317,
+          "test_reproduced": 0.939445777422317,
+          "selection_gap": 0.00989480357928696,
+          "dir": "bench/runs/artifacts/spgoff-spambase-seed42/train/iter_01"
+        },
+        "spg_on": {
+          "label": "iteration 3",
+          "fits": 5,
+          "val_score": 0.9530733281847166,
+          "test_recorded": 0.936276252258657,
+          "test_reproduced": 0.936276252258657,
+          "selection_gap": 0.016797075926059613,
+          "dir": "bench/runs/artifacts/spgon-spambase-seed42/train/iter_03"
+        },
+        "llm_recorded": {
+          "label": "iteration 1",
+          "fits": 1,
+          "val_score": 0.9484445236539337,
+          "test_recorded": 0.9362096033650286,
+          "test_reproduced": 0.9362096033650286,
+          "selection_gap": 0.01223492028890516,
+          "dir": "bench/runs/artifacts/llm-spambase-seed42/train/iter_01"
+        }
+      },
+      "pairs": [
+        {
+          "a": "spg_on",
+          "b": "spg_off",
+          "kind": "primary",
+          "delta": -0.003169525163660092,
+          "ci_low": -0.009531227560733515,
+          "ci_high": 0.0028492063492064133,
+          "p_better": 0.14275,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "spg_off",
+          "b": "llm_recorded",
+          "kind": "observation",
+          "delta": 0.003236174057288488,
+          "ci_low": -0.0029738066435671226,
+          "ci_high": 0.010229901804792121,
+          "p_better": 0.834,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        }
+      ]
+    },
+    {
+      "dataset": "house_sales",
+      "metric": "r2",
+      "task": "regression",
+      "verdict": "ok",
+      "refusal": null,
+      "test_rows": 4323,
+      "test_fingerprint": "52d19699ed4519d4414f8d8afb82f3af",
+      "missing_arms": [],
+      "arms": {
+        "spg_off": {
+          "label": "iteration 1",
+          "fits": 1,
+          "val_score": 0.8875550376091721,
+          "test_recorded": 0.8763826430122559,
+          "test_reproduced": 0.8763826430122559,
+          "selection_gap": 0.011172394596916213,
+          "dir": "bench/runs/artifacts/spgoff-house_sales-seed42/train/iter_01"
+        },
+        "spg_on": {
+          "label": "iteration 1",
+          "fits": 3,
+          "val_score": 0.8902327569197764,
+          "test_recorded": 0.8825262762688825,
+          "test_reproduced": 0.8825262762688825,
+          "selection_gap": 0.007706480650893965,
+          "dir": "bench/runs/artifacts/spgon-house_sales-seed42/train/iter_01"
+        },
+        "llm_recorded": {
+          "label": "iteration 1",
+          "fits": 1,
+          "val_score": 0.8902327569197764,
+          "test_recorded": 0.8825262762688825,
+          "test_reproduced": 0.8825262762688825,
+          "selection_gap": 0.007706480650893965,
+          "dir": "bench/runs/artifacts/llm-house_sales-seed42/train/iter_01"
+        }
+      },
+      "pairs": [
+        {
+          "a": "spg_on",
+          "b": "spg_off",
+          "kind": "primary",
+          "delta": 0.0061436332566265905,
+          "ci_low": -0.005581198699489581,
+          "ci_high": 0.021142676589097412,
+          "p_better": 0.818,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "spg_off",
+          "b": "llm_recorded",
+          "kind": "observation",
+          "delta": -0.0061436332566265905,
+          "ci_low": -0.021142676589097402,
+          "ci_high": 0.005581198699489588,
+          "p_better": 0.182,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        }
+      ]
+    }
+  ],
+  "fits": [
+    {
+      "dataset": "adult",
+      "spg_off": 1,
+      "spg_on": 4
+    },
+    {
+      "dataset": "bank-marketing",
+      "spg_off": 1,
+      "spg_on": 3
+    },
+    {
+      "dataset": "speeddating",
+      "spg_off": 2,
+      "spg_on": 4
+    },
+    {
+      "dataset": "spambase",
+      "spg_off": 1,
+      "spg_on": 5
+    },
+    {
+      "dataset": "house_sales",
+      "spg_off": 1,
+      "spg_on": 3
+    }
+  ],
+  "criterion": {
+    "challenger": "spg_on",
+    "baseline": "spg_off",
+    "seed": 42,
+    "judged_seed": 42,
+    "expected_binary": [
+      "adult",
+      "bank-marketing",
+      "spambase",
+      "speeddating"
+    ],
+    "judged": [
+      "adult",
+      "bank-marketing",
+      "speeddating",
+      "spambase"
+    ],
+    "wins": [],
+    "losses": [
+      "adult"
+    ],
+    "indistinguishable": [
+      "bank-marketing",
+      "speeddating",
+      "spambase"
+    ],
+    "not_evaluated": [],
+    "complete": true,
+    "status": "구분되지 않음 — 이 데이터셋들과 이 예산으로는 답이 나오지 않습니다 (이김 0 / 걸침 3 / 짐 1)"
+  }
+}

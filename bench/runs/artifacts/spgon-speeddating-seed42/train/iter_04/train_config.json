@@ -1,0 +1,33 @@
+{
+  "model": "xgboost",
+  "hyperparams": {
+    "n_estimators": 600,
+    "learning_rate": 0.05,
+    "max_depth": 6,
+    "min_child_weight": 5,
+    "subsample": 0.85,
+    "colsample_bytree": 0.8,
+    "reg_lambda": 2.0,
+    "reg_alpha": 0.5,
+    "scale_pos_weight": 20.0,
+    "class_weight": "balanced"
+  },
+  "preprocessing": {
+    "impute": "median"
+  },
+  "target_missing": {
+    "policy": "reject"
+  },
+  "data": {
+    "path": "bench/data/speeddating.csv",
+    "target_column": "match"
+  },
+  "metric": "balanced_accuracy",
+  "task": "classification",
+  "seed": 42,
+  "paired_baseline": {
+    "iteration": 2,
+    "path": "bench\\runs\\artifacts\\spgon-speeddating-seed42\\train\\iter_02\\val_predictions.npz"
+  },
+  "memory_limit_mb": 2048
+}

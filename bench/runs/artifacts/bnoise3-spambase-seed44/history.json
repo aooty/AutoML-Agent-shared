@@ -1,0 +1,412 @@
+{
+  "thread_id": "bnoise3-spambase-seed44",
+  "goal": {
+    "metric": "balanced_accuracy",
+    "direction": "maximize",
+    "mode": "auto",
+    "threshold": 0.967,
+    "source": "derived",
+    "reference": {
+      "source": "baseline",
+      "metric": "balanced_accuracy",
+      "baseline": 0.9058,
+      "margin": 0.65,
+      "ks": 0.8466,
+      "ranking_ceiling": 0.9233,
+      "exceeds_ranking_ceiling": true,
+      "required_ks": 0.934,
+      "ks_shortfall": 0.0874,
+      "passable_margin": 0.185,
+      "baseline_ci": [
+        0.8823,
+        0.9239
+      ],
+      "baseline_ci_unit": "row",
+      "chance": 0.5
+    }
+  },
+  "iterations": 5,
+  "stop_reason": "max_iterations",
+  "critic_runs": 4,
+  "budget": {
+    "spent_sec": 253.39,
+    "total_sec": 3600.0
+  },
+  "best": {
+    "iteration": 3,
+    "model": "extra_trees",
+    "hyperparams": {
+      "n_estimators": 1000,
+      "min_samples_leaf": 1,
+      "class_weight": null
+    },
+    "preprocessing": {
+      "impute": "median",
+      "scale": false,
+      "missing_indicator": false,
+      "missing_count": false
+    },
+    "metric": "balanced_accuracy",
+    "score": 0.9379542169151864,
+    "metrics": {
+      "f1": 0.9260808926080892,
+      "accuracy": 0.9423913043478261,
+      "balanced_accuracy": 0.9379542169151864,
+      "precision": 0.9352112676056338,
+      "recall": 0.9171270718232044,
+      "roc_auc": 0.9816233984831383,
+      "pr_auc": 0.973924013237403,
+      "average_precision": 0.973924013237403,
+      "specificity": 0.958781,
+      "balanced_accuracy_at_best_cut": 0.9434,
+      "cut_headroom": 0.005446,
+      "brier": 0.047744,
+      "calibration_error": 0.044216,
+      "balanced_accuracy_ci_low": 0.920586,
+      "balanced_accuracy_ci_high": 0.954209,
+      "train_f1": 0.9990800367985281,
+      "train_accuracy": 0.9992753623188406,
+      "train_balanced_accuracy": 0.9990808823529411,
+      "train_val_gap": 0.061127
+    },
+    "train_time_sec": 5.267,
+    "plan_strategy": "Attempt 3: leave the boosted-tree family entirely and fit a bagged, fully-grown forest — extra_trees with 1000 randomised trees, max_features='sqrt', min_samples_leaf=1, unlimited depth — on the same median-imputed, unscaled matrix so the change is attributable to the family swap alone. Extra-trees averages fully-grown, randomly-split trees, a variance-reduction ranking generator structurally unlike the sequential residual fitting of hist_gbdt and xgboost, and its averaged leaf votes produce a much finer-grained probability ranking than 400–682 boosted stages did. Class weight stays at default (recall 0.914 vs specificity 0.955 is a mild imbalance whose entire correction is inside cut_headroom 0.006), so the whole attempt is spent on the ranking axis. I will read roc_auc, pr_auc and balanced_accuracy_at_best_cut against attempt 1's 0.9793 / 0.9601 / 0.9408: if the best-cut ceiling again lands in 0.934–0.941, the three families tried span the ranking this feature set supports and the 0.967 bar should be reported as unreachable rather than chased with further retuning."
+  },
+  "holdout": {
+    "status": "ok",
+    "split": "test",
+    "test_fraction": 0.2,
+    "iteration": 3,
+    "model": "extra_trees",
+    "metric": "balanced_accuracy",
+    "score": 0.9433780621463905,
+    "val_score": 0.9379542169151864,
+    "metrics": {
+      "f1": 0.9350282485875706,
+      "accuracy": 0.9500542888165038,
+      "balanced_accuracy": 0.9433780621463905,
+      "precision": 0.9594202898550724,
+      "recall": 0.9118457300275482,
+      "roc_auc": 0.9873046200025672,
+      "pr_auc": 0.9827619675611062,
+      "average_precision": 0.9827619675611062,
+      "specificity": 0.97491,
+      "balanced_accuracy_at_best_cut": 0.9537,
+      "cut_headroom": 0.010322,
+      "brier": 0.042367,
+      "calibration_error": 0.050445,
+      "balanced_accuracy_ci_low": 0.926319,
+      "balanced_accuracy_ci_high": 0.959274
+    },
+    "wall_time_sec": 5.672,
+    "selection_gap": -0.005424,
+    "score_ci": [
+      0.926319,
+      0.959274
+    ],
+    "val_inside_ci": true
+  },
+  "models": {
+    "mode": "all",
+    "kept_iteration": 3,
+    "removed": [],
+    "freed_bytes": 0
+  },
+  "history": [
+    {
+      "iteration": 1,
+      "model": "hist_gbdt",
+      "hyperparams": {
+        "max_iter": 400,
+        "learning_rate": 0.06,
+        "max_leaf_nodes": 31,
+        "l2_regularization": 1.0,
+        "early_stopping": false
+      },
+      "dropped_hyperparams": [],
+      "preprocessing": {
+        "impute": "median",
+        "scale": false,
+        "missing_indicator": false,
+        "missing_count": false
+      },
+      "internal_validation": {},
+      "unsupported_claims": [],
+      "status": "ok",
+      "error_type": null,
+      "metrics": {
+        "f1": 0.9220055710306406,
+        "accuracy": 0.9391304347826087,
+        "balanced_accuracy": 0.9347808867502327,
+        "precision": 0.9297752808988764,
+        "recall": 0.914364640883978,
+        "roc_auc": 0.9793312738866116,
+        "pr_auc": 0.9600788596599372,
+        "average_precision": 0.9600788596599372,
+        "specificity": 0.955197,
+        "balanced_accuracy_at_best_cut": 0.9408,
+        "cut_headroom": 0.006019,
+        "brier": 0.051495,
+        "calibration_error": 0.044107,
+        "balanced_accuracy_ci_low": 0.916462,
+        "balanced_accuracy_ci_high": 0.951215,
+        "train_f1": 0.9990808823529411,
+        "train_accuracy": 0.9992753623188406,
+        "train_balanced_accuracy": 0.9992413981142696,
+        "train_val_gap": 0.064461
+      },
+      "train_time_sec": 4.532,
+      "critic": {
+        "failure_type": "overfitting",
+        "evidence": "Attempt 1 (hist_gbdt, 400 iters, lr 0.06, 31 leaves, l2 1.0) scored balanced_accuracy 0.9348 (95% CI 0.9165~0.9512) against the bar 0.967 — the bar is outside the interval, so the shortfall of 0.0322 is real. The cut is already near-optimal: cut_headroom is only 0.006019 (balanced_accuracy_at_best_cut 0.9408), i.e. threshold/class_weight can buy at most 19% of the 0.0322 still needed, and recall 0.9144 vs specificity 0.9552 are close enough that no weight move covers the rest. That means 81% of the gap is in the ranking: KS implied by 0.9408 is 0.8816, still 0.0524 short of the required 0.934, even though roc_auc 0.9793 is already well above the logistic baseline's 0.8466 KS. Meanwhile train_balanced_accuracy 0.9992 vs val 0.9348 gives train_val_gap 0.064461 — the ensemble has memorised the 2,760 training rows almost perfectly with 400 unstopped trees at 31 leaves and l2 1.0, so the capacity is being spent on training rows rather than on ranking held-out ones. Cost is trivial (4.53 s train, 7.13 s wall), and no hyperparams were dropped, so there is budget for a regularised refit. Only one family has been tried, so 'wrong_model_family' is not yet supported by a plateau.",
+        "direction": "Stay in the boosted-tree family but attack the 0.0645 train/val gap on the ranking axis: refit hist_gbdt with markedly stronger regularisation and smaller trees (shallower leaves, higher l2, min_samples_leaf, feature subsampling via max_features) at a lower learning rate with more iterations, leaving preprocessing and class_weight untouched so the change is attributable to capacity control alone.",
+        "concrete_changes": {
+          "model": "hist_gbdt",
+          "max_iter": 800,
+          "learning_rate": 0.03,
+          "max_leaf_nodes": 15,
+          "min_samples_leaf": 20,
+          "l2_regularization": 5.0,
+          "max_features": 0.6,
+          "early_stopping": false,
+          "class_weight": null,
+          "preprocessing": "unchanged (impute median, scale false)"
+        },
+        "unsupported_claims": [],
+        "source": "llm"
+      }
+    },
+    {
+      "iteration": 2,
+      "model": "xgboost",
+      "hyperparams": {
+        "n_estimators": 1200,
+        "learning_rate": 0.025,
+        "max_depth": 4,
+        "subsample": 0.8,
+        "reg_lambda": 5.0,
+        "early_stopping_rounds": 60
+      },
+      "dropped_hyperparams": [],
+      "preprocessing": {
+        "impute": "median",
+        "scale": false,
+        "missing_indicator": false,
+        "missing_count": false
+      },
+      "internal_validation": {
+        "held_out_rows": 276,
+        "fit_rows": 2484,
+        "validation_fraction": 0.1,
+        "stopped_at_iter": 682,
+        "max_iter": 1200
+      },
+      "unsupported_claims": [],
+      "status": "ok",
+      "error_type": null,
+      "metrics": {
+        "f1": 0.9159663865546218,
+        "accuracy": 0.9347826086956522,
+        "balanced_accuracy": 0.9292560248717796,
+        "precision": 0.9289772727272727,
+        "recall": 0.9033149171270718,
+        "roc_auc": 0.9784451177251036,
+        "pr_auc": 0.9640959302347469,
+        "average_precision": 0.9640959302347469,
+        "specificity": 0.955197,
+        "balanced_accuracy_at_best_cut": 0.9341,
+        "cut_headroom": 0.004844,
+        "brier": 0.051033,
+        "calibration_error": 0.027644,
+        "balanced_accuracy_ci_low": 0.911246,
+        "balanced_accuracy_ci_high": 0.945216,
+        "train_f1": 0.9744304974430498,
+        "train_accuracy": 0.980072463768116,
+        "train_balanced_accuracy": 0.9771320011258091,
+        "train_val_gap": 0.047876
+      },
+      "train_time_sec": 4.493,
+      "critic": {
+        "failure_type": "wrong_model_family",
+        "evidence": "Attempt 2 (xgboost, 1200 rounds capped by early stopping at iter 682, lr 0.025, depth 4, subsample 0.8, reg_lambda 5.0) scored balanced_accuracy 0.9293 (95% CI 0.9112~0.9452) versus the bar 0.967 — the bar is outside the interval, so the 0.0377 shortfall is real. Against attempt 1 the paired Δ is -0.0055 (95% CI -0.0138~+0.0034, P(better) 0.083), and 0.9348 sits inside this attempt's own CI, so the regularisation step produced movement this measurement cannot resolve — it is neither an improvement nor a regression, and I cannot diagnose overfitting again from it: the gap it was aimed at did close (train_val_gap 0.0645 → 0.0479, train_balanced_accuracy 0.9992 → 0.9771) and the validation score did not follow. No hyperparams were dropped and the fit cost 4.49 s of a 600 s budget, so cost is not the constraint. The operating point is exhausted: cut_headroom 0.004844 against 0.0377 still needed is 13% of the distance, and recall 0.9033 vs specificity 0.9552 is a mild imbalance whose whole correction is inside that 0.0048. That leaves 87% in the ranking, and the ranking is not moving: across the two families tried, balanced_accuracy_at_best_cut spans only 0.9341~0.9408 (width 0.0067) while the distance from the best of those to the bar is 0.0262 — the shortfall is ~4x the entire span the two families have covered (KS 0.8816 achieved vs 0.9340 required). That span is a range over per-family maxima, not a paired test, so it is not evidence the families differ; it is a measure of how little any swap has bought, and it is why another point in gbdt hyperparameter space is not a plan that reaches 0.967.",
+        "direction": "Stop spending iterations on boosted-tree variants and preprocessing tweaks that the ranking ceiling shows cannot reach 0.967: with 3 iterations left, take the single largest available ranking step by fitting a structurally different family on the same pipeline — random_forest with many deep trees (a genuinely different variance/averaging profile from sequential boosting) — and if its balanced_accuracy_at_best_cut still lands near 0.934~0.941, report that the bar is unreachable on this feature set rather than burning the remaining attempts on further within-family retuning or class_weight moves.",
+        "concrete_changes": {
+          "model": "random_forest",
+          "n_estimators": 1000,
+          "max_depth": null,
+          "min_samples_leaf": 1,
+          "max_features": "sqrt",
+          "class_weight": null,
+          "impute": "median",
+          "scale": false,
+          "missing_indicator": false,
+          "missing_count": false
+        },
+        "unsupported_claims": [],
+        "source": "llm"
+      }
+    },
+    {
+      "iteration": 3,
+      "model": "extra_trees",
+      "hyperparams": {
+        "n_estimators": 1000,
+        "min_samples_leaf": 1,
+        "class_weight": null
+      },
+      "dropped_hyperparams": [],
+      "preprocessing": {
+        "impute": "median",
+        "scale": false,
+        "missing_indicator": false,
+        "missing_count": false
+      },
+      "internal_validation": {},
+      "unsupported_claims": [],
+      "status": "ok",
+      "error_type": null,
+      "metrics": {
+        "f1": 0.9260808926080892,
+        "accuracy": 0.9423913043478261,
+        "balanced_accuracy": 0.9379542169151864,
+        "precision": 0.9352112676056338,
+        "recall": 0.9171270718232044,
+        "roc_auc": 0.9816233984831383,
+        "pr_auc": 0.973924013237403,
+        "average_precision": 0.973924013237403,
+        "specificity": 0.958781,
+        "balanced_accuracy_at_best_cut": 0.9434,
+        "cut_headroom": 0.005446,
+        "brier": 0.047744,
+        "calibration_error": 0.044216,
+        "balanced_accuracy_ci_low": 0.920586,
+        "balanced_accuracy_ci_high": 0.954209,
+        "train_f1": 0.9990800367985281,
+        "train_accuracy": 0.9992753623188406,
+        "train_balanced_accuracy": 0.9990808823529411,
+        "train_val_gap": 0.061127
+      },
+      "train_time_sec": 5.267,
+      "critic": {
+        "failure_type": "wrong_model_family",
+        "evidence": "Attempt 3 (extra_trees, 1000 trees, min_samples_leaf=1, class_weight=null, no dropped hyperparams, 5.27 s of a 600 s budget) scored balanced_accuracy 0.9380 (95% CI 0.9206~0.9542) against the bar 0.967 — the bar is outside the interval, so the 0.0290 shortfall is real. The paired Δ vs iteration 1 is +0.0032 (95% CI -0.0070~+0.0135, P(better) 0.720), and iterations 1 (0.9348) and 2 (0.9293) both fall inside this attempt's CI (width 0.0336), so the family swap produced movement this slice cannot resolve — it is not an improvement I can diagnose a cause for. This is not the earlier overfitting call repeated: train_val_gap 0.0611 (train 0.9991 vs val 0.9380) is the same shape as attempt 1's 0.0645, and attempt 2 already showed that closing it (gap 0.0645→0.0479, train 0.9992→0.9771) did not raise validation, so capacity control is measured as not paying here. The operating point is exhausted: cut_headroom 0.005446 against 0.0290 still needed is 19% of the distance, and recall 0.9171 vs specificity 0.9588 is a mild imbalance whose whole correction sits inside that 0.0054. That puts 81% in the ranking, and the ranking is not moving across three families: balanced_accuracy_at_best_cut spans only 0.9341~0.9434 (width 0.0093) while the distance from the best of those to the bar is 0.0236 — the shortfall is ~3x the entire span the three tried families have covered (KS 0.8868 achieved vs 0.9340 required, a 0.0472 ranking deficit). That span is a range over per-family maxima, not a paired test, so it is not evidence the families differ; it measures how little any swap has bought, and it is why a fourth tree-family point is not a plan that reaches 0.967. roc_auc is already 0.9816 and pr_auc 0.9739, with calibration_error 0.0442 — the ordering is near the practical limit of these 57 columns with no feature construction available.",
+        "direction": "The bar is unreachable by another family swap or any operating-point move on these 57 columns — spend the second-to-last iteration on the only untried structurally different ranking generator that is not a tree at all, an RBF-scale-sensitive kernel model (svc with probability on standardised, median-imputed columns), and if its balanced_accuracy_at_best_cut again lands under 0.95 report the 0.967 bar as unreachable on this feature set rather than burning the final iteration on a fourth tree variant.",
+        "concrete_changes": {
+          "model": "svc",
+          "kernel": "rbf",
+          "C": 10.0,
+          "gamma": "scale",
+          "probability": true,
+          "class_weight": null,
+          "impute": "median",
+          "scale": true,
+          "missing_indicator": false,
+          "missing_count": false
+        },
+        "unsupported_claims": [],
+        "source": "llm"
+      }
+    },
+    {
+      "iteration": 4,
+      "model": "svc",
+      "hyperparams": {
+        "kernel": "rbf",
+        "C": 10.0,
+        "class_weight": null
+      },
+      "dropped_hyperparams": [],
+      "preprocessing": {
+        "impute": "median",
+        "scale": true,
+        "missing_indicator": false,
+        "missing_count": false
+      },
+      "internal_validation": {},
+      "unsupported_claims": [],
+      "status": "ok",
+      "error_type": null,
+      "metrics": {
+        "f1": 0.9032258064516129,
+        "accuracy": 0.925,
+        "balanced_accuracy": 0.9187657181330323,
+        "precision": 0.9173789173789174,
+        "recall": 0.8895027624309392,
+        "specificity": 0.948029,
+        "balanced_accuracy_ci_low": 0.898438,
+        "balanced_accuracy_ci_high": 0.937137,
+        "train_f1": 0.9622025198320112,
+        "train_accuracy": 0.9706521739130435,
+        "train_balanced_accuracy": 0.9666281135660006,
+        "train_val_gap": 0.047862
+      },
+      "train_time_sec": 3.425,
+      "critic": {
+        "failure_type": "wrong_model_family",
+        "evidence": "Attempt 4 (svc, RBF, C=10, gamma='scale', scale=true, median impute; no dropped_hyperparams, 3.43 s train of a 600 s budget) scored balanced_accuracy 0.9188 (95% CI 0.8984~0.9371) against the bar 0.967 — the bar is far outside the interval, so the 0.0482 shortfall is real, and this is the first paired result the measurement can resolve: Δ vs iteration 3 is -0.0192 (95% CI -0.0355~-0.0031, P(better) 0.003), a genuine regression. That row moved two levers at once (family bagging→kernel and scale false→true), so the -0.0192 cannot be attributed to either alone. Iterations 1 (0.9348) and 2 (0.9293) sit inside this attempt's CI (width 0.0387), so those differences are not evidence. Four families have now been fit and the ranking has not moved: balanced_accuracy_at_best_cut across the three tree families spans only 0.9341~0.9434 (width 0.0093) while the distance from the best of those (0.9434) to the bar is 0.0236 — the shortfall is ~3x the entire span the swaps have covered; in KS terms the bar requires 0.9340 and the best achieved is 0.8868, a 0.0472 ranking deficit that the baseline-ceiling note already flagged as un-passable by any threshold. The operating point is exhausted on the best attempt as well: cut_headroom 0.005446 against 0.0290 needed is 19%, and recall 0.9171 vs specificity 0.9588 is a mild imbalance whose full correction sits inside that 0.0054. On this attempt recall 0.8895 vs specificity 0.9480 is the same shape and no weight move covers 0.0482. train_val_gap 0.0479 here (train 0.9666 vs val 0.9188) is not the overfitting story either — attempt 2 already showed that closing the gap from 0.0645 to 0.0479 did not raise validation, so capacity control is measured as not paying, and 'overfitting' is the one diagnosis already spent without a best-score update. With 1 iteration left and no feature-construction lever available, the ranking these 57 columns support is plateaued at ~0.938~0.943 and 0.967 is not reachable.",
+        "direction": "The 0.967 bar is unreachable on these 57 columns — no fifth family will close a 0.0472 KS deficit when four families spanned only 0.0093 of best-cut ceiling — so spend the final iteration confirming the best known configuration by refitting extra_trees exactly as in iteration 3 (single lever unchanged, so the score is directly comparable) rather than on another family swap or a class_weight move that cut_headroom 0.0054 shows has nothing to give.",
+        "concrete_changes": {
+          "model": "extra_trees",
+          "n_estimators": 1000,
+          "min_samples_leaf": 1,
+          "max_features": "sqrt",
+          "max_depth": null,
+          "class_weight": null,
+          "impute": "median",
+          "scale": false,
+          "missing_indicator": false,
+          "missing_count": false
+        },
+        "unsupported_claims": [],
+        "source": "llm"
+      }
+    },
+    {
+      "iteration": 5,
+      "model": "extra_trees",
+      "hyperparams": {
+        "n_estimators": 2000,
+        "min_samples_leaf": 1,
+        "max_features": 0.35,
+        "class_weight": null,
+        "bootstrap": false,
+        "n_jobs": -1,
+        "random_state": 44
+      },
+      "dropped_hyperparams": [],
+      "preprocessing": {
+        "impute": "median",
+        "scale": false,
+        "missing_indicator": false,
+        "missing_count": false
+      },
+      "internal_validation": {},
+      "unsupported_claims": [],
+      "status": "ok",
+      "error_type": null,
+      "metrics": {
+        "f1": 0.924791086350975,
+        "accuracy": 0.941304347826087,
+        "balanced_accuracy": 0.9370581595675163,
+        "precision": 0.9325842696629213,
+        "recall": 0.9171270718232044,
+        "roc_auc": 0.9802669359789302,
+        "pr_auc": 0.9729396980977283,
+        "average_precision": 0.9729396980977283,
+        "specificity": 0.956989,
+        "balanced_accuracy_at_best_cut": 0.9397,
+        "cut_headroom": 0.002642,
+        "brier": 0.048284,
+        "calibration_error": 0.032601,
+        "balanced_accuracy_ci_low": 0.919931,
+        "balanced_accuracy_ci_high": 0.953597,
+        "train_f1": 0.9990800367985281,
+        "train_accuracy": 0.9992753623188406,
+        "train_balanced_accuracy": 0.9990808823529411,
+        "train_val_gap": 0.062023
+      },
+      "train_time_sec": 7.538,
+      "critic": null
+    }
+  ]
+}

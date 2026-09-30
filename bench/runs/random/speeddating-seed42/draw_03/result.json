@@ -1,0 +1,47 @@
+{
+  "metrics": {
+    "f1": 0.19154929577464788,
+    "accuracy": 0.8287589498806682,
+    "balanced_accuracy": 0.5455227743271222,
+    "precision": 0.43037974683544306,
+    "recall": 0.12318840579710146,
+    "roc_auc": 0.6771299171842651,
+    "pr_auc": 0.3003385154581898,
+    "average_precision": 0.3003385154581898,
+    "specificity": 0.967857,
+    "balanced_accuracy_at_best_cut": 0.6444,
+    "cut_headroom": 0.098877,
+    "brier": 0.13484,
+    "calibration_error": 0.059819,
+    "balanced_accuracy_ci_low": 0.525062,
+    "balanced_accuracy_ci_high": 0.566307,
+    "train_f1": 1.0,
+    "train_accuracy": 1.0,
+    "train_balanced_accuracy": 1.0,
+    "train_val_gap": 0.454477
+  },
+  "split": "val",
+  "applied_hyperparams": {
+    "n_neighbors": 7,
+    "weights": "distance"
+  },
+  "dropped_hyperparams": [],
+  "applied_preprocessing": {
+    "impute": "mean",
+    "scale": false,
+    "missing_indicator": true,
+    "missing_count": false
+  },
+  "train_time_sec": 3.455,
+  "status": "ok",
+  "error_type": null,
+  "log_tail": "features: 수치 61개 + 범주형 58개를 one-hot 180열로; 고유값 50개 초과로 제외 1개 (field)\nloaded bench/data/speeddating.csv: 8378 rows x 241 encoded features\nmemory estimate 30.8 MB vs budget 2048.0 MB\nsplit: train 60% / val 20% / test 20% (stratified, seed=42) — test는 반복 밖에서 저장된 모델로 1회만 채점합니다 {'train': 5026, 'val': 1676, 'test': 1676}\nestimator=knn applied_hyperparams={'n_neighbors': 7, 'weights': 'distance'}\npreprocessing applied: impute=mean scale=False missing_indicator=True missing_count=False\nfitting on 5026 rows, validating on 1676 rows\nmodel saved to model.joblib (18.5 MB)\nfeature schema saved to feature_schema.json (241 columns)\nbalanced_accuracy=0.5455 (95% CI 0.5251~0.5663, 폭 0.0412) — row 단위 재표집 400회\nval predictions saved to val_predictions.npz (9 KB)\npaired comparison skipped (no_baseline)\ntrain_val_gap measured on balanced_accuracy (maximize)\nmetrics: {\"f1\": 0.1915, \"accuracy\": 0.8288, \"balanced_accuracy\": 0.5455, \"precision\": 0.4304, \"recall\": 0.1232, \"roc_auc\": 0.6771, \"pr_auc\": 0.3003, \"average_precision\": 0.3003, \"specificity\": 0.9679, \"balanced_accuracy_at_best_cut\": 0.6444, \"cut_headroom\": 0.0989, \"brier\": 0.1348, \"calibration_error\": 0.0598, \"balanced_accuracy_ci_low\": 0.5251, \"balanced_accuracy_ci_high\": 0.5663, \"train_f1\": 1.0, \"train_accuracy\": 1.0, \"train_balanced_accuracy\": 1.0, \"train_val_gap\": 0.4545}",
+  "paired": {
+    "metric": "balanced_accuracy",
+    "baseline_iteration": null,
+    "status": "skipped",
+    "reason": "no_baseline"
+  },
+  "model_path": "bench\\runs\\random\\speeddating-seed42\\draw_03\\model.joblib",
+  "schema_path": "bench\\runs\\random\\speeddating-seed42\\draw_03\\feature_schema.json"
+}

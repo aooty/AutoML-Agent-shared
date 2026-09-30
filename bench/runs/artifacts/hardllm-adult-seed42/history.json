@@ -1,0 +1,315 @@
+{
+  "thread_id": "hardllm-adult-seed42",
+  "goal": {
+    "metric": "balanced_accuracy",
+    "direction": "maximize",
+    "mode": "auto",
+    "threshold": 0.8832,
+    "source": "derived",
+    "reference": {
+      "source": "baseline",
+      "metric": "balanced_accuracy",
+      "baseline": 0.7664,
+      "margin": 0.5,
+      "ks": 0.6476,
+      "ranking_ceiling": 0.8238,
+      "exceeds_ranking_ceiling": true,
+      "required_ks": 0.7664,
+      "ks_shortfall": 0.1188,
+      "passable_margin": 0.245,
+      "baseline_ci": [
+        0.7575,
+        0.7762
+      ],
+      "baseline_ci_unit": "row",
+      "chance": 0.5
+    }
+  },
+  "iterations": 3,
+  "stop_reason": "stalled",
+  "critic_runs": 2,
+  "best": {
+    "iteration": 1,
+    "model": "hist_gbdt",
+    "hyperparams": {
+      "max_iter": 400,
+      "learning_rate": 0.08,
+      "max_depth": 8,
+      "max_leaf_nodes": 31,
+      "l2_regularization": 1.0,
+      "min_samples_leaf": 20,
+      "early_stopping": false,
+      "class_weight": "balanced"
+    },
+    "preprocessing": {
+      "impute": "none",
+      "scale": false,
+      "missing_indicator": false,
+      "missing_count": false
+    },
+    "metric": "balanced_accuracy",
+    "score": 0.8451930220678899,
+    "metrics": {
+      "f1": 0.7209724238026125,
+      "accuracy": 0.8425632101545706,
+      "balanced_accuracy": 0.8451930220678899,
+      "precision": 0.6258267716535433,
+      "recall": 0.8502353444587077,
+      "roc_auc": 0.9291055908760323,
+      "pr_auc": 0.8319110811267931,
+      "average_precision": 0.8319110811267931,
+      "specificity": 0.840151,
+      "balanced_accuracy_at_best_cut": 0.8467,
+      "cut_headroom": 0.001507,
+      "brier": 0.10499,
+      "calibration_error": 0.089875,
+      "balanced_accuracy_ci_low": 0.836549,
+      "balanced_accuracy_ci_high": 0.852934,
+      "train_f1": 0.7759588959254391,
+      "train_accuracy": 0.872031122031122,
+      "train_balanced_accuracy": 0.8905709460770079,
+      "train_val_gap": 0.045378
+    },
+    "train_time_sec": 12.084,
+    "plan_strategy": "Attempt 1: replace the linear baseline with a gradient-boosted tree ensemble to raise the ranking itself, and move the operating point in the same fit. Fit hist_gbdt on all 29,304 training rows with impute: none so the estimator splits on NaN directly in workclass/occupation/native-country's one-hot encoding, no scaling, early_stopping disabled so the full training split is used, 400 boosting iterations at learning_rate 0.08, max_leaf_nodes 31, max_depth 8, l2_regularization 1.0, and class_weight 'balanced' to push recall up against specificity, since balanced_accuracy is their mean and the default cut on a 3.18:1 target sits far on the specificity side (baseline recall 0.6008). Then read roc_auc / balanced_accuracy_at_best_cut / cut_headroom: cut_headroom tells attempt 2 whether the remaining distance is on the ranking axis (needs more capacity or a different family) or on the operating point (needs an explicit weight map heavier than 'balanced')."
+  },
+  "holdout": {
+    "status": "ok",
+    "split": "test",
+    "test_fraction": 0.2,
+    "iteration": 1,
+    "model": "hist_gbdt",
+    "metric": "balanced_accuracy",
+    "score": 0.8415641466360779,
+    "val_score": 0.8451930220678899,
+    "metrics": {
+      "f1": 0.7152915688752483,
+      "accuracy": 0.8385709898659024,
+      "balanced_accuracy": 0.8415641466360779,
+      "precision": 0.6188691034051859,
+      "recall": 0.8473053892215568,
+      "roc_auc": 0.9272698331349299,
+      "pr_auc": 0.8287782112264979,
+      "average_precision": 0.8287782112264979,
+      "specificity": 0.835823,
+      "balanced_accuracy_at_best_cut": 0.8445,
+      "cut_headroom": 0.002936,
+      "brier": 0.105947,
+      "calibration_error": 0.089655,
+      "balanced_accuracy_ci_low": 0.833464,
+      "balanced_accuracy_ci_high": 0.850102
+    },
+    "wall_time_sec": 6.322,
+    "selection_gap": 0.003629,
+    "score_ci": [
+      0.833464,
+      0.850102
+    ],
+    "val_inside_ci": true
+  },
+  "models": {
+    "mode": "all",
+    "kept_iteration": 1,
+    "removed": [],
+    "freed_bytes": 0
+  },
+  "history": [
+    {
+      "iteration": 1,
+      "model": "hist_gbdt",
+      "hyperparams": {
+        "max_iter": 400,
+        "learning_rate": 0.08,
+        "max_depth": 8,
+        "max_leaf_nodes": 31,
+        "l2_regularization": 1.0,
+        "min_samples_leaf": 20,
+        "early_stopping": false,
+        "class_weight": "balanced"
+      },
+      "dropped_hyperparams": [],
+      "preprocessing": {
+        "impute": "none",
+        "scale": false,
+        "missing_indicator": false,
+        "missing_count": false
+      },
+      "internal_validation": {},
+      "unsupported_claims": [
+        "feature_engineering"
+      ],
+      "status": "ok",
+      "error_type": null,
+      "metrics": {
+        "f1": 0.7209724238026125,
+        "accuracy": 0.8425632101545706,
+        "balanced_accuracy": 0.8451930220678899,
+        "precision": 0.6258267716535433,
+        "recall": 0.8502353444587077,
+        "roc_auc": 0.9291055908760323,
+        "pr_auc": 0.8319110811267931,
+        "average_precision": 0.8319110811267931,
+        "specificity": 0.840151,
+        "balanced_accuracy_at_best_cut": 0.8467,
+        "cut_headroom": 0.001507,
+        "brier": 0.10499,
+        "calibration_error": 0.089875,
+        "balanced_accuracy_ci_low": 0.836549,
+        "balanced_accuracy_ci_high": 0.852934,
+        "train_f1": 0.7759588959254391,
+        "train_accuracy": 0.872031122031122,
+        "train_balanced_accuracy": 0.8905709460770079,
+        "train_val_gap": 0.045378
+      },
+      "train_time_sec": 12.084,
+      "critic": {
+        "failure_type": "wrong_model_family",
+        "evidence": "Attempt 1 (hist_gbdt, class_weight='balanced') scored balanced_accuracy 0.8452 (95% CI 0.8365–0.8529) against the bar 0.8832 — short by 0.0380, and the bar sits outside the CI, so the shortfall is real. The operating point is already spent: recall 0.8502 vs specificity 0.8402 are nearly equal (so 'balanced' is essentially at the crossing and a heavier positive weight would push specificity below recall), and cut_headroom is only 0.001507, i.e. the very best cut of this ranking would give balanced_accuracy_at_best_cut 0.8467 — 4% of the remaining 0.0380, leaving 96% on the ranking axis. Capacity is not the binding constraint in the overfitting sense either: train_balanced_accuracy 0.8906 vs val 0.8452 is train_val_gap 0.045378, and train itself (0.8906) is barely above the bar, so there is no large train-side headroom being lost to variance. roc_auc 0.9291 / pr_auc 0.8319 are already strong, which is why the ranking has to move rather than the cut. Runtime is not a constraint (train_time_sec 12.084, wall 14.595, returncode 0, error_type null, dropped_hyperparams empty). Sizing the family swap honestly: only one family has been tried (hist_gbdt, max 0.8452), so there is no measured per-family span here, and the recorded sizes for a family swap elsewhere are 0.0022–0.0077 roc_auc — smaller than the 0.0380 of balanced_accuracy still needed, so a second family is the best available lever but is not guaranteed to close the gap on its own; with 4 iterations left it is worth one attempt before concluding the bar is out of reach for the columns as given (no feature derivation is available).",
+        "direction": "Spend the next attempt raising the ranking itself with a different tree family — fit xgboost under the same impute: none / no-scale pipeline (moving only the family, so the row stays attributable), with deeper capacity and more, slower trees, since the operating point is already exhausted (cut_headroom 0.0015) and the 0.0380 still missing has to come from a better ordering.",
+        "concrete_changes": {
+          "model": "xgboost",
+          "n_estimators": 1200,
+          "learning_rate": 0.03,
+          "max_depth": 8,
+          "min_child_weight": 2,
+          "subsample": 0.9,
+          "colsample_bytree": 0.8,
+          "reg_lambda": 1.0,
+          "scale_pos_weight": 3.18,
+          "early_stopping_rounds": 60,
+          "preprocessing": "unchanged (impute: none, scale: false, missing_indicator: false, missing_count: false)"
+        },
+        "unsupported_claims": [],
+        "source": "llm"
+      }
+    },
+    {
+      "iteration": 2,
+      "model": "xgboost",
+      "hyperparams": {
+        "n_estimators": 1200,
+        "learning_rate": 0.03,
+        "max_depth": 8,
+        "min_child_weight": 2,
+        "subsample": 0.9,
+        "colsample_bytree": 0.8,
+        "reg_lambda": 1.0,
+        "scale_pos_weight": 3.18,
+        "early_stopping_rounds": 60
+      },
+      "dropped_hyperparams": [],
+      "preprocessing": {
+        "impute": "none",
+        "scale": false,
+        "missing_indicator": false,
+        "missing_count": false
+      },
+      "internal_validation": {
+        "held_out_rows": 2931,
+        "fit_rows": 26373,
+        "validation_fraction": 0.1,
+        "stopped_at_iter": 759,
+        "max_iter": 1200
+      },
+      "unsupported_claims": [],
+      "status": "ok",
+      "error_type": null,
+      "metrics": {
+        "f1": 0.7220577350111029,
+        "accuracy": 0.8462483365748797,
+        "balanced_accuracy": 0.8423347579745131,
+        "precision": 0.6361265079882621,
+        "recall": 0.8348309798887462,
+        "roc_auc": 0.9287812984639391,
+        "pr_auc": 0.8288219194378493,
+        "average_precision": 0.8288219194378493,
+        "specificity": 0.849839,
+        "balanced_accuracy_at_best_cut": 0.8475,
+        "cut_headroom": 0.005165,
+        "brier": 0.102509,
+        "calibration_error": 0.078902,
+        "balanced_accuracy_ci_low": 0.834814,
+        "balanced_accuracy_ci_high": 0.850997,
+        "train_f1": 0.8021462105969148,
+        "train_accuracy": 0.8892642642642643,
+        "train_balanced_accuracy": 0.906003527417918,
+        "train_val_gap": 0.063669
+      },
+      "train_time_sec": 10.58,
+      "critic": {
+        "failure_type": "data_issue",
+        "evidence": "Attempt 2 (xgboost) scored balanced_accuracy 0.8423 (95% CI 0.8348–0.8510) vs the bar 0.8832 — short by 0.0409, bar far outside the CI. The paired Δ vs iteration 1 is -0.0029 (95% CI -0.0074 to +0.0014, P(better) 0.092), so the family swap produced movement this measurement cannot resolve — not a regression and not a cause to diagnose. The prescription that produced it was wrong_model_family, and it paid nothing: hist_gbdt 0.8452 and xgboost 0.8423 are one CI width (0.0162) apart. What is different this time is that the ranking-ceiling span is now measured: the two families' balanced_accuracy_at_best_cut are 0.8467 and 0.8475 (span 0.0008) while the distance from the best cut to the bar is 0.0357 — 45x that span; in KS terms the bar demands 0.7664 and the best ranking so far is 0.6950. Operating point is also spent: cut_headroom 0.005165 is 13% of the remaining 0.0409, recall 0.8348 vs specificity 0.8498 are essentially at the crossing (scale_pos_weight 3.18 slightly overshot toward specificity), leaving 87% on the ranking. Capacity is not binding: train_balanced_accuracy 0.9060 vs val 0.8423, train_val_gap 0.063669, early stopping fired at iter 759/1200; runtime 10.58s, returncode 0, dropped_hyperparams empty. So a third family off the same list cannot plausibly cover 0.0357 when two families spanned 0.0008 — the remaining distance is in the information the columns carry, and the pipeline (impute: none, no missingness columns) has never been moved on its own in this run.",
+        "direction": "Stop spending attempts on another tree family off the same list — with 3 iterations left, the only lever that can move the ranking axis is adding information to the columns, so prescribe the one pipeline change the executor supports alone (median imputation plus missing_count, family held at hist_gbdt) as a single-lever transition, and if it moves nothing, accept the bar is out of reach for these columns.",
+        "concrete_changes": {
+          "model": "hist_gbdt",
+          "impute": "median",
+          "missing_count": true,
+          "missing_indicator": false,
+          "scale": false,
+          "max_iter": 400,
+          "learning_rate": 0.08,
+          "max_depth": 8,
+          "max_leaf_nodes": 31,
+          "l2_regularization": 1.0,
+          "min_samples_leaf": 20,
+          "early_stopping": false,
+          "class_weight": "balanced"
+        },
+        "unsupported_claims": [],
+        "source": "llm"
+      }
+    },
+    {
+      "iteration": 3,
+      "model": "hist_gbdt",
+      "hyperparams": {
+        "max_iter": 400,
+        "learning_rate": 0.08,
+        "max_depth": 8,
+        "max_leaf_nodes": 31,
+        "l2_regularization": 1.0,
+        "min_samples_leaf": 20,
+        "early_stopping": false,
+        "class_weight": "balanced"
+      },
+      "dropped_hyperparams": [
+        "missing_count",
+        "missing_indicator",
+        "scale"
+      ],
+      "preprocessing": {
+        "impute": "median",
+        "scale": false,
+        "missing_indicator": false,
+        "missing_count": true
+      },
+      "internal_validation": {},
+      "unsupported_claims": [],
+      "status": "ok",
+      "error_type": null,
+      "metrics": {
+        "f1": 0.7209724238026125,
+        "accuracy": 0.8425632101545706,
+        "balanced_accuracy": 0.8451930220678899,
+        "precision": 0.6258267716535433,
+        "recall": 0.8502353444587077,
+        "roc_auc": 0.9291055908760323,
+        "pr_auc": 0.8319110811267931,
+        "average_precision": 0.8319110811267931,
+        "specificity": 0.840151,
+        "balanced_accuracy_at_best_cut": 0.8467,
+        "cut_headroom": 0.001507,
+        "brier": 0.10499,
+        "calibration_error": 0.089875,
+        "balanced_accuracy_ci_low": 0.836549,
+        "balanced_accuracy_ci_high": 0.852934,
+        "train_f1": 0.7759588959254391,
+        "train_accuracy": 0.872031122031122,
+        "train_balanced_accuracy": 0.8905709460770079,
+        "train_val_gap": 0.045378
+      },
+      "train_time_sec": 13.324,
+      "critic": null
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "model": "random_forest",
+  "hyperparams": {
+    "n_estimators": 127,
+    "max_depth": 55,
+    "min_samples_leaf": 2,
+    "class_weight": "balanced"
+  },
+  "preprocessing": {
+    "impute": "median",
+    "scale": true,
+    "missing_indicator": true,
+    "missing_count": false
+  },
+  "target_missing": {
+    "policy": "reject"
+  },
+  "data": {
+    "path": "bench/data/spambase.csv",
+    "target_column": "class"
+  },
+  "metric": "balanced_accuracy",
+  "task": "classification",
+  "seed": 42,
+  "memory_limit_mb": 2048
+}

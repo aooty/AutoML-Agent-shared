@@ -1,0 +1,30 @@
+{
+  "model": "mlp",
+  "hyperparams": {
+    "hidden_layer_sizes": [
+      479,
+      116
+    ],
+    "alpha": 0.000252,
+    "learning_rate_init": 0.220099,
+    "batch_size": 2104,
+    "max_iter": 2
+  },
+  "preprocessing": {
+    "impute": "median",
+    "scale": true,
+    "missing_indicator": true,
+    "missing_count": false
+  },
+  "target_missing": {
+    "policy": "reject"
+  },
+  "data": {
+    "path": "bench/data/spambase.csv",
+    "target_column": "class"
+  },
+  "metric": "balanced_accuracy",
+  "task": "classification",
+  "seed": 43,
+  "memory_limit_mb": 2048
+}

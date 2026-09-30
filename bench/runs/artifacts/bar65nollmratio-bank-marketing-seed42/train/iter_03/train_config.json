@@ -1,0 +1,30 @@
+{
+  "model": "hist_gbdt",
+  "hyperparams": {
+    "max_iter": 800,
+    "learning_rate": 0.02,
+    "max_depth": 5,
+    "class_weight": {
+      "0": 1.0,
+      "1": 7.547
+    }
+  },
+  "preprocessing": {
+    "impute": "median"
+  },
+  "target_missing": {
+    "policy": "reject"
+  },
+  "data": {
+    "path": "bench/data/bank-marketing.csv",
+    "target_column": "Class"
+  },
+  "metric": "balanced_accuracy",
+  "task": "classification",
+  "seed": 42,
+  "paired_baseline": {
+    "iteration": 2,
+    "path": "bench\\runs\\artifacts\\bar65nollmratio-bank-marketing-seed42\\train\\iter_02\\val_predictions.npz"
+  },
+  "memory_limit_mb": 2048
+}

@@ -1,0 +1,60 @@
+{
+  "metrics": {
+    "f1": 0.5181476846057572,
+    "accuracy": 0.7702863961813843,
+    "balanced_accuracy": 0.7621428571428571,
+    "precision": 0.39579349904397704,
+    "recall": 0.75,
+    "roc_auc": 0.8477924430641822,
+    "pr_auc": 0.5378499455429482,
+    "average_precision": 0.5378499455429482,
+    "specificity": 0.774286,
+    "balanced_accuracy_at_best_cut": 0.7655,
+    "cut_headroom": 0.003357,
+    "brier": 0.155564,
+    "calibration_error": 0.177062,
+    "balanced_accuracy_ci_low": 0.734014,
+    "balanced_accuracy_ci_high": 0.791574,
+    "train_f1": 0.5679414157851912,
+    "train_accuracy": 0.7886987664146439,
+    "train_balanced_accuracy": 0.8104923439503053,
+    "train_val_gap": 0.048349
+  },
+  "split": "val",
+  "applied_hyperparams": {
+    "max_iter": 400,
+    "class_weight": {
+      "0": 1.0,
+      "1": 5.07
+    }
+  },
+  "dropped_hyperparams": [
+    "l2_regularization",
+    "learning_rate",
+    "max_depth"
+  ],
+  "applied_preprocessing": {
+    "impute": "median",
+    "scale": true,
+    "missing_indicator": false,
+    "missing_count": false
+  },
+  "train_time_sec": 2.989,
+  "status": "ok",
+  "error_type": null,
+  "log_tail": "features: 수치 61개 + 범주형 58개를 one-hot 180열로; 고유값 50개 초과로 제외 1개 (field)\nloaded bench/data/speeddating.csv: 8378 rows x 241 encoded features\nmemory estimate 30.8 MB vs budget 2048.0 MB\nsplit: train 60% / val 20% / test 20% (stratified, seed=42) — test는 반복 밖에서 저장된 모델로 1회만 채점합니다 {'train': 5026, 'val': 1676, 'test': 1676}\ndropped hyperparams not applicable to logreg: ['l2_regularization', 'learning_rate', 'max_depth']\nestimator=logreg applied_hyperparams={'max_iter': 400, 'class_weight': {0: 1.0, 1: 5.07}}\npreprocessing applied: impute=median scale=True missing_indicator=False missing_count=False\nfitting on 5026 rows, validating on 1676 rows\nmodel saved to model.joblib (11 KB)\nfeature schema saved to feature_schema.json (241 columns)\nbalanced_accuracy=0.7621 (95% CI 0.7340~0.7916, 폭 0.0576) — row 단위 재표집 400회\nval predictions saved to val_predictions.npz (14 KB)\npaired comparison skipped (no_baseline)\ntrain_val_gap measured on balanced_accuracy (maximize)\nmetrics: {\"f1\": 0.5181, \"accuracy\": 0.7703, \"balanced_accuracy\": 0.7621, \"precision\": 0.3958, \"recall\": 0.75, \"roc_auc\": 0.8478, \"pr_auc\": 0.5378, \"average_precision\": 0.5378, \"specificity\": 0.7743, \"balanced_accuracy_at_best_cut\": 0.7655, \"cut_headroom\": 0.0034, \"brier\": 0.1556, \"calibration_error\": 0.1771, \"balanced_accuracy_ci_low\": 0.734, \"balanced_accuracy_ci_high\": 0.7916, \"train_f1\": 0.5679, \"train_accuracy\": 0.7887, \"train_balanced_accuracy\": 0.8105, \"train_val_gap\": 0.0483}",
+  "threads": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "cpu_count": 20
+  },
+  "paired": {
+    "metric": "balanced_accuracy",
+    "baseline_iteration": null,
+    "status": "skipped",
+    "reason": "no_baseline"
+  },
+  "model_path": "bench\\runs\\weightlever\\speeddating-seed42\\ratio\\model.joblib",
+  "schema_path": "bench\\runs\\weightlever\\speeddating-seed42\\ratio\\feature_schema.json"
+}

@@ -1,0 +1,33 @@
+{
+  "thread_id": "hardnollm-spambase-seed43",
+  "metric": "balanced_accuracy",
+  "goal_mode": "auto",
+  "threshold": null,
+  "goal_margin": 0.5,
+  "direction": "maximize",
+  "max_iterations": 5,
+  "time_budget_sec": 3600,
+  "stall_limit": 2,
+  "search_past_goal": false,
+  "dry_run": false,
+  "dry_run_scenario": "success",
+  "no_llm": true,
+  "seed": 43,
+  "llm_model": "claude-opus-5",
+  "llm_max_tokens": 8000,
+  "llm_timeout_sec": 180.0,
+  "dataset_card_path": "bench\\cards\\spambase-seed43.json",
+  "data_path": null,
+  "target_column": null,
+  "on_missing_target": null,
+  "caveats": [],
+  "group_column": null,
+  "artifacts_root": "bench\\runs\\artifacts",
+  "keep_models": "all",
+  "threads": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "cpu_count": 20
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "metrics": {
+    "f1": 0.7181113460183227,
+    "accuracy": 0.8362166035418159,
+    "balanced_accuracy": 0.8483711969336603,
+    "precision": 0.6105452366686639,
+    "recall": 0.8716852010265184,
+    "roc_auc": 0.9326777266160913,
+    "pr_auc": 0.8358309023190572,
+    "average_precision": 0.8358309023190572,
+    "specificity": 0.825057,
+    "balanced_accuracy_at_best_cut": 0.8504,
+    "cut_headroom": 0.002029,
+    "brier": 0.107535,
+    "calibration_error": 0.105654,
+    "balanced_accuracy_ci_low": 0.840998,
+    "balanced_accuracy_ci_high": 0.85615
+  },
+  "split": "test",
+  "applied_hyperparams": {},
+  "dropped_hyperparams": [],
+  "applied_preprocessing": {
+    "impute": "none",
+    "scale": false,
+    "missing_indicator": false,
+    "missing_count": false
+  },
+  "train_time_sec": 4.918,
+  "status": "ok",
+  "error_type": null,
+  "log_tail": "encoding from feature_schema.json: 108 columns\nloaded bench/data/adult.csv: 48842 rows x 108 encoded features\nscoring the held-back test split: 9769 rows, model=model.joblib\nbalanced_accuracy=0.8484 (95% CI 0.8410~0.8561, 폭 0.0152) — row 단위 재표집 400회\ntest metrics: {\"f1\": 0.7181, \"accuracy\": 0.8362, \"balanced_accuracy\": 0.8484, \"precision\": 0.6105, \"recall\": 0.8717, \"roc_auc\": 0.9327, \"pr_auc\": 0.8358, \"average_precision\": 0.8358, \"specificity\": 0.8251, \"balanced_accuracy_at_best_cut\": 0.8504, \"cut_headroom\": 0.002, \"brier\": 0.1075, \"calibration_error\": 0.1057, \"balanced_accuracy_ci_low\": 0.841, \"balanced_accuracy_ci_high\": 0.8561}",
+  "threads": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "cpu_count": 20
+  }
+}

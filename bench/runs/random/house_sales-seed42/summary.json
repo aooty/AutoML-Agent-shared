@@ -1,0 +1,331 @@
+{
+  "arm": "random",
+  "dataset": "house_sales",
+  "data_id": 42731,
+  "seed": 42,
+  "metric": "r2",
+  "task": "regression",
+  "draws": 5,
+  "omp_num_threads": "1",
+  "timeout_sec": 3600,
+  "candidates": [
+    "ridge",
+    "linreg",
+    "elasticnet",
+    "decision_tree",
+    "knn",
+    "hist_gbdt",
+    "random_forest",
+    "extra_trees",
+    "gradient_boosting",
+    "xgboost",
+    "mlp"
+  ],
+  "excluded_by_rows": [
+    "svr"
+  ],
+  "card": "bench/cards/house_sales-seed42.json",
+  "train_script": "automl_agent/scripts/train.py",
+  "best_by_val_for_k": {
+    "1": 1,
+    "2": 2,
+    "3": 2,
+    "4": 4,
+    "5": 4
+  },
+  "records": [
+    {
+      "draw": 1,
+      "model": "xgboost",
+      "hyperparams": {
+        "n_estimators": 27,
+        "learning_rate": 0.046151,
+        "max_depth": 21,
+        "reg_lambda": 75.411799,
+        "subsample": 0.406331
+      },
+      "preprocessing": {
+        "impute": "median",
+        "scale": false,
+        "missing_indicator": true,
+        "missing_count": false
+      },
+      "untouched_params": [],
+      "applied_hyperparams": {
+        "n_estimators": 27,
+        "learning_rate": 0.046151,
+        "max_depth": 21,
+        "reg_lambda": 75.411799,
+        "subsample": 0.406331
+      },
+      "dropped_hyperparams": [],
+      "applied_preprocessing": {
+        "impute": "median",
+        "scale": false,
+        "missing_indicator": true,
+        "missing_count": false
+      },
+      "status": "ok",
+      "returncode": 0,
+      "error_type": null,
+      "val_score": 0.6326656466883829,
+      "val_metrics": {
+        "r2": 0.6326656466883829,
+        "mae": 118090.35154262086,
+        "rmse": 211790.76747154666,
+        "mean_absolute_error": 118090.35154262086,
+        "root_mean_squared_error": 211790.76747154666,
+        "r2_score": 0.6326656466883829,
+        "r2_ci_low": 0.608555,
+        "r2_ci_high": 0.656876,
+        "train_r2": 0.6002670008791053,
+        "train_mae": 114193.3759109663,
+        "train_val_gap": -0.032399
+      },
+      "val_split": "val",
+      "model_file": "bench/runs/random/house_sales-seed42/draw_01/model.joblib",
+      "elapsed_sec": 5.46,
+      "dir": "bench/runs/random/house_sales-seed42/draw_01",
+      "test": {
+        "status": "ok",
+        "test_score": 0.573719579483889,
+        "test_metrics": {
+          "r2": 0.573719579483889,
+          "mae": 124573.91496067545,
+          "rmse": 253857.5830521829,
+          "mean_absolute_error": 124573.91496067545,
+          "root_mean_squared_error": 253857.5830521829,
+          "r2_score": 0.573719579483889,
+          "r2_ci_low": 0.537097,
+          "r2_ci_high": 0.615101
+        },
+        "split": "test"
+      },
+      "selection_gap": 0.058946
+    },
+    {
+      "draw": 2,
+      "model": "linreg",
+      "hyperparams": {},
+      "preprocessing": {
+        "impute": "most_frequent",
+        "scale": true,
+        "missing_indicator": true,
+        "missing_count": true
+      },
+      "untouched_params": [],
+      "applied_hyperparams": {},
+      "dropped_hyperparams": [],
+      "applied_preprocessing": {
+        "impute": "most_frequent",
+        "scale": true,
+        "missing_indicator": true,
+        "missing_count": true
+      },
+      "status": "ok",
+      "returncode": 0,
+      "error_type": null,
+      "val_score": 0.6956863027394256,
+      "val_metrics": {
+        "r2": 0.6956863027394256,
+        "mae": 125214.58096571093,
+        "rmse": 192768.91437449682,
+        "mean_absolute_error": 125214.58096571093,
+        "root_mean_squared_error": 192768.91437449682,
+        "r2_score": 0.6956863027394256,
+        "r2_ci_low": 0.673468,
+        "r2_ci_high": 0.712979,
+        "train_r2": 0.7019124105192129,
+        "train_mae": 124800.96097338924,
+        "train_val_gap": 0.006226
+      },
+      "val_split": "val",
+      "model_file": "bench/runs/random/house_sales-seed42/draw_02/model.joblib",
+      "elapsed_sec": 4.25,
+      "dir": "bench/runs/random/house_sales-seed42/draw_02",
+      "test": {
+        "status": "ok",
+        "test_score": 0.7023065036655332,
+        "test_metrics": {
+          "r2": 0.7023065036655332,
+          "mae": 127080.20352172267,
+          "rmse": 212142.22596195526,
+          "mean_absolute_error": 127080.20352172267,
+          "root_mean_squared_error": 212142.22596195526,
+          "r2_score": 0.7023065036655332,
+          "r2_ci_low": 0.678924,
+          "r2_ci_high": 0.728656
+        },
+        "split": "test"
+      },
+      "selection_gap": -0.00662
+    },
+    {
+      "draw": 3,
+      "model": "elasticnet",
+      "hyperparams": {
+        "alpha": 16.23933,
+        "l1_ratio": 0.571764,
+        "max_iter": 115
+      },
+      "preprocessing": {
+        "impute": "median",
+        "scale": false,
+        "missing_indicator": false,
+        "missing_count": false
+      },
+      "untouched_params": [],
+      "applied_hyperparams": {
+        "alpha": 16.23933,
+        "l1_ratio": 0.571764,
+        "max_iter": 115
+      },
+      "dropped_hyperparams": [],
+      "applied_preprocessing": {
+        "impute": "median",
+        "scale": false,
+        "missing_indicator": false,
+        "missing_count": false
+      },
+      "status": "ok",
+      "returncode": 0,
+      "error_type": null,
+      "val_score": 0.5492956232944204,
+      "val_metrics": {
+        "r2": 0.5492956232944204,
+        "mae": 159896.08473171294,
+        "rmse": 234596.8297811307,
+        "mean_absolute_error": 159896.08473171294,
+        "root_mean_squared_error": 234596.8297811307,
+        "r2_score": 0.5492956232944204,
+        "r2_ci_low": 0.52379,
+        "r2_ci_high": 0.572326,
+        "train_r2": 0.5616060657896458,
+        "train_mae": 159072.70583358585,
+        "train_val_gap": 0.01231
+      },
+      "val_split": "val",
+      "model_file": "bench/runs/random/house_sales-seed42/draw_03/model.joblib",
+      "elapsed_sec": 4.23,
+      "dir": "bench/runs/random/house_sales-seed42/draw_03"
+    },
+    {
+      "draw": 4,
+      "model": "extra_trees",
+      "hyperparams": {
+        "n_estimators": 179,
+        "max_depth": 17,
+        "min_samples_leaf": 7
+      },
+      "preprocessing": {
+        "impute": "mean",
+        "scale": false,
+        "missing_indicator": true,
+        "missing_count": false
+      },
+      "untouched_params": [],
+      "applied_hyperparams": {
+        "n_estimators": 179,
+        "max_depth": 17,
+        "min_samples_leaf": 7
+      },
+      "dropped_hyperparams": [],
+      "applied_preprocessing": {
+        "impute": "mean",
+        "scale": false,
+        "missing_indicator": true,
+        "missing_count": false
+      },
+      "status": "ok",
+      "returncode": 0,
+      "error_type": null,
+      "val_score": 0.858540202819972,
+      "val_metrics": {
+        "r2": 0.858540202819972,
+        "mae": 73720.20983012998,
+        "rmse": 131429.47309610323,
+        "mean_absolute_error": 73720.20983012998,
+        "root_mean_squared_error": 131429.47309610323,
+        "r2_score": 0.858540202819972,
+        "r2_ci_low": 0.843281,
+        "r2_ci_high": 0.873332,
+        "train_r2": 0.9090122507839767,
+        "train_mae": 56111.17956120919,
+        "train_val_gap": 0.050472
+      },
+      "val_split": "val",
+      "model_file": "bench/runs/random/house_sales-seed42/draw_04/model.joblib",
+      "elapsed_sec": 4.91,
+      "dir": "bench/runs/random/house_sales-seed42/draw_04",
+      "test": {
+        "status": "ok",
+        "test_score": 0.8509293955891526,
+        "test_metrics": {
+          "r2": 0.8509293955891526,
+          "mae": 78271.96031814572,
+          "rmse": 150119.96492463743,
+          "mean_absolute_error": 78271.96031814572,
+          "root_mean_squared_error": 150119.96492463743,
+          "r2_score": 0.8509293955891526,
+          "r2_ci_low": 0.832266,
+          "r2_ci_high": 0.869701
+        },
+        "split": "test"
+      },
+      "selection_gap": 0.007611
+    },
+    {
+      "draw": 5,
+      "model": "xgboost",
+      "hyperparams": {
+        "n_estimators": 3,
+        "learning_rate": 0.030645,
+        "max_depth": 45,
+        "reg_lambda": 83.5942,
+        "subsample": 0.990425
+      },
+      "preprocessing": {
+        "impute": "most_frequent",
+        "scale": true,
+        "missing_indicator": false,
+        "missing_count": true
+      },
+      "untouched_params": [],
+      "applied_hyperparams": {
+        "n_estimators": 3,
+        "learning_rate": 0.030645,
+        "max_depth": 45,
+        "reg_lambda": 83.5942,
+        "subsample": 0.990425
+      },
+      "dropped_hyperparams": [],
+      "applied_preprocessing": {
+        "impute": "most_frequent",
+        "scale": true,
+        "missing_indicator": false,
+        "missing_count": true
+      },
+      "status": "ok",
+      "returncode": 0,
+      "error_type": null,
+      "val_score": 0.10342685120821782,
+      "val_metrics": {
+        "r2": 0.10342685120821782,
+        "mae": 217836.72837873004,
+        "rmse": 330878.93205545645,
+        "mean_absolute_error": 217836.72837873004,
+        "root_mean_squared_error": 330878.93205545645,
+        "r2_score": 0.10342685120821782,
+        "r2_ci_low": 0.098282,
+        "r2_ci_high": 0.10852,
+        "train_r2": 0.09807416339871122,
+        "train_mae": 216078.0797601604,
+        "train_val_gap": -0.005353
+      },
+      "val_split": "val",
+      "model_file": "bench/runs/random/house_sales-seed42/draw_05/model.joblib",
+      "elapsed_sec": 4.77,
+      "dir": "bench/runs/random/house_sales-seed42/draw_05"
+    }
+  ]
+}

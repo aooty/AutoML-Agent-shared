@@ -1,0 +1,147 @@
+{
+  "generated_by": "bench/class_weight_key.py",
+  "corrects": "docs/REPLAN-SEEDS.md",
+  "dataset": "speeddating",
+  "run_seed": 42,
+  "seed": 42,
+  "resamples": 4000,
+  "score_tolerance": 1e-06,
+  "threads": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "cpu_count": 20
+  },
+  "preregistered": false,
+  "datasets": [
+    {
+      "dataset": "speeddating-seed42-it1",
+      "metric": "balanced_accuracy",
+      "task": "binary",
+      "verdict": "ok",
+      "refusal": null,
+      "test_rows": 1676,
+      "test_fingerprint": "1cb427764715caa82986be0169a1467d",
+      "config_ladder": {
+        "recorded@it1 → refit": [],
+        "refit → refit+class_weight": [
+          "hyperparams.class_weight"
+        ],
+        "refit+class_weight → new@it1": [
+          "preprocessing.missing_count"
+        ]
+      },
+      "arms": {
+        "recorded@it1": {
+          "label": "iteration 1",
+          "fits": 1,
+          "val_score": 0.6597308488612836,
+          "test_recorded": NaN,
+          "test_reproduced": 0.6894824016563147,
+          "selection_gap": -0.029751552795031055,
+          "dir": "bench/runs/artifacts/hardllm-speeddating-seed42/train/iter_01",
+          "class_weight": null,
+          "missing_count": true
+        },
+        "refit": {
+          "label": "refit",
+          "fits": 1,
+          "val_score": 0.6597308488612836,
+          "test_recorded": NaN,
+          "test_reproduced": 0.6894824016563147,
+          "selection_gap": -0.029751552795031055,
+          "dir": "bench/runs/artifacts/classweightkey-speeddating-seed42/refit",
+          "class_weight": null,
+          "missing_count": true
+        },
+        "refit+class_weight": {
+          "label": "refit",
+          "fits": 1,
+          "val_score": 0.6990786749482402,
+          "test_recorded": NaN,
+          "test_reproduced": 0.7357194616977225,
+          "selection_gap": -0.036640786749482346,
+          "dir": "bench/runs/artifacts/classweightkey-speeddating-seed42/refit-class-weight",
+          "class_weight": "balanced",
+          "missing_count": true
+        },
+        "new@it1": {
+          "label": "iteration 1",
+          "fits": 1,
+          "val_score": 0.704896480331263,
+          "test_recorded": NaN,
+          "test_reproduced": 0.7375310559006212,
+          "selection_gap": -0.032634575569358226,
+          "dir": "bench/runs/artifacts/hardllm2-speeddating-seed42/train/iter_01",
+          "class_weight": "balanced",
+          "missing_count": false
+        }
+      },
+      "pairs": [
+        {
+          "a": "refit",
+          "b": "recorded@it1",
+          "kind": "code_shift",
+          "delta": 0.0,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "p_better": NaN,
+          "resamples_used": 0,
+          "identical_predictions": true
+        },
+        {
+          "a": "refit+class_weight",
+          "b": "refit",
+          "kind": "key_shift",
+          "delta": 0.04623706004140782,
+          "ci_low": 0.02515899101289691,
+          "ci_high": 0.0674189353377228,
+          "p_better": 1.0,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "new@it1",
+          "b": "refit+class_weight",
+          "kind": "count_shift",
+          "delta": 0.0018115942028986698,
+          "ci_low": -0.012661835977653673,
+          "ci_high": 0.01618663665920478,
+          "p_better": 0.583,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "new@it1",
+          "b": "recorded@it1",
+          "kind": "plan_shift",
+          "delta": 0.04804865424430649,
+          "ci_low": 0.028649497715694583,
+          "ci_high": 0.06883195272907934,
+          "p_better": 1.0,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        }
+      ]
+    }
+  ],
+  "decomposition": {
+    "terms": {
+      "code_shift": 0.0,
+      "key_shift": 0.04623706004140782,
+      "count_shift": 0.0018115942028986698
+    },
+    "sum_of_terms": 0.04804865424430649,
+    "plan_shift": 0.04804865424430649,
+    "residual": 0.0,
+    "recorded_plan_shift": 0.048,
+    "val_agreement": {
+      "recorded": 0.6597308488612836,
+      "refit": 0.6597308488612836,
+      "gap": 0.0,
+      "tolerance": 1e-06,
+      "agrees": true
+    },
+    "status": "기록된 첫 시도와 새 첫 시도의 차이 +0.0480가 코드 +0.0000 · class_weight +0.0462 · missing_count +0.0018로 갈립니다. 코드 항은 예측이 동일해 0입니다 (같은 config, 두 코드 버전). REPLAN-SEEDS.md가 +0.0480를 class_weight 한 키에 귀속했는데, 그 몫은 +0.0462이고 missing_count가 +0.0018를 따로 가져갔습니다"
+  }
+}

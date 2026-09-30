@@ -1,0 +1,38 @@
+{
+  "model": "hist_gbdt",
+  "hyperparams": {
+    "max_iter": 1200,
+    "learning_rate": 0.02,
+    "max_leaf_nodes": 127,
+    "min_samples_leaf": 5,
+    "l2_regularization": 3.0,
+    "max_bins": 255,
+    "early_stopping": false,
+    "class_weight": {
+      "0": 1.0,
+      "1": 9.0
+    },
+    "random_state": 42
+  },
+  "preprocessing": {
+    "impute": "none",
+    "scale": false,
+    "missing_indicator": false,
+    "missing_count": true
+  },
+  "target_missing": {
+    "policy": "reject"
+  },
+  "data": {
+    "path": "bench/data/speeddating.csv",
+    "target_column": "match"
+  },
+  "metric": "balanced_accuracy",
+  "task": "classification",
+  "seed": 42,
+  "paired_baseline": {
+    "iteration": 4,
+    "path": "bench\\runs\\artifacts\\hardllm-speeddating-seed42\\train\\iter_04\\val_predictions.npz"
+  },
+  "memory_limit_mb": 2048
+}

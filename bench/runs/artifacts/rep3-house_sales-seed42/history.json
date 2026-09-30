@@ -1,0 +1,133 @@
+{
+  "thread_id": "rep3-house_sales-seed42",
+  "goal": {
+    "metric": "r2",
+    "direction": "maximize",
+    "mode": "auto",
+    "threshold": 0.7718,
+    "source": "derived",
+    "reference": {
+      "source": "baseline",
+      "metric": "r2",
+      "baseline": 0.6957,
+      "margin": 0.25,
+      "baseline_ci": [
+        0.6735,
+        0.713
+      ],
+      "baseline_ci_unit": "row",
+      "chance": -0.0
+    }
+  },
+  "iterations": 1,
+  "stop_reason": "goal_reached",
+  "critic_runs": 0,
+  "best": {
+    "iteration": 1,
+    "model": "hist_gbdt",
+    "hyperparams": {
+      "learning_rate": 0.06,
+      "max_iter": 600,
+      "max_leaf_nodes": 31,
+      "max_depth": 8,
+      "l2_regularization": 1.0,
+      "early_stopping": false
+    },
+    "preprocessing": {
+      "impute": "median",
+      "scale": false,
+      "missing_indicator": false,
+      "missing_count": false
+    },
+    "metric": "r2",
+    "score": 0.8890462182866024,
+    "metrics": {
+      "r2": 0.8890462182866024,
+      "mae": 64154.88766131979,
+      "rmse": 116398.47913672974,
+      "mean_absolute_error": 64154.88766131979,
+      "root_mean_squared_error": 116398.47913672974,
+      "r2_score": 0.8890462182866024,
+      "r2_ci_low": 0.872703,
+      "r2_ci_high": 0.903433,
+      "train_r2": 0.9757841043603381,
+      "train_mae": 39373.63506459922,
+      "train_val_gap": 0.086738
+    },
+    "train_time_sec": 3.958,
+    "plan_strategy": "Switch from the linear baseline to a gradient-boosted tree ensemble (hist_gbdt) fitted on all 12,967 training rows. The King County housing target is driven by strong non-linear and interaction structure — lat/long geography, zipcode as an unordered numeric code, and sqft_living × grade — none of which a ridge fit can express, which is exactly why the baseline stalls at r2 0.6957. A single hist_gbdt with moderate depth and many boosting rounds at a low learning rate captures axis-aligned splits on lat/long/zipcode and multiplicative size×quality effects directly, and routinely lands r2 0.87-0.90 on this dataset — well past the 0.7718 bar. Configuration: learning_rate 0.06, max_iter 600, max_leaf_nodes 31, max_depth 8, l2_regularization 1.0, early_stopping disabled so all 12,967 rows are used for the fit and the score is comparable to the baseline's. Preprocessing: median imputation (no missingness anywhere, so it is a no-op), scaling off since tree splits are scale-invariant; no missingness columns since the card reports 0.0 missing in every column, so they would be constant."
+  },
+  "holdout": {
+    "status": "ok",
+    "split": "test",
+    "test_fraction": 0.2,
+    "iteration": 1,
+    "model": "hist_gbdt",
+    "metric": "r2",
+    "score": 0.8684785905121291,
+    "val_score": 0.8890462182866024,
+    "metrics": {
+      "r2": 0.8684785905121291,
+      "mae": 67969.45985217691,
+      "rmse": 141007.00081117984,
+      "mean_absolute_error": 67969.45985217691,
+      "root_mean_squared_error": 141007.00081117984,
+      "r2_score": 0.8684785905121291,
+      "r2_ci_low": 0.819645,
+      "r2_ci_high": 0.908709
+    },
+    "wall_time_sec": 4.313,
+    "selection_gap": 0.020568,
+    "score_ci": [
+      0.819645,
+      0.908709
+    ],
+    "val_inside_ci": true
+  },
+  "models": {
+    "mode": "best",
+    "kept_iteration": 1,
+    "removed": [],
+    "freed_bytes": 0
+  },
+  "history": [
+    {
+      "iteration": 1,
+      "model": "hist_gbdt",
+      "hyperparams": {
+        "learning_rate": 0.06,
+        "max_iter": 600,
+        "max_leaf_nodes": 31,
+        "max_depth": 8,
+        "l2_regularization": 1.0,
+        "early_stopping": false
+      },
+      "dropped_hyperparams": [],
+      "preprocessing": {
+        "impute": "median",
+        "scale": false,
+        "missing_indicator": false,
+        "missing_count": false
+      },
+      "internal_validation": {},
+      "unsupported_claims": [],
+      "status": "ok",
+      "error_type": null,
+      "metrics": {
+        "r2": 0.8890462182866024,
+        "mae": 64154.88766131979,
+        "rmse": 116398.47913672974,
+        "mean_absolute_error": 64154.88766131979,
+        "root_mean_squared_error": 116398.47913672974,
+        "r2_score": 0.8890462182866024,
+        "r2_ci_low": 0.872703,
+        "r2_ci_high": 0.903433,
+        "train_r2": 0.9757841043603381,
+        "train_mae": 39373.63506459922,
+        "train_val_gap": 0.086738
+      },
+      "train_time_sec": 3.958,
+      "critic": null
+    }
+  ]
+}

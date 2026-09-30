@@ -1,0 +1,425 @@
+{
+  "arm": "random",
+  "dataset": "adult",
+  "data_id": 1590,
+  "seed": 43,
+  "metric": "balanced_accuracy",
+  "task": "classification",
+  "draws": 5,
+  "omp_num_threads": "1",
+  "timeout_sec": 3600,
+  "candidates": [
+    "logreg",
+    "decision_tree",
+    "knn",
+    "hist_gbdt",
+    "random_forest",
+    "extra_trees",
+    "gradient_boosting",
+    "xgboost",
+    "mlp"
+  ],
+  "excluded_by_rows": [
+    "svc"
+  ],
+  "card": "bench/cards/adult-seed43.json",
+  "train_script": "automl_agent/scripts/train.py",
+  "best_by_val_for_k": {
+    "1": 1,
+    "2": 1,
+    "3": 3,
+    "4": 4,
+    "5": 5
+  },
+  "records": [
+    {
+      "draw": 1,
+      "model": "gradient_boosting",
+      "hyperparams": {
+        "n_estimators": 429,
+        "learning_rate": 0.000348,
+        "max_depth": 64,
+        "subsample": 0.198552
+      },
+      "preprocessing": {
+        "impute": "mean",
+        "scale": false,
+        "missing_indicator": true,
+        "missing_count": true
+      },
+      "untouched_params": [],
+      "applied_hyperparams": {
+        "n_estimators": 429,
+        "learning_rate": 0.000348,
+        "max_depth": 64,
+        "subsample": 0.198552
+      },
+      "dropped_hyperparams": [],
+      "applied_preprocessing": {
+        "impute": "mean",
+        "scale": false,
+        "missing_indicator": true,
+        "missing_count": true
+      },
+      "status": "ok",
+      "returncode": 0,
+      "error_type": null,
+      "val_score": 0.5,
+      "val_metrics": {
+        "f1": 0.0,
+        "accuracy": 0.7607738765482649,
+        "balanced_accuracy": 0.5,
+        "precision": 0.0,
+        "recall": 0.0,
+        "roc_auc": 0.9171745664470978,
+        "pr_auc": 0.8112668797368061,
+        "average_precision": 0.8112668797368061,
+        "specificity": 1.0,
+        "balanced_accuracy_at_best_cut": 0.8298,
+        "cut_headroom": 0.3298,
+        "brier": 0.159117,
+        "calibration_error": 0.133813,
+        "balanced_accuracy_ci_low": 0.5,
+        "balanced_accuracy_ci_high": 0.5,
+        "train_f1": 0.0,
+        "train_accuracy": 0.7607152607152607,
+        "train_balanced_accuracy": 0.5,
+        "train_val_gap": 0.0
+      },
+      "val_split": "val",
+      "model_file": "bench/runs/random/adult-seed43/draw_01/model.joblib",
+      "elapsed_sec": 140.62,
+      "dir": "bench/runs/random/adult-seed43/draw_01",
+      "test": {
+        "status": "ok",
+        "test_score": 0.5,
+        "test_metrics": {
+          "f1": 0.0,
+          "accuracy": 0.7606715119254785,
+          "balanced_accuracy": 0.5,
+          "precision": 0.0,
+          "recall": 0.0,
+          "roc_auc": 0.9171142690684151,
+          "pr_auc": 0.8081371293396191,
+          "average_precision": 0.8081371293396191,
+          "specificity": 1.0,
+          "balanced_accuracy_at_best_cut": 0.8338,
+          "cut_headroom": 0.3338,
+          "brier": 0.159097,
+          "calibration_error": 0.132772,
+          "balanced_accuracy_ci_low": 0.5,
+          "balanced_accuracy_ci_high": 0.5
+        },
+        "split": "test"
+      },
+      "selection_gap": 0.0
+    },
+    {
+      "draw": 2,
+      "model": "gradient_boosting",
+      "hyperparams": {
+        "n_estimators": 2,
+        "learning_rate": 0.019048,
+        "max_depth": 48,
+        "subsample": 0.181652
+      },
+      "preprocessing": {
+        "impute": "median",
+        "scale": true,
+        "missing_indicator": true,
+        "missing_count": true
+      },
+      "untouched_params": [],
+      "applied_hyperparams": {
+        "n_estimators": 2,
+        "learning_rate": 0.019048,
+        "max_depth": 48,
+        "subsample": 0.181652
+      },
+      "dropped_hyperparams": [],
+      "applied_preprocessing": {
+        "impute": "median",
+        "scale": true,
+        "missing_indicator": true,
+        "missing_count": true
+      },
+      "status": "ok",
+      "returncode": 0,
+      "error_type": null,
+      "val_score": 0.5,
+      "val_metrics": {
+        "f1": 0.0,
+        "accuracy": 0.7607738765482649,
+        "balanced_accuracy": 0.5,
+        "precision": 0.0,
+        "recall": 0.0,
+        "roc_auc": 0.7954079330819368,
+        "pr_auc": 0.5658308272554192,
+        "average_precision": 0.5658308272554192,
+        "specificity": 1.0,
+        "balanced_accuracy_at_best_cut": 0.7834,
+        "cut_headroom": 0.2834,
+        "brier": 0.175316,
+        "calibration_error": 0.0007,
+        "balanced_accuracy_ci_low": 0.5,
+        "balanced_accuracy_ci_high": 0.5,
+        "train_f1": 0.0,
+        "train_accuracy": 0.7607152607152607,
+        "train_balanced_accuracy": 0.5,
+        "train_val_gap": 0.0
+      },
+      "val_split": "val",
+      "model_file": "bench/runs/random/adult-seed43/draw_02/model.joblib",
+      "elapsed_sec": 5.84,
+      "dir": "bench/runs/random/adult-seed43/draw_02"
+    },
+    {
+      "draw": 3,
+      "model": "random_forest",
+      "hyperparams": {
+        "n_estimators": 54,
+        "max_depth": 11,
+        "min_samples_leaf": 20,
+        "class_weight": null
+      },
+      "preprocessing": {
+        "impute": "median",
+        "scale": true,
+        "missing_indicator": true,
+        "missing_count": false
+      },
+      "untouched_params": [],
+      "applied_hyperparams": {
+        "n_estimators": 54,
+        "max_depth": 11,
+        "min_samples_leaf": 20,
+        "class_weight": null
+      },
+      "dropped_hyperparams": [],
+      "applied_preprocessing": {
+        "impute": "median",
+        "scale": true,
+        "missing_indicator": true,
+        "missing_count": false
+      },
+      "status": "ok",
+      "returncode": 0,
+      "error_type": null,
+      "val_score": 0.732810199150374,
+      "val_metrics": {
+        "f1": 0.620507399577167,
+        "accuracy": 0.8530044016787798,
+        "balanced_accuracy": 0.732810199150374,
+        "precision": 0.8113337940566689,
+        "recall": 0.5023534445870774,
+        "roc_auc": 0.9074093489716837,
+        "pr_auc": 0.7751147900207392,
+        "average_precision": 0.7751147900207392,
+        "specificity": 0.963267,
+        "balanced_accuracy_at_best_cut": 0.8256,
+        "cut_headroom": 0.09279,
+        "brier": 0.109069,
+        "calibration_error": 0.071005,
+        "balanced_accuracy_ci_low": 0.720899,
+        "balanced_accuracy_ci_high": 0.743851,
+        "train_f1": 0.6039639001946558,
+        "train_accuracy": 0.8472563472563472,
+        "train_balanced_accuracy": 0.7236977772282199,
+        "train_val_gap": -0.009112
+      },
+      "val_split": "val",
+      "model_file": "bench/runs/random/adult-seed43/draw_03/model.joblib",
+      "elapsed_sec": 5.85,
+      "dir": "bench/runs/random/adult-seed43/draw_03",
+      "test": {
+        "status": "ok",
+        "test_score": 0.7306217198223658,
+        "test_metrics": {
+          "f1": 0.6160737812911726,
+          "accuracy": 0.8508547446002661,
+          "balanced_accuracy": 0.7306217198223658,
+          "precision": 0.8023335621139327,
+          "recall": 0.5,
+          "roc_auc": 0.9105535972290957,
+          "pr_auc": 0.7772349433794485,
+          "average_precision": 0.7772349433794485,
+          "specificity": 0.961243,
+          "balanced_accuracy_at_best_cut": 0.8329,
+          "cut_headroom": 0.102278,
+          "brier": 0.108239,
+          "calibration_error": 0.07438,
+          "balanced_accuracy_ci_low": 0.720026,
+          "balanced_accuracy_ci_high": 0.741953
+        },
+        "split": "test"
+      },
+      "selection_gap": 0.002188
+    },
+    {
+      "draw": 4,
+      "model": "xgboost",
+      "hyperparams": {
+        "n_estimators": 64,
+        "learning_rate": 0.018557,
+        "max_depth": 53,
+        "reg_lambda": 17.747991,
+        "subsample": 0.945115
+      },
+      "preprocessing": {
+        "impute": "none",
+        "scale": false,
+        "missing_indicator": false,
+        "missing_count": false
+      },
+      "untouched_params": [],
+      "applied_hyperparams": {
+        "n_estimators": 64,
+        "learning_rate": 0.018557,
+        "max_depth": 53,
+        "reg_lambda": 17.747991,
+        "subsample": 0.945115
+      },
+      "dropped_hyperparams": [],
+      "applied_preprocessing": {
+        "impute": "none",
+        "scale": false,
+        "missing_indicator": false,
+        "missing_count": false
+      },
+      "status": "ok",
+      "returncode": 0,
+      "error_type": null,
+      "val_score": 0.7374644070005938,
+      "val_metrics": {
+        "f1": 0.6318902930895401,
+        "accuracy": 0.8598628314054663,
+        "balanced_accuracy": 0.7374644070005938,
+        "precision": 0.8502170767004341,
+        "recall": 0.5027813436029097,
+        "roc_auc": 0.9170017832196338,
+        "pr_auc": 0.8064972185880386,
+        "average_precision": 0.8064972185880386,
+        "specificity": 0.972147,
+        "balanced_accuracy_at_best_cut": 0.8352,
+        "cut_headroom": 0.097736,
+        "brier": 0.104796,
+        "calibration_error": 0.088231,
+        "balanced_accuracy_ci_low": 0.725275,
+        "balanced_accuracy_ci_high": 0.747538,
+        "train_f1": 0.6359696641386782,
+        "train_accuracy": 0.8624078624078624,
+        "train_balanced_accuracy": 0.7389840737505795,
+        "train_val_gap": 0.00152
+      },
+      "val_split": "val",
+      "model_file": "bench/runs/random/adult-seed43/draw_04/model.joblib",
+      "elapsed_sec": 7.43,
+      "dir": "bench/runs/random/adult-seed43/draw_04",
+      "test": {
+        "status": "ok",
+        "test_score": 0.7402264506110912,
+        "test_metrics": {
+          "f1": 0.6363636363636364,
+          "accuracy": 0.8607841130105436,
+          "balanced_accuracy": 0.7402264506110912,
+          "precision": 0.8487874465049928,
+          "recall": 0.5089820359281437,
+          "roc_auc": 0.9195661678546132,
+          "pr_auc": 0.8115404832935081,
+          "average_precision": 0.8115404832935081,
+          "specificity": 0.971471,
+          "balanced_accuracy_at_best_cut": 0.8406,
+          "cut_headroom": 0.100374,
+          "brier": 0.10362,
+          "calibration_error": 0.083945,
+          "balanced_accuracy_ci_low": 0.730821,
+          "balanced_accuracy_ci_high": 0.750565
+        },
+        "split": "test"
+      },
+      "selection_gap": -0.002762
+    },
+    {
+      "draw": 5,
+      "model": "extra_trees",
+      "hyperparams": {
+        "n_estimators": 11,
+        "max_depth": 37,
+        "min_samples_leaf": 14,
+        "class_weight": "balanced"
+      },
+      "preprocessing": {
+        "impute": "most_frequent",
+        "scale": true,
+        "missing_indicator": false,
+        "missing_count": false
+      },
+      "untouched_params": [],
+      "applied_hyperparams": {
+        "n_estimators": 11,
+        "max_depth": 37,
+        "min_samples_leaf": 14,
+        "class_weight": "balanced"
+      },
+      "dropped_hyperparams": [],
+      "applied_preprocessing": {
+        "impute": "most_frequent",
+        "scale": true,
+        "missing_indicator": false,
+        "missing_count": false
+      },
+      "status": "ok",
+      "returncode": 0,
+      "error_type": null,
+      "val_score": 0.8076986586816749,
+      "val_metrics": {
+        "f1": 0.6516672062156037,
+        "accuracy": 0.7797113317637424,
+        "balanced_accuracy": 0.8076986586816749,
+        "precision": 0.5240822702421244,
+        "recall": 0.8613607188703466,
+        "roc_auc": 0.8952340041076463,
+        "pr_auc": 0.7347369386448737,
+        "average_precision": 0.7347369386448737,
+        "specificity": 0.754037,
+        "balanced_accuracy_at_best_cut": 0.809,
+        "cut_headroom": 0.001301,
+        "brier": 0.139562,
+        "calibration_error": 0.150424,
+        "balanced_accuracy_ci_low": 0.799158,
+        "balanced_accuracy_ci_high": 0.816427,
+        "train_f1": 0.655367231638418,
+        "train_accuracy": 0.7814291564291564,
+        "train_balanced_accuracy": 0.8112742232970902,
+        "train_val_gap": 0.003576
+      },
+      "val_split": "val",
+      "model_file": "bench/runs/random/adult-seed43/draw_05/model.joblib",
+      "elapsed_sec": 5.27,
+      "dir": "bench/runs/random/adult-seed43/draw_05",
+      "test": {
+        "status": "ok",
+        "test_score": 0.8105617590011741,
+        "test_metrics": {
+          "f1": 0.6560364464692483,
+          "accuracy": 0.7836011874296244,
+          "balanced_accuracy": 0.8105617590011741,
+          "precision": 0.5294117647058824,
+          "recall": 0.8622754491017964,
+          "roc_auc": 0.8969036090112872,
+          "pr_auc": 0.7342824853585049,
+          "average_precision": 0.7342824853585049,
+          "specificity": 0.758848,
+          "balanced_accuracy_at_best_cut": 0.814,
+          "cut_headroom": 0.003438,
+          "brier": 0.137623,
+          "calibration_error": 0.146889,
+          "balanced_accuracy_ci_low": 0.801699,
+          "balanced_accuracy_ci_high": 0.819187
+        },
+        "split": "test"
+      },
+      "selection_gap": -0.002863
+    }
+  ]
+}

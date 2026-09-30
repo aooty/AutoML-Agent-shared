@@ -1,0 +1,371 @@
+{
+  "generated_by": "bench/paired.py",
+  "seed": 43,
+  "resamples": 4000,
+  "score_tolerance": 1e-06,
+  "threads": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "cpu_count": 20
+  },
+  "datasets": [
+    {
+      "dataset": "adult",
+      "metric": "balanced_accuracy",
+      "task": "binary",
+      "verdict": "ok",
+      "refusal": null,
+      "test_rows": 9769,
+      "test_fingerprint": "5f70716669e546ab5768478022516d31",
+      "missing_arms": [
+        "llm"
+      ],
+      "arms": {
+        "no_llm": {
+          "label": "iteration 3",
+          "fits": 3,
+          "val_score": 0.8420008505011116,
+          "test_recorded": 0.8476129809704083,
+          "test_reproduced": 0.8476129809704083,
+          "selection_gap": -0.00561213046929665,
+          "dir": "bench/runs/artifacts/nollm-adult-seed43/train/iter_03"
+        },
+        "random@k=3": {
+          "label": "draw 3",
+          "fits": 3,
+          "val_score": 0.732810199150374,
+          "test_recorded": 0.7306217198223658,
+          "test_reproduced": 0.7306217198223658,
+          "selection_gap": 0.0021884793280082526,
+          "dir": "bench/runs/random/adult-seed43/draw_03"
+        },
+        "random@k=5": {
+          "label": "draw 5",
+          "fits": 5,
+          "val_score": 0.8076986586816749,
+          "test_recorded": 0.8105617590011741,
+          "test_reproduced": 0.8105617590011741,
+          "selection_gap": -0.002863100319499212,
+          "dir": "bench/runs/random/adult-seed43/draw_05"
+        }
+      },
+      "pairs": [
+        {
+          "a": "no_llm",
+          "b": "random@k=3",
+          "kind": "primary",
+          "delta": 0.11699126114804248,
+          "ci_low": 0.10685153706113874,
+          "ci_high": 0.1275062967044247,
+          "p_better": 1.0,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "no_llm",
+          "b": "random@k=5",
+          "kind": "best_of_5",
+          "delta": 0.03705122196923416,
+          "ci_low": 0.02919738231778639,
+          "ci_high": 0.044542439166106174,
+          "p_better": 1.0,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        }
+      ]
+    },
+    {
+      "dataset": "bank-marketing",
+      "metric": "balanced_accuracy",
+      "task": "binary",
+      "verdict": "ok",
+      "refusal": null,
+      "test_rows": 9043,
+      "test_fingerprint": "8905074b8fe6e6b762da533d3399aaf6",
+      "missing_arms": [
+        "llm"
+      ],
+      "arms": {
+        "no_llm": {
+          "label": "iteration 2",
+          "fits": 2,
+          "val_score": 0.7804365820487856,
+          "test_recorded": 0.7712384870971446,
+          "test_reproduced": 0.7712384870971446,
+          "selection_gap": 0.009198094951641034,
+          "dir": "bench/runs/artifacts/nollm-bank-marketing-seed43/train/iter_02"
+        },
+        "random@k=2": {
+          "label": "draw 2",
+          "fits": 2,
+          "val_score": 0.8147873014459921,
+          "test_recorded": 0.8017814001441739,
+          "test_reproduced": 0.8017814001441739,
+          "selection_gap": 0.013005901301818223,
+          "dir": "bench/runs/random/bank-marketing-seed43/draw_02"
+        },
+        "random@k=5": {
+          "label": "draw 2",
+          "fits": 5,
+          "val_score": 0.8147873014459921,
+          "test_recorded": 0.8017814001441739,
+          "test_reproduced": 0.8017814001441739,
+          "selection_gap": 0.013005901301818223,
+          "dir": "bench/runs/random/bank-marketing-seed43/draw_02"
+        }
+      },
+      "pairs": [
+        {
+          "a": "no_llm",
+          "b": "random@k=2",
+          "kind": "primary",
+          "delta": -0.030542913047029274,
+          "ci_low": -0.045278253377305594,
+          "ci_high": -0.016723935196307278,
+          "p_better": 0.0,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "no_llm",
+          "b": "random@k=5",
+          "kind": "best_of_5",
+          "delta": -0.030542913047029274,
+          "ci_low": -0.045278253377305594,
+          "ci_high": -0.016723935196307278,
+          "p_better": 0.0,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        }
+      ]
+    },
+    {
+      "dataset": "speeddating",
+      "metric": "balanced_accuracy",
+      "task": "binary",
+      "verdict": "ok",
+      "refusal": null,
+      "test_rows": 1676,
+      "test_fingerprint": "6cf28a0074ee1c3ad89a3557fb831650",
+      "missing_arms": [
+        "llm"
+      ],
+      "arms": {
+        "no_llm": {
+          "label": "iteration 4",
+          "fits": 5,
+          "val_score": 0.7326552795031056,
+          "test_recorded": 0.7163250517598344,
+          "test_reproduced": 0.7163250517598344,
+          "selection_gap": 0.016330227743271197,
+          "dir": "bench/runs/artifacts/nollm-speeddating-seed43/train/iter_04"
+        },
+        "random@k=5": {
+          "label": "draw 5",
+          "fits": 5,
+          "val_score": 0.5733592132505176,
+          "test_recorded": 0.5617753623188406,
+          "test_reproduced": 0.5617753623188406,
+          "selection_gap": 0.01158385093167702,
+          "dir": "bench/runs/random/speeddating-seed43/draw_05"
+        }
+      },
+      "pairs": [
+        {
+          "a": "no_llm",
+          "b": "random@k=5",
+          "kind": "primary",
+          "delta": 0.1545496894409938,
+          "ci_low": 0.12317322451903395,
+          "ci_high": 0.18546273132007102,
+          "p_better": 1.0,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        }
+      ]
+    },
+    {
+      "dataset": "spambase",
+      "metric": "balanced_accuracy",
+      "task": "binary",
+      "verdict": "ok",
+      "refusal": null,
+      "test_rows": 921,
+      "test_fingerprint": "02a6d47d5875a78c6b1d6e66d0af1ef3",
+      "missing_arms": [
+        "llm"
+      ],
+      "arms": {
+        "no_llm": {
+          "label": "iteration 1",
+          "fits": 1,
+          "val_score": 0.957479356026852,
+          "test_recorded": 0.9526718800912349,
+          "test_reproduced": 0.9526718800912349,
+          "selection_gap": 0.004807475935617034,
+          "dir": "bench/runs/artifacts/nollm-spambase-seed43/train/iter_01"
+        },
+        "random@k=1": {
+          "label": "draw 1",
+          "fits": 1,
+          "val_score": 0.7608170458820966,
+          "test_recorded": 0.7654477324565301,
+          "test_reproduced": 0.7654477324565301,
+          "selection_gap": -0.00463068657443344,
+          "dir": "bench/runs/random/spambase-seed43/draw_01"
+        },
+        "random@k=5": {
+          "label": "draw 1",
+          "fits": 5,
+          "val_score": 0.7608170458820966,
+          "test_recorded": 0.7654477324565301,
+          "test_reproduced": 0.7654477324565301,
+          "selection_gap": -0.00463068657443344,
+          "dir": "bench/runs/random/spambase-seed43/draw_01"
+        }
+      },
+      "pairs": [
+        {
+          "a": "no_llm",
+          "b": "random@k=1",
+          "kind": "primary",
+          "delta": 0.18722414763470485,
+          "ci_low": 0.1584589213271652,
+          "ci_high": 0.21678933653302557,
+          "p_better": 1.0,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "no_llm",
+          "b": "random@k=5",
+          "kind": "best_of_5",
+          "delta": 0.18722414763470485,
+          "ci_low": 0.1584589213271652,
+          "ci_high": 0.21678933653302557,
+          "p_better": 1.0,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        }
+      ]
+    },
+    {
+      "dataset": "house_sales",
+      "metric": "r2",
+      "task": "regression",
+      "verdict": "ok",
+      "refusal": null,
+      "test_rows": 4323,
+      "test_fingerprint": "4a20c7f2a20f279fb1207fe3990b7398",
+      "missing_arms": [
+        "llm"
+      ],
+      "arms": {
+        "no_llm": {
+          "label": "iteration 1",
+          "fits": 1,
+          "val_score": 0.8833152590659645,
+          "test_recorded": 0.8831548600622428,
+          "test_reproduced": 0.8831548600622428,
+          "selection_gap": 0.0001603990037217784,
+          "dir": "bench/runs/artifacts/nollm-house_sales-seed43/train/iter_01"
+        },
+        "random@k=1": {
+          "label": "draw 1",
+          "fits": 1,
+          "val_score": 0.762036003642813,
+          "test_recorded": 0.8040616440005774,
+          "test_reproduced": 0.8040616440005774,
+          "selection_gap": -0.04202564035776446,
+          "dir": "bench/runs/random/house_sales-seed43/draw_01"
+        },
+        "random@k=5": {
+          "label": "draw 3",
+          "fits": 5,
+          "val_score": 0.8464759839968603,
+          "test_recorded": 0.8256005470517639,
+          "test_reproduced": 0.8256005470517639,
+          "selection_gap": 0.020875436945096415,
+          "dir": "bench/runs/random/house_sales-seed43/draw_03"
+        }
+      },
+      "pairs": [
+        {
+          "a": "no_llm",
+          "b": "random@k=1",
+          "kind": "primary",
+          "delta": 0.0790932160616653,
+          "ci_low": 0.024876264021413914,
+          "ci_high": 0.13147898478154277,
+          "p_better": 0.99625,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "no_llm",
+          "b": "random@k=5",
+          "kind": "best_of_5",
+          "delta": 0.057554313010478864,
+          "ci_low": 0.042125860933410086,
+          "ci_high": 0.07360600371350824,
+          "p_better": 1.0,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        }
+      ]
+    }
+  ],
+  "criterion": {
+    "challenger": "llm",
+    "seed": 43,
+    "judged_seed": 42,
+    "expected_binary": [
+      "adult",
+      "bank-marketing",
+      "spambase",
+      "speeddating"
+    ],
+    "judged": [],
+    "wins": [],
+    "losses": [],
+    "indistinguishable": [],
+    "not_evaluated": [
+      "adult",
+      "bank-marketing",
+      "spambase",
+      "speeddating"
+    ],
+    "complete": false,
+    "status": "기준 판정 안 함 — 사전 등록은 시드 42만 판정에 씁니다. 시드 43는 잡음 바닥용입니다 (이김 0 / 걸침 0 / 짐 0)"
+  },
+  "criterion_no_llm": {
+    "challenger": "no_llm",
+    "seed": 43,
+    "judged_seed": 42,
+    "expected_binary": [
+      "adult",
+      "bank-marketing",
+      "spambase",
+      "speeddating"
+    ],
+    "judged": [
+      "adult",
+      "bank-marketing",
+      "speeddating",
+      "spambase"
+    ],
+    "wins": [
+      "adult",
+      "speeddating",
+      "spambase"
+    ],
+    "losses": [
+      "bank-marketing"
+    ],
+    "indistinguishable": [],
+    "not_evaluated": [],
+    "complete": false,
+    "status": "기준 판정 안 함 — 사전 등록은 시드 42만 판정에 씁니다. 시드 43는 잡음 바닥용입니다 (이김 3 / 걸침 0 / 짐 1)"
+  }
+}

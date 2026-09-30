@@ -1,0 +1,48 @@
+{
+  "metrics": {
+    "f1": 0.8534850640113798,
+    "accuracy": 0.8880434782608696,
+    "balanced_accuracy": 0.8776262896294976,
+    "precision": 0.8797653958944281,
+    "recall": 0.8287292817679558,
+    "roc_auc": 0.9349145527634211,
+    "pr_auc": 0.8882727151463331,
+    "average_precision": 0.8882727151463331,
+    "specificity": 0.926523,
+    "balanced_accuracy_at_best_cut": 0.8954,
+    "cut_headroom": 0.017774,
+    "brier": 0.107951,
+    "calibration_error": 0.122788,
+    "balanced_accuracy_ci_low": 0.852881,
+    "balanced_accuracy_ci_high": 0.896797,
+    "train_f1": 0.8789868667917449,
+    "train_accuracy": 0.9065217391304348,
+    "train_balanced_accuracy": 0.8986090099915565,
+    "train_val_gap": 0.020983
+  },
+  "split": "val",
+  "applied_hyperparams": {
+    "C": 0.00281,
+    "max_iter": 2,
+    "class_weight": null
+  },
+  "dropped_hyperparams": [],
+  "applied_preprocessing": {
+    "impute": "most_frequent",
+    "scale": true,
+    "missing_indicator": true,
+    "missing_count": false
+  },
+  "train_time_sec": 1.838,
+  "status": "ok",
+  "error_type": null,
+  "log_tail": "features: 수치 57개 + 범주형 0개를 one-hot 0열로\nloaded bench/data/spambase.csv: 4601 rows x 57 encoded features\nmemory estimate 4.0 MB vs budget 2048.0 MB\nsplit: train 60% / val 20% / test 20% (stratified, seed=44) — test는 반복 밖에서 저장된 모델로 1회만 채점합니다 {'train': 2760, 'val': 920, 'test': 921}\nestimator=logreg applied_hyperparams={'C': 0.00281, 'max_iter': 2, 'class_weight': None}\npreprocessing applied: impute=most_frequent scale=True missing_indicator=True missing_count=False\nfitting on 2760 rows, validating on 920 rows\nmodel saved to model.joblib (6 KB)\nfeature schema saved to feature_schema.json (57 columns)\nbalanced_accuracy=0.8776 (95% CI 0.8529~0.8968, 폭 0.0439) — row 단위 재표집 400회\nval predictions saved to val_predictions.npz (7 KB)\npaired comparison skipped (no_baseline)\ntrain_val_gap measured on balanced_accuracy (maximize)\nmetrics: {\"f1\": 0.8535, \"accuracy\": 0.888, \"balanced_accuracy\": 0.8776, \"precision\": 0.8798, \"recall\": 0.8287, \"roc_auc\": 0.9349, \"pr_auc\": 0.8883, \"average_precision\": 0.8883, \"specificity\": 0.9265, \"balanced_accuracy_at_best_cut\": 0.8954, \"cut_headroom\": 0.0178, \"brier\": 0.108, \"calibration_error\": 0.1228, \"balanced_accuracy_ci_low\": 0.8529, \"balanced_accuracy_ci_high\": 0.8968, \"train_f1\": 0.879, \"train_accuracy\": 0.9065, \"train_balanced_accuracy\": 0.8986, \"train_val_gap\": 0.021}",
+  "paired": {
+    "metric": "balanced_accuracy",
+    "baseline_iteration": null,
+    "status": "skipped",
+    "reason": "no_baseline"
+  },
+  "model_path": "bench\\runs\\random\\spambase-seed44\\draw_03\\model.joblib",
+  "schema_path": "bench\\runs\\random\\spambase-seed44\\draw_03\\feature_schema.json"
+}

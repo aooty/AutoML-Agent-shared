@@ -1,0 +1,308 @@
+{
+  "thread_id": "bnoise1-adult-seed43",
+  "goal": {
+    "metric": "balanced_accuracy",
+    "direction": "maximize",
+    "mode": "auto",
+    "threshold": 0.9194,
+    "source": "derived",
+    "reference": {
+      "source": "baseline",
+      "metric": "balanced_accuracy",
+      "baseline": 0.7698,
+      "margin": 0.65,
+      "ks": 0.6531,
+      "ranking_ceiling": 0.8266,
+      "exceeds_ranking_ceiling": true,
+      "required_ks": 0.8388,
+      "ks_shortfall": 0.1857,
+      "passable_margin": 0.246,
+      "baseline_ci": [
+        0.7586,
+        0.7798
+      ],
+      "baseline_ci_unit": "row",
+      "chance": 0.5
+    }
+  },
+  "iterations": 3,
+  "stop_reason": "stalled",
+  "critic_runs": 2,
+  "budget": {
+    "spent_sec": 191.327,
+    "total_sec": 3600.0
+  },
+  "best": {
+    "iteration": 1,
+    "model": "hist_gbdt",
+    "hyperparams": {
+      "max_iter": 400,
+      "learning_rate": 0.06,
+      "max_leaf_nodes": 31,
+      "l2_regularization": 1.0,
+      "class_weight": "balanced",
+      "early_stopping": false
+    },
+    "preprocessing": {
+      "impute": "none",
+      "scale": false,
+      "missing_indicator": false,
+      "missing_count": false
+    },
+    "metric": "balanced_accuracy",
+    "score": 0.8441638362689785,
+    "metrics": {
+      "f1": 0.7162790697674418,
+      "accuracy": 0.8376497082608251,
+      "balanced_accuracy": 0.8441638362689785,
+      "precision": 0.6154319090070703,
+      "recall": 0.8566538296961917,
+      "roc_auc": 0.9271773104819598,
+      "pr_auc": 0.8287761682759793,
+      "average_precision": 0.8287761682759793,
+      "specificity": 0.831674,
+      "balanced_accuracy_at_best_cut": 0.8451,
+      "cut_headroom": 0.000936,
+      "brier": 0.108126,
+      "calibration_error": 0.098609,
+      "balanced_accuracy_ci_low": 0.83621,
+      "balanced_accuracy_ci_high": 0.851671,
+      "train_f1": 0.7719006299774159,
+      "train_accuracy": 0.869028119028119,
+      "train_balanced_accuracy": 0.8885971438161071,
+      "train_val_gap": 0.044433
+    },
+    "train_time_sec": 13.243,
+    "plan_strategy": "Attempt 1: swap the linear baseline for a gradient-boosted tree ensemble (hist_gbdt) on the same fixed split, which is the ranking-axis move the goal demands. Fit hist_gbdt with early_stopping disabled so all 29,304 training rows are used, learning_rate 0.06 with max_iter 400, max_leaf_nodes 31, min_samples_leaf 20-equivalent defaults, l2_regularization 1.0, and class_weight 'balanced' so the default predict() cut sits near the recall/specificity balance that balanced_accuracy rewards. Preprocessing: impute 'none' so hist_gbdt splits on NaN itself in workclass/occupation/native-country's one-hot encoding path, and scale false (trees are scale-invariant). No missing_indicator (redundant under impute: none, established). After the run, read balanced_accuracy together with roc_auc, balanced_accuracy_at_best_cut and cut_headroom to see whether the remaining distance to 0.9194 is ranking or operating point."
+  },
+  "holdout": {
+    "status": "ok",
+    "split": "test",
+    "test_fraction": 0.2,
+    "iteration": 1,
+    "model": "hist_gbdt",
+    "metric": "balanced_accuracy",
+    "score": 0.8431738806256223,
+    "val_score": 0.8441638362689785,
+    "metrics": {
+      "f1": 0.7144640627786695,
+      "accuracy": 0.8361142389190296,
+      "balanced_accuracy": 0.8431738806256223,
+      "precision": 0.6127256041602936,
+      "recall": 0.8567151411462789,
+      "roc_auc": 0.9311126291162988,
+      "pr_auc": 0.8328094931388217,
+      "average_precision": 0.8328094931388217,
+      "specificity": 0.829633,
+      "balanced_accuracy_at_best_cut": 0.8472,
+      "cut_headroom": 0.004026,
+      "brier": 0.105806,
+      "calibration_error": 0.095742,
+      "balanced_accuracy_ci_low": 0.835441,
+      "balanced_accuracy_ci_high": 0.851543
+    },
+    "wall_time_sec": 6.567,
+    "selection_gap": 0.00099,
+    "score_ci": [
+      0.835441,
+      0.851543
+    ],
+    "val_inside_ci": true
+  },
+  "models": {
+    "mode": "all",
+    "kept_iteration": 1,
+    "removed": [],
+    "freed_bytes": 0
+  },
+  "history": [
+    {
+      "iteration": 1,
+      "model": "hist_gbdt",
+      "hyperparams": {
+        "max_iter": 400,
+        "learning_rate": 0.06,
+        "max_leaf_nodes": 31,
+        "l2_regularization": 1.0,
+        "class_weight": "balanced",
+        "early_stopping": false
+      },
+      "dropped_hyperparams": [],
+      "preprocessing": {
+        "impute": "none",
+        "scale": false,
+        "missing_indicator": false,
+        "missing_count": false
+      },
+      "internal_validation": {},
+      "unsupported_claims": [
+        "feature_engineering"
+      ],
+      "status": "ok",
+      "error_type": null,
+      "metrics": {
+        "f1": 0.7162790697674418,
+        "accuracy": 0.8376497082608251,
+        "balanced_accuracy": 0.8441638362689785,
+        "precision": 0.6154319090070703,
+        "recall": 0.8566538296961917,
+        "roc_auc": 0.9271773104819598,
+        "pr_auc": 0.8287761682759793,
+        "average_precision": 0.8287761682759793,
+        "specificity": 0.831674,
+        "balanced_accuracy_at_best_cut": 0.8451,
+        "cut_headroom": 0.000936,
+        "brier": 0.108126,
+        "calibration_error": 0.098609,
+        "balanced_accuracy_ci_low": 0.83621,
+        "balanced_accuracy_ci_high": 0.851671,
+        "train_f1": 0.7719006299774159,
+        "train_accuracy": 0.869028119028119,
+        "train_balanced_accuracy": 0.8885971438161071,
+        "train_val_gap": 0.044433
+      },
+      "train_time_sec": 13.243,
+      "critic": {
+        "failure_type": "wrong_model_family",
+        "evidence": "balanced_accuracy=0.8442 (95% CI 0.8362~0.8517)로 바 0.9194에 0.0752 부족하다. 운영점은 이미 최적에 붙어 있다: cut_headroom=0.000936이고 balanced_accuracy_at_best_cut=0.8451이므로 어떤 임계값을 골라도 남은 거리의 1.2%만 살 수 있다. recall 0.8567 vs specificity 0.8317로 class_weight='balanced'는 두 값을 이미 거의 맞췄고(양성 가중치를 더 올리면 specificity가 더 내려가 합이 개선되지 않음), 따라서 나머지 99%는 랭킹에 있다(roc_auc 0.9271, KS=2*0.8451-1=0.6902로 바가 요구하는 0.8388에 0.1486 미달). train_val_gap=0.044433 (train 0.8886 vs val 0.8442)은 과적합이라 부르기엔 작고, 400 iter/lr 0.06에서 13.2초, dropped_hyperparams 비어 있음 — 즉 용량·시간·설정 문제가 아니라 hist_gbdt 랭킹의 상한 문제다. 다만 계열 교체가 지금까지 옮긴 랭킹 폭은 roc_auc 0.0022~0.0077로 남은 0.0752의 3~10%에 불과하므로, 계열 하나 더로 바에 닿는다는 보장은 없다.",
+        "direction": "랭킹 자체를 더 올려야 하므로 다음 시도는 계열을 xgboost로 바꾸되 전처리(impute: none, scale false, 지표 컬럼 없음)는 그대로 두어 이 전이가 계열 단독으로 귀속되게 하고, 용량을 키운 설정(max_depth 8, learning_rate 0.05, n_estimators 800, subsample/colsample 0.8, min_child_weight 5, reg_lambda 2.0, scale_pos_weight 3.18)으로 roc_auc/balanced_accuracy_at_best_cut가 실제로 움직이는지 본다 — 다만 계열 교체로 관측된 랭킹 이동 폭(0.0022~0.0077 roc_auc)은 남은 0.0752의 10분의 1 수준이어서, 바 0.9194는 이 실행기가 허용하는 레버만으로는 도달하지 않을 가능성이 크고, 이 시도는 그 상한을 확정하는 측정으로 쓰라.",
+        "concrete_changes": {
+          "model": "xgboost",
+          "n_estimators": 800,
+          "learning_rate": 0.05,
+          "max_depth": 8,
+          "min_child_weight": 5,
+          "subsample": 0.8,
+          "colsample_bytree": 0.8,
+          "reg_lambda": 2.0,
+          "scale_pos_weight": 3.18,
+          "preprocessing": {
+            "impute": "none",
+            "scale": false,
+            "missing_indicator": false,
+            "missing_count": false
+          }
+        },
+        "unsupported_claims": [],
+        "source": "llm"
+      }
+    },
+    {
+      "iteration": 2,
+      "model": "xgboost",
+      "hyperparams": {
+        "n_estimators": 800,
+        "learning_rate": 0.05,
+        "max_depth": 8,
+        "min_child_weight": 5,
+        "subsample": 0.8,
+        "colsample_bytree": 0.8,
+        "reg_lambda": 2.0,
+        "scale_pos_weight": 3.18
+      },
+      "dropped_hyperparams": [],
+      "preprocessing": {
+        "impute": "none",
+        "scale": false,
+        "missing_indicator": false,
+        "missing_count": false
+      },
+      "internal_validation": {},
+      "unsupported_claims": [],
+      "status": "ok",
+      "error_type": null,
+      "metrics": {
+        "f1": 0.7164510166358595,
+        "accuracy": 0.8429726686457161,
+        "balanced_accuracy": 0.8382751581821524,
+        "precision": 0.6306540839570453,
+        "recall": 0.8292682926829268,
+        "roc_auc": 0.9226160578202576,
+        "pr_auc": 0.8205999741970811,
+        "average_precision": 0.8205999741970811,
+        "specificity": 0.847282,
+        "balanced_accuracy_at_best_cut": 0.8405,
+        "cut_headroom": 0.002225,
+        "brier": 0.106872,
+        "calibration_error": 0.080195,
+        "balanced_accuracy_ci_low": 0.829872,
+        "balanced_accuracy_ci_high": 0.846331,
+        "train_f1": 0.8337141092929916,
+        "train_accuracy": 0.9081012831012831,
+        "train_balanced_accuracy": 0.926840330318874,
+        "train_val_gap": 0.088565
+      },
+      "train_time_sec": 10.509,
+      "critic": {
+        "failure_type": "wrong_model_family",
+        "evidence": "iteration 2(xgboost) balanced_accuracy=0.8383 (95% CI 0.8299~0.8463)으로 바 0.9194에 0.0811 부족하다. 짝지은 Δ(iteration 1 대비) = -0.0059 (95% CI -0.0114~-0.0005, P(개선)=0.015)로 0과 구분되는 소폭 하락 — 즉 hist_gbdt→xgboost 계열 교체는 랭킹을 올리지 못했다. 랭킹 지표도 같은 방향이다: roc_auc 0.9272→0.9226, pr_auc 0.8288→0.8206, balanced_accuracy_at_best_cut 0.8451→0.8405. 운영점은 다시 거의 최적이다: cut_headroom=0.002225로 남은 0.0811의 3%뿐이고, recall 0.8293 vs specificity 0.8473은 거의 대칭이라 scale_pos_weight를 더 밀어도 두 값의 평균은 오르지 않는다. train_val_gap은 0.0444→0.0886으로 커졌지만(train 0.9268 vs val 0.8383) val이 오히려 내려갔으니 용량 부족은 아니고, depth 8·800라운드의 추가 용량이 분산으로만 갔다 — 이는 hyperparam/underfitting이 아니라 이 계열군의 랭킹 상한 문제를 다시 확인한 것이다. 지난번 wrong_model_family 처방과 다른 점은 이제 그 처방의 값이 측정되었다는 것이다: 계열 2개의 balanced_accuracy_at_best_cut이 0.8405~0.8451(폭 0.0046)인데 최적 컷에서도 바까지 0.0743이 남아 부족분이 그 폭의 16배이고, KS는 0.6902(최고)로 요구치 0.8388에 0.1486 미달이다. 따라서 계열을 한 번 더 바꾸는 것으로 바에 닿는다는 근거는 없으며, dropped_hyperparams=[] , 시간 10.5초/2GB 내로 자원 문제도 아니다. 남은 미측정 축은 컬럼 정보(impute/missing_count)뿐인데, 이 실행기 기록상 전처리 단독 전이는 아직 한 번도 없었다.",
+        "direction": "계열 교체는 더 이상 사지 못하므로(두 계열의 best_cut 폭 0.0046 대 남은 0.0743) 남은 3회 중 이번 한 번은 아직 단독으로 측정된 적 없는 정보 레버 하나만 움직여라: iteration 1의 최고 설정(hist_gbdt, max_iter 400, learning_rate 0.06, max_leaf_nodes 31, l2_regularization 1.0, class_weight='balanced', early_stopping=false)을 그대로 두고 preprocessing만 impute='median' + missing_count=true로 바꿔, 랭킹(roc_auc, balanced_accuracy_at_best_cut)이 컬럼 정보로 움직이는지를 계열·하이퍼파라미터 오염 없이 확인한다 — 다만 바 0.9194는 이 실행기의 레버 범위(계열 폭 0.0046, cut_headroom 0.0022) 안에서는 도달 가능성이 매우 낮으므로 이 시도는 상한 확정 측정으로 취급하라.",
+        "concrete_changes": {
+          "model": "hist_gbdt",
+          "max_iter": 400,
+          "learning_rate": 0.06,
+          "max_leaf_nodes": 31,
+          "l2_regularization": 1.0,
+          "class_weight": "balanced",
+          "early_stopping": false,
+          "preprocessing": {
+            "impute": "median",
+            "scale": false,
+            "missing_indicator": false,
+            "missing_count": true
+          }
+        },
+        "unsupported_claims": [],
+        "source": "llm"
+      }
+    },
+    {
+      "iteration": 3,
+      "model": "hist_gbdt",
+      "hyperparams": {
+        "max_iter": 400,
+        "learning_rate": 0.06,
+        "max_leaf_nodes": 31,
+        "l2_regularization": 1.0,
+        "class_weight": "balanced",
+        "early_stopping": false
+      },
+      "dropped_hyperparams": [],
+      "preprocessing": {
+        "impute": "median",
+        "scale": false,
+        "missing_indicator": false,
+        "missing_count": true
+      },
+      "internal_validation": {},
+      "unsupported_claims": [
+        "feature_engineering"
+      ],
+      "status": "ok",
+      "error_type": null,
+      "metrics": {
+        "f1": 0.7162790697674418,
+        "accuracy": 0.8376497082608251,
+        "balanced_accuracy": 0.8441638362689785,
+        "precision": 0.6154319090070703,
+        "recall": 0.8566538296961917,
+        "roc_auc": 0.9271773104819598,
+        "pr_auc": 0.8287761682759793,
+        "average_precision": 0.8287761682759793,
+        "specificity": 0.831674,
+        "balanced_accuracy_at_best_cut": 0.8451,
+        "cut_headroom": 0.000936,
+        "brier": 0.108126,
+        "calibration_error": 0.098609,
+        "balanced_accuracy_ci_low": 0.83621,
+        "balanced_accuracy_ci_high": 0.851671,
+        "train_f1": 0.7719006299774159,
+        "train_accuracy": 0.869028119028119,
+        "train_balanced_accuracy": 0.8885971438161071,
+        "train_val_gap": 0.044433
+      },
+      "train_time_sec": 14.983,
+      "critic": null
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "model": "mlp",
+  "hyperparams": {
+    "hidden_layer_sizes": [
+      256,
+      128,
+      64
+    ],
+    "alpha": 0.0003,
+    "learning_rate_init": 0.0008,
+    "batch_size": 256,
+    "max_iter": 300,
+    "early_stopping": true
+  },
+  "preprocessing": {
+    "impute": "median",
+    "scale": true,
+    "missing_indicator": false,
+    "missing_count": true
+  },
+  "target_missing": {
+    "policy": "reject"
+  },
+  "data": {
+    "path": "bench/data/adult.csv",
+    "target_column": "class"
+  },
+  "metric": "balanced_accuracy",
+  "task": "classification",
+  "seed": 42,
+  "paired_baseline": {
+    "iteration": 2,
+    "path": "bench\\runs\\artifacts\\bar65llm-adult-seed42\\train\\iter_02\\val_predictions.npz"
+  },
+  "memory_limit_mb": 2048
+}

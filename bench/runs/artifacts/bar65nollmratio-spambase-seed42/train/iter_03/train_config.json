@@ -1,0 +1,27 @@
+{
+  "model": "random_forest",
+  "hyperparams": {
+    "n_estimators": 300,
+    "learning_rate": 0.02,
+    "max_depth": 5,
+    "max_iter": 800
+  },
+  "preprocessing": {
+    "impute": "median"
+  },
+  "target_missing": {
+    "policy": "reject"
+  },
+  "data": {
+    "path": "bench/data/spambase.csv",
+    "target_column": "class"
+  },
+  "metric": "balanced_accuracy",
+  "task": "classification",
+  "seed": 42,
+  "paired_baseline": {
+    "iteration": 1,
+    "path": "bench\\runs\\artifacts\\bar65nollmratio-spambase-seed42\\train\\iter_01\\val_predictions.npz"
+  },
+  "memory_limit_mb": 2048
+}

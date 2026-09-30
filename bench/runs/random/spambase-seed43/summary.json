@@ -1,0 +1,333 @@
+{
+  "arm": "random",
+  "dataset": "spambase",
+  "data_id": 44,
+  "seed": 43,
+  "metric": "balanced_accuracy",
+  "task": "classification",
+  "draws": 5,
+  "omp_num_threads": "1",
+  "timeout_sec": 3600,
+  "candidates": [
+    "logreg",
+    "decision_tree",
+    "knn",
+    "hist_gbdt",
+    "random_forest",
+    "extra_trees",
+    "gradient_boosting",
+    "xgboost",
+    "mlp",
+    "svc"
+  ],
+  "excluded_by_rows": [],
+  "card": "bench/cards/spambase-seed43.json",
+  "train_script": "automl_agent/scripts/train.py",
+  "best_by_val_for_k": {
+    "1": 1,
+    "2": 1,
+    "3": 1,
+    "4": 1,
+    "5": 1
+  },
+  "records": [
+    {
+      "draw": 1,
+      "model": "mlp",
+      "hyperparams": {
+        "hidden_layer_sizes": [
+          479,
+          116
+        ],
+        "alpha": 0.000252,
+        "learning_rate_init": 0.220099,
+        "batch_size": 2104,
+        "max_iter": 2
+      },
+      "preprocessing": {
+        "impute": "median",
+        "scale": true,
+        "missing_indicator": true,
+        "missing_count": false
+      },
+      "untouched_params": [],
+      "applied_hyperparams": {
+        "hidden_layer_sizes": [
+          479,
+          116
+        ],
+        "alpha": 0.000252,
+        "learning_rate_init": 0.220099,
+        "batch_size": 2104,
+        "max_iter": 2
+      },
+      "dropped_hyperparams": [],
+      "applied_preprocessing": {
+        "impute": "median",
+        "scale": true,
+        "missing_indicator": true,
+        "missing_count": false
+      },
+      "status": "ok",
+      "returncode": 0,
+      "error_type": null,
+      "val_score": 0.7608170458820966,
+      "val_metrics": {
+        "f1": 0.7021276595744681,
+        "accuracy": 0.7869565217391304,
+        "balanced_accuracy": 0.7608170458820966,
+        "precision": 0.7804054054054054,
+        "recall": 0.638121546961326,
+        "roc_auc": 0.8398730667934018,
+        "pr_auc": 0.8005942876710648,
+        "average_precision": 0.8005942876710648,
+        "specificity": 0.883513,
+        "balanced_accuracy_at_best_cut": 0.7762,
+        "cut_headroom": 0.015383,
+        "brier": 0.206214,
+        "calibration_error": 0.209274,
+        "balanced_accuracy_ci_low": 0.734067,
+        "balanced_accuracy_ci_high": 0.790294,
+        "train_f1": 0.6927029804727647,
+        "train_accuracy": 0.7833333333333333,
+        "train_balanced_accuracy": 0.7547187236138475,
+        "train_val_gap": -0.006098
+      },
+      "val_split": "val",
+      "model_file": "bench/runs/random/spambase-seed43/draw_01/model.joblib",
+      "elapsed_sec": 4.36,
+      "dir": "bench/runs/random/spambase-seed43/draw_01",
+      "test": {
+        "status": "ok",
+        "test_score": 0.7654477324565301,
+        "test_metrics": {
+          "f1": 0.7088989441930619,
+          "accuracy": 0.7904451682953312,
+          "balanced_accuracy": 0.7654477324565301,
+          "precision": 0.7833333333333333,
+          "recall": 0.6473829201101928,
+          "roc_auc": 0.8421359242473612,
+          "pr_auc": 0.7994954609812602,
+          "average_precision": 0.7994954609812602,
+          "specificity": 0.883513,
+          "balanced_accuracy_at_best_cut": 0.7782,
+          "cut_headroom": 0.012752,
+          "brier": 0.20381,
+          "calibration_error": 0.206178,
+          "balanced_accuracy_ci_low": 0.735038,
+          "balanced_accuracy_ci_high": 0.790494
+        },
+        "split": "test"
+      },
+      "selection_gap": -0.004631
+    },
+    {
+      "draw": 2,
+      "model": "knn",
+      "hyperparams": {
+        "n_neighbors": 74,
+        "weights": "distance"
+      },
+      "preprocessing": {
+        "impute": "median",
+        "scale": false,
+        "missing_indicator": true,
+        "missing_count": true
+      },
+      "untouched_params": [],
+      "applied_hyperparams": {
+        "n_neighbors": 74,
+        "weights": "distance"
+      },
+      "dropped_hyperparams": [],
+      "applied_preprocessing": {
+        "impute": "median",
+        "scale": false,
+        "missing_indicator": true,
+        "missing_count": true
+      },
+      "status": "ok",
+      "returncode": 0,
+      "error_type": null,
+      "val_score": 0.7607378363927999,
+      "val_metrics": {
+        "f1": 0.7086834733893558,
+        "accuracy": 0.7739130434782608,
+        "balanced_accuracy": 0.7607378363927999,
+        "precision": 0.71875,
+        "recall": 0.6988950276243094,
+        "roc_auc": 0.8683191746371215,
+        "pr_auc": 0.8205225678274732,
+        "average_precision": 0.8205225678274732,
+        "specificity": 0.822581,
+        "balanced_accuracy_at_best_cut": 0.7785,
+        "cut_headroom": 0.017762,
+        "brier": 0.144012,
+        "calibration_error": 0.052018,
+        "balanced_accuracy_ci_low": 0.734294,
+        "balanced_accuracy_ci_high": 0.787029,
+        "train_f1": 1.0,
+        "train_accuracy": 1.0,
+        "train_balanced_accuracy": 1.0,
+        "train_val_gap": 0.239262
+      },
+      "val_split": "val",
+      "model_file": "bench/runs/random/spambase-seed43/draw_02/model.joblib",
+      "elapsed_sec": 4.56,
+      "dir": "bench/runs/random/spambase-seed43/draw_02"
+    },
+    {
+      "draw": 3,
+      "model": "extra_trees",
+      "hyperparams": {
+        "n_estimators": 2,
+        "max_depth": 56,
+        "min_samples_leaf": 19,
+        "class_weight": "balanced"
+      },
+      "preprocessing": {
+        "impute": "median",
+        "scale": true,
+        "missing_indicator": false,
+        "missing_count": false
+      },
+      "untouched_params": [],
+      "applied_hyperparams": {
+        "n_estimators": 2,
+        "max_depth": 56,
+        "min_samples_leaf": 19,
+        "class_weight": "balanced"
+      },
+      "dropped_hyperparams": [],
+      "applied_preprocessing": {
+        "impute": "median",
+        "scale": true,
+        "missing_indicator": false,
+        "missing_count": false
+      },
+      "status": "ok",
+      "returncode": 0,
+      "error_type": null,
+      "val_score": 0.6027891641418641,
+      "val_metrics": {
+        "f1": 0.613047363717605,
+        "accuracy": 0.5293478260869565,
+        "balanced_accuracy": 0.6027891641418641,
+        "precision": 0.45310435931307796,
+        "recall": 0.9475138121546961,
+        "roc_auc": 0.6038139369096418,
+        "pr_auc": 0.45073833398553537,
+        "average_precision": 0.45073833398553537,
+        "specificity": 0.258065,
+        "balanced_accuracy_at_best_cut": 0.6028,
+        "cut_headroom": 1.1e-05,
+        "brier": 0.234535,
+        "calibration_error": 0.100497,
+        "balanced_accuracy_ci_low": 0.582874,
+        "balanced_accuracy_ci_high": 0.623614,
+        "train_f1": 0.6140611094630674,
+        "train_accuracy": 0.5286231884057971,
+        "train_balanced_accuracy": 0.6024376407261469,
+        "train_val_gap": -0.000352
+      },
+      "val_split": "val",
+      "model_file": "bench/runs/random/spambase-seed43/draw_03/model.joblib",
+      "elapsed_sec": 4.46,
+      "dir": "bench/runs/random/spambase-seed43/draw_03"
+    },
+    {
+      "draw": 4,
+      "model": "svc",
+      "hyperparams": {
+        "C": 0.698497,
+        "kernel": "poly",
+        "gamma": 0.016278,
+        "class_weight": "balanced"
+      },
+      "preprocessing": {
+        "impute": "median",
+        "scale": false,
+        "missing_indicator": true,
+        "missing_count": true
+      },
+      "untouched_params": [],
+      "applied_hyperparams": null,
+      "dropped_hyperparams": [],
+      "applied_preprocessing": null,
+      "status": "too_slow",
+      "returncode": -9,
+      "error_type": null,
+      "val_score": null,
+      "val_metrics": {},
+      "val_split": null,
+      "model_file": null,
+      "elapsed_sec": 3600.05,
+      "dir": "bench/runs/random/spambase-seed43/draw_04"
+    },
+    {
+      "draw": 5,
+      "model": "mlp",
+      "hyperparams": {
+        "hidden_layer_sizes": [
+          249
+        ],
+        "alpha": 11.409548,
+        "learning_rate_init": 4.5e-05,
+        "batch_size": 3,
+        "max_iter": 2
+      },
+      "preprocessing": {
+        "impute": "median",
+        "scale": true,
+        "missing_indicator": true,
+        "missing_count": true
+      },
+      "untouched_params": [],
+      "applied_hyperparams": {
+        "hidden_layer_sizes": [
+          249
+        ],
+        "alpha": 11.409548,
+        "learning_rate_init": 4.5e-05,
+        "batch_size": 3,
+        "max_iter": 2
+      },
+      "dropped_hyperparams": [],
+      "applied_preprocessing": {
+        "impute": "median",
+        "scale": true,
+        "missing_indicator": true,
+        "missing_count": true
+      },
+      "status": "ok",
+      "returncode": 0,
+      "error_type": null,
+      "val_score": 0.6366215172577675,
+      "val_metrics": {
+        "f1": 0.48440366972477067,
+        "accuracy": 0.6945652173913044,
+        "balanced_accuracy": 0.6366215172577675,
+        "precision": 0.7213114754098361,
+        "recall": 0.36464088397790057,
+        "roc_auc": 0.7792332521436067,
+        "pr_auc": 0.6727743514274513,
+        "average_precision": 0.6727743514274513,
+        "specificity": 0.908602,
+        "balanced_accuracy_at_best_cut": 0.7261,
+        "cut_headroom": 0.089478,
+        "brier": 0.239206,
+        "calibration_error": 0.175298,
+        "balanced_accuracy_ci_low": 0.609261,
+        "balanced_accuracy_ci_high": 0.661853,
+        "train_f1": 0.49252839210998206,
+        "train_accuracy": 0.6923913043478261,
+        "train_balanced_accuracy": 0.6376037855333521,
+        "train_val_gap": 0.000982
+      },
+      "val_split": "val",
+      "model_file": "bench/runs/random/spambase-seed43/draw_05/model.joblib",
+      "elapsed_sec": 5.18,
+      "dir": "bench/runs/random/spambase-seed43/draw_05"
+    }
+  ]
+}

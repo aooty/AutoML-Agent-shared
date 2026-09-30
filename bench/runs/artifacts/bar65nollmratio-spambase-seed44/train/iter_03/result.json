@@ -1,0 +1,60 @@
+{
+  "metrics": {
+    "f1": 0.9202797202797203,
+    "accuracy": 0.9380434782608695,
+    "balanced_accuracy": 0.9329145131586765,
+    "precision": 0.9320113314447592,
+    "recall": 0.9088397790055248,
+    "roc_auc": 0.9824798510861601,
+    "pr_auc": 0.9682579423918175,
+    "average_precision": 0.9682579423918175,
+    "specificity": 0.956989,
+    "balanced_accuracy_at_best_cut": 0.9416,
+    "cut_headroom": 0.008685,
+    "brier": 0.046894,
+    "calibration_error": 0.024076,
+    "balanced_accuracy_ci_low": 0.915494,
+    "balanced_accuracy_ci_high": 0.948577,
+    "train_f1": 0.9879740980573543,
+    "train_accuracy": 0.9905797101449275,
+    "train_balanced_accuracy": 0.989014565156206,
+    "train_val_gap": 0.0561
+  },
+  "split": "val",
+  "applied_hyperparams": {
+    "max_iter": 800,
+    "learning_rate": 0.02,
+    "max_depth": 5
+  },
+  "dropped_hyperparams": [],
+  "applied_preprocessing": {
+    "impute": "median",
+    "scale": false,
+    "missing_indicator": false,
+    "missing_count": false
+  },
+  "train_time_sec": 4.793,
+  "status": "ok",
+  "error_type": null,
+  "log_tail": "features: 수치 57개 + 범주형 0개를 one-hot 0열로\nloaded bench/data/spambase.csv: 4601 rows x 57 encoded features\nmemory estimate 4.0 MB vs budget 2048.0 MB\nsplit: train 60% / val 20% / test 20% (stratified, seed=44) — test는 반복 밖에서 저장된 모델로 1회만 채점합니다 {'train': 2760, 'val': 920, 'test': 921}\nestimator=hist_gbdt applied_hyperparams={'max_iter': 800, 'learning_rate': 0.02, 'max_depth': 5}\npreprocessing applied: impute=median scale=False missing_indicator=False missing_count=False\nfitting on 2760 rows, validating on 920 rows\nmodel saved to model.joblib (1.6 MB)\nfeature schema saved to feature_schema.json (57 columns)\nbalanced_accuracy=0.9329 (95% CI 0.9155~0.9486, 폭 0.0331) — row 단위 재표집 400회\nval predictions saved to val_predictions.npz (8 KB)\nbalanced_accuracy vs iteration 2: [짝지은 Δ(iteration 2 대비) -0.0032, 95% CI -0.0108~+0.0041, P(개선) 0.170 — 이 행들로는 0과 구분되지 않음]\ntrain_val_gap measured on balanced_accuracy (maximize)\nmetrics: {\"f1\": 0.9203, \"accuracy\": 0.938, \"balanced_accuracy\": 0.9329, \"precision\": 0.932, \"recall\": 0.9088, \"roc_auc\": 0.9825, \"pr_auc\": 0.9683, \"average_precision\": 0.9683, \"specificity\": 0.957, \"balanced_accuracy_at_best_cut\": 0.9416, \"cut_headroom\": 0.0087, \"brier\": 0.0469, \"calibration_error\": 0.0241, \"balanced_accuracy_ci_low\": 0.9155, \"balanced_accuracy_ci_high\": 0.9486, \"train_f1\": 0.988, \"train_accuracy\": 0.9906, \"train_balanced_accuracy\": 0.989, \"train_val_gap\": 0.0561}",
+  "threads": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "cpu_count": 20
+  },
+  "paired": {
+    "metric": "balanced_accuracy",
+    "baseline_iteration": 2,
+    "threads_changed": false,
+    "status": "measured",
+    "resamples": 400,
+    "unit": "row",
+    "delta_vs_best": -0.003173,
+    "delta_ci_low": -0.01083,
+    "delta_ci_high": 0.0041,
+    "p_better": 0.17
+  },
+  "model_path": "bench\\runs\\artifacts\\bar65nollmratio-spambase-seed44\\train\\iter_03\\model.joblib",
+  "schema_path": "bench\\runs\\artifacts\\bar65nollmratio-spambase-seed44\\train\\iter_03\\feature_schema.json"
+}

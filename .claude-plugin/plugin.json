@@ -1,0 +1,10 @@
+{
+  "name": "automl-agent",
+  "version": "0.2.5",
+  "description": "Executes the AutoML loop in Claude Code—using local Ollama gemma4:12b for planning and model selection, and Claude for critique and reporting (without passing raw CSV rows to prompts).",
+  "author": {
+    "name": "aooty",
+    "url": "https://github.com/aooty/AutoML-Agent-shared"
+  },
+  "keywords": ["automl", "machine-learning", "ollama", "langgraph"]
+}

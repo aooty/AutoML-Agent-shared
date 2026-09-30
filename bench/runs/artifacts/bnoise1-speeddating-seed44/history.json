@@ -1,0 +1,395 @@
+{
+  "thread_id": "bnoise1-speeddating-seed44",
+  "goal": {
+    "metric": "balanced_accuracy",
+    "direction": "maximize",
+    "mode": "auto",
+    "threshold": 0.8882,
+    "source": "derived",
+    "reference": {
+      "source": "baseline",
+      "metric": "balanced_accuracy",
+      "baseline": 0.6807,
+      "margin": 0.65,
+      "ks": 0.5297,
+      "ranking_ceiling": 0.7649,
+      "exceeds_ranking_ceiling": true,
+      "required_ks": 0.7764,
+      "ks_shortfall": 0.2467,
+      "passable_margin": 0.263,
+      "baseline_ci": [
+        0.654,
+        0.7099
+      ],
+      "baseline_ci_unit": "row",
+      "chance": 0.5
+    }
+  },
+  "iterations": 4,
+  "stop_reason": "stalled",
+  "critic_runs": 3,
+  "budget": {
+    "spent_sec": 226.109,
+    "total_sec": 3600.0
+  },
+  "best": {
+    "iteration": 2,
+    "model": "hist_gbdt",
+    "hyperparams": {
+      "max_iter": 600,
+      "learning_rate": 0.03,
+      "max_leaf_nodes": 8,
+      "max_depth": 4,
+      "min_samples_leaf": 60,
+      "l2_regularization": 20.0,
+      "max_features": 0.6,
+      "class_weight": "balanced",
+      "early_stopping": false
+    },
+    "preprocessing": {
+      "impute": "none",
+      "scale": false,
+      "missing_indicator": false,
+      "missing_count": false
+    },
+    "metric": "balanced_accuracy",
+    "score": 0.7777536231884058,
+    "metrics": {
+      "f1": 0.5554035567715458,
+      "accuracy": 0.8060859188544153,
+      "balanced_accuracy": 0.7777536231884058,
+      "precision": 0.4461538461538462,
+      "recall": 0.7355072463768116,
+      "roc_auc": 0.8603623188405797,
+      "pr_auc": 0.5924961903359339,
+      "average_precision": 0.5924961903359339,
+      "specificity": 0.82,
+      "balanced_accuracy_at_best_cut": 0.7891,
+      "cut_headroom": 0.011346,
+      "brier": 0.131475,
+      "calibration_error": 0.147811,
+      "balanced_accuracy_ci_low": 0.750961,
+      "balanced_accuracy_ci_high": 0.80214,
+      "train_f1": 0.6740088105726872,
+      "train_accuracy": 0.8527656187823319,
+      "train_balanced_accuracy": 0.8813228866748141,
+      "train_val_gap": 0.103569
+    },
+    "train_time_sec": 8.35,
+    "plan_strategy": "Attempt 2: stay in the gbdt family but move to a heavily regularised, low-capacity hist_gbdt so the ranking stops being spent on memorised noise. Concretely: max_iter 600 at learning_rate 0.03 (same effective budget, much smaller steps), max_leaf_nodes 8 with max_depth 4, min_samples_leaf 60, l2_regularization 20.0, and max_features 0.6 for column subsampling. Keep preprocessing exactly as attempt 1 (impute 'none' so the trees split on NaN natively across the 60 missing columns including expected_num_interested_in_me at 78.5%, no scaling, no missingness columns) and keep class_weight='balanced' so the default predict() cut stays near the balanced point. This isolates capacity as the only changed axis: read roc_auc / pr_auc / balanced_accuracy_at_best_cut against attempt 1's 0.8598 / 0.6049 / 0.7922 and train_val_gap against 0.2752 to see whether shrinking capacity raised the ranking. early_stopping stays false so all 5,026 train rows are used and the score stays comparable."
+  },
+  "holdout": {
+    "status": "ok",
+    "split": "test",
+    "test_fraction": 0.2,
+    "iteration": 2,
+    "model": "hist_gbdt",
+    "metric": "balanced_accuracy",
+    "score": 0.7937008281573499,
+    "val_score": 0.7777536231884058,
+    "metrics": {
+      "f1": 0.5721997300944669,
+      "accuracy": 0.8108591885441527,
+      "balanced_accuracy": 0.7937008281573499,
+      "precision": 0.4559139784946237,
+      "recall": 0.7681159420289855,
+      "roc_auc": 0.8733876811594202,
+      "pr_auc": 0.6028860156644832,
+      "average_precision": 0.6028860156644832,
+      "specificity": 0.819286,
+      "balanced_accuracy_at_best_cut": 0.8136,
+      "cut_headroom": 0.019899,
+      "brier": 0.12823,
+      "calibration_error": 0.150768,
+      "balanced_accuracy_ci_low": 0.766299,
+      "balanced_accuracy_ci_high": 0.821818
+    },
+    "wall_time_sec": 5.571,
+    "selection_gap": -0.015947,
+    "score_ci": [
+      0.766299,
+      0.821818
+    ],
+    "val_inside_ci": true
+  },
+  "models": {
+    "mode": "all",
+    "kept_iteration": 2,
+    "removed": [],
+    "freed_bytes": 0
+  },
+  "history": [
+    {
+      "iteration": 1,
+      "model": "hist_gbdt",
+      "hyperparams": {
+        "max_iter": 400,
+        "learning_rate": 0.06,
+        "max_leaf_nodes": 31,
+        "l2_regularization": 1.0,
+        "min_samples_leaf": 20,
+        "class_weight": "balanced",
+        "early_stopping": false
+      },
+      "dropped_hyperparams": [],
+      "preprocessing": {
+        "impute": "none",
+        "scale": false,
+        "missing_indicator": false,
+        "missing_count": false
+      },
+      "internal_validation": {},
+      "unsupported_claims": [
+        "feature_engineering"
+      ],
+      "status": "ok",
+      "error_type": null,
+      "metrics": {
+        "f1": 0.5502846299810247,
+        "accuracy": 0.8585918854415274,
+        "balanced_accuracy": 0.724824016563147,
+        "precision": 0.5776892430278885,
+        "recall": 0.5253623188405797,
+        "roc_auc": 0.8598033126293996,
+        "pr_auc": 0.6049164555387502,
+        "average_precision": 0.6049164555387502,
+        "specificity": 0.924286,
+        "balanced_accuracy_at_best_cut": 0.7922,
+        "cut_headroom": 0.067376,
+        "brier": 0.101116,
+        "calibration_error": 0.056384,
+        "balanced_accuracy_ci_low": 0.696923,
+        "balanced_accuracy_ci_high": 0.752723,
+        "train_f1": 1.0,
+        "train_accuracy": 1.0,
+        "train_balanced_accuracy": 1.0,
+        "train_val_gap": 0.275176
+      },
+      "train_time_sec": 11.872,
+      "critic": {
+        "failure_type": "overfitting",
+        "evidence": "hist_gbdt scored balanced_accuracy 0.7248 (95% CI 0.6969~0.7527) against the bar 0.8882 — a shortfall of 0.1634. train_balanced_accuracy = 1.0 with train_val_gap = 0.2752 and train_f1 = 1.0: 400 iterations at lr 0.06 with 31 leaves and min_samples_leaf 20 memorised all 5,026 training rows, so capacity is being spent on noise rather than ranking. The ranking did move off the baseline (roc_auc 0.8598 vs 0.8419, pr_auc 0.6049 vs 0.5751, balanced_accuracy_at_best_cut 0.7922 vs the baseline ceiling 0.7649), so the family swap was not wasted, but the ceiling is still 0.0960 short of the bar. On the operating-point axis cut_headroom is only 0.0674 against 0.1634 still to go — 41% at most from any cut/class_weight move, and recall 0.5254 vs specificity 0.9243 says 'balanced' has already been applied and is still cutting conservatively. Since the ranking ceiling is where 59% of the remaining distance sits, and train is saturated at 1.0, the binding problem this attempt shows is unregularised capacity inside a family that has only been tried once — not an exhausted family (only 1 family tried, so no plateau) and not the threshold.",
+        "direction": "Stay in hist_gbdt but kill the memorisation that is capping the ranking: cut capacity and raise regularisation hard (shallower/coarser trees, much stronger l2 and larger leaves, lower learning rate with the same budget) while leaving preprocessing and class_weight exactly as they were, so the next row attributes any change in roc_auc / balanced_accuracy_at_best_cut to capacity alone.",
+        "concrete_changes": {
+          "model": "hist_gbdt",
+          "max_iter": 600,
+          "learning_rate": 0.03,
+          "max_leaf_nodes": 8,
+          "max_depth": 4,
+          "min_samples_leaf": 60,
+          "l2_regularization": 20.0,
+          "max_features": 0.6,
+          "class_weight": "balanced",
+          "early_stopping": false,
+          "preprocessing": {
+            "impute": "none",
+            "scale": false,
+            "missing_indicator": false,
+            "missing_count": false
+          }
+        },
+        "unsupported_claims": [],
+        "source": "llm"
+      }
+    },
+    {
+      "iteration": 2,
+      "model": "hist_gbdt",
+      "hyperparams": {
+        "max_iter": 600,
+        "learning_rate": 0.03,
+        "max_leaf_nodes": 8,
+        "max_depth": 4,
+        "min_samples_leaf": 60,
+        "l2_regularization": 20.0,
+        "max_features": 0.6,
+        "class_weight": "balanced",
+        "early_stopping": false
+      },
+      "dropped_hyperparams": [],
+      "preprocessing": {
+        "impute": "none",
+        "scale": false,
+        "missing_indicator": false,
+        "missing_count": false
+      },
+      "internal_validation": {},
+      "unsupported_claims": [
+        "feature_engineering"
+      ],
+      "status": "ok",
+      "error_type": null,
+      "metrics": {
+        "f1": 0.5554035567715458,
+        "accuracy": 0.8060859188544153,
+        "balanced_accuracy": 0.7777536231884058,
+        "precision": 0.4461538461538462,
+        "recall": 0.7355072463768116,
+        "roc_auc": 0.8603623188405797,
+        "pr_auc": 0.5924961903359339,
+        "average_precision": 0.5924961903359339,
+        "specificity": 0.82,
+        "balanced_accuracy_at_best_cut": 0.7891,
+        "cut_headroom": 0.011346,
+        "brier": 0.131475,
+        "calibration_error": 0.147811,
+        "balanced_accuracy_ci_low": 0.750961,
+        "balanced_accuracy_ci_high": 0.80214,
+        "train_f1": 0.6740088105726872,
+        "train_accuracy": 0.8527656187823319,
+        "train_balanced_accuracy": 0.8813228866748141,
+        "train_val_gap": 0.103569
+      },
+      "train_time_sec": 8.35,
+      "critic": {
+        "failure_type": "wrong_model_family",
+        "evidence": "Attempt 2 scored balanced_accuracy 0.7778 (95% CI 0.7510~0.8021) against the bar 0.8882 — still 0.1104 short. The paired Δ vs iteration 1 is +0.0529 (95% CI +0.0290~+0.0771, P 1.000), so the regularisation did resolve as a gain, but it bought almost none of it on the ranking axis: roc_auc 0.8598→0.8604, pr_auc 0.6049→0.5925 (down), and balanced_accuracy_at_best_cut 0.7922→0.7891 (down). The entire +0.0529 was the default cut moving — recall 0.5254→0.7355, specificity 0.9243→0.8200 — and that lever is now exhausted: cut_headroom is 0.0113 against 0.1104 still to go, i.e. at most 10% of the remaining distance, with recall 0.7355 vs specificity 0.8200 nearly crossed. train_val_gap fell 0.2752→0.1036 with train_balanced_accuracy 1.0→0.8813, so the memorisation diagnosis is now closed: capacity is no longer the binding constraint and re-tuning hist_gbdt's capacity knobs cannot repay 0.1104. Two hist_gbdt attempts have plateaued at a ranking ceiling of 0.7891~0.7922, which is itself above the baseline's 0.7649 ceiling but 0.099 under the bar; the goal's own note says the required KS is 0.7764 vs baseline 0.5297, so 90% of what is left is ranking. No hyperparameters were dropped (dropped_hyperparams empty) and cost is trivial (8.35 s of a 600 s budget), so nothing is resource-limited. 3 iterations remain.",
+        "direction": "Stop tuning hist_gbdt — its ranking ceiling has sat at 0.789~0.792 across two very different capacity points while the cut lever is spent (cut_headroom 0.0113) — and spend the next attempt on a different family's ranking, fitting xgboost (the only other family that also takes impute 'none', so preprocessing stays untouched and the Δ is attributable to the family alone) with moderate depth, strong shrinkage and column/row subsampling plus scale_pos_weight at the class ratio.",
+        "concrete_changes": {
+          "model": "xgboost",
+          "n_estimators": 900,
+          "learning_rate": 0.03,
+          "max_depth": 5,
+          "min_child_weight": 5,
+          "subsample": 0.8,
+          "colsample_bytree": 0.6,
+          "reg_lambda": 5.0,
+          "reg_alpha": 0.5,
+          "scale_pos_weight": 5.0,
+          "preprocessing": {
+            "impute": "none",
+            "scale": false,
+            "missing_indicator": false,
+            "missing_count": false
+          }
+        },
+        "unsupported_claims": [],
+        "source": "llm"
+      }
+    },
+    {
+      "iteration": 3,
+      "model": "extra_trees",
+      "hyperparams": {
+        "n_estimators": 800,
+        "min_samples_leaf": 5,
+        "class_weight": "balanced"
+      },
+      "dropped_hyperparams": [],
+      "preprocessing": {
+        "impute": "median",
+        "scale": false,
+        "missing_indicator": false,
+        "missing_count": true
+      },
+      "internal_validation": {},
+      "unsupported_claims": [
+        "feature_engineering"
+      ],
+      "status": "ok",
+      "error_type": null,
+      "metrics": {
+        "f1": 0.5608465608465608,
+        "accuracy": 0.8514319809069213,
+        "balanced_accuracy": 0.7409006211180125,
+        "precision": 0.5463917525773195,
+        "recall": 0.5760869565217391,
+        "roc_auc": 0.8473628364389234,
+        "pr_auc": 0.5481417376974478,
+        "average_precision": 0.5481417376974478,
+        "specificity": 0.905714,
+        "balanced_accuracy_at_best_cut": 0.7715,
+        "cut_headroom": 0.030599,
+        "brier": 0.116321,
+        "calibration_error": 0.11058,
+        "balanced_accuracy_ci_low": 0.715494,
+        "balanced_accuracy_ci_high": 0.77288,
+        "train_f1": 0.9261744966442953,
+        "train_accuracy": 0.9737365698368484,
+        "train_balanced_accuracy": 0.9842782277274893,
+        "train_val_gap": 0.243378
+      },
+      "train_time_sec": 5.349,
+      "critic": {
+        "failure_type": "hyperparam",
+        "evidence": "extra_trees scored balanced_accuracy 0.7409 (95% CI 0.7155~0.7729) against the bar 0.8882 — 0.1473 short, and the paired Δ vs iteration 2 is -0.0369 (95% CI -0.0583~-0.0118, P(better) 0.000), a resolved regression. That row moved two levers at once (family gbdt→bagging AND impute none→median + missing_count true), so the -0.0369 has two owners and is not evidence about either lever alone; what it does show is that on the ranking axis the new family did not help — roc_auc 0.8474 vs 0.8604, pr_auc 0.5481 vs 0.5925, balanced_accuracy_at_best_cut 0.7715 vs 0.7891 — while train_balanced_accuracy 0.9843 with train_val_gap 0.2434 shows 800 fully grown trees memorising 5,026 rows again. wrong_model_family has now been prescribed once and paid nothing (-0.0369), and the two levers-in-one-row caveat means I cannot claim the family alone was at fault, so I will not re-issue it: the sizing lines say the ranking-cap spread across the two families tried is only 0.7715~0.7922 (width 0.0207) while the distance from the best cut to the bar is 0.0960 — 5x the span — and the bar needs KS 0.7764 against the best 0.5844. One more family off the same list cannot cover 0.0960; only 0.0306 of cut_headroom (21% of the remaining 0.1473) is purchasable at all with the levers the executor has. dropped_hyperparams is empty and cost is trivial (5.3 s train, 7.9 s wall of 600 s), so nothing is resource-bound. With 2 iterations left the honest reading is that the settings/operating point are the only movable thing, and the bar is out of reach for this column set.",
+        "direction": "Stop swapping families — with 2 iterations left and the ranking shortfall (0.0960 at best cut) five times the whole span the two families tried have covered, spend the next attempt inside the best-known ranking (iteration 2's hist_gbdt with impute 'none') and buy back the only measurable piece left, the ~0.011 operating-point headroom, by nudging the positive class weight slightly below 'balanced' (recall 0.7355 < specificity 0.8200 says the cut is fine but the weight point is a touch conservative on specificity... it is recall that is lower, so raise positive weight modestly) — i.e. refit iteration 2 exactly, changing only class_weight to an explicit {\"0\": 1, \"1\": 6} so recall and specificity meet, and keep every other lever fixed so the row is attributable.",
+        "concrete_changes": {
+          "model": "hist_gbdt",
+          "max_iter": 600,
+          "learning_rate": 0.03,
+          "max_leaf_nodes": 8,
+          "max_depth": 4,
+          "min_samples_leaf": 60,
+          "l2_regularization": 20.0,
+          "max_features": 0.6,
+          "class_weight": {
+            "0": 1,
+            "1": 6
+          },
+          "early_stopping": false,
+          "preprocessing": {
+            "impute": "none",
+            "scale": false,
+            "missing_indicator": false,
+            "missing_count": false
+          }
+        },
+        "unsupported_claims": [],
+        "source": "llm"
+      }
+    },
+    {
+      "iteration": 4,
+      "model": "hist_gbdt",
+      "hyperparams": {
+        "max_iter": 600,
+        "learning_rate": 0.03,
+        "max_leaf_nodes": 8,
+        "max_depth": 4,
+        "min_samples_leaf": 60,
+        "l2_regularization": 20.0,
+        "max_features": 0.6,
+        "class_weight": {
+          "0": 1.0,
+          "1": 6.5
+        },
+        "early_stopping": false
+      },
+      "dropped_hyperparams": [],
+      "preprocessing": {
+        "impute": "none",
+        "scale": false,
+        "missing_indicator": false,
+        "missing_count": false
+      },
+      "internal_validation": {},
+      "unsupported_claims": [],
+      "status": "ok",
+      "error_type": null,
+      "metrics": {
+        "f1": 0.5384615384615384,
+        "accuracy": 0.7852028639618138,
+        "balanced_accuracy": 0.7754347826086957,
+        "precision": 0.4166666666666667,
+        "recall": 0.7608695652173914,
+        "roc_auc": 0.8588742236024844,
+        "pr_auc": 0.5948029063310722,
+        "average_precision": 0.5948029063310722,
+        "specificity": 0.79,
+        "balanced_accuracy_at_best_cut": 0.7867,
+        "cut_headroom": 0.011265,
+        "brier": 0.142964,
+        "calibration_error": 0.169542,
+        "balanced_accuracy_ci_low": 0.750847,
+        "balanced_accuracy_ci_high": 0.801402,
+        "train_f1": 0.6578293289146645,
+        "train_accuracy": 0.8356545961002786,
+        "train_balanced_accuracy": 0.8851379653987521,
+        "train_val_gap": 0.109703
+      },
+      "train_time_sec": 8.289,
+      "critic": null
+    }
+  ]
+}

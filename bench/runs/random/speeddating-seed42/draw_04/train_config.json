@@ -1,0 +1,24 @@
+{
+  "model": "knn",
+  "hyperparams": {
+    "n_neighbors": 168,
+    "weights": "distance"
+  },
+  "preprocessing": {
+    "impute": "mean",
+    "scale": false,
+    "missing_indicator": false,
+    "missing_count": true
+  },
+  "target_missing": {
+    "policy": "reject"
+  },
+  "data": {
+    "path": "bench/data/speeddating.csv",
+    "target_column": "match"
+  },
+  "metric": "balanced_accuracy",
+  "task": "classification",
+  "seed": 42,
+  "memory_limit_mb": 2048
+}

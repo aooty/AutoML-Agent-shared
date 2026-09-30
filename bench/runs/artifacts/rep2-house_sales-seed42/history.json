@@ -1,0 +1,133 @@
+{
+  "thread_id": "rep2-house_sales-seed42",
+  "goal": {
+    "metric": "r2",
+    "direction": "maximize",
+    "mode": "auto",
+    "threshold": 0.7718,
+    "source": "derived",
+    "reference": {
+      "source": "baseline",
+      "metric": "r2",
+      "baseline": 0.6957,
+      "margin": 0.25,
+      "baseline_ci": [
+        0.6735,
+        0.713
+      ],
+      "baseline_ci_unit": "row",
+      "chance": -0.0
+    }
+  },
+  "iterations": 1,
+  "stop_reason": "goal_reached",
+  "critic_runs": 0,
+  "best": {
+    "iteration": 1,
+    "model": "hist_gbdt",
+    "hyperparams": {
+      "max_iter": 600,
+      "learning_rate": 0.06,
+      "max_leaf_nodes": 63,
+      "min_samples_leaf": 20,
+      "l2_regularization": 1.0,
+      "early_stopping": false
+    },
+    "preprocessing": {
+      "impute": "median",
+      "scale": false,
+      "missing_indicator": false,
+      "missing_count": false
+    },
+    "metric": "r2",
+    "score": 0.8875942461692182,
+    "metrics": {
+      "r2": 0.8875942461692182,
+      "mae": 63947.56056577035,
+      "rmse": 117157.61511572132,
+      "mean_absolute_error": 63947.56056577035,
+      "root_mean_squared_error": 117157.61511572132,
+      "r2_score": 0.8875942461692182,
+      "r2_ci_low": 0.870633,
+      "r2_ci_high": 0.902541,
+      "train_r2": 0.9902484562709596,
+      "train_mae": 24699.660433954297,
+      "train_val_gap": 0.102654
+    },
+    "train_time_sec": 5.399,
+    "plan_strategy": "Switch from the linear baseline to a gradient-boosted tree ensemble (hist_gbdt) fitted on all 12,967 training rows with median imputation and no scaling. Housing price on this file is dominated by interactions and sharp non-linearities that a ridge fit cannot express — lat/long as a geographic surface, zipcode as an effectively categorical integer, grade × sqft_living, and a heavily right-skewed target. A depth-unbounded, many-leaf histogram GBDT with a moderate learning rate and a decent iteration budget recovers exactly those effects by axis-aligned splits, which is the ranking improvement the goal statement says the remaining distance lives in. Concretely: 600 boosting iterations at learning_rate 0.06, max_leaf_nodes 63, min_samples_leaf 20, l2_regularization 1.0, early_stopping disabled so the fit sees all 12,967 rows and the score is comparable to attempts that do not pay a 10% internal holdout. Read train_r2 vs val r2 (train_val_gap) from this run: if the gap is large (>0.12) attempt 2 shrinks leaves/adds l2; if both train and val r2 are modest, attempt 2 raises iterations or leaf count."
+  },
+  "holdout": {
+    "status": "ok",
+    "split": "test",
+    "test_fraction": 0.2,
+    "iteration": 1,
+    "model": "hist_gbdt",
+    "metric": "r2",
+    "score": 0.8616677423511985,
+    "val_score": 0.8875942461692182,
+    "metrics": {
+      "r2": 0.8616677423511985,
+      "mae": 68014.39297153808,
+      "rmse": 144611.94940396253,
+      "mean_absolute_error": 68014.39297153808,
+      "root_mean_squared_error": 144611.94940396253,
+      "r2_score": 0.8616677423511985,
+      "r2_ci_low": 0.804885,
+      "r2_ci_high": 0.90837
+    },
+    "wall_time_sec": 4.461,
+    "selection_gap": 0.025927,
+    "score_ci": [
+      0.804885,
+      0.90837
+    ],
+    "val_inside_ci": true
+  },
+  "models": {
+    "mode": "best",
+    "kept_iteration": 1,
+    "removed": [],
+    "freed_bytes": 0
+  },
+  "history": [
+    {
+      "iteration": 1,
+      "model": "hist_gbdt",
+      "hyperparams": {
+        "max_iter": 600,
+        "learning_rate": 0.06,
+        "max_leaf_nodes": 63,
+        "min_samples_leaf": 20,
+        "l2_regularization": 1.0,
+        "early_stopping": false
+      },
+      "dropped_hyperparams": [],
+      "preprocessing": {
+        "impute": "median",
+        "scale": false,
+        "missing_indicator": false,
+        "missing_count": false
+      },
+      "internal_validation": {},
+      "unsupported_claims": [],
+      "status": "ok",
+      "error_type": null,
+      "metrics": {
+        "r2": 0.8875942461692182,
+        "mae": 63947.56056577035,
+        "rmse": 117157.61511572132,
+        "mean_absolute_error": 63947.56056577035,
+        "root_mean_squared_error": 117157.61511572132,
+        "r2_score": 0.8875942461692182,
+        "r2_ci_low": 0.870633,
+        "r2_ci_high": 0.902541,
+        "train_r2": 0.9902484562709596,
+        "train_mae": 24699.660433954297,
+        "train_val_gap": 0.102654
+      },
+      "train_time_sec": 5.399,
+      "critic": null
+    }
+  ]
+}

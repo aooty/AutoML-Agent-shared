@@ -1,0 +1,383 @@
+{
+  "arm": "random",
+  "dataset": "bank-marketing",
+  "data_id": 1461,
+  "seed": 43,
+  "metric": "balanced_accuracy",
+  "task": "classification",
+  "draws": 5,
+  "omp_num_threads": "1",
+  "timeout_sec": 3600,
+  "candidates": [
+    "logreg",
+    "decision_tree",
+    "knn",
+    "hist_gbdt",
+    "random_forest",
+    "extra_trees",
+    "gradient_boosting",
+    "xgboost",
+    "mlp"
+  ],
+  "excluded_by_rows": [
+    "svc"
+  ],
+  "card": "bench/cards/bank-marketing-seed43.json",
+  "train_script": "automl_agent/scripts/train.py",
+  "best_by_val_for_k": {
+    "1": 1,
+    "2": 2,
+    "3": 2,
+    "4": 2,
+    "5": 2
+  },
+  "records": [
+    {
+      "draw": 1,
+      "model": "mlp",
+      "hyperparams": {
+        "hidden_layer_sizes": [
+          77
+        ],
+        "alpha": 4.6e-05,
+        "learning_rate_init": 6.2e-05,
+        "batch_size": 2984,
+        "max_iter": 406
+      },
+      "preprocessing": {
+        "impute": "most_frequent",
+        "scale": true,
+        "missing_indicator": true,
+        "missing_count": true
+      },
+      "untouched_params": [],
+      "applied_hyperparams": {
+        "hidden_layer_sizes": [
+          77
+        ],
+        "alpha": 4.6e-05,
+        "learning_rate_init": 6.2e-05,
+        "batch_size": 2984,
+        "max_iter": 406
+      },
+      "dropped_hyperparams": [],
+      "applied_preprocessing": {
+        "impute": "most_frequent",
+        "scale": true,
+        "missing_indicator": true,
+        "missing_count": true
+      },
+      "status": "ok",
+      "returncode": 0,
+      "error_type": null,
+      "val_score": 0.6615700683029575,
+      "val_metrics": {
+        "f1": 0.45579078455790784,
+        "accuracy": 0.9033399690333996,
+        "balanced_accuracy": 0.6615700683029575,
+        "precision": 0.6678832116788321,
+        "recall": 0.34593572778827975,
+        "roc_auc": 0.912434273083028,
+        "pr_auc": 0.5714704327450595,
+        "average_precision": 0.5714704327450595,
+        "specificity": 0.977204,
+        "balanced_accuracy_at_best_cut": 0.8501,
+        "cut_headroom": 0.18853,
+        "brier": 0.069422,
+        "calibration_error": 0.031295,
+        "balanced_accuracy_ci_low": 0.646096,
+        "balanced_accuracy_ci_high": 0.676728,
+        "train_f1": 0.4654500717654296,
+        "train_accuracy": 0.9038929440389294,
+        "train_balanced_accuracy": 0.6669753940472958,
+        "train_val_gap": 0.005405
+      },
+      "val_split": "val",
+      "model_file": "bench/runs/random/bank-marketing-seed43/draw_01/model.joblib",
+      "elapsed_sec": 22.19,
+      "dir": "bench/runs/random/bank-marketing-seed43/draw_01",
+      "test": {
+        "status": "ok",
+        "test_score": 0.6605979666506079,
+        "test_metrics": {
+          "f1": 0.45257284562926225,
+          "accuracy": 0.9023554130266505,
+          "balanced_accuracy": 0.6605979666506079,
+          "precision": 0.6576576576576577,
+          "recall": 0.3449905482041588,
+          "roc_auc": 0.9138111037590566,
+          "pr_auc": 0.554089056849492,
+          "average_precision": 0.554089056849492,
+          "specificity": 0.976205,
+          "balanced_accuracy_at_best_cut": 0.845,
+          "cut_headroom": 0.184402,
+          "brier": 0.070027,
+          "calibration_error": 0.032627,
+          "balanced_accuracy_ci_low": 0.646528,
+          "balanced_accuracy_ci_high": 0.67508
+        },
+        "split": "test"
+      },
+      "selection_gap": 0.000972
+    },
+    {
+      "draw": 2,
+      "model": "extra_trees",
+      "hyperparams": {
+        "n_estimators": 7,
+        "max_depth": 62,
+        "min_samples_leaf": 7,
+        "class_weight": "balanced"
+      },
+      "preprocessing": {
+        "impute": "mean",
+        "scale": false,
+        "missing_indicator": true,
+        "missing_count": false
+      },
+      "untouched_params": [],
+      "applied_hyperparams": {
+        "n_estimators": 7,
+        "max_depth": 62,
+        "min_samples_leaf": 7,
+        "class_weight": "balanced"
+      },
+      "dropped_hyperparams": [],
+      "applied_preprocessing": {
+        "impute": "mean",
+        "scale": false,
+        "missing_indicator": true,
+        "missing_count": false
+      },
+      "status": "ok",
+      "returncode": 0,
+      "error_type": null,
+      "val_score": 0.8147873014459921,
+      "val_metrics": {
+        "f1": 0.5387139107611548,
+        "accuracy": 0.8445034284450342,
+        "balanced_accuracy": 0.8147873014459921,
+        "precision": 0.4125628140703518,
+        "recall": 0.775992438563327,
+        "roc_auc": 0.8939608304510722,
+        "pr_auc": 0.5357605823606288,
+        "average_precision": 0.5357605823606288,
+        "specificity": 0.853582,
+        "balanced_accuracy_at_best_cut": 0.8299,
+        "cut_headroom": 0.015113,
+        "brier": 0.125473,
+        "calibration_error": 0.213983,
+        "balanced_accuracy_ci_low": 0.801313,
+        "balanced_accuracy_ci_high": 0.827226,
+        "train_f1": 0.602056114799743,
+        "train_accuracy": 0.8630096586300966,
+        "train_balanced_accuracy": 0.8729440858344439,
+        "train_val_gap": 0.058157
+      },
+      "val_split": "val",
+      "model_file": "bench/runs/random/bank-marketing-seed43/draw_02/model.joblib",
+      "elapsed_sec": 4.83,
+      "dir": "bench/runs/random/bank-marketing-seed43/draw_02",
+      "test": {
+        "status": "ok",
+        "test_score": 0.8017814001441739,
+        "test_metrics": {
+          "f1": 0.5177304964539007,
+          "accuracy": 0.8345681742784474,
+          "balanced_accuracy": 0.8017814001441739,
+          "precision": 0.39285714285714285,
+          "recall": 0.7589792060491494,
+          "roc_auc": 0.8891301388591322,
+          "pr_auc": 0.5003581071551837,
+          "average_precision": 0.5003581071551837,
+          "specificity": 0.844584,
+          "balanced_accuracy_at_best_cut": 0.8161,
+          "cut_headroom": 0.014319,
+          "brier": 0.128941,
+          "calibration_error": 0.216702,
+          "balanced_accuracy_ci_low": 0.790459,
+          "balanced_accuracy_ci_high": 0.816034
+        },
+        "split": "test"
+      },
+      "selection_gap": 0.013006
+    },
+    {
+      "draw": 3,
+      "model": "logreg",
+      "hyperparams": {
+        "C": 0.270817,
+        "max_iter": 322,
+        "class_weight": null
+      },
+      "preprocessing": {
+        "impute": "median",
+        "scale": true,
+        "missing_indicator": false,
+        "missing_count": true
+      },
+      "untouched_params": [],
+      "applied_hyperparams": {
+        "C": 0.270817,
+        "max_iter": 322,
+        "class_weight": null
+      },
+      "dropped_hyperparams": [],
+      "applied_preprocessing": {
+        "impute": "median",
+        "scale": true,
+        "missing_indicator": false,
+        "missing_count": true
+      },
+      "status": "ok",
+      "returncode": 0,
+      "error_type": null,
+      "val_score": 0.6616042813415111,
+      "val_metrics": {
+        "f1": 0.4547707558859975,
+        "accuracy": 0.902676399026764,
+        "balanced_accuracy": 0.6616042813415111,
+        "precision": 0.6600719424460432,
+        "recall": 0.34688090737240074,
+        "roc_auc": 0.9064642754317709,
+        "pr_auc": 0.5628600701542102,
+        "average_precision": 0.5628600701542102,
+        "specificity": 0.976328,
+        "balanced_accuracy_at_best_cut": 0.8414,
+        "cut_headroom": 0.179796,
+        "brier": 0.070976,
+        "calibration_error": 0.029356,
+        "balanced_accuracy_ci_low": 0.645622,
+        "balanced_accuracy_ci_high": 0.675731,
+        "train_f1": 0.45265968371328813,
+        "train_accuracy": 0.9017547740175478,
+        "train_balanced_accuracy": 0.6612534126836712,
+        "train_val_gap": -0.000351
+      },
+      "val_split": "val",
+      "model_file": "bench/runs/random/bank-marketing-seed43/draw_03/model.joblib",
+      "elapsed_sec": 4.69,
+      "dir": "bench/runs/random/bank-marketing-seed43/draw_03"
+    },
+    {
+      "draw": 4,
+      "model": "random_forest",
+      "hyperparams": {
+        "n_estimators": 1813,
+        "max_depth": 40,
+        "min_samples_leaf": 539,
+        "class_weight": "balanced"
+      },
+      "preprocessing": {
+        "impute": "median",
+        "scale": true,
+        "missing_indicator": true,
+        "missing_count": false
+      },
+      "untouched_params": [],
+      "applied_hyperparams": {
+        "n_estimators": 1813,
+        "max_depth": 40,
+        "min_samples_leaf": 539,
+        "class_weight": "balanced"
+      },
+      "dropped_hyperparams": [],
+      "applied_preprocessing": {
+        "impute": "median",
+        "scale": true,
+        "missing_indicator": true,
+        "missing_count": false
+      },
+      "status": "ok",
+      "returncode": 0,
+      "error_type": null,
+      "val_score": 0.7766201116789344,
+      "val_metrics": {
+        "f1": 0.44844517184942717,
+        "accuracy": 0.7763769077637691,
+        "balanced_accuracy": 0.7766201116789344,
+        "precision": 0.3151840490797546,
+        "recall": 0.776937618147448,
+        "roc_auc": 0.8610191791901383,
+        "pr_auc": 0.48487887067214874,
+        "average_precision": 0.48487887067214874,
+        "specificity": 0.776303,
+        "balanced_accuracy_at_best_cut": 0.7813,
+        "cut_headroom": 0.00468,
+        "brier": 0.177078,
+        "calibration_error": 0.306591,
+        "balanced_accuracy_ci_low": 0.761325,
+        "balanced_accuracy_ci_high": 0.790466,
+        "train_f1": 0.46610939487552244,
+        "train_accuracy": 0.7833812578338126,
+        "train_balanced_accuracy": 0.7942262679583846,
+        "train_val_gap": 0.017606
+      },
+      "val_split": "val",
+      "model_file": "bench/runs/random/bank-marketing-seed43/draw_04/model.joblib",
+      "elapsed_sec": 11.93,
+      "dir": "bench/runs/random/bank-marketing-seed43/draw_04"
+    },
+    {
+      "draw": 5,
+      "model": "hist_gbdt",
+      "hyperparams": {
+        "max_iter": 2,
+        "learning_rate": 0.006553,
+        "max_depth": 50,
+        "max_leaf_nodes": 2,
+        "l2_regularization": 95.587836
+      },
+      "preprocessing": {
+        "impute": "median",
+        "scale": false,
+        "missing_indicator": true,
+        "missing_count": false
+      },
+      "untouched_params": [],
+      "applied_hyperparams": {
+        "max_iter": 2,
+        "learning_rate": 0.006553,
+        "max_depth": 50,
+        "max_leaf_nodes": 2,
+        "l2_regularization": 95.587836
+      },
+      "dropped_hyperparams": [],
+      "applied_preprocessing": {
+        "impute": "median",
+        "scale": false,
+        "missing_indicator": true,
+        "missing_count": false
+      },
+      "status": "ok",
+      "returncode": 0,
+      "error_type": null,
+      "val_score": 0.5,
+      "val_metrics": {
+        "f1": 0.0,
+        "accuracy": 0.8829904888299049,
+        "balanced_accuracy": 0.5,
+        "precision": 0.0,
+        "recall": 0.0,
+        "roc_auc": 0.691081240931769,
+        "pr_auc": 0.23659636685279525,
+        "average_precision": 0.23659636685279525,
+        "specificity": 1.0,
+        "balanced_accuracy_at_best_cut": 0.6911,
+        "cut_headroom": 0.1911,
+        "brier": 0.10306,
+        "calibration_error": 0.0001,
+        "balanced_accuracy_ci_low": 0.5,
+        "balanced_accuracy_ci_high": 0.5,
+        "train_f1": 0.0,
+        "train_accuracy": 0.8830273538302735,
+        "train_balanced_accuracy": 0.5,
+        "train_val_gap": 0.0
+      },
+      "val_split": "val",
+      "model_file": "bench/runs/random/bank-marketing-seed43/draw_05/model.joblib",
+      "elapsed_sec": 4.96,
+      "dir": "bench/runs/random/bank-marketing-seed43/draw_05"
+    }
+  ]
+}

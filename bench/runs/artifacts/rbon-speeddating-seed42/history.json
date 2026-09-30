@@ -1,0 +1,166 @@
+{
+  "thread_id": "rbon-speeddating-seed42",
+  "goal": {
+    "metric": "balanced_accuracy",
+    "direction": "maximize",
+    "mode": "auto",
+    "threshold": 0.7514,
+    "source": "derived",
+    "reference": {
+      "source": "baseline",
+      "metric": "balanced_accuracy",
+      "baseline": 0.6685,
+      "margin": 0.25,
+      "ks": 0.5423,
+      "ranking_ceiling": 0.7712,
+      "baseline_ci": [
+        0.6425,
+        0.695
+      ],
+      "baseline_ci_unit": "row",
+      "chance": 0.5
+    }
+  },
+  "iterations": 1,
+  "stop_reason": "max_iterations",
+  "critic_runs": 0,
+  "best": {
+    "iteration": 1,
+    "model": "hist_gbdt",
+    "hyperparams": {
+      "max_iter": 400,
+      "learning_rate": 0.06,
+      "max_leaf_nodes": 31,
+      "min_samples_leaf": 20,
+      "l2_regularization": 1.0,
+      "early_stopping": false,
+      "class_weight": {
+        "0": 1.0,
+        "1": 4.0
+      }
+    },
+    "preprocessing": {
+      "impute": "none",
+      "scale": false,
+      "missing_indicator": false,
+      "missing_count": true
+    },
+    "metric": "balanced_accuracy",
+    "score": 0.6853002070393375,
+    "metrics": {
+      "f1": 0.4899598393574297,
+      "accuracy": 0.8484486873508353,
+      "balanced_accuracy": 0.6853002070393375,
+      "precision": 0.5495495495495496,
+      "recall": 0.4420289855072464,
+      "roc_auc": 0.8691407867494824,
+      "pr_auc": 0.5858329129352341,
+      "average_precision": 0.5858329129352341,
+      "specificity": 0.928571,
+      "balanced_accuracy_at_best_cut": 0.8026,
+      "cut_headroom": 0.1173,
+      "brier": 0.10591,
+      "calibration_error": 0.061968,
+      "balanced_accuracy_ci_low": 0.655278,
+      "balanced_accuracy_ci_high": 0.71294,
+      "train_f1": 0.9993964996982498,
+      "train_accuracy": 0.9998010346199762,
+      "train_balanced_accuracy": 0.9998808956646021,
+      "train_val_gap": 0.314581
+    },
+    "train_time_sec": 10.205,
+    "plan_strategy": "Single attempt: replace the linear baseline with a gradient-boosted tree ensemble (hist_gbdt) that splits on NaN natively, and move the operating point with an explicit class weight so the default predict() cut sits near the recall/specificity balance point. Concretely: hist_gbdt with impute: none (no imputer, no scaling), max_iter 400, learning_rate 0.06, max_leaf_nodes 31, min_samples_leaf 20, l2_regularization 1.0, early_stopping off so all 5,026 training rows are used, and class_weight {\"0\": 1, \"1\": 4} to lift recall toward specificity. Add missing_count as a single aggregate column (the one missingness signal a per-column NaN split cannot express) but no missing_indicator, which is documented as bit-for-bit redundant under impute: none."
+  },
+  "holdout": {
+    "status": "ok",
+    "split": "test",
+    "test_fraction": 0.2,
+    "iteration": 1,
+    "model": "hist_gbdt",
+    "metric": "balanced_accuracy",
+    "score": 0.728064182194617,
+    "val_score": 0.6853002070393375,
+    "metrics": {
+      "f1": 0.5572519083969466,
+      "accuracy": 0.8615751789976134,
+      "balanced_accuracy": 0.728064182194617,
+      "precision": 0.5887096774193549,
+      "recall": 0.5289855072463768,
+      "roc_auc": 0.8815398550724638,
+      "pr_auc": 0.5995822691105549,
+      "average_precision": 0.5995822691105549,
+      "specificity": 0.927143,
+      "balanced_accuracy_at_best_cut": 0.808,
+      "cut_headroom": 0.079936,
+      "brier": 0.10075,
+      "calibration_error": 0.052908,
+      "balanced_accuracy_ci_low": 0.700994,
+      "balanced_accuracy_ci_high": 0.76036
+    },
+    "wall_time_sec": 4.731,
+    "selection_gap": -0.042764,
+    "score_ci": [
+      0.700994,
+      0.76036
+    ],
+    "val_inside_ci": false
+  },
+  "models": {
+    "mode": "best",
+    "kept_iteration": 1,
+    "removed": [],
+    "freed_bytes": 0
+  },
+  "history": [
+    {
+      "iteration": 1,
+      "model": "hist_gbdt",
+      "hyperparams": {
+        "max_iter": 400,
+        "learning_rate": 0.06,
+        "max_leaf_nodes": 31,
+        "min_samples_leaf": 20,
+        "l2_regularization": 1.0,
+        "early_stopping": false,
+        "class_weight": {
+          "0": 1.0,
+          "1": 4.0
+        }
+      },
+      "dropped_hyperparams": [],
+      "preprocessing": {
+        "impute": "none",
+        "scale": false,
+        "missing_indicator": false,
+        "missing_count": true
+      },
+      "internal_validation": {},
+      "unsupported_claims": [],
+      "status": "ok",
+      "error_type": null,
+      "metrics": {
+        "f1": 0.4899598393574297,
+        "accuracy": 0.8484486873508353,
+        "balanced_accuracy": 0.6853002070393375,
+        "precision": 0.5495495495495496,
+        "recall": 0.4420289855072464,
+        "roc_auc": 0.8691407867494824,
+        "pr_auc": 0.5858329129352341,
+        "average_precision": 0.5858329129352341,
+        "specificity": 0.928571,
+        "balanced_accuracy_at_best_cut": 0.8026,
+        "cut_headroom": 0.1173,
+        "brier": 0.10591,
+        "calibration_error": 0.061968,
+        "balanced_accuracy_ci_low": 0.655278,
+        "balanced_accuracy_ci_high": 0.71294,
+        "train_f1": 0.9993964996982498,
+        "train_accuracy": 0.9998010346199762,
+        "train_balanced_accuracy": 0.9998808956646021,
+        "train_val_gap": 0.314581
+      },
+      "train_time_sec": 10.205,
+      "critic": null
+    }
+  ]
+}

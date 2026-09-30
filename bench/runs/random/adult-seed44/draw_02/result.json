@@ -1,0 +1,49 @@
+{
+  "metrics": {
+    "f1": 0.6259038038352719,
+    "accuracy": 0.7563721977684512,
+    "balanced_accuracy": 0.789132781348209,
+    "precision": 0.49465838509316773,
+    "recall": 0.8519469405220368,
+    "roc_auc": 0.8819467666448803,
+    "pr_auc": 0.7077768802594776,
+    "average_precision": 0.7077768802594776,
+    "specificity": 0.726319,
+    "balanced_accuracy_at_best_cut": 0.7912,
+    "cut_headroom": 0.002067,
+    "brier": 0.150744,
+    "calibration_error": 0.1701,
+    "balanced_accuracy_ci_low": 0.779939,
+    "balanced_accuracy_ci_high": 0.797966,
+    "train_f1": 0.628496595075956,
+    "train_accuracy": 0.757985257985258,
+    "train_balanced_accuracy": 0.7914173226815091,
+    "train_val_gap": 0.002285
+  },
+  "split": "val",
+  "applied_hyperparams": {
+    "n_estimators": 467,
+    "max_depth": 29,
+    "min_samples_leaf": 72,
+    "class_weight": "balanced"
+  },
+  "dropped_hyperparams": [],
+  "applied_preprocessing": {
+    "impute": "mean",
+    "scale": false,
+    "missing_indicator": true,
+    "missing_count": false
+  },
+  "train_time_sec": 5.46,
+  "status": "ok",
+  "error_type": null,
+  "log_tail": "features: 수치 6개 + 범주형 8개를 one-hot 102열로\nloaded bench/data/adult.csv: 48842 rows x 108 encoded features\nmemory estimate 161.0 MB vs budget 2048.0 MB\nsplit: train 60% / val 20% / test 20% (stratified, seed=44) — test는 반복 밖에서 저장된 모델로 1회만 채점합니다 {'train': 29304, 'val': 9769, 'test': 9769}\nestimator=extra_trees applied_hyperparams={'n_estimators': 467, 'max_depth': 29, 'min_samples_leaf': 72, 'class_weight': 'balanced'}\npreprocessing applied: impute=mean scale=False missing_indicator=True missing_count=False\nfitting on 29304 rows, validating on 9769 rows\nmodel saved to model.joblib (4.6 MB)\nfeature schema saved to feature_schema.json (108 columns)\nbalanced_accuracy=0.7891 (95% CI 0.7799~0.7980, 폭 0.0180) — row 단위 재표집 400회\nval predictions saved to val_predictions.npz (74 KB)\npaired comparison skipped (no_baseline)\ntrain_val_gap measured on balanced_accuracy (maximize)\nmetrics: {\"f1\": 0.6259, \"accuracy\": 0.7564, \"balanced_accuracy\": 0.7891, \"precision\": 0.4947, \"recall\": 0.8519, \"roc_auc\": 0.8819, \"pr_auc\": 0.7078, \"average_precision\": 0.7078, \"specificity\": 0.7263, \"balanced_accuracy_at_best_cut\": 0.7912, \"cut_headroom\": 0.0021, \"brier\": 0.1507, \"calibration_error\": 0.1701, \"balanced_accuracy_ci_low\": 0.7799, \"balanced_accuracy_ci_high\": 0.798, \"train_f1\": 0.6285, \"train_accuracy\": 0.758, \"train_balanced_accuracy\": 0.7914, \"train_val_gap\": 0.0023}",
+  "paired": {
+    "metric": "balanced_accuracy",
+    "baseline_iteration": null,
+    "status": "skipped",
+    "reason": "no_baseline"
+  },
+  "model_path": "bench\\runs\\random\\adult-seed44\\draw_02\\model.joblib",
+  "schema_path": "bench\\runs\\random\\adult-seed44\\draw_02\\feature_schema.json"
+}

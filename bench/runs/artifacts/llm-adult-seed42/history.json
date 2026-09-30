@@ -1,0 +1,168 @@
+{
+  "thread_id": "llm-adult-seed42",
+  "goal": {
+    "metric": "balanced_accuracy",
+    "direction": "maximize",
+    "mode": "auto",
+    "threshold": 0.8248,
+    "source": "derived",
+    "reference": {
+      "source": "baseline",
+      "metric": "balanced_accuracy",
+      "baseline": 0.7664,
+      "margin": 0.25,
+      "ks": 0.6476,
+      "ranking_ceiling": 0.8238,
+      "exceeds_ranking_ceiling": true,
+      "required_ks": 0.6496,
+      "ks_shortfall": 0.002,
+      "passable_margin": 0.245,
+      "baseline_ci": [
+        0.7575,
+        0.7762
+      ],
+      "baseline_ci_unit": "row",
+      "chance": 0.5
+    }
+  },
+  "iterations": 1,
+  "stop_reason": "goal_reached",
+  "best": {
+    "iteration": 1,
+    "model": "hist_gbdt",
+    "hyperparams": {
+      "max_iter": 300,
+      "learning_rate": 0.08,
+      "max_leaf_nodes": 31,
+      "min_samples_leaf": 20,
+      "l2_regularization": 1.0,
+      "early_stopping": true,
+      "validation_fraction": 0.1,
+      "n_iter_no_change": 25,
+      "class_weight": "balanced"
+    },
+    "preprocessing": {
+      "impute": "none",
+      "scale": false,
+      "missing_indicator": false,
+      "missing_count": false
+    },
+    "metric": "balanced_accuracy",
+    "score": 0.848149480694569,
+    "metrics": {
+      "f1": 0.720656439529076,
+      "accuracy": 0.8396970007165524,
+      "balanced_accuracy": 0.848149480694569,
+      "precision": 0.617925971245029,
+      "recall": 0.8643560119811724,
+      "roc_auc": 0.9299519753596492,
+      "pr_auc": 0.8306287204623471,
+      "average_precision": 0.8306287204623471,
+      "specificity": 0.831943,
+      "balanced_accuracy_at_best_cut": 0.8508,
+      "cut_headroom": 0.002651,
+      "brier": 0.107117,
+      "calibration_error": 0.100564,
+      "balanced_accuracy_ci_low": 0.839216,
+      "balanced_accuracy_ci_high": 0.855007,
+      "train_f1": 0.7445597982286352,
+      "train_accuracy": 0.8513854763854763,
+      "train_balanced_accuracy": 0.8698161716875299,
+      "train_val_gap": 0.021667
+    },
+    "train_time_sec": 8.416,
+    "plan_strategy": "Move the ranking axis first by switching from the linear baseline to a gradient-boosted tree ensemble (hist_gbdt), which on adult-style tabular data with 102 one-hot columns and strong non-linear/interaction structure (education-num x marital-status x capital-gain) reliably lifts roc_auc/KS well beyond the 0.6496 the bar needs. Simultaneously set the operating point with class_weight='balanced' so the default predict() rule cuts near the balanced-accuracy optimum instead of at the majority-favouring 0.5, since recall (0.6008) vs specificity is where the baseline lost most of its balanced accuracy. Configuration: hist_gbdt, max_iter=400 with learning_rate=0.06, max_leaf_nodes=31, min_samples_leaf=20, l2_regularization=1.0, early_stopping=True with validation_fraction=0.1 and n_iter_no_change=25 so the iteration count self-limits inside the 600s budget. Preprocessing: impute='none' so the trees split on NaN in workclass/occupation/native-country directly (no missing_indicator, which is bit-for-bit redundant under impute:none), and scale=False since trees are scale-invariant. Then read cut_headroom, recall vs specificity, and balanced_accuracy_at_best_cut on the validation split: if cut_headroom is small, the remaining gap is ranking and attempt 2 goes to a different ensemble family or deeper trees; if cut_headroom is large, attempt 2 tunes an explicit class weight map instead of 'balanced'."
+  },
+  "holdout": {
+    "status": "ok",
+    "split": "test",
+    "test_fraction": 0.2,
+    "iteration": 1,
+    "model": "hist_gbdt",
+    "metric": "balanced_accuracy",
+    "score": 0.8445337538775612,
+    "val_score": 0.848149480694569,
+    "metrics": {
+      "f1": 0.7138820204874603,
+      "accuracy": 0.8341693110860886,
+      "balanced_accuracy": 0.8445337538775612,
+      "precision": 0.6080024067388689,
+      "recall": 0.8644140290846878,
+      "roc_auc": 0.9286231447365377,
+      "pr_auc": 0.8297571066620364,
+      "average_precision": 0.8297571066620364,
+      "specificity": 0.824653,
+      "balanced_accuracy_at_best_cut": 0.8451,
+      "cut_headroom": 0.000566,
+      "brier": 0.108132,
+      "calibration_error": 0.100992,
+      "balanced_accuracy_ci_low": 0.836043,
+      "balanced_accuracy_ci_high": 0.853056
+    },
+    "wall_time_sec": 5.159,
+    "selection_gap": 0.003616,
+    "score_ci": [
+      0.836043,
+      0.853056
+    ],
+    "val_inside_ci": true
+  },
+  "models": {
+    "mode": "best",
+    "kept_iteration": 1,
+    "removed": [],
+    "freed_bytes": 0
+  },
+  "history": [
+    {
+      "iteration": 1,
+      "model": "hist_gbdt",
+      "hyperparams": {
+        "max_iter": 300,
+        "learning_rate": 0.08,
+        "max_leaf_nodes": 31,
+        "min_samples_leaf": 20,
+        "l2_regularization": 1.0,
+        "early_stopping": true,
+        "validation_fraction": 0.1,
+        "n_iter_no_change": 25,
+        "class_weight": "balanced"
+      },
+      "dropped_hyperparams": [],
+      "preprocessing": {
+        "impute": "none",
+        "scale": false,
+        "missing_indicator": false,
+        "missing_count": false
+      },
+      "unsupported_claims": [
+        "feature_engineering"
+      ],
+      "status": "ok",
+      "error_type": null,
+      "metrics": {
+        "f1": 0.720656439529076,
+        "accuracy": 0.8396970007165524,
+        "balanced_accuracy": 0.848149480694569,
+        "precision": 0.617925971245029,
+        "recall": 0.8643560119811724,
+        "roc_auc": 0.9299519753596492,
+        "pr_auc": 0.8306287204623471,
+        "average_precision": 0.8306287204623471,
+        "specificity": 0.831943,
+        "balanced_accuracy_at_best_cut": 0.8508,
+        "cut_headroom": 0.002651,
+        "brier": 0.107117,
+        "calibration_error": 0.100564,
+        "balanced_accuracy_ci_low": 0.839216,
+        "balanced_accuracy_ci_high": 0.855007,
+        "train_f1": 0.7445597982286352,
+        "train_accuracy": 0.8513854763854763,
+        "train_balanced_accuracy": 0.8698161716875299,
+        "train_val_gap": 0.021667
+      },
+      "train_time_sec": 8.416,
+      "critic": null
+    }
+  ]
+}

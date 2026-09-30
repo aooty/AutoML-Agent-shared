@@ -1,0 +1,29 @@
+{
+  "model": "extra_trees",
+  "hyperparams": {
+    "n_estimators": 800,
+    "min_samples_leaf": 5,
+    "class_weight": "balanced"
+  },
+  "preprocessing": {
+    "impute": "median",
+    "scale": false,
+    "missing_indicator": false,
+    "missing_count": true
+  },
+  "target_missing": {
+    "policy": "reject"
+  },
+  "data": {
+    "path": "bench/data/speeddating.csv",
+    "target_column": "match"
+  },
+  "metric": "balanced_accuracy",
+  "task": "classification",
+  "seed": 44,
+  "paired_baseline": {
+    "iteration": 2,
+    "path": "bench/runs/artifacts/bnoise1-speeddating-seed44/train/iter_02/val_predictions.npz"
+  },
+  "memory_limit_mb": 2048
+}

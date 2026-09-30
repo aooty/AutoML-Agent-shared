@@ -1,0 +1,145 @@
+{
+  "thread_id": "rboff-house_sales-seed42",
+  "goal": {
+    "metric": "r2",
+    "direction": "maximize",
+    "mode": "auto",
+    "threshold": 0.7718,
+    "source": "derived",
+    "reference": {
+      "source": "baseline",
+      "metric": "r2",
+      "baseline": 0.6957,
+      "margin": 0.25,
+      "baseline_ci": [
+        0.6735,
+        0.713
+      ],
+      "baseline_ci_unit": "row",
+      "chance": -0.0
+    }
+  },
+  "iterations": 1,
+  "stop_reason": "goal_reached",
+  "critic_runs": 0,
+  "best": {
+    "iteration": 1,
+    "model": "hist_gbdt",
+    "hyperparams": {
+      "learning_rate": 0.05,
+      "max_iter": 800,
+      "max_leaf_nodes": 64,
+      "min_samples_leaf": 20,
+      "l2_regularization": 1.0,
+      "early_stopping": true,
+      "validation_fraction": 0.1,
+      "n_iter_no_change": 30,
+      "random_state": 42
+    },
+    "preprocessing": {
+      "impute": "median",
+      "scale": false,
+      "missing_indicator": false,
+      "missing_count": false
+    },
+    "metric": "r2",
+    "score": 0.890479227529879,
+    "metrics": {
+      "r2": 0.890479227529879,
+      "mae": 63821.39843094605,
+      "rmse": 115644.37156394361,
+      "mean_absolute_error": 63821.39843094605,
+      "root_mean_squared_error": 115644.37156394361,
+      "r2_score": 0.890479227529879,
+      "r2_ci_low": 0.872389,
+      "r2_ci_high": 0.90622,
+      "train_r2": 0.9607796159450263,
+      "train_mae": 42457.90435502339,
+      "train_val_gap": 0.0703
+    },
+    "train_time_sec": 3.363,
+    "plan_strategy": "Single attempt: fit hist_gbdt (gradient-boosted trees) on all 21 numeric columns with median imputation and no scaling, using a moderately deep, many-leaf configuration with a low learning rate and enough boosting rounds to fully exploit the strong non-linear/interaction structure (lat/long/zipcode geography crossed with sqft_living and grade) that the ridge baseline cannot represent. Configuration: learning_rate 0.05, max_iter 800, max_leaf_nodes 64, max_depth None (leaf-limited), min_samples_leaf 20, l2_regularization 1.0, early_stopping enabled with validation_fraction 0.1 and n_iter_no_change 30 so the round count is chosen by the executor's internal holdout rather than fixed guesswork. No subsampling (21.6k rows x 21 cols is tiny; cost 3 fits well inside 600 s and 2 GB)."
+  },
+  "holdout": {
+    "status": "ok",
+    "split": "test",
+    "test_fraction": 0.2,
+    "iteration": 1,
+    "model": "hist_gbdt",
+    "metric": "r2",
+    "score": 0.8830637180457762,
+    "val_score": 0.890479227529879,
+    "metrics": {
+      "r2": 0.8830637180457762,
+      "mae": 68104.85685325418,
+      "rmse": 132958.8005713813,
+      "mean_absolute_error": 68104.85685325418,
+      "root_mean_squared_error": 132958.8005713813,
+      "r2_score": 0.8830637180457762,
+      "r2_ci_low": 0.851025,
+      "r2_ci_high": 0.909047
+    },
+    "wall_time_sec": 4.199,
+    "selection_gap": 0.007416,
+    "score_ci": [
+      0.851025,
+      0.909047
+    ],
+    "val_inside_ci": true
+  },
+  "models": {
+    "mode": "best",
+    "kept_iteration": 1,
+    "removed": [],
+    "freed_bytes": 0
+  },
+  "history": [
+    {
+      "iteration": 1,
+      "model": "hist_gbdt",
+      "hyperparams": {
+        "learning_rate": 0.05,
+        "max_iter": 800,
+        "max_leaf_nodes": 64,
+        "min_samples_leaf": 20,
+        "l2_regularization": 1.0,
+        "early_stopping": true,
+        "validation_fraction": 0.1,
+        "n_iter_no_change": 30,
+        "random_state": 42
+      },
+      "dropped_hyperparams": [],
+      "preprocessing": {
+        "impute": "median",
+        "scale": false,
+        "missing_indicator": false,
+        "missing_count": false
+      },
+      "internal_validation": {
+        "held_out_rows": 1297,
+        "fit_rows": 11670,
+        "validation_fraction": 0.1,
+        "stopped_at_iter": 240,
+        "max_iter": 800
+      },
+      "unsupported_claims": [],
+      "status": "ok",
+      "error_type": null,
+      "metrics": {
+        "r2": 0.890479227529879,
+        "mae": 63821.39843094605,
+        "rmse": 115644.37156394361,
+        "mean_absolute_error": 63821.39843094605,
+        "root_mean_squared_error": 115644.37156394361,
+        "r2_score": 0.890479227529879,
+        "r2_ci_low": 0.872389,
+        "r2_ci_high": 0.90622,
+        "train_r2": 0.9607796159450263,
+        "train_mae": 42457.90435502339,
+        "train_val_gap": 0.0703
+      },
+      "train_time_sec": 3.363,
+      "critic": null
+    }
+  ]
+}

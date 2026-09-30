@@ -1,0 +1,485 @@
+{
+  "generated_by": "bench/replan.py",
+  "preregistration": "docs/REPLAN.md",
+  "margin": 0.5,
+  "seed": 42,
+  "resamples": 4000,
+  "score_tolerance": 1e-06,
+  "threads": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "cpu_count": 20
+  },
+  "datasets": [
+    {
+      "dataset": "adult",
+      "metric": "balanced_accuracy",
+      "task": "binary",
+      "verdict": "ok",
+      "refusal": null,
+      "test_rows": 9769,
+      "test_fingerprint": "35bc63e35f35b70596c7052ac7688bf5",
+      "missing_arms": [],
+      "arms": {
+        "hard_llm": {
+          "label": "iteration 1",
+          "fits": 3,
+          "val_score": 0.8451930220678899,
+          "test_recorded": 0.8415641466360779,
+          "test_reproduced": 0.8415641466360779,
+          "selection_gap": 0.0036288754318120064,
+          "dir": "bench/runs/artifacts/hardllm-adult-seed42/train/iter_01",
+          "stop_reason": "stalled",
+          "critic_runs": 2,
+          "goal_threshold": 0.8832
+        },
+        "hard_llm@it1": {
+          "label": "iteration 1",
+          "fits": 1,
+          "val_score": 0.8451930220678899,
+          "test_recorded": NaN,
+          "test_reproduced": 0.8415641466360779,
+          "selection_gap": 0.0036288754318120064,
+          "dir": "bench/runs/artifacts/hardllm-adult-seed42/train/iter_01"
+        },
+        "hard_nollm": {
+          "label": "iteration 3",
+          "fits": 5,
+          "val_score": 0.8419899687850201,
+          "test_recorded": 0.8399406562041728,
+          "test_reproduced": 0.8399406562041728,
+          "selection_gap": 0.0020493125808472845,
+          "dir": "bench/runs/artifacts/hardnollm-adult-seed42/train/iter_03",
+          "stop_reason": "max_iterations",
+          "critic_runs": 4,
+          "goal_threshold": 0.8832
+        },
+        "hard_nollm@it1": {
+          "label": "iteration 1",
+          "fits": 1,
+          "val_score": 0.8030964412527815,
+          "test_recorded": NaN,
+          "test_reproduced": 0.7992118882369064,
+          "selection_gap": 0.003884553015875092,
+          "dir": "bench/runs/artifacts/hardnollm-adult-seed42/train/iter_01"
+        },
+        "random@k=1": {
+          "label": "draw 1",
+          "fits": 1,
+          "val_score": 0.6834309002967657,
+          "test_recorded": 0.6845968078837423,
+          "test_reproduced": 0.6845968078837423,
+          "selection_gap": -0.0011659075869766555,
+          "dir": "bench/runs/random/adult-seed42/draw_01"
+        },
+        "random@k=3": {
+          "label": "draw 3",
+          "fits": 3,
+          "val_score": 0.8188702947805071,
+          "test_recorded": 0.8150681450410213,
+          "test_reproduced": 0.8150681450410213,
+          "selection_gap": 0.003802149739485783,
+          "dir": "bench/runs/random/adult-seed42/draw_03"
+        }
+      },
+      "pairs": [
+        {
+          "a": "hard_llm",
+          "b": "hard_llm@it1",
+          "kind": "primary",
+          "delta": 0.0,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "p_better": NaN,
+          "resamples_used": 0,
+          "identical_predictions": true
+        },
+        {
+          "a": "random@k=3",
+          "b": "random@k=1",
+          "kind": "blind_gain",
+          "delta": 0.130471337157279,
+          "ci_low": 0.11974767302744765,
+          "ci_high": 0.14183368923121056,
+          "p_better": 1.0,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "hard_llm",
+          "b": "random@k=3",
+          "kind": "matched_level",
+          "delta": 0.026496001595056606,
+          "ci_low": 0.019935122046720866,
+          "ci_high": 0.033366220606290395,
+          "p_better": 1.0,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "hard_llm",
+          "b": "hard_nollm",
+          "kind": "vs_rules",
+          "delta": 0.001623490431905128,
+          "ci_low": -0.0037282671360978127,
+          "ci_high": 0.006869751687430605,
+          "p_better": 0.738,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "hard_nollm",
+          "b": "hard_nollm@it1",
+          "kind": "rules_gain",
+          "delta": 0.04072876796726643,
+          "ci_low": 0.03284110236490133,
+          "ci_high": 0.048818811962987256,
+          "p_better": 1.0,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        }
+      ]
+    },
+    {
+      "dataset": "spambase",
+      "metric": "balanced_accuracy",
+      "task": "binary",
+      "verdict": "ok",
+      "refusal": null,
+      "test_rows": 921,
+      "test_fingerprint": "e2b91bd7f4fbf56b6f68af097a3ea79a",
+      "missing_arms": [],
+      "arms": {
+        "hard_llm": {
+          "label": "iteration 5",
+          "fits": 5,
+          "val_score": 0.9612121032099645,
+          "test_recorded": 0.9427486003732338,
+          "test_reproduced": 0.9427486003732338,
+          "selection_gap": 0.018463502836730705,
+          "dir": "bench/runs/artifacts/hardllm-spambase-seed42/train/iter_05",
+          "stop_reason": "max_iterations",
+          "critic_runs": 4,
+          "goal_threshold": 0.9614
+        },
+        "hard_llm@it1": {
+          "label": "iteration 1",
+          "fits": 1,
+          "val_score": 0.953409968514228,
+          "test_recorded": NaN,
+          "test_reproduced": 0.944059361947925,
+          "selection_gap": 0.009350606566303044,
+          "dir": "bench/runs/artifacts/hardllm-spambase-seed42/train/iter_01"
+        },
+        "hard_nollm": {
+          "label": "iteration 1",
+          "fits": 3,
+          "val_score": 0.959419988514624,
+          "test_recorded": 0.9490210018069256,
+          "test_reproduced": 0.9490210018069256,
+          "selection_gap": 0.010398986707698343,
+          "dir": "bench/runs/artifacts/hardnollm-spambase-seed42/train/iter_01",
+          "stop_reason": "stalled",
+          "critic_runs": 2,
+          "goal_threshold": 0.9614
+        },
+        "hard_nollm@it1": {
+          "label": "iteration 1",
+          "fits": 1,
+          "val_score": 0.959419988514624,
+          "test_recorded": NaN,
+          "test_reproduced": 0.9490210018069256,
+          "selection_gap": 0.010398986707698343,
+          "dir": "bench/runs/artifacts/hardnollm-spambase-seed42/train/iter_01"
+        },
+        "random@k=1": {
+          "label": "draw 1",
+          "fits": 1,
+          "val_score": 0.9485187825501495,
+          "test_recorded": 0.9380683669539975,
+          "test_reproduced": 0.9380683669539975,
+          "selection_gap": 0.010450415596152007,
+          "dir": "bench/runs/random/spambase-seed42/draw_01"
+        },
+        "random@k=5": {
+          "label": "draw 1",
+          "fits": 5,
+          "val_score": 0.9485187825501495,
+          "test_recorded": 0.9380683669539975,
+          "test_reproduced": 0.9380683669539975,
+          "selection_gap": 0.010450415596152007,
+          "dir": "bench/runs/random/spambase-seed42/draw_01"
+        }
+      },
+      "pairs": [
+        {
+          "a": "hard_llm",
+          "b": "hard_llm@it1",
+          "kind": "primary",
+          "delta": -0.0013107615746911216,
+          "ci_low": -0.010817286564294261,
+          "ci_high": 0.008442953503125256,
+          "p_better": 0.39,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "random@k=5",
+          "b": "random@k=1",
+          "kind": "blind_gain",
+          "delta": 0.0,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "p_better": NaN,
+          "resamples_used": 0,
+          "identical_predictions": true
+        },
+        {
+          "a": "hard_llm",
+          "b": "random@k=5",
+          "kind": "matched_level",
+          "delta": 0.0046802334192362904,
+          "ci_low": -0.007426722140846695,
+          "ci_high": 0.016927775848772527,
+          "p_better": 0.7805,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "hard_llm",
+          "b": "hard_nollm",
+          "kind": "vs_rules",
+          "delta": -0.006272401433691788,
+          "ci_low": -0.015241155638075316,
+          "ci_high": 0.0025159282232059426,
+          "p_better": 0.0725,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "hard_nollm",
+          "b": "hard_nollm@it1",
+          "kind": "rules_gain",
+          "delta": 0.0,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "p_better": NaN,
+          "resamples_used": 0,
+          "identical_predictions": true
+        }
+      ]
+    },
+    {
+      "dataset": "speeddating",
+      "metric": "balanced_accuracy",
+      "task": "binary",
+      "verdict": "ok",
+      "refusal": null,
+      "test_rows": 1676,
+      "test_fingerprint": "1cb427764715caa82986be0169a1467d",
+      "missing_arms": [],
+      "arms": {
+        "hard_llm": {
+          "label": "iteration 4",
+          "fits": 5,
+          "val_score": 0.7782867494824017,
+          "test_recorded": 0.7830072463768116,
+          "test_reproduced": 0.7830072463768116,
+          "selection_gap": -0.004720496894409898,
+          "dir": "bench/runs/artifacts/hardllm-speeddating-seed42/train/iter_04",
+          "stop_reason": "max_iterations",
+          "critic_runs": 4,
+          "goal_threshold": 0.8342
+        },
+        "hard_llm@it1": {
+          "label": "iteration 1",
+          "fits": 1,
+          "val_score": 0.6597308488612836,
+          "test_recorded": NaN,
+          "test_reproduced": 0.6894824016563147,
+          "selection_gap": -0.029751552795031055,
+          "dir": "bench/runs/artifacts/hardllm-speeddating-seed42/train/iter_01"
+        },
+        "hard_nollm": {
+          "label": "iteration 5",
+          "fits": 5,
+          "val_score": 0.6998447204968944,
+          "test_recorded": 0.7157660455486543,
+          "test_reproduced": 0.7157660455486543,
+          "selection_gap": -0.015921325051759916,
+          "dir": "bench/runs/artifacts/hardnollm-speeddating-seed42/train/iter_05",
+          "stop_reason": "max_iterations",
+          "critic_runs": 4,
+          "goal_threshold": 0.8342
+        },
+        "hard_nollm@it1": {
+          "label": "iteration 1",
+          "fits": 1,
+          "val_score": 0.6586076604554866,
+          "test_recorded": NaN,
+          "test_reproduced": 0.676061076604555,
+          "selection_gap": -0.017453416149068368,
+          "dir": "bench/runs/artifacts/hardnollm-speeddating-seed42/train/iter_01"
+        },
+        "random@k=1": {
+          "label": "draw 1",
+          "fits": 1,
+          "val_score": 0.6481728778467909,
+          "test_recorded": 0.6543219461697722,
+          "test_reproduced": 0.6543219461697722,
+          "selection_gap": -0.006149068322981344,
+          "dir": "bench/runs/random/speeddating-seed42/draw_01"
+        },
+        "random@k=5": {
+          "label": "draw 1",
+          "fits": 5,
+          "val_score": 0.6481728778467909,
+          "test_recorded": 0.6543219461697722,
+          "test_reproduced": 0.6543219461697722,
+          "selection_gap": -0.006149068322981344,
+          "dir": "bench/runs/random/speeddating-seed42/draw_01"
+        }
+      },
+      "pairs": [
+        {
+          "a": "hard_llm",
+          "b": "hard_llm@it1",
+          "kind": "primary",
+          "delta": 0.09352484472049694,
+          "ci_low": 0.06543407968184972,
+          "ci_high": 0.12187477021970627,
+          "p_better": 1.0,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "random@k=5",
+          "b": "random@k=1",
+          "kind": "blind_gain",
+          "delta": 0.0,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "p_better": NaN,
+          "resamples_used": 0,
+          "identical_predictions": true
+        },
+        {
+          "a": "hard_llm",
+          "b": "random@k=5",
+          "kind": "matched_level",
+          "delta": 0.1286853002070394,
+          "ci_low": 0.0970500049099448,
+          "ci_high": 0.16048739980137106,
+          "p_better": 1.0,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "hard_llm",
+          "b": "hard_nollm",
+          "kind": "vs_rules",
+          "delta": 0.06724120082815732,
+          "ci_low": 0.03928868465225621,
+          "ci_high": 0.0955408098115946,
+          "p_better": 1.0,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        },
+        {
+          "a": "hard_nollm",
+          "b": "hard_nollm@it1",
+          "kind": "rules_gain",
+          "delta": 0.03970496894409936,
+          "ci_low": 0.014262476096942603,
+          "ci_high": 0.06644399856002625,
+          "p_better": 0.99875,
+          "resamples_used": 4000,
+          "identical_predictions": false
+        }
+      ]
+    }
+  ],
+  "budget": [
+    {
+      "dataset": "adult",
+      "hard_llm": {
+        "fits": 3,
+        "stop_reason": "stalled",
+        "critic_runs": 2,
+        "goal_threshold": 0.8832,
+        "winner": "iteration 1"
+      },
+      "hard_nollm": {
+        "fits": 5,
+        "stop_reason": "max_iterations",
+        "critic_runs": 4,
+        "goal_threshold": 0.8832,
+        "winner": "iteration 3"
+      }
+    },
+    {
+      "dataset": "spambase",
+      "hard_llm": {
+        "fits": 5,
+        "stop_reason": "max_iterations",
+        "critic_runs": 4,
+        "goal_threshold": 0.9614,
+        "winner": "iteration 5"
+      },
+      "hard_nollm": {
+        "fits": 3,
+        "stop_reason": "stalled",
+        "critic_runs": 2,
+        "goal_threshold": 0.9614,
+        "winner": "iteration 1"
+      }
+    },
+    {
+      "dataset": "speeddating",
+      "hard_llm": {
+        "fits": 5,
+        "stop_reason": "max_iterations",
+        "critic_runs": 4,
+        "goal_threshold": 0.8342,
+        "winner": "iteration 4"
+      },
+      "hard_nollm": {
+        "fits": 5,
+        "stop_reason": "max_iterations",
+        "critic_runs": 4,
+        "goal_threshold": 0.8342,
+        "winner": "iteration 5"
+      }
+    }
+  ],
+  "criterion": {
+    "challenger": "hard_llm",
+    "baseline": "hard_llm@it1",
+    "seed": 42,
+    "judged_seed": 42,
+    "scope": [
+      "adult",
+      "spambase",
+      "speeddating"
+    ],
+    "judged": [
+      "speeddating",
+      "adult",
+      "spambase"
+    ],
+    "majority_needed": 2,
+    "wins": [
+      "speeddating"
+    ],
+    "losses": [],
+    "indistinguishable": [
+      "adult",
+      "spambase"
+    ],
+    "not_looped": [],
+    "not_evaluated": [],
+    "complete": true,
+    "status": "구분되지 않음 — 이 데이터셋들과 이 예산으로는 답이 나오지 않습니다 (이김 1 / 걸침 2 / 짐 0)"
+  }
+}

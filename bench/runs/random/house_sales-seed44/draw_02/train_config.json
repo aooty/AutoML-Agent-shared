@@ -1,0 +1,24 @@
+{
+  "model": "ridge",
+  "hyperparams": {
+    "alpha": 4.7e-05,
+    "max_iter": 3
+  },
+  "preprocessing": {
+    "impute": "most_frequent",
+    "scale": true,
+    "missing_indicator": false,
+    "missing_count": true
+  },
+  "target_missing": {
+    "policy": "reject"
+  },
+  "data": {
+    "path": "bench/data/house_sales.csv",
+    "target_column": "price"
+  },
+  "metric": "r2",
+  "task": "regression",
+  "seed": 44,
+  "memory_limit_mb": 2048
+}

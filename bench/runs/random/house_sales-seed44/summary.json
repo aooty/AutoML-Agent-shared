@@ -1,0 +1,297 @@
+{
+  "arm": "random",
+  "dataset": "house_sales",
+  "data_id": 42731,
+  "seed": 44,
+  "metric": "r2",
+  "task": "regression",
+  "draws": 5,
+  "omp_num_threads": "1",
+  "timeout_sec": 3600,
+  "candidates": [
+    "ridge",
+    "linreg",
+    "elasticnet",
+    "decision_tree",
+    "knn",
+    "hist_gbdt",
+    "random_forest",
+    "extra_trees",
+    "gradient_boosting",
+    "xgboost",
+    "mlp"
+  ],
+  "excluded_by_rows": [
+    "svr"
+  ],
+  "card": "bench/cards/house_sales-seed44.json",
+  "train_script": "automl_agent/scripts/train.py",
+  "best_by_val_for_k": {
+    "1": 1,
+    "2": 1,
+    "3": 1,
+    "4": 1,
+    "5": 1
+  },
+  "records": [
+    {
+      "draw": 1,
+      "model": "random_forest",
+      "hyperparams": {
+        "n_estimators": 5,
+        "max_depth": 47,
+        "min_samples_leaf": 6
+      },
+      "preprocessing": {
+        "impute": "mean",
+        "scale": true,
+        "missing_indicator": true,
+        "missing_count": true
+      },
+      "untouched_params": [],
+      "applied_hyperparams": {
+        "n_estimators": 5,
+        "max_depth": 47,
+        "min_samples_leaf": 6
+      },
+      "dropped_hyperparams": [],
+      "applied_preprocessing": {
+        "impute": "mean",
+        "scale": true,
+        "missing_indicator": true,
+        "missing_count": true
+      },
+      "status": "ok",
+      "returncode": 0,
+      "error_type": null,
+      "val_score": 0.8365685938083705,
+      "val_metrics": {
+        "r2": 0.8365685938083705,
+        "mae": 78601.51199273574,
+        "rmse": 146632.8824376915,
+        "mean_absolute_error": 78601.51199273574,
+        "root_mean_squared_error": 146632.8824376915,
+        "r2_score": 0.8365685938083705,
+        "r2_ci_low": 0.803839,
+        "r2_ci_high": 0.867418,
+        "train_r2": 0.9068066567871016,
+        "train_mae": 54473.70458483121,
+        "train_val_gap": 0.070238
+      },
+      "val_split": "val",
+      "model_file": "bench/runs/random/house_sales-seed44/draw_01/model.joblib",
+      "elapsed_sec": 4.18,
+      "dir": "bench/runs/random/house_sales-seed44/draw_01",
+      "test": {
+        "status": "ok",
+        "test_score": 0.8230255038751787,
+        "test_metrics": {
+          "r2": 0.8230255038751787,
+          "mae": 80932.45477659105,
+          "rmse": 156460.97770622958,
+          "mean_absolute_error": 80932.45477659105,
+          "root_mean_squared_error": 156460.97770622958,
+          "r2_score": 0.8230255038751787,
+          "r2_ci_low": 0.795328,
+          "r2_ci_high": 0.845307
+        },
+        "split": "test"
+      },
+      "selection_gap": 0.013543
+    },
+    {
+      "draw": 2,
+      "model": "ridge",
+      "hyperparams": {
+        "alpha": 4.7e-05,
+        "max_iter": 3
+      },
+      "preprocessing": {
+        "impute": "most_frequent",
+        "scale": true,
+        "missing_indicator": false,
+        "missing_count": true
+      },
+      "untouched_params": [],
+      "applied_hyperparams": {
+        "alpha": 4.7e-05,
+        "max_iter": 3
+      },
+      "dropped_hyperparams": [],
+      "applied_preprocessing": {
+        "impute": "most_frequent",
+        "scale": true,
+        "missing_indicator": false,
+        "missing_count": true
+      },
+      "status": "ok",
+      "returncode": 0,
+      "error_type": null,
+      "val_score": 0.7132782416459886,
+      "val_metrics": {
+        "r2": 0.7132782416459886,
+        "mae": 125225.47668080415,
+        "rmse": 194219.99506334687,
+        "mean_absolute_error": 125225.47668080415,
+        "root_mean_squared_error": 194219.99506334687,
+        "r2_score": 0.7132782416459886,
+        "r2_ci_low": 0.692155,
+        "r2_ci_high": 0.730723,
+        "train_r2": 0.694817520484726,
+        "train_mae": 125947.24055746452,
+        "train_val_gap": -0.018461
+      },
+      "val_split": "val",
+      "model_file": "bench/runs/random/house_sales-seed44/draw_02/model.joblib",
+      "elapsed_sec": 4.06,
+      "dir": "bench/runs/random/house_sales-seed44/draw_02"
+    },
+    {
+      "draw": 3,
+      "model": "ridge",
+      "hyperparams": {
+        "alpha": 0.286516,
+        "max_iter": 2
+      },
+      "preprocessing": {
+        "impute": "median",
+        "scale": false,
+        "missing_indicator": false,
+        "missing_count": true
+      },
+      "untouched_params": [],
+      "applied_hyperparams": {
+        "alpha": 0.286516,
+        "max_iter": 2
+      },
+      "dropped_hyperparams": [],
+      "applied_preprocessing": {
+        "impute": "median",
+        "scale": false,
+        "missing_indicator": false,
+        "missing_count": true
+      },
+      "status": "ok",
+      "returncode": 0,
+      "error_type": null,
+      "val_score": 0.7132439220223891,
+      "val_metrics": {
+        "r2": 0.7132439220223891,
+        "mae": 125222.58295234662,
+        "rmse": 194231.61845341523,
+        "mean_absolute_error": 125222.58295234662,
+        "root_mean_squared_error": 194231.61845341523,
+        "r2_score": 0.7132439220223891,
+        "r2_ci_low": 0.692153,
+        "r2_ci_high": 0.730658,
+        "train_r2": 0.694817222416829,
+        "train_mae": 125939.27580209194,
+        "train_val_gap": -0.018427
+      },
+      "val_split": "val",
+      "model_file": "bench/runs/random/house_sales-seed44/draw_03/model.joblib",
+      "elapsed_sec": 4.05,
+      "dir": "bench/runs/random/house_sales-seed44/draw_03"
+    },
+    {
+      "draw": 4,
+      "model": "linreg",
+      "hyperparams": {},
+      "preprocessing": {
+        "impute": "most_frequent",
+        "scale": false,
+        "missing_indicator": true,
+        "missing_count": true
+      },
+      "untouched_params": [],
+      "applied_hyperparams": {},
+      "dropped_hyperparams": [],
+      "applied_preprocessing": {
+        "impute": "most_frequent",
+        "scale": false,
+        "missing_indicator": true,
+        "missing_count": true
+      },
+      "status": "ok",
+      "returncode": 0,
+      "error_type": null,
+      "val_score": 0.7132782416130871,
+      "val_metrics": {
+        "r2": 0.7132782416130871,
+        "mae": 125225.47683534009,
+        "rmse": 194219.99507449035,
+        "mean_absolute_error": 125225.47683534009,
+        "root_mean_squared_error": 194219.99507449035,
+        "r2_score": 0.7132782416130871,
+        "r2_ci_low": 0.692155,
+        "r2_ci_high": 0.730723,
+        "train_r2": 0.6948175204847258,
+        "train_mae": 125947.24070451884,
+        "train_val_gap": -0.018461
+      },
+      "val_split": "val",
+      "model_file": "bench/runs/random/house_sales-seed44/draw_04/model.joblib",
+      "elapsed_sec": 4.09,
+      "dir": "bench/runs/random/house_sales-seed44/draw_04"
+    },
+    {
+      "draw": 5,
+      "model": "mlp",
+      "hyperparams": {
+        "hidden_layer_sizes": [
+          142,
+          225
+        ],
+        "alpha": 3e-06,
+        "learning_rate_init": 0.000292,
+        "batch_size": 816,
+        "max_iter": 77
+      },
+      "preprocessing": {
+        "impute": "mean",
+        "scale": false,
+        "missing_indicator": false,
+        "missing_count": true
+      },
+      "untouched_params": [],
+      "applied_hyperparams": {
+        "hidden_layer_sizes": [
+          142,
+          225
+        ],
+        "alpha": 3e-06,
+        "learning_rate_init": 0.000292,
+        "batch_size": 816,
+        "max_iter": 77
+      },
+      "dropped_hyperparams": [],
+      "applied_preprocessing": {
+        "impute": "mean",
+        "scale": false,
+        "missing_indicator": false,
+        "missing_count": true
+      },
+      "status": "ok",
+      "returncode": 0,
+      "error_type": null,
+      "val_score": 0.5141500575776781,
+      "val_metrics": {
+        "r2": 0.5141500575776781,
+        "mae": 165869.92658040335,
+        "rmse": 252821.90004024253,
+        "mean_absolute_error": 165869.92658040335,
+        "root_mean_squared_error": 252821.90004024253,
+        "r2_score": 0.5141500575776781,
+        "r2_ci_low": 0.494179,
+        "r2_ci_high": 0.535549,
+        "train_r2": 0.4993416430447398,
+        "train_mae": 166426.92039462965,
+        "train_val_gap": -0.014808
+      },
+      "val_split": "val",
+      "model_file": "bench/runs/random/house_sales-seed44/draw_05/model.joblib",
+      "elapsed_sec": 10.88,
+      "dir": "bench/runs/random/house_sales-seed44/draw_05"
+    }
+  ]
+}

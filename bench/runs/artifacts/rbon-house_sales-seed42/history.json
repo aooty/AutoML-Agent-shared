@@ -1,0 +1,147 @@
+{
+  "thread_id": "rbon-house_sales-seed42",
+  "goal": {
+    "metric": "r2",
+    "direction": "maximize",
+    "mode": "auto",
+    "threshold": 0.7718,
+    "source": "derived",
+    "reference": {
+      "source": "baseline",
+      "metric": "r2",
+      "baseline": 0.6957,
+      "margin": 0.25,
+      "baseline_ci": [
+        0.6735,
+        0.713
+      ],
+      "baseline_ci_unit": "row",
+      "chance": -0.0
+    }
+  },
+  "iterations": 1,
+  "stop_reason": "goal_reached",
+  "critic_runs": 0,
+  "best": {
+    "iteration": 1,
+    "model": "hist_gbdt",
+    "hyperparams": {
+      "learning_rate": 0.06,
+      "max_iter": 900,
+      "max_leaf_nodes": 63,
+      "min_samples_leaf": 15,
+      "l2_regularization": 1.0,
+      "max_bins": 255,
+      "early_stopping": true,
+      "validation_fraction": 0.1,
+      "n_iter_no_change": 30,
+      "random_state": 42
+    },
+    "preprocessing": {
+      "impute": "median",
+      "scale": false,
+      "missing_indicator": false,
+      "missing_count": false
+    },
+    "metric": "r2",
+    "score": 0.8875550376091721,
+    "metrics": {
+      "r2": 0.8875550376091721,
+      "mae": 64690.80501009314,
+      "rmse": 117178.04636912918,
+      "mean_absolute_error": 64690.80501009314,
+      "root_mean_squared_error": 117178.04636912918,
+      "r2_score": 0.8875550376091721,
+      "r2_ci_low": 0.872281,
+      "r2_ci_high": 0.902386,
+      "train_r2": 0.9585611983063331,
+      "train_mae": 45442.11836360495,
+      "train_val_gap": 0.071006
+    },
+    "train_time_sec": 2.727,
+    "plan_strategy": "Single attempt: replace the linear baseline with a gradient-boosted tree ensemble (hist_gbdt) sized for 12,967 training rows. House prices in this dataset are driven by strong non-linear, spatially-interacting structure (lat/long/zipcode crossed with sqft_living and grade) that a scaled ridge cannot express at all; a boosted tree ensemble builds those interactions internally, which is exactly the 'better ranking generator' the goal asks for. Configuration: hist_gbdt with learning_rate 0.06, max_iter 900, max_leaf_nodes 63, min_samples_leaf 15, l2_regularization 1.0, max_bins 255, early_stopping true with validation_fraction 0.1 and n_iter_no_change 30 so the 900-iteration budget is a ceiling rather than a commitment and the fit stops before it starts memorising the 5.3% high-price outlier tail. Preprocessing: median impute (the card reports zero missingness, so this is inert) and no scaling, since tree splits are scale-invariant; no missingness columns, since there is no missingness to encode. Full training set, no subsample — cost-3 model on ~13k rows and 21 numeric columns fits comfortably inside 600s and 2GB."
+  },
+  "holdout": {
+    "status": "ok",
+    "split": "test",
+    "test_fraction": 0.2,
+    "iteration": 1,
+    "model": "hist_gbdt",
+    "metric": "r2",
+    "score": 0.8763826430122559,
+    "val_score": 0.8875550376091721,
+    "metrics": {
+      "r2": 0.8763826430122559,
+      "mae": 68625.17462246207,
+      "rmse": 136704.29988588253,
+      "mean_absolute_error": 68625.17462246207,
+      "root_mean_squared_error": 136704.29988588253,
+      "r2_score": 0.8763826430122559,
+      "r2_ci_low": 0.835928,
+      "r2_ci_high": 0.907639
+    },
+    "wall_time_sec": 4.139,
+    "selection_gap": 0.011172,
+    "score_ci": [
+      0.835928,
+      0.907639
+    ],
+    "val_inside_ci": true
+  },
+  "models": {
+    "mode": "best",
+    "kept_iteration": 1,
+    "removed": [],
+    "freed_bytes": 0
+  },
+  "history": [
+    {
+      "iteration": 1,
+      "model": "hist_gbdt",
+      "hyperparams": {
+        "learning_rate": 0.06,
+        "max_iter": 900,
+        "max_leaf_nodes": 63,
+        "min_samples_leaf": 15,
+        "l2_regularization": 1.0,
+        "max_bins": 255,
+        "early_stopping": true,
+        "validation_fraction": 0.1,
+        "n_iter_no_change": 30,
+        "random_state": 42
+      },
+      "dropped_hyperparams": [],
+      "preprocessing": {
+        "impute": "median",
+        "scale": false,
+        "missing_indicator": false,
+        "missing_count": false
+      },
+      "internal_validation": {
+        "held_out_rows": 1297,
+        "fit_rows": 11670,
+        "validation_fraction": 0.1,
+        "stopped_at_iter": 149,
+        "max_iter": 900
+      },
+      "unsupported_claims": [],
+      "status": "ok",
+      "error_type": null,
+      "metrics": {
+        "r2": 0.8875550376091721,
+        "mae": 64690.80501009314,
+        "rmse": 117178.04636912918,
+        "mean_absolute_error": 64690.80501009314,
+        "root_mean_squared_error": 117178.04636912918,
+        "r2_score": 0.8875550376091721,
+        "r2_ci_low": 0.872281,
+        "r2_ci_high": 0.902386,
+        "train_r2": 0.9585611983063331,
+        "train_mae": 45442.11836360495,
+        "train_val_gap": 0.071006
+      },
+      "train_time_sec": 2.727,
+      "critic": null
+    }
+  ]
+}

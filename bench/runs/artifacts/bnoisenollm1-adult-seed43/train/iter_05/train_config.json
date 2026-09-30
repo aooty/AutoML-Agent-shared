@@ -1,0 +1,31 @@
+{
+  "model": "logreg",
+  "hyperparams": {
+    "max_iter": 1200,
+    "learning_rate": 0.08,
+    "max_depth": 6,
+    "class_weight": {
+      "0": 1.0,
+      "1": 2.25
+    },
+    "max_leaf_nodes": 63
+  },
+  "preprocessing": {
+    "impute": "median"
+  },
+  "target_missing": {
+    "policy": "reject"
+  },
+  "data": {
+    "path": "bench/data/adult.csv",
+    "target_column": "class"
+  },
+  "metric": "balanced_accuracy",
+  "task": "classification",
+  "seed": 43,
+  "paired_baseline": {
+    "iteration": 3,
+    "path": "bench/runs/artifacts/bnoisenollm1-adult-seed43/train/iter_03/val_predictions.npz"
+  },
+  "memory_limit_mb": 2048
+}
